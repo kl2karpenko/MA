@@ -12,7 +12,8 @@ module.exports = {
     devtool: 'inline-source-map',
 
     entry: {
-        app: './app/bootstrap.js'
+        app: './src/bootstrap.js',
+        connect: './src/connect.js'
     },
 
     output: {
@@ -30,11 +31,18 @@ module.exports = {
 
         new CopyWebpackPlugin([
             {
-                from: 'app/index.html', to: 'index.html'
+                from: 'src/index.html',
+                to: 'index.html'
+            },
+            {
+                from: 'src/connect.html',
+                to: 'connect.html'
             }
         ]),
 
-        new CleanWebpackPlugin(['www/*'])
+        new CleanWebpackPlugin([
+            'www/*'
+        ])
     ],
 
     module: {
