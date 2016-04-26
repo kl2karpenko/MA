@@ -37,7 +37,10 @@ export default class System {
 		React.render(
 			<Router history={browserHistory}>
 				<Route path="/" component={App}>
-					<Route path="/connect" component={ConnectPage}/>
+					<Route path="/connect" component={ConnectPage}>
+						<Route path="/pin" component={ConnectPage}/>
+						<Route path="/qr" component={ConnectPage}/>
+					</Route>
 				</Route>
 			</Router>, document.getElementById('app')
 		)

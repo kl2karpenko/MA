@@ -8,7 +8,9 @@ class ConnectByQR extends React.Component {
 	render() {
 		return (
 			<div>
-				Scan QR code
+				<div>
+					Scan QR code
+				</div>
 				<a href="/connect/pin">Connect by PIN code</a>
 			</div>
 		);
@@ -23,7 +25,9 @@ class ConnectByPIN extends React.Component {
 	render() {
 		return (
 			<div>
-				Enter PIN code
+				<div>
+					Enter PIN code
+				</div>
 				<a href="/connect/qr">Connect by QR code</a>
 			</div>
 		);
@@ -40,6 +44,8 @@ class ConnectPage extends React.Component {
 		return (
 			<div>
 				<ConnectByQR />
+
+				{this.props.children}
 			</div>
 		);
 	}
