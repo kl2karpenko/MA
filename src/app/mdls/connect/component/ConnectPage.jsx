@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class ConnectByQR extends React.Component {
 	constructor(props) {
@@ -8,10 +9,10 @@ class ConnectByQR extends React.Component {
 	render() {
 		return (
 			<div>
-				<div>
+				<h1>
 					Scan QR code
-				</div>
-				<a href="/connect/pin">Connect by PIN code</a>
+				</h1>
+				<Link to="/connect/pin">Connect by PIN code</Link>
 			</div>
 		);
 	}
@@ -25,10 +26,10 @@ class ConnectByPIN extends React.Component {
 	render() {
 		return (
 			<div>
-				<div>
+				<h1>
 					Enter PIN code
-				</div>
-				<a href="/connect/qr">Connect by QR code</a>
+				</h1>
+				<Link to="/connect/qr">Connect by QR code</Link>
 			</div>
 		);
 	}
@@ -40,10 +41,16 @@ class ConnectPage extends React.Component {
 	}
 
 	render() {
-		console.log('render ConnectByQR');
+		var pageRender;
+		if (this.props.params.name === "qr") {
+			pageRender = <ConnectByQR />;
+		} else {
+			pageRender = <ConnectByPIN />;
+		}
+
 		return (
 			<div>
-				<ConnectByQR />
+				{pageRender}
 
 				{this.props.children}
 			</div>
@@ -51,4 +58,4 @@ class ConnectPage extends React.Component {
 	}
 }
 
-export default ConnectPage;
+module.exports = ConnectPage;

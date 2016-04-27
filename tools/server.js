@@ -6,8 +6,7 @@ var app = express();
 var port = 8030;
 
 app.configure(function () {
-	app.use(express.static(__dirname));
-	app.use(express.static('www'));
+	app.use(express.static(path.dirname(__dirname)));
 	app.use(express.bodyParser());
 	app.use(express.logger('dev'));
 	app.use(app.router);

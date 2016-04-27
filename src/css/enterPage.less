@@ -1,0 +1,49 @@
+.app {
+
+  &-enterPage {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 2;
+
+    background-image: url("../img/entry.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  &-loader {
+    position: absolute;
+
+    height: 20px;
+    margin-top: -10px;
+
+    left: 0;
+    top: 50%;
+    right: 0;
+
+    z-index: 3;
+
+    text-align: center;
+
+    span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+
+      border-radius: 50%;
+      margin-right: 5px;
+
+      opacity: 0.3;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}
