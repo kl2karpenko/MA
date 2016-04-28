@@ -50,13 +50,9 @@ module.exports = {
             }
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: true
-            }
-        }),
+        new ExtractTextPlugin("[name].css"),
 
-        new ExtractTextPlugin("[name].css")
+        new webpack.optimize.UglifyJsPlugin()
     ],
 
     module: {

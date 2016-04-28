@@ -1,8 +1,8 @@
+import ConnectPage from './component/ConnectPage.jsx';
+
 module.exports = {
 	path: '/connect/:name',
 	getComponent(nextState, cb) {
-		require.ensure([], (require) => {
-			cb(null, require('./component/ConnectPage.jsx'))
-		})
+		cb(null, ConnectPage);
 	}
 };

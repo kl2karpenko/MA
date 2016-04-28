@@ -1,16 +1,21 @@
-import { Router, hashHistory } from 'react-router';
+import { Router, hashHistory, Redirect } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class System {
 	constructor() {
 		this.rootRoute = {
+			component: 'div',
 			childRoutes: [
 				{
 					path: '/',
 					component: require('./mdls/App.jsx'),
+					indexRoute: {
+						onEnter: (nextState, replace) => replace('/connect/qr')
+					},
 					childRoutes: [
-						require('./mdls/connect/index.jsx')
+						require('./mdls/connect/index.jsx'),
+						require('./mdls/contacts/index.jsx')
 					]
 				}
 			]
@@ -38,11 +43,10 @@ export default class System {
 }
 
 /*
-
  <Router history={routerHistory}>
 	 <Route path="/" component={App}>
 		 <Route path="connect/:name" component={ConnectPage} />
+		 <Route path="contacts/:name" component={ContactPage} />
 	 </Route>
  </Router>
-
  */
