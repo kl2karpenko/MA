@@ -16,11 +16,15 @@ export default class Contacts extends React.Component {
 			contacts: []
 		};
 
-		_getContacts(navigator.contactsPhoneNumbers, (contactsList) => {
+		this._getContactsList(navigator.contactsPhoneNumbers, (contactsList) => {
 			this.setState({
 				contacts: contactsList
 			});
-		}).bind(this);
+		});
+	}
+
+	_getContactsList(contacts, cb) {
+		return envConfig.routesData.contacts(contacts, cb);
 	}
 
 	render() {
