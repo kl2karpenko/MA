@@ -31,5 +31,13 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "com.dbaq.cordova.contactsPhoneNumbers": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-contacts-phonenumbers"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
