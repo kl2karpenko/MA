@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 class App extends React.Component {
 	constructor(props) {
@@ -10,8 +9,6 @@ class App extends React.Component {
 		return (
 			<div>
 				<div className="col-group">
-					<Link to="/connect/qr">Connect to the app</Link>
-
 					{this.props.children}
 				</div>
 			</div>
@@ -19,4 +16,4 @@ class App extends React.Component {
 	}
 }
 
-module.exports = App
+module.exports = App;

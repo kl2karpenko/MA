@@ -16,7 +16,8 @@ console.log(" ========================== Your are on >> " + ENVIRONMENT.toUpperC
 module.exports = {
     context: dirname,
 
-    devtool: ENVIRONMENT === "dev" ? 'inline-source-map' : null,
+    // devtool: ENVIRONMENT === "dev" ? 'inline-source-map' : null,
+    devtool: 'inline-source-map',
 
     entry: {
         app: './src/bootstrap.js'
@@ -54,6 +55,13 @@ module.exports = {
 
         new webpack.optimize.UglifyJsPlugin()
     ],
+
+    resolve: {
+        root: path.resolve(dirname),
+        alias: {
+            "envConfig": "src/app/env/" + ENVIRONMENT +  ".js"
+        }
+    },
 
     module: {
         loaders: [

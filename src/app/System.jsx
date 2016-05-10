@@ -1,4 +1,4 @@
-import { Router, hashHistory, Redirect } from 'react-router';
+import { Router, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -11,7 +11,7 @@ export default class System {
 					path: '/',
 					component: require('./mdls/App.jsx'),
 					indexRoute: {
-						onEnter: (nextState, replace) => replace('/connect/qr')
+						onEnter: (nextState, replace) => replace('/connect/main')
 					},
 					childRoutes: [
 						require('./mdls/connect/index.jsx'),

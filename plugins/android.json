@@ -15,6 +15,9 @@
         },
         "cordova-plugin-contacts": {
             "PACKAGE_NAME": "com.example.hello"
+        },
+        "com.dbaq.cordova.contactsPhoneNumbers": {
+            "PACKAGE_NAME": "com.example.hello"
         }
     },
     "dependent_plugins": {

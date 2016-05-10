@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import MobileContacts from './MobileContacts.jsx';
+import Contacts from './Contacts.jsx';
 import Extensions from './Extensions.jsx';
 
 class ContactPage extends React.Component {
@@ -13,7 +13,7 @@ class ContactPage extends React.Component {
 		var pageRender;
 		
 		if (this.props.params.name === "mobile") {
-			pageRender = <MobileContacts />;
+			pageRender = <Contacts />;
 		} else {
 			pageRender = <Extensions />;
 		}
@@ -24,10 +24,10 @@ class ContactPage extends React.Component {
 					<div>Forward to</div>
 					<ul>
 						<li>
-							<Link activeClassName="-active" to="/contacts/mobile">Mobile</Link>
+							<Link activeClassName="active" to="/contacts/mobile">Mobile</Link>
 						</li>
 						<li>
-							<Link activeClassName="-active" to="/contacts/extensions">Extensions</Link>
+							<Link activeClassName="active" to="/contacts/extensions">Extensions</Link>
 						</li>
 					</ul>
 				</div>
