@@ -5,6 +5,9 @@ module.exports = function(context) {
 	if (!process.env.NODE_ENV) {
 		process.env.NODE_ENV = 'production';
 	}
+	if (!process.env.platformName) {
+		process.env.platformName = androidIs ? 'android' : 'ios';
+	}
 	// >>>>>>>>>>>>>>>>>>>>>> set env variable <<<<<<<<<<<<<<<<<<<<<<
 
 	var deferral = new context.requireCordovaModule('q').defer();

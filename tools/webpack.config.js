@@ -11,6 +11,10 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
 const dirname = path.join(__dirname, '../');
 
+var isProd = ENVIRONMENT === "prod";
+// if we have prod we will set all to ww dir if dev all to build dir
+var cleanDir = isProd ? 'www' : 'build';
+
 console.log(" ========================== Your are on >> " + ENVIRONMENT.toUpperCase() + " << environment ================================");
 
 module.exports = {
@@ -24,7 +28,7 @@ module.exports = {
     },
 
     output: {
-        path: path.join(dirname, 'www'),
+        path: path.join(dirname, cleanDir),
         filename: '[name].js'
     },
 
@@ -37,7 +41,7 @@ module.exports = {
         }),
 
         new CleanWebpackPlugin([
-            'www/*'
+            cleanDir + '/*'
         ]),
 
         new HtmlWebpackPlugin({

@@ -1,9 +1,9 @@
 module.exports = {
 	"dev": {
 		filesPath: {
-			"scripts": "/www/app.js",
-			"additionalScripts": "/www/common.js",
-			"styles": "/www/app.css"
+			"scripts": "/build/app.js",
+			"additionalScripts": "/build/common.js",
+			"styles": "/build/app.css"
 		}
 	},
 	"prod": {
