@@ -1,20 +1,45 @@
+@import "normalize.css";
+@import "bootstrap.min.css";
+
+// for theme styles
+@import "thm/main";
+
 html {
   height:100%;
   min-height:100%;
+
+  -webkit-text-size-adjust:none;
+  text-size-adjust:none;
+  font-size: 26px;
 }
 
 body {
   margin: 0;
-  min-height:100%;
+  height: 100%;
+
+  min-width: 320px;
+  min-height: 540px;
 
   position: relative;
+  // TODO: make font-face for Roboto
+  font-family: 'Roboto', sans-serif;
 }
 
-a.active {
-  font-size: 20px;
-  color: purple;
-  text-decoration: none;
+#app {
+  height: 100%;
+  & > div, & > div > div {
+    height: 100%;
+  }
 }
+
+@screenMed: 600px;
 
 @import "fluidable";
 @import "enterPage";
+
+@import "mdls/angle";
+@import "mdls/adaptive";
+@import "mdls/connect-slider";
+
+@import "screen";
+@import "layouts/main";

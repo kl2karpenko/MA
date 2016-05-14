@@ -11,9 +11,11 @@ export default class System {
 					path: '/',
 					component: require('./mdls/App.jsx'),
 					indexRoute: {
+						// TODO: check if person is already login and if is don't show this module connect
 						onEnter: (nextState, replace) => replace('/connect/main')
 					},
 					childRoutes: [
+						// TODO: check if person is already login and if is don't show this module connect
 						require('./mdls/connect/index.jsx'),
 						require('./mdls/contacts/index.jsx')
 					]

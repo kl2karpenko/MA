@@ -6,6 +6,7 @@ const webpackConfig = require('./env/config');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 // load plugins
 
 const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
@@ -40,35 +41,43 @@ module.exports = {
             }
         }),
 
-        new CleanWebpackPlugin([
-            cleanDir + '/*'
-        ]),
-
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/template.html', // Load a custom template
             inject: false,
             assets: {
                 "scripts": webpackConfig[ENVIRONMENT].filesPath.scripts,
-                "additionalScripts": webpackConfig[ENVIRONMENT].filesPath.additionalScripts,
+                "modernizr": webpackConfig[ENVIRONMENT].filesPath.modernizr,
                 "styles": webpackConfig[ENVIRONMENT].filesPath.styles
             }
         }),
 
         new ExtractTextPlugin("[name].css"),
 
-        new webpack.optimize.UglifyJsPlugin()
+        // TODO: don't copy modernizr figure out why not!!!!!
+        new CopyWebpackPlugin([
+            {
+                from: 'app/vendor/modernizr.js',
+                to: dirname + '/modernizr.js'
+            }
+        ])
     ],
 
     resolve: {
         root: path.resolve(dirname),
         alias: {
-            "envConfig": "src/app/env/" + ENVIRONMENT +  ".js"
+            "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
+            "images": 'src/img',
+            "imageLoader": 'src/app/helpers/imageLoader.js'
         }
     },
 
     module: {
         loaders: [
+            {
+                test: /\.xml$/, loader: 'xml-loader'
+            },
+
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
@@ -82,7 +91,7 @@ module.exports = {
             {
                 test: /.*\.(gif|png|jpe?g|svg)$/i,
                 loaders: [
-                    'file?hash=sha512&digest=hex&name=img/[hash].[ext]',
+                    'file?hash=sha512&digest=hex&name=img/[name].[ext]',
                     'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
                 ]
             },
@@ -99,3 +108,7 @@ module.exports = {
         ]
     }
 };
+
+if (isProd) {
+    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin());
+}

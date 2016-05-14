@@ -8,9 +8,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="col-group">
-					{this.props.children}
-				</div>
+				{this.props.children}
 			</div>
 		);
 	}

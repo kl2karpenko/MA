@@ -7,7 +7,7 @@ class ConnectPage extends React.Component {
 
 	render() {		
 		return (
-			<div>
+			<div className="l-adaptive-wrapper">
 				{this.props.children}
 			</div>
 		);
