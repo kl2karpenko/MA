@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import imageLoader from 'imageLoader';
+import imageLoader from 'lib/imageLoader';
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 
@@ -21,7 +21,7 @@ class ConnectPage extends React.Component {
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link activeClassName="active" className="m-angle__button" to="/connect/qr">Start</Link>
+					<Link activeClassName="active" className="m-angle__button btn-round btn-md" to="/connect/qr">Start</Link>
 
 					<div className="l-main-center">
 						<h2 className="l-main__header">Where can I find this QR Code?</h2>

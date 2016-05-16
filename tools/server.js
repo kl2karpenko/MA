@@ -438,10 +438,11 @@ app.get('/ajax/contacts', function (req, res) {
 });
 
 app.get('/ajax/login', function (req, res) {
-	res.send({
-		'login': 'Lily',
-		'isConnected': true
-	});
+	// res.send({
+	// 	'login': 'Lily',
+	// 	'isConnected': true
+	// });
+	res.send(false);
 });
 
 app.get('*', function (req, res) {

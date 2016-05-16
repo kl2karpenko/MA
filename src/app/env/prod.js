@@ -11,6 +11,7 @@ function _getContactsFromMobile(contacts, cb) {
 module.exports = {
 	"routesData": {
 		"contacts": _getContactsFromMobile,
+		"login": process.env.platformName === 'ios' ? "http://192.168.2.105:8030/ajax/login" : "http://192.168.3.51:8030/ajax/login",
 		"users": process.env.platformName === 'ios' ? "http://192.168.2.105:8030/ajax/users" : "http://192.168.3.51:8030/ajax/users"
 	}
 };

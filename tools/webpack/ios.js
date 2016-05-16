@@ -1,4 +1,4 @@
-var config = require('./webpack.config.js');
+var config = require('./config.js');
 var extend = require('extend');
 
 const webpack = require('webpack');

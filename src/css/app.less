@@ -1,5 +1,5 @@
 @import "normalize.css";
-@import "bootstrap.min.css";
+@import "vendor/bootstrap.css";
 
 // for theme styles
 @import "thm/main";
@@ -25,7 +25,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-#app {
+.app {
   height: 100%;
   & > div, & > div > div {
     height: 100%;
@@ -36,10 +36,13 @@ body {
 
 @import "fluidable";
 @import "enterPage";
+@import "btn";
 
 @import "mdls/angle";
 @import "mdls/adaptive";
 @import "mdls/connect-slider";
+@import "mdls/keyboard";
 
 @import "layouts/main";
+@import "layouts/pin";
 @import "media/screen";

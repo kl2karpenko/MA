@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import imageLoader from 'imageLoader';
+import imageLoader from 'lib/imageLoader';
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 
@@ -18,7 +18,7 @@ export default class ConnectByQR extends React.Component {
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link className="m-angle__button disabled" to="/connect/main">Cancel</Link>
+					<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
 
 					<div className="l-main-center">
 						<h2 className="l-main__header">Where can I find this QR Code?</h2>

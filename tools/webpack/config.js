@@ -1,16 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const webpackConfig = require('./env/config');
+const webpackConfig = require('./../env/config');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 // load plugins
 
 const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
-const dirname = path.join(__dirname, '../');
+const dirname = path.join(__dirname, '../../');
 
 var isProd = ENVIRONMENT === "prod";
 // if we have prod we will set all to ww dir if dev all to build dir
@@ -47,20 +45,13 @@ module.exports = {
             inject: false,
             assets: {
                 "scripts": webpackConfig[ENVIRONMENT].filesPath.scripts,
+                "connect": webpackConfig[ENVIRONMENT].filesPath.connect,
                 "modernizr": webpackConfig[ENVIRONMENT].filesPath.modernizr,
                 "styles": webpackConfig[ENVIRONMENT].filesPath.styles
             }
         }),
 
-        new ExtractTextPlugin("[name].css"),
-
-        // TODO: don't copy modernizr figure out why not!!!!!
-        new CopyWebpackPlugin([
-            {
-                from: 'app/vendor/modernizr.js',
-                to: dirname + '/modernizr.js'
-            }
-        ])
+        new ExtractTextPlugin("[name].css")
     ],
 
     resolve: {
@@ -68,7 +59,8 @@ module.exports = {
         alias: {
             "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
             "images": 'src/img',
-            "imageLoader": 'src/app/helpers/imageLoader.js'
+            "lib": 'src/app/lib',
+            "components": 'src/app/lib/components'
         }
     },
 

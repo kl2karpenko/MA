@@ -1,0 +1,92 @@
+.l {
+  &-pin {
+    height: 100%;
+    position: relative;
+
+    color: #fff;
+
+    background-image: url("../../@{BackgroundMainImage}");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      background-color: rgba(0,0,0,0.5);
+      z-index: 0;
+    }
+
+    &__name {
+      font-size: 1.2em;
+    }
+
+    &__space {
+      &, div {
+        position: relative;
+        height: 100%;
+      }
+    }
+
+    &__spaces {
+      padding: 0 7.343124165554073%;
+      height: 59.6078431372549%;
+
+      position: absolute;
+      bottom: 25px;
+      left: 0;
+      right: 0;
+
+      .row {
+        position: relative;
+        height: 100%;
+      }
+    }
+
+    &__pinLetters {
+      position: absolute;
+
+      left: 0;
+      top: 0;
+
+      height: 100%;
+      width: 100%;
+
+      border: 0;
+      border-bottom: 1px solid #fff;
+      background-color: transparent;
+
+      outline: none;
+
+      text-align: center;
+      font-size: 2.2em;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &-wrapper {
+      z-index: 1;
+      position: absolute;
+      height: 57.94602698650675%;
+
+      left: 0;
+      right: 0;
+    }
+
+    &-center {
+      text-align: center;
+      position: relative;
+      height: 33.031088082901555%;
+
+      top: 50%;
+      transform: translate(0,-50%);
+    }
+  }
+}

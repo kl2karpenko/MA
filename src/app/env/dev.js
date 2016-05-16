@@ -13,6 +13,7 @@ function _getContactsFromMobile(contacts, cb) {
 module.exports = {
 	"routesData": {
 		"contacts": _getContactsFromMobile,
-		"users": "/ajax/users"
+		"users": "/ajax/users",
+		"login": "/ajax/login"
 	}
 };

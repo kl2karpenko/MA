@@ -15,7 +15,7 @@ export default class ConnectByPIN extends React.Component {
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link className="m-angle__button" to="/contacts/mobile">Log In</Link>
+					<Link className="m-angle__button btn-round btn-md" to="/pin">Log In</Link>
 
 					<div className="l-main-center">
 						<h2 className="l-main__header">Where can I find this this Code?</h2>

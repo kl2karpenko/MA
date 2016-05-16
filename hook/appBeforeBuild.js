@@ -13,7 +13,7 @@ module.exports = function(context) {
 	var deferral = new context.requireCordovaModule('q').defer();
 
 	var webpack = require("webpack");
-	var config = require('../tools/webpack' + (androidIs ? '.android' : '.ios') + '.config.js');
+	var config = require('../tools/webpack/' + (androidIs ? 'android' : 'ios') + '.js');
 
 	webpack(config).run(function(err, stats) {
 		if(err) {
