@@ -21,13 +21,6 @@
         margin-left: 10px;
         margin-right: 10px;
 
-        @media screen and (min-width: @screenMed) {
-          width: 15px;
-          height: 15px;
-          margin-left: 20px;
-          margin-right: 20px;
-        }
-
         border: 2px solid #e8e8e9;
         background-color: #fff;
 
@@ -59,6 +52,11 @@
         color: @LinkColor;
         font-weight: 300;
         font-size: 1.10285714em;
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }

@@ -4,10 +4,6 @@ import { Link } from 'react-router';
 import envConfig from 'envConfig';
 import ContactItem from './ContactItem.jsx';
 
-function _getContacts(contacts, cb) {
-	return envConfig.routesData.contacts(contacts, cb);
-}
-
 export default class Contacts extends React.Component {
 	constructor(props) {
 		super(props);

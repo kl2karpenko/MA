@@ -8,8 +8,14 @@
     padding: 0 8.4%;
 
     &-center {
-      position: relative;
-      margin-top: 15%;
+      position: absolute;
+      padding: 0 8.4%;
+
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%, -50%);
+      width: 100%;
     }
 
     .l-adaptive & {
@@ -18,6 +24,8 @@
       z-index: 3;
       top: 37.48125937%;
       bottom: 25%;
+      left: 0;
+      right: 0;
     }
 
     &-connect {
@@ -25,14 +33,15 @@
     }
 
     &__header {
-      font-size: 1.6139999999999999em;
+      font-size: 1.4139999999999999em;
       font-weight: 400;
       margin-bottom: 20px;
     }
 
     &__text {
-      font-size: 1.1528571428571428em;
+      font-size: 1.10456165em;
       font-weight: 100;
+      margin-bottom: 0;
 
       color: #8d8d8d;
       line-height: 1.7em;

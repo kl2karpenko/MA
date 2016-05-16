@@ -49,7 +49,7 @@ export default class Extensions extends React.Component {
 
 				{users}
 
-				<Link activeClassName="active" to="/contacts/pin">Connect by PIN code</Link>
+				<Link activeClassName="active" to="/">Connect by PIN code</Link>
 			</div>
 		);
 	}

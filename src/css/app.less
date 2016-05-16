@@ -21,7 +21,7 @@ body {
   min-height: 540px;
 
   position: relative;
-  // TODO: make font-face for Roboto
+  // TODO: make font-face for Roboto, download ttf
   font-family: 'Roboto', sans-serif;
 }
 
@@ -30,9 +30,9 @@ body {
   & > div, & > div > div {
     height: 100%;
   }
-}
 
-@screenMed: 600px;
+  max-width: 860px;
+}
 
 @import "fluidable";
 @import "enterPage";
@@ -41,5 +41,5 @@ body {
 @import "mdls/adaptive";
 @import "mdls/connect-slider";
 
-@import "screen";
 @import "layouts/main";
+@import "media/screen";

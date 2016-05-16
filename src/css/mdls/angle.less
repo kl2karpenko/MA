@@ -38,32 +38,27 @@
     text-transform: uppercase;
     font-size: 1em;
     font-weight: 300;
-    text-decoration: none;
     text-align: center;
 
     line-height: 77px;
     position: absolute;
     color: #fff;
+    text-decoration: none;
 
     transform: translateX(-50%);
-    top: -108px;
     left: 50%;
+    top: -108px;
 
     box-shadow: 3px 0 10px rgba(0,0,0,0.2);
-
-    @media screen and (min-width: @screenMed) {
-      width: 110px;
-      height: 110px;
-      line-height: 110px;
-      top: -126px;
-    }
-
     background-color: @LinkColor;
-
     border-radius: 50%;
 
     &.disabled {
       background-color: @LinkColorDisabled;
+    }
+
+    &:active, &:visited {
+      text-decoration: none;
     }
   }
 
@@ -74,8 +69,8 @@
     height: 150px;
     left: -100px;
     right: -100px;
-    bottom: -81px;
-    transform: rotate(-9deg);
+    bottom: -75px;
+    transform: rotate(-10deg);
     z-index: 0;
   }
 }

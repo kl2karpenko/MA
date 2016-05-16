@@ -2,43 +2,65 @@ import { Router, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import $ from 'jquery';
+
 export default class System {
 	constructor() {
-		this.rootRoute = {
-			component: 'div',
-			childRoutes: [
-				{
-					path: '/',
-					component: require('./mdls/App.jsx'),
-					indexRoute: {
-						// TODO: check if person is already login and if is don't show this module connect
-						onEnter: (nextState, replace) => replace('/connect/main')
-					},
-					childRoutes: [
-						// TODO: check if person is already login and if is don't show this module connect
-						require('./mdls/connect/index.jsx'),
-						require('./mdls/contacts/index.jsx')
-					]
-				}
-			]
-		}
+	}
+
+	_createRoutes() {
+		return this._checkIfAlreadyConnect().then((loginInfo) => {
+			let isConnected = loginInfo;
+			let routes = [
+				require('./mdls/contacts/index.jsx')
+			];
+
+			if (!isConnected) {
+				routes.unshift(require('./mdls/connect/index.jsx'));
+			}
+
+			return {
+				component: 'div',
+				childRoutes: [
+					{
+						path: '/',
+						component: require('./mdls/App.jsx'),
+						indexRoute: {
+							// TODO: think about login of redirect after login
+							onEnter: (nextState, replace) => replace(isConnected ? '/contacts/mobile' : '/connect/main')
+						},
+						childRoutes: routes
+					}
+				]
+			};
+		});
+	}
+
+	_checkIfAlreadyConnect() {
+		return $.get("/ajax/login", (loginInfo) => {
+			return loginInfo;
+		});
 	}
 
 	_addStyles() {
 		require("../css/app.less");
 	}
 
-	_createRoutes() {
+	_addRoutes(rootRoute) {
+		console.log(rootRoute);
+
 		ReactDOM.render(
-			<Router history={hashHistory} routes={this.rootRoute} />,
+			<Router history={hashHistory} routes={rootRoute} />,
 			document.getElementById('app')
 		)
 	}
 
 	init() {
-		this._createRoutes();
+		this._createRoutes().then((routes) => {
+			this._addRoutes(routes);
+		});
 	}
-	
+
 	boot() {
 		this._addStyles();
 	}

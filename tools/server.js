@@ -437,6 +437,13 @@ app.get('/ajax/contacts', function (req, res) {
 	]);
 });
 
+app.get('/ajax/login', function (req, res) {
+	res.send({
+		'login': 'Lily',
+		'isConnected': true
+	});
+});
+
 app.get('*', function (req, res) {
 	res.sendfile('index.html');
 });
