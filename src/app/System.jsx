@@ -3,9 +3,15 @@ import { Router, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class System {
-	constructor(props) {
+import schema from 'schema';
 
+export default class System {
+	getAuthentication() {
+		schema.add('login');
+
+		return schema.login.read().then((loginInfo) => {
+			return loginInfo ? '/contacts/mobile' : '/connect/main';
+		});
 	}
 
 	_createRoutes(redirectPage) {

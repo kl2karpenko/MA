@@ -25,6 +25,7 @@
     "csp-parse": "^0.0.2",
     "css-loader": "^0.23.1",
     "elementtree": "0.1.6",
+    "expose-loader": "^0.7.1",
     "express": "3.0.2",
     "extract-text-webpack-plugin": "*",
     "html-webpack-plugin": "^2.16.0",

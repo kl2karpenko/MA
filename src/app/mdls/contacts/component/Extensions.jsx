@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import $ from 'jquery';
 
-import envConfig from 'envConfig';
+import config from 'envConfig';
 
 import ContactItem from './ContactItem.jsx';
 
@@ -19,7 +19,7 @@ export default class Extensions extends React.Component {
 	}
 
 	_getExtensionsList() {
-		$.get(envConfig.routesData.users, (usersData) => {
+		$.get(config.schema.extensions, (usersData) => {
 			let users = usersData.users.map((userItem) => {
 				return {
 					id: userItem._id,

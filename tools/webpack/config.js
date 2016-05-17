@@ -28,11 +28,17 @@ module.exports = {
 
     output: {
         path: path.join(dirname, cleanDir),
-        filename: '[name].js'
+        filename: '[name].js',
+        library: "[name]"
     },
 
     // Step 2: Node environment
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jquery: "jQuery",
+            "windows.jQuery": "jquery"
+        }),
         new webpack.DefinePlugin({
             'process.env': {
               'NODE_ENV': JSON.stringify(ENVIRONMENT)
@@ -60,6 +66,9 @@ module.exports = {
             "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
+            "scope": 'src/app/lib/scope.jsx',
+            "schema": 'src/app/lib/schema',
+            "rest-client": 'src/app/vendor/jquery.rest',
             "components": 'src/app/lib/components'
         }
     },
@@ -68,6 +77,13 @@ module.exports = {
         loaders: [
             {
                 test: /\.xml$/, loader: 'xml-loader'
+            },
+
+            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
+
+            {
+                test: /[\/\\]node_modules[\/\\]some-module[\/\\]index\.js$/,
+                loader: "imports?this=>window"
             },
 
             {

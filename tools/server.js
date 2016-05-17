@@ -12,7 +12,7 @@ app.configure(function () {
 	app.use(app.router);
 });
 
-app.get('/ajax/users', function (req, res) {
+app.get('/ajax/extensions', function (req, res) {
 	res.send({
 		"users": [{
 			"_id": "95c50c4e05cf7993ea326f813f007385",
@@ -443,6 +443,16 @@ app.get('/ajax/login', function (req, res) {
 	// 	'isConnected': true
 	// });
 	res.send(false);
+});
+
+app.post('/ajax/pin', function (req, res) {
+	console.log(req);
+	
+	res.send({
+		'pin': {
+			'correct': true
+		}
+	});
 });
 
 app.get('*', function (req, res) {

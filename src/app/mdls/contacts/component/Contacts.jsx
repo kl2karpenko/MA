@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import envConfig from 'envConfig';
+import config from 'envConfig';
 import ContactItem from './ContactItem.jsx';
 
 export default class Contacts extends React.Component {
@@ -20,7 +20,7 @@ export default class Contacts extends React.Component {
 	}
 
 	_getContactsList(contacts, cb) {
-		return envConfig.routesData.contacts(contacts, cb);
+		return config.schema.contacts(contacts, cb);
 	}
 
 	render() {

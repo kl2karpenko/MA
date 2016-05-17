@@ -18,6 +18,9 @@
         },
         "com.dbaq.cordova.contactsPhoneNumbers": {
             "PACKAGE_NAME": "com.example.hello"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.kwebbl.androidapp"
         }
     },
     "dependent_plugins": {
