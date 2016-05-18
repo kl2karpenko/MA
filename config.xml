@@ -12,7 +12,7 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <hook type="before_run" src="hook/appBeforeBuild.js" />
-    <allow-intent href="http://*/*" />m
+    <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
