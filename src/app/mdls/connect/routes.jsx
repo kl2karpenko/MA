@@ -1,7 +1,7 @@
-import ConnectPage from './component/ConnectPage.jsx';
-import ConnectMain from './component/ConnectMain.jsx';
-import ConnectByQR from './component/ConnectByQR.jsx';
-import ConnectByPIN from './component/ConnectByPIN.jsx';
+import ConnectPage from './components/ConnectPage.jsx';
+import ConnectMain from './components/ConnectMain.jsx';
+import ConnectByQR from './components/ConnectByQR.jsx';
+import ConnectByPIN from './components/ConnectByPIN.jsx';
 
 module.exports = {
 	path: '/connect',

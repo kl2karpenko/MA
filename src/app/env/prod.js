@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import config from "./config";
+
 function _getContactsFromMobile(contacts, cb) {
 	return contacts.list((contactsList) => {
 		contactsList = contactsList.filter((contactItem) => {
@@ -8,8 +11,8 @@ function _getContactsFromMobile(contacts, cb) {
 	});
 }
 
-// TODO: only for development, delete after deploy
 function getAddressOfHost() {
+// TODO: only for development, delete after deploy
 	let Ip =  isIOS ? workIPMac : workIPDesktop;
 
 	return Ip + "/ajax/";
@@ -21,9 +24,9 @@ let homeIPMac = 'http://192.168.4.186';
 let workIPMac = 'http://192.168.2.105:8030';
 let workIPDesktop = 'http://192.168.3.51:8030';
 
-module.exports = {
+module.exports = $.extend(config, {
 	"hostname": getAddressOfHost()
-};
+});
 
 // module.exports = {
 // 	"schema": {
@@ -33,6 +36,3 @@ module.exports = {
 // 		"pin": setAddressForRequest("pin")
 // 	}
 // };
-
-// work - http://192.168.4.186
-// home - http://192.168.2.105

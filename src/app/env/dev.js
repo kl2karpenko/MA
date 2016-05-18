@@ -1,4 +1,5 @@
-// import $ from 'jquery';
+import $ from 'jquery';
+import config from "./config";
 
 function _getContactsFromMobile(contacts, cb) {
 	return $.get("/ajax/contacts", (contactsData) => {
@@ -10,9 +11,9 @@ function _getContactsFromMobile(contacts, cb) {
 	})
 }
 
-module.exports = {
+module.exports = $.extend(config, {
 	"hostname": "/ajax/"
-};
+});
 
 // module.exports = {
 // 	"schema": {

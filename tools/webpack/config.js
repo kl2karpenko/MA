@@ -11,24 +11,22 @@ const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production
 const dirname = path.join(__dirname, '../../');
 
 var isProd = ENVIRONMENT === "prod";
+
 // if we have prod we will set all to ww dir if dev all to build dir
-var cleanDir = isProd ? 'www' : 'build';
+var distDir = isProd ? 'www' : 'build';
 
 console.log(" ========================== Your are on >> " + ENVIRONMENT.toUpperCase() + " << environment ================================");
 
 module.exports = {
     context: dirname,
 
-    // devtool: ENVIRONMENT === "dev" ? 'inline-source-map' : null,
-    devtool: 'inline-source-map',
-
     entry: {
-        app: './src/bootstrap.js'
+        app: "./src/bootstrap.js"
     },
 
     output: {
-        path: path.join(dirname, cleanDir),
-        filename: '[name].js',
+        path: path.join(dirname, distDir),
+        filename: "[name].js",
         library: "[name]"
     },
 
@@ -39,6 +37,7 @@ module.exports = {
             jquery: "jQuery",
             "windows.jQuery": "jquery"
         }),
+
         new webpack.DefinePlugin({
             'process.env': {
               'NODE_ENV': JSON.stringify(ENVIRONMENT)
@@ -66,6 +65,7 @@ module.exports = {
             "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
+            "modules": 'src/app/mdls',
             "scope": 'src/app/lib/scope.jsx',
             "schema": 'src/app/lib/schema',
             "rest-client": 'src/app/vendor/jquery.rest',
@@ -79,7 +79,9 @@ module.exports = {
                 test: /\.xml$/, loader: 'xml-loader'
             },
 
-            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
+            {
+                test: require.resolve("jquery"), loader: "expose?$!expose?jQuery"
+            },
 
             {
                 test: /[\/\\]node_modules[\/\\]some-module[\/\\]index\.js$/,
@@ -119,4 +121,6 @@ module.exports = {
 
 if (isProd) {
     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin());
+} else {
+    module.exports.devtool = 'inline-source-map';
 }

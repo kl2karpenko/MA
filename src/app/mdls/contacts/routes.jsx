@@ -1,4 +1,4 @@
-import ContactPage from './component/ContactPage.jsx';
+import ContactPage from './components/ContactPage.jsx';
 
 module.exports = {
 	path: '/contacts/:name',
