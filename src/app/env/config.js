@@ -2,6 +2,7 @@ module.exports = {
 	"mdls": [
 		"core",
 		"connect",
-		"pin"
+		"pin",
+		"dialplan"
 	]
 };

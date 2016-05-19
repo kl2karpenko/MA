@@ -60,9 +60,10 @@ export default class System {
 	 */
 	// TODO: rename to connect
 	login() {
-		return schema.login.read().then((loginInfo) => {
-			return loginInfo ? '/contacts/mobile' : '/connect/main';
-		});
+		return schema.login.read()
+												.then((loginInfo) => {
+													return loginInfo.user ? '/contacts/mobile' : '/connect/main';
+												});
 	}
 
 

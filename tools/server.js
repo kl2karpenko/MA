@@ -438,16 +438,53 @@ app.get('/ajax/contacts', function (req, res) {
 });
 
 app.get('/ajax/login', function (req, res) {
-	// res.send({
-	// 	'login': 'Lily',
-	// 	'isConnected': true
-	// });
+	res.send({
+		'login': {
+			'user': {
+				"_id": "8ce53381732507b4aa468efb5d3d4747",
+				"_rev": "6-8c23b8e77214df7a2c2cae2bb485be37",
+				"first_name": "Karpenko",
+				"second_name": "Lilya",
+				"email": "i.sayko@kwebbl.com",
+				"image_id": "",
+				"organization_id": "efab49adb7dc65c50f3fd58f1200290b",
+				"username": "1030.ira_company",
+				"type": "user",
+				"extension": {
+					"_id": "8ce53381732507b4aa468efb5d3d6ced",
+					"in_number": "1030",
+					"com_id": "efab49adb7dc65c50f3fd58f1200290b",
+					"caller_id": "0350fbf3555b900dbffa9d1e103dca95",
+					"caller_number": 31347202659,
+					"user_id": "8ce53381732507b4aa468efb5d3d4747",
+					"type": "extension"
+				},
+				"mailbox": {
+					"_id": "8ce53381732507b4aa468efb5d3d52f2",
+					"_rev": "3-622d7331810ddcf1225af6e8bc3cf0bc",
+					"enabled": false,
+					"number": "1030",
+					"owner_id": "8ce53381732507b4aa468efb5d3d4747"
+				}
+			}
+		}
+	});
 	res.send(false);
 });
 
 app.post('/ajax/pin', function (req, res) {
 	console.log(req);
-	
+
+	res.send({
+		'pin': {
+			'correct': true
+		}
+	});
+});
+
+app.get('/ajax/dialplan/:id', function (req, res) {
+	console.log(req);
+
 	res.send({
 		'pin': {
 			'correct': true

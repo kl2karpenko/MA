@@ -1,7 +1,9 @@
 import React from 'react';
 import schema from 'schema';
+import { hashHistory } from 'react-router'
 
 import Keyboard from 'components/Keyboard.jsx';
+import User from '../../core/models/User';
 
 function findNextTabStop(el) {
 	var universe = document.querySelectorAll('form[name=pinCheck] input');
@@ -21,6 +23,8 @@ class PinPage extends React.Component {
 		super(props);
 
 		this.init();
+		var user = new User();
+		console.log(user)
 	}
 
 	init() {
@@ -59,9 +63,14 @@ class PinPage extends React.Component {
 	}
 
 	_checkPinCode() {
-		return schema.pin
+		schema.pin
 			.create({
 				'pin': this._getPinCodeValue()
+			})
+			.then(() => {
+				if(res) {
+					hashHistory.push('/connect/main');
+				}
 			});
 	}
 
