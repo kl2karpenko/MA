@@ -11,7 +11,6 @@ class Model {
 			let defaultProps = methodForDefaultProps();
 
 			Object.keys(defaultProps).forEach(function(prop) {
-
 				// this[prop] = $.extend(defaultProps[prop], props[prop]);
 			});
 
