@@ -65,11 +65,12 @@ module.exports = {
             "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
-            "modules": 'src/app/mdls',
-            "scope": 'src/app/lib/scope.jsx',
+            "modules": 'src/app/modules',
+            "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
             "rest-client": 'src/app/vendor/jquery.rest',
-            "components": 'src/app/lib/components'
+            "components": 'src/app/lib/components',
+            "mainModel": 'src/app/modules/core/models/Model'
         }
     },
 

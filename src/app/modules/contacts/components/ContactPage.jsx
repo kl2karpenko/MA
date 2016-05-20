@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import Contacts from './Contacts.jsx';
 import Extensions from './Extensions.jsx';
 
-class ContactPage extends React.Component {
+class ContactPage extends Component {
 	constructor(props) {
 		super(props);
 	}

@@ -1,5 +1,6 @@
 module.exports = {
-	"mdls": [
+	"modules": [
+		"authorize",
 		"core",
 		"connect",
 		"pin",

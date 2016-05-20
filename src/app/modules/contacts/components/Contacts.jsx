@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import config from 'envConfig';
 import ContactItem from './ContactItem.jsx';
 
-export default class Contacts extends React.Component {
+export default class Contacts extends Component {
 	constructor(props) {
 		super(props);
 

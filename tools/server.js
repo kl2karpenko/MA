@@ -437,6 +437,27 @@ app.get('/ajax/contacts', function (req, res) {
 	]);
 });
 
+app.get('/ajax/authorize', function (req, res) {
+	var isAuthorize = {
+		'authorize': {
+			'user': {
+				"_id": "8ce53381732507b4aa468efb5d3d4747",
+				"id": "8ce53381732507b4aa468efb5d3d4747",
+				"username": "1030.ira_company",
+				"dialplan": {
+					"id": "1e212b17f4c01c3bb31a9b21ff896396"
+				}
+			}
+		}
+	};
+
+	var isNotAuthorize = {
+		'authorize': false
+	};
+
+	res.send(isAuthorize);
+});
+
 app.get('/ajax/login', function (req, res) {
 	res.send({
 		'login': {
@@ -465,6 +486,9 @@ app.get('/ajax/login', function (req, res) {
 					"enabled": false,
 					"number": "1030",
 					"owner_id": "8ce53381732507b4aa468efb5d3d4747"
+				},
+				"permit": {
+					"roles": ["1b579f07eb1be47e5da0c2ef305106db"]
 				}
 			}
 		}
@@ -472,17 +496,60 @@ app.get('/ajax/login', function (req, res) {
 	res.send(false);
 });
 
-app.post('/ajax/pin', function (req, res) {
-	console.log(req);
-
+app.get('/ajax/user/:userId/', function (req, res) {
 	res.send({
-		'pin': {
-			'correct': true
+		'user': {
+			"_id": "8ce53381732507b4aa468efb5d3d4747",
+			"id": "8ce53381732507b4aa468efb5d3d4747",
+			"_rev": "6-8c23b8e77214df7a2c2cae2bb485be37",
+			"first_name": "Karpenko",
+			"second_name": "Lilya",
+			"email": "i.sayko@kwebbl.com",
+			"image_id": "",
+			"organization_id": "efab49adb7dc65c50f3fd58f1200290b",
+			"username": "1030.ira_company",
+			"type": "user",
+			"extension": {
+				"_id": "8ce53381732507b4aa468efb5d3d6ced",
+				"in_number": "1030",
+				"com_id": "efab49adb7dc65c50f3fd58f1200290b",
+				"caller_id": "0350fbf3555b900dbffa9d1e103dca95",
+				"caller_number": 31347202659,
+				"user_id": "8ce53381732507b4aa468efb5d3d4747",
+				"type": "extension"
+			},
+			"mailbox": {
+				"_id": "8ce53381732507b4aa468efb5d3d52f2",
+				"_rev": "3-622d7331810ddcf1225af6e8bc3cf0bc",
+				"enabled": false,
+				"number": "1030",
+				"owner_id": "8ce53381732507b4aa468efb5d3d4747"
+			},
+			"permit": {
+				"roles": ["1b579f07eb1be47e5da0c2ef305106db"]
+			}
 		}
 	});
 });
 
-app.get('/ajax/dialplan/:id', function (req, res) {
+app.get('/ajax/user/:userId/dialplan/:dialplanId', function (req, res) {
+	res.send({
+		"dialplan": {
+			"_id": "1e212b17f4c01c3bb31a9b21ff8c7db5",
+			"_rev": "1-007552b640d78d014d442f08c38a8116",
+			"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
+			"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
+			"actions": [{"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}],
+			"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"type": "dialplan",
+			"in_number": "255",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
+		}
+	});
+});
+
+app.post('/ajax/pin', function (req, res) {
 	console.log(req);
 
 	res.send({

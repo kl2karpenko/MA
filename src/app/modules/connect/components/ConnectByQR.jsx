@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 
-class ConnectPage extends React.Component {
+export default class ConnectByQR extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -14,14 +14,11 @@ class ConnectPage extends React.Component {
 		return (
 			<div className="l-adaptive">
 				<div className="m-angle main">
-					<img src={imageLoader(require("images/main-back.jpg"))} alt="Main background"/>
-					<h2 className="m-angle__header">Scan QR code</h2>
-
-					<div className="m-angle-border"></div>
+					<img src={imageLoader(require("images/qr-back.jpg"))} alt="Qr background"/>
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link activeClassName="active" className="m-angle__button btn-round btn-md" to="/connect/qr">Start</Link>
+					<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
 
 					<div className="l-main-center">
 						<h2 className="l-main__header">Where can I find this QR Code?</h2>
@@ -36,5 +33,3 @@ class ConnectPage extends React.Component {
 		);
 	}
 }
-
-module.exports = ConnectPage;

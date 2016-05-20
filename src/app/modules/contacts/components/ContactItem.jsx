@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export  default class Contact extends React.Component {
+export  default class Contact extends Component {
 	constructor(props) {
 		super(props);
 	}

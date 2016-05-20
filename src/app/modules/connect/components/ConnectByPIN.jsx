@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
-
-import imageLoader from 'lib/imageLoader';
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 
-export default class ConnectByQR extends React.Component {
+export default class ConnectByPIN extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -14,14 +12,13 @@ export default class ConnectByQR extends React.Component {
 		return (
 			<div className="l-adaptive">
 				<div className="m-angle main">
-					<img src={imageLoader(require("images/qr-back.jpg"))} alt="Qr background"/>
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
+					<Link className="m-angle__button btn-round btn-md" to="/pin">Log In</Link>
 
 					<div className="l-main-center">
-						<h2 className="l-main__header">Where can I find this QR Code?</h2>
+						<h2 className="l-main__header">Where can I find this this Code?</h2>
 						<p className="l-main__text">Use a computer to log in to your webinterface
 							Click on your name in the top-right corner
 							Select “Connect App” from the menu</p>

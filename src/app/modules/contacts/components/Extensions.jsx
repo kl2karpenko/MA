@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import $ from 'jquery';
@@ -7,7 +7,7 @@ import config from 'envConfig';
 
 import ContactItem from './ContactItem.jsx';
 
-export default class Extensions extends React.Component {
+export default class Extensions extends Component {
 	constructor(props) {
 		super(props);
 
