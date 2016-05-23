@@ -455,7 +455,28 @@ app.get('/ajax/authorize', function (req, res) {
 		'authorize': false
 	};
 
-	res.send(isAuthorize);
+	res.send(isNotAuthorize);
+});
+
+app.get('/ajax/session', function (req, res) {
+	var isAuthorize = {
+		'session': {
+			'user': {
+				"_id": "8ce53381732507b4aa468efb5d3d4747",
+				"id": "8ce53381732507b4aa468efb5d3d4747",
+				"username": "1030.ira_company",
+				"dialplan": {
+					"id": "1e212b17f4c01c3bb31a9b21ff896396"
+				}
+			}
+		}
+	};
+
+	var isNotAuthorize = {
+		'session': false
+	};
+
+	res.send(req ? isAuthorize : isNotAuthorize);
 });
 
 app.get('/ajax/login', function (req, res) {
@@ -549,9 +570,25 @@ app.get('/ajax/user/:userId/dialplan/:dialplanId', function (req, res) {
 	});
 });
 
-app.post('/ajax/pin', function (req, res) {
-	console.log(req);
+app.get('/ajax/dialplan/:dialplanId', function (req, res) {
+	res.send({
+		"dialplan": {
+			"_id": "1e212b17f4c01c3bb31a9b21ff8c7db5",
+			"_rev": "1-007552b640d78d014d442f08c38a8116",
+			"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
+			"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
+			"actions": [{"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}],
+			"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"type": "dialplan",
+			"personal": true,
+			"in_number": "255",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
+		}
+	});
+});
 
+app.post('/ajax/pin', function (req, res) {
 	res.send({
 		'pin': {
 			'correct': true

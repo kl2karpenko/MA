@@ -10,23 +10,13 @@ class Loader extends Component {
 		super(props);
 
 		// here take data from authorize
-		this._getInfoAboutAuthorize().then((authorizeInfo) => {
-			let info = authorizeInfo.authorize && authorizeInfo.authorize.user && authorizeInfo.authorize.user.id;
-			let enterPage = info ? '/pin' : '/connect/main';
-
-			if (info) {
-				Session.assignAttributesTo(Session.user, authorizeInfo.authorize.user);
-			}
-
+		Session._checkIfAuthorize(Session.session.user).then((authorizeInfo) => {
+			let enterPage = authorizeInfo.session && authorizeInfo.session.user && authorizeInfo.session.user.id ? '/pin' : '/connect/main';
 			// TODO: delete settimeout
 			setTimeout(() => {
 				hashHistory.push(enterPage);
 			}, 0);
 		});
-	}
-	
-	_getInfoAboutAuthorize() {
-		return schema.authorize.read();
 	}
 
 	render() {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import schema from 'schema';
 
 import Session from "core/models/Session";
 import User from "core/models/User";
+import Dialplan from "../models/Dialplan";
 
 import DialplanPersonal from './DialplanPersonal.jsx';
 import DialplanCompany from './DialplanCompany.jsx';
@@ -12,34 +11,39 @@ class DialplanPage extends Component {
 	constructor(props) {
 		super(props);
 
-		this._loadResources();
+		Session
+			._checkIfAuthorize(Session.session.user)
+			.then(() => {
+				let { username, dialplan } = Session.session.user;
+				this._loadResources(username, dialplan);
+			});
 	}
 
-	_loadResources() {
+	_loadResources(username, dialplan) {
 		return this
-			._loadUser()
-			.then(this._loadUserDialplan);
+			._loadUser(username)
+			.then(this._loadUserDialplan(dialplan));
 	}
 
 	_loadUser() {
 		return User.load();
 	}
 
-	_loadUserDialplan() {
-		let { username, dialplan } = Session.user;
-
-		return User.loadSingleResourceFromCollection(dialplan.id, 'dialplan', {
-			id: username
+	_loadUserDialplan(dialplan) {
+		return Dialplan.load({
+			id: dialplan.id
 		});
+
+		// return User.loadCollection('dialplan', {
+		// 	id: username + ', ' + dialplan.id
+		// });
 	}
 
 	render() {
-		// let { params } = this.props;
-		// let type = params.type;
 		let Page;
 		
-		if ("personal") {
-			Page = <DialplanPersonal/>;
+		if (Dialplan.dialplan.personal) {
+			Page = <DialplanPersonal dialplan={Dialplan.dialplan}/>;
 		} else {
 			Page = <DialplanCompany/>;
 		}

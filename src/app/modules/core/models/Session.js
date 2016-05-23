@@ -2,22 +2,24 @@ import Model from 'mainModel';
 
 class Session extends Model {
 	initialize() {
-		this.managedResource = 'session';
-
 		return session;
 	}
 
 	_defaultSession() {
 		return {
-			"user": {
-				"_id": "",
-				"id": "",
-				"username": "",
-				"dialplan": {
-					"id": ""
-				}
+			"_id": "",
+			"id": "",
+			"username": "",
+			"dialplan": {
+				"id": ""
 			}
 		};
+	}
+
+	_checkIfAuthorize(user) {
+		let userID = user && user.id || null;
+		// here take data from authorize
+		return this.load(userID);
 	}
 }
 

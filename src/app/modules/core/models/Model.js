@@ -1,23 +1,28 @@
 import schema from 'schema';
 
 class Model {
+	initialize() {
+		modelInstance = new this.constructor.name();
+		return modelInstance;
+	}
+
 	constructor(props) {
 		this.assignAttributes(props);
+
 		this.schema = schema;
+		this.managedResource = this.constructor.name.toLowerCase();
 	}
 
 	assignAttributesTo(model, attributes) {
-		Object.keys(attributes).forEach((prop) => {
-			model[prop] = attributes[prop];
-		});
-
-		return this;
+		return $.extend(true, model, attributes);
 	}
 
 	assignAttributes(props) {
 		let defaultAttributes = this._getDefaultAttributes();
+		let resName = this.constructor.name.toLowerCase();
+		this[resName] = {};
 
-		return this.assignAttributesTo(this, $.extend(true, defaultAttributes, props));
+		return this.assignAttributesTo(this[resName], $.extend(true, defaultAttributes, props));
 	}
 
 	_getDefaultAttributes() {
@@ -26,34 +31,39 @@ class Model {
 		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
 	}
 
-	load() {
-		if (this.managedResource) {
-			return schema[this.managedResource].read().then((props) => {
-				this.assignAttributes(props);
-			});
-		} else {
-			console.log('cannot load, dont have url');
+	load(options) {
+		options = options || {};
+		
+		let name = this.managedResource;
+		let resource = this.schema[name];
+		let readMethod = options.method || 'read';
+		let params = [];
+
+		if (options.id) {
+			params.push(options.id);
 		}
+
+		return resource[readMethod].apply(resource, params).done((items) => {
+			this.assignAttributesTo(this[name], items[name]);
+		});
 	}
 
-	loadCollection(collection) {
-		if (arguments.length !== 1) {
-			return;
+	loadCollection(name, options) {
+		let resource = options.from || this.schema[this.managedResource][name];
+		let readMethod = options.method || 'read';
+		let params = [];
+		let path = options.to;
+
+		if (options.id) {
+			params.push(options.id);
 		}
 
-		let mainResId = this.id;
-
-		if (this.managedResource) {
-			if (mainResId) {
-				return schema[this.managedResource][collection].read(mainResId).then((props) => {
-					this.assignAttributes(props);
-				});
-			} else {
-				console.log('dont have id of resource to get child collection');
+		return resource[readMethod].apply(resource, params).done((items) => {
+			if (options.to) {
+				resource = this.schema[this.managedResource][options.to];
 			}
-		} else {
-			console.log('cannot load, dont have url');
-		}
+			this.assignAttributesTo(this[this.managedResource][path], items[this.managedResource][path]);
+		});
 	}
 
 	loadSingleResourceFromCollection(resourceId, resourceName, options) {
@@ -62,15 +72,16 @@ class Model {
 		}
 
 		let mainResId = this.id;
+		let name = this.managedResource;
 		
 		if (options) {
 			mainResId = options.id;
 		}
 
-		if (this.managedResource) {
+		if (name) {
 			if (mainResId) {
-				return schema[this.managedResource][resourceName].read(this.id, resourceId).then((props) => {
-					this.assignAttributes(props);
+				return schema[name][resourceName].read(this.id, resourceId).then((props) => {
+					this.assignAttributes(props[name][resourceName]);
 				});
 			} else {
 				console.log('dont have id of resource to get single child from collection');
@@ -80,5 +91,7 @@ class Model {
 		}
 	}
 }
+
+let modelInstance;
 
 module.exports = Model;

@@ -33,7 +33,7 @@ export default class System {
 						onEnter: (nextState, replace) => replace('/authorize')
 					},
 					childRoutes: [
-						require('./modules/authorize/routes.jsx'),
+						require('./modules/loader/routes.jsx'),
 						require('./modules/connect/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
 						require('./modules/contacts/routes.jsx'),

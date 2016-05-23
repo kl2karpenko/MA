@@ -1,7 +1,7 @@
 module.exports = {
 	"modules": [
-		"authorize",
 		"core",
+		"loader",
 		"connect",
 		"pin",
 		"dialplan"
