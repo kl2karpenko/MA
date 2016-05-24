@@ -21,12 +21,8 @@ class Loader extends Component {
 
 	render() {
 		return (
-			<div className="app-enterPage">
-				<div className="app-loader">
-					{[...Array(5)].map((x, i) =>
-						<span></span>
-					)}
-				</div>
+			<div>
+				Settings
 			</div>
 		);
 	}

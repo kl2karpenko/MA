@@ -1,10 +1,6 @@
 import Model from 'mainModel';
 
 class Session extends Model {
-	initialize() {
-		return session;
-	}
-
 	_defaultSession() {
 		return {
 			"_id": "",
@@ -16,7 +12,7 @@ class Session extends Model {
 		};
 	}
 
-	_checkIfAuthorize(user) {
+	_getSessionData(user) {
 		let userID = user && user.id || null;
 		// here take data from authorize
 		return this.load(userID);
@@ -25,4 +21,6 @@ class Session extends Model {
 
 let session = new Session();
 
-module.exports = session.initialize();
+module.exports = (() => {
+	return session;
+})();

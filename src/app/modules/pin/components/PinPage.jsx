@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router'
+import { hashHistory } from 'react-router';
+
+import Session from "core/models/Session";
+import Dialplan from "core/models/Dialplan";
 
 import schema from 'schema';
 
@@ -32,7 +35,7 @@ class PinPage extends Component {
 		};
 
 		this.keyBoardOptions = {
-			onSubmit: this._checkPinCode.bind(this),
+			onSubmit: this._renderDialplanPage.bind(this),
 			multiple: false,
 			onChange: this._setNextInput.bind(this)
 		};
@@ -60,15 +63,35 @@ class PinPage extends Component {
 		});
 	}
 
-	_checkPinCode() {
-		schema.pin
-			.create({
-				'pin': this._getPinCodeValue()
-			})
+	_renderDialplanPage() {
+		this._checkPinCode()
 			.then((res) => {
 				if(res) {
-					hashHistory.push('/dialplan');
+					hashHistory.push('/dialplan/' + Session.Model.user.dialplan.id);
+					// return this._loadSession();
 				}
+			});
+	}
+
+	_loadSession() {
+		return Session
+			._getSessionData(Session.Model.user)
+			.then(() => {
+				let { dialplan } = Session.Model.user;
+
+				return Dialplan.load({
+					id: dialplan.id
+				});
+			})
+			.then(() => {
+				hashHistory.push('/dialplan/' + Session.Model.user.dialplan.id);
+			});
+	}
+
+	_checkPinCode() {
+		return schema.pin
+			.create({
+				'pin': this._getPinCodeValue()
 			});
 	}
 

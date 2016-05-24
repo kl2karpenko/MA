@@ -4,6 +4,7 @@ module.exports = {
 		"loader",
 		"connect",
 		"pin",
+		"settings",
 		"dialplan"
 	]
 };

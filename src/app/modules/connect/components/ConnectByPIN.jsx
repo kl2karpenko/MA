@@ -11,8 +11,7 @@ export default class ConnectByPIN extends Component {
 	render() {
 		return (
 			<div className="l-adaptive">
-				<div className="m-angle main">
-				</div>
+				<div className="m-angle main"></div>
 
 				<div className="l-main l-main-connect">
 					<Link className="m-angle__button btn-round btn-md" to="/pin">Log In</Link>

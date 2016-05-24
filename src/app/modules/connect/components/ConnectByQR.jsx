@@ -13,7 +13,7 @@ export default class ConnectByQR extends Component {
 	render() {
 		return (
 			<div className="l-adaptive">
-				<div className="m-angle main">
+				<div className="m-angle">
 					<img src={imageLoader(require("images/qr-back.jpg"))} alt="Qr background"/>
 				</div>
 

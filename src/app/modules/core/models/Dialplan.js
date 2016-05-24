@@ -1,10 +1,6 @@
 import Model from 'mainModel';
 
 class Dialplan extends Model {
-	initialize() {
-		return dialplan;
-	}
-
 	_defaultDialplan() {
 		return {
 			"_id": "",
@@ -19,6 +15,7 @@ class Dialplan extends Model {
 			"actions": [],
 			"modified": {},
 			"created": {},
+			"personal": false,
 			"type": "",
 			"in_number": "",
 			"com_id": ""
@@ -26,6 +23,8 @@ class Dialplan extends Model {
 	}
 }
 
-let dialplan = new Dialplan();
+let instance = new Dialplan();
 
-module.exports = dialplan.initialize();
+module.exports = (() => {
+	return instance;
+})();

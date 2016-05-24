@@ -70,7 +70,8 @@ module.exports = {
             "schema": 'src/app/lib/schema',
             "rest-client": 'src/app/vendor/jquery.rest',
             "components": 'src/app/lib/components',
-            "mainModel": 'src/app/modules/core/models/Model'
+            "mainModel": 'src/app/modules/core/models/Model',
+            "mainComponent": 'src/app/modules/core/components/Component'
         }
     },
 

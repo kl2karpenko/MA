@@ -32,11 +32,13 @@ export default class System {
 					indexRoute: {
 						onEnter: (nextState, replace) => replace('/authorize')
 					},
+					// TODO: render from config array
 					childRoutes: [
 						require('./modules/loader/routes.jsx'),
 						require('./modules/connect/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
 						require('./modules/contacts/routes.jsx'),
+						require('./modules/settings/routes.jsx'),
 						require('./modules/dialplan/routes.jsx')
 					]
 				}

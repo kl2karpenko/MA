@@ -473,7 +473,7 @@ app.get('/ajax/session', function (req, res) {
 	};
 
 	var isNotAuthorize = {
-		'session': false
+		'session': {}
 	};
 
 	res.send(req ? isAuthorize : isNotAuthorize);

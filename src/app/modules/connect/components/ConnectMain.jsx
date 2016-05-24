@@ -16,8 +16,6 @@ class ConnectPage extends Component {
 				<div className="m-angle main">
 					<img src={imageLoader(require("images/main-back.jpg"))} alt="Main background"/>
 					<h2 className="m-angle__header">Scan QR code</h2>
-
-					<div className="m-angle-border"></div>
 				</div>
 
 				<div className="l-main l-main-connect">

@@ -1,12 +1,10 @@
 import Model from 'mainModel';
 
 class User extends Model {
-	initialize() {
+	init() {
 		this.resources = {
 			dialplan: this.schema.user.dialplan
 		};
-
-		return user;
 	}
 
 	_defaultUser() {
@@ -40,6 +38,8 @@ class User extends Model {
 	}
 }
 
-let user = new User();
+let instance = new User();
 
-module.exports = user.initialize();
+module.exports = (() => {
+	return instance;
+})();
