@@ -16,11 +16,13 @@ class ConnectPage extends Component {
 				<div className="m-angle main">
 					<img src={imageLoader(require("images/main-back.jpg"))} alt="Main background"/>
 					<h2 className="m-angle__header">Scan QR code</h2>
+
+					<div className="m-angle-rotated">
+						<Link activeClassName="active" className="m-angle__button btn-round btn-md" to="/connect/qr">Start</Link>
+					</div>
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link activeClassName="active" className="m-angle__button btn-round btn-md" to="/connect/qr">Start</Link>
-
 					<div className="l-main-center">
 						<h2 className="l-main__header">Where can I find this QR Code?</h2>
 						<p className="l-main__text">Use a computer to log in to your webinterface

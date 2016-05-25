@@ -1,7 +1,7 @@
 // import './vendor/modernizr';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, hashHistory } from 'react-router';
+import {Router, hashHistory} from 'react-router';
 
 import config from 'envConfig';
 
@@ -25,6 +25,9 @@ export default class System {
 	_createRoutes() {
 		this.rootRoute = {
 			component: 'div',
+			createHistory: {
+				queryKey: false
+			},
 			childRoutes: [
 				{
 					path: '/',
@@ -39,7 +42,7 @@ export default class System {
 						require('./modules/pin/routes.jsx'),
 						require('./modules/contacts/routes.jsx'),
 						require('./modules/settings/routes.jsx'),
-						require('./modules/dialplan/routes.jsx')
+						require('./modules/dialplans/routes.jsx')
 					]
 				}
 			]
@@ -50,7 +53,7 @@ export default class System {
 
 	_renderApp() {
 		ReactDOM.render(
-			<Router history={hashHistory} routes={this.rootRoute} />,
+			<Router history={hashHistory} routes={this.rootRoute}/>,
 			document.getElementById('app')
 		);
 	}
@@ -72,7 +75,7 @@ export default class System {
 	init() {
 		if (process.env.NODE_ENV === "prod") {
 			/* on device ready init app */
-			document.addEventListener("deviceready",() => {
+			document.addEventListener("deviceready", () => {
 				this._initApp();
 			}, false);
 			/* on device ready init app */
@@ -89,6 +92,6 @@ export default class System {
 		var constr = this.constructor;
 
 		return $.when(constr._setStyles)
-						.then(constr._loadConfiguration);
+			.then(constr._loadConfiguration);
 	}
 }

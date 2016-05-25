@@ -2,6 +2,7 @@ import schema from 'schema';
 
 class Model {
 	constructor(props) {
+		this.Model = {};
 		this.assignAttributes(props);
 
 		this.schema = schema;
@@ -16,7 +17,6 @@ class Model {
 
 	assignAttributes(props) {
 		let defaultAttributes = this._getDefaultAttributes();
-		this.Model = {};
 
 		return this.assignAttributesTo(this.Model, $.extend(true, defaultAttributes, props));
 	}

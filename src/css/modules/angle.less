@@ -1,9 +1,11 @@
+@rotateDeg: 10deg;
+
 .m-angle {
   position: relative;
   text-align: center;
   background-color: @Background;
 
-  img  {
+  > img  {
     width: 100%;
     height: 100%;
     max-width: 100%;
@@ -30,27 +32,31 @@
 
     position: absolute;
 
-    transform: translateX(-50%);
+    transform: translateX(-50%) rotate(@rotateDeg);
     left: 50%;
-    top: -108px;
+    margin-top: -38px;
 
     &.btn-settings {
-      top: -34.906585039886586%;
-      transform: none;
       left: auto;
-      right: 5.333333333333334%;
+      top: 0;
+      z-index: 100;
+      right: 3.333333333333334%;
+      transform: rotate(@rotateDeg);
+      margin-top: -25px;
+      margin-right: 100px;
     }
   }
 
-  &:after {
+  &-rotated {
     content: '';
     position: absolute;
     background: #fff;
     height: 150px;
     left: -100px;
     right: -100px;
-    bottom: -75px;
-    transform: rotate(-10deg);
+    bottom: 0;
+    transform: rotate(-@rotateDeg) translate(0, 50%);
+
     z-index: 0;
   }
 
@@ -76,6 +82,9 @@
     position: absolute;
     display: inline-block;
 
+    background-color: transparent;
+    border: 0;
+
     height: 100%;
     width: auto;
 
@@ -89,6 +98,11 @@
 
     &:active {
       margin-top: 2px;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.3;
     }
   }
 

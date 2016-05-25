@@ -66,11 +66,13 @@ module.exports = {
             "images": 'src/img',
             "lib": 'src/app/lib',
             "modules": 'src/app/modules',
+            "models": 'src/app/models',
             "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
             "rest-client": 'src/app/vendor/jquery.rest',
             "components": 'src/app/lib/components',
-            "mainModel": 'src/app/modules/core/models/Model',
+            "Model": 'src/app/models/core/Model',
+            "List": 'src/app/models/core/List',
             "mainComponent": 'src/app/modules/core/components/Component'
         }
     },

@@ -15,10 +15,13 @@ export default class ConnectByQR extends Component {
 			<div className="l-adaptive">
 				<div className="m-angle">
 					<img src={imageLoader(require("images/qr-back.jpg"))} alt="Qr background"/>
+
+					<div className="m-angle-rotated">
+						<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
+					</div>
 				</div>
 
 				<div className="l-main l-main-connect">
-					<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
 
 					<div className="l-main-center">
 						<h2 className="l-main__header">Where can I find this QR Code?</h2>

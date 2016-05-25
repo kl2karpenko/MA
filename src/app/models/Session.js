@@ -1,4 +1,4 @@
-import Model from 'mainModel';
+import Model from 'Model';
 
 class Session extends Model {
 	_defaultSession() {
@@ -12,8 +12,8 @@ class Session extends Model {
 		};
 	}
 
-	_getSessionData(user) {
-		let userID = user && user.id || null;
+	_getSessionData() {
+		let userID = this.Model.user && this.Model.user.id || null;
 		// here take data from authorize
 		return this.load(userID);
 	}

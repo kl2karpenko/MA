@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import Session from "core/models/Session";
-import Dialplan from "core/models/Dialplan";
+import Session from "models/Session";
+import Dialplan from "models/Dialplan";
 
 import schema from 'schema';
 
@@ -67,24 +67,8 @@ class PinPage extends Component {
 		this._checkPinCode()
 			.then((res) => {
 				if(res) {
-					hashHistory.push('/dialplan/' + Session.Model.user.dialplan.id);
-					// return this._loadSession();
+					hashHistory.push('/dialplans');
 				}
-			});
-	}
-
-	_loadSession() {
-		return Session
-			._getSessionData(Session.Model.user)
-			.then(() => {
-				let { dialplan } = Session.Model.user;
-
-				return Dialplan.load({
-					id: dialplan.id
-				});
-			})
-			.then(() => {
-				hashHistory.push('/dialplan/' + Session.Model.user.dialplan.id);
 			});
 	}
 

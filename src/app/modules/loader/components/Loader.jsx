@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
 
-import Session from "core/models/Session";
+import Session from "models/Session";
 
 class Loader extends Component {
 	constructor(props) {
@@ -10,7 +10,7 @@ class Loader extends Component {
 
 	componentWillMount() {
 		// here take data from authorize
-		Session._getSessionData(Session.Model.user).then((authorizeInfo) => {
+		Session._getSessionData().then((authorizeInfo) => {
 			let enterPage = authorizeInfo.session && authorizeInfo.session.user && authorizeInfo.session.user.id ? '/pin' : '/connect/main';
 			// TODO: delete settimeout
 			setTimeout(() => {

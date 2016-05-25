@@ -1,4 +1,4 @@
-import Model from 'mainModel';
+import Model from 'Model';
 
 class Dialplan extends Model {
 	_defaultDialplan() {

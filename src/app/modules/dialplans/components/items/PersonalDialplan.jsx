@@ -6,17 +6,17 @@ import imageLoader from 'lib/imageLoader';
 class DialpanPage extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = props.dialplan;
 	}
 
 	render() {
 		return (
 			<div className="l-main">
-				<Link activeClassName="active" className="m-angle__button btn-round btn-sm btn-settings" to="/connect/qr">
-					<img src={imageLoader(require("images/icons/list.png"))} alt="Right"/>
-				</Link>
-
 				<div className="l-dialplan">
 					<div className="l-dialplan-top">
+
+						{this.state._id} dialplan
 
 					</div>
 				</div>

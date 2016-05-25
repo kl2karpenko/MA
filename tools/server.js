@@ -573,7 +573,7 @@ app.get('/ajax/user/:userId/dialplan/:dialplanId', function (req, res) {
 app.get('/ajax/dialplan/:dialplanId', function (req, res) {
 	res.send({
 		"dialplan": {
-			"_id": "1e212b17f4c01c3bb31a9b21ff8c7db5",
+			"_id": "1",
 			"_rev": "1-007552b640d78d014d442f08c38a8116",
 			"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
 			"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
@@ -585,6 +585,72 @@ app.get('/ajax/dialplan/:dialplanId', function (req, res) {
 			"in_number": "255",
 			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
 		}
+	});
+});
+
+app.get('/ajax/dialplans', function (req, res) {
+	res.send({
+		"dialplans": [{
+			"_id": "2",
+			"_rev": "3-297375d401acc96cefe64d11cb568bc2",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "1234",
+			"ex_number": 31152026029,
+			"ex_number_id": "61f7329019d10a7dd6872b42d1f5eff0",
+			"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
+			"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
+			"type": "dialplan",
+			"title": "1rule",
+			"color": "turquoise",
+			"ext_id": "19457038ba53984e82fc6a1f8331466f",
+			"actions": [{
+				"items": [{
+					"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
+					"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
+				}]
+			}]
+		}, {
+			"_id": "3",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "77",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "tthrth",
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "4",
+			"_rev": "3-297375d401acc96cefe64d11cb568bc2",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "1234",
+			"ex_number": 31152026029,
+			"ex_number_id": "61f7329019d10a7dd6872b42d1f5eff0",
+			"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
+			"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
+			"type": "dialplan",
+			"title": "1rule",
+			"color": "turquoise",
+			"ext_id": "19457038ba53984e82fc6a1f8331466f",
+			"actions": [{
+				"items": [{
+					"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
+					"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
+				}]
+			}]
+		}, {
+			"_id": "5",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "77",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "tthrth",
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}]
 	});
 });
 
