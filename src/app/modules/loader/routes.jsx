@@ -1,6 +1,6 @@
-import Loader from './components/Loader.jsx';
+import Index from './components/Index.jsx';
 
 module.exports = {
 	path: '/authorize',
-	component: Loader
+	component: Index
 };

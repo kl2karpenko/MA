@@ -31,7 +31,7 @@ export default class System {
 			childRoutes: [
 				{
 					path: '/',
-					component: require('./modules/core/components/App.jsx'),
+					component: 'div',
 					indexRoute: {
 						onEnter: (nextState, replace) => replace('/authorize')
 					},

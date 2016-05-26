@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import config from 'envConfig';
 
-import ContactItem from './ContactItem.jsx';
+import ContactItem from './../ContactItem.jsx';
 
 export default class Extensions extends Component {
 	constructor(props) {

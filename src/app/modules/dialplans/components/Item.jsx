@@ -6,16 +6,16 @@ import imageLoader from 'lib/imageLoader';
 import Dialplans from "models/Dialplans";
 import Dialplan from "models/Dialplan";
 
-import PersonalDialplan from './items/PersonalDialplan.jsx';
-import CompanyDialplan from './items/PersonalDialplan.jsx';
+import Personal from './item/Personal.jsx';
+import Company from './item/Company.jsx';
 
-class DialplanItem extends Component {
+class Item extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			Dialplans: Dialplans,
-			Dialplan: Dialplan.Model,
+			Dialplan: Dialplan,
 			current: "",
 			previous: "",
 			next: ""
@@ -29,7 +29,8 @@ class DialplanItem extends Component {
 	_changePreviousAndNextState() {
 		this.setState({
 			previous: Dialplans.getPreviousUrl(),
-			next: Dialplans.getNextUrl()
+			next: Dialplans.getNextUrl(),
+			Dialplan: Dialplan
 		});
 	}
 
@@ -37,16 +38,8 @@ class DialplanItem extends Component {
 		let currentDialplan = Dialplans.getCurrent();
 
 		this._changePreviousAndNextState();
-		this._setCurrentDialplan(currentDialplan);
+		Dialplan.assignAttributes(currentDialplan);
 		hashHistory.push(Dialplans.getUrl(currentDialplan));
-	}
-
-	_setCurrentDialplan(props) {
-		Dialplan.assignAttributes(props);
-		
-		this.setState({
-			Dialplan: Dialplan.Model
-		});
 	}
 
 	renderDialplan(dialplan) {
@@ -59,13 +52,12 @@ class DialplanItem extends Component {
 	}
 
 	render() {
-		// console.log('render item', Dialplans, this.state.previous, this.state.next)
 		let Page;
 
-		if (true) {
-			Page = <PersonalDialplan dialplan={this.state.Dialplan}/>;
+		if (this.state.Dialplan.Model.personal) {
+			Page = <Personal dialplan={this.state.Dialplan}/>;
 		} else {
-			Page = <CompanyDialplan dialplan={this.state.Dialplan}/>;
+			Page = <Company dialplan={this.state.Dialplan}/>;
 		}
 
 		return (
@@ -82,11 +74,25 @@ class DialplanItem extends Component {
 								</Link>
 							</div>
 
+							<div className="m-angle-info">
+								<div className="m-angle-info-photo">
+									<img className="img-responsive img-circle" src={imageLoader(require("images/photo-placeholder.png"))} alt="Photo"/>
+								</div>
+								<div className="m-angle-info-text">
+									<h2>
+										{this.state.Dialplan.Model.title}
+									</h2>
+									<p>
+										{this.state.Dialplan.Model.ex_number || this.state.Dialplan.Model.in_number}
+									</p>
+								</div>
+							</div>
+
 							<div className="m-angle__arrows">
-								<button className={"m-angle-arrow __left" + DialplanItem._getButtonClass(this.state.previous)} onClick={this.renderDialplan.bind(this, 'Previous')}>
+								<button className={"m-angle-arrow __left" + Item._getButtonClass(this.state.previous)} onClick={this.renderDialplan.bind(this, 'Previous')}>
 									<img className="img-responsive" src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
 								</button>
-								<button className={"m-angle-arrow __right" + DialplanItem._getButtonClass(this.state.next)} onClick={this.renderDialplan.bind(this, 'Next')}>
+								<button className={"m-angle-arrow __right" + Item._getButtonClass(this.state.next)} onClick={this.renderDialplan.bind(this, 'Next')}>
 									<img className="img-responsive" src={imageLoader(require("images/icons/arrow-right.png"))} alt="Left"/>
 								</button>
 							</div>
@@ -106,4 +112,4 @@ class DialplanItem extends Component {
 	}
 }
 
-module.exports = DialplanItem;
+module.exports = Item;

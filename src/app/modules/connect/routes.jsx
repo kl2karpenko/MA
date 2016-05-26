@@ -1,23 +1,23 @@
-import ConnectPage from './components/ConnectPage.jsx';
-import ConnectMain from './components/ConnectMain.jsx';
-import ConnectByQR from './components/ConnectByQR.jsx';
-import ConnectByPIN from './components/ConnectByPIN.jsx';
+import Index from './components/Index.jsx';
+import Enter from './components/item/Enter.jsx';
+import Qr from './components/item/Qr.jsx';
+import Pin from './components/item/Pin.jsx';
 
 module.exports = {
 	path: '/connect',
-	component: ConnectPage,
+	component: Index,
 	childRoutes: [
 		{
 			path: '/connect/main',
-			component: ConnectMain
+			component: Enter
 		},
 		{
 			path: '/connect/qr',
-			component: ConnectByQR
+			component: Qr
 		},
 		{
 			path: '/connect/pin',
-			component: ConnectByPIN
+			component: Pin
 		}
 	]
 };

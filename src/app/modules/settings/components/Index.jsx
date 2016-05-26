@@ -3,7 +3,7 @@ import { hashHistory } from 'react-router';
 
 import Session from "models/Session";
 
-class Loader extends Component {
+export default class Index extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -21,15 +21,9 @@ class Loader extends Component {
 
 	render() {
 		return (
-			<div className="app-enterPage">
-				<div className="app-loader">
-					{[...Array(5)].map((x, i) =>
-						<span></span>
-					)}
-				</div>
+			<div>
+				Settings
 			</div>
 		);
 	}
 }
-
-module.exports = Loader;

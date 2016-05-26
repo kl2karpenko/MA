@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import Contacts from './Contacts.jsx';
-import Extensions from './Extensions.jsx';
+import Contacts from './item/Contacts.jsx';
+import Extensions from './item/Extensions.jsx';
 
 class ContactPage extends Component {
 	constructor(props) {

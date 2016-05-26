@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ConnectPage extends Component {
+export default class Index extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -13,5 +13,3 @@ class ConnectPage extends Component {
 		);
 	}
 }
-
-module.exports = ConnectPage;

@@ -1,6 +1,6 @@
-import PinPage from './components/PinPage.jsx';
+import Index from './components/Index.jsx';
 
 module.exports = {
 	path: '/pin',
-	component: PinPage
+	component: Index
 };

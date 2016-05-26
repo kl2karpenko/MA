@@ -72,8 +72,7 @@ module.exports = {
             "rest-client": 'src/app/vendor/jquery.rest',
             "components": 'src/app/lib/components',
             "Model": 'src/app/models/core/Model',
-            "List": 'src/app/models/core/List',
-            "mainComponent": 'src/app/modules/core/components/Component'
+            "List": 'src/app/models/core/List'
         }
     },
 
@@ -123,8 +122,8 @@ module.exports = {
     }
 };
 
-if (isProd) {
+// if (isProd) {
     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin());
-} else {
+// } else {
     module.exports.devtool = 'inline-source-map';
-}
+// }

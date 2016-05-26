@@ -10,16 +10,14 @@ class DialpanListItem extends Component {
 	}
 
 	render() {
-		console.log(this.state.dialplan);
-
 		return (
-			<div className="m-list-item row">
+			<div className="m-list-item clearfix">
 				<div className="col-xs-3">
 					<img className="img-circle img-responsive" src={imageLoader(require("images/photo-placeholder.png"))} alt="Qr background"/>
 				</div>
 				<div className="col-xs-9">
 					<h3 className="m-list-name">{this.state.title}</h3>
-					<div className="m-list-phone">{this.state.ex_number}</div>
+					<div className="m-list-phone">{this.state.ex_number || this.state.in_number}</div>
 				</div>
 			</div>
 		);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import config from 'envConfig';
-import ContactItem from './ContactItem.jsx';
+import ContactItem from './../ContactItem.jsx';
 
 export default class Contacts extends Component {
 	constructor(props) {

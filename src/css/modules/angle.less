@@ -40,9 +40,9 @@
       left: auto;
       top: 0;
       z-index: 100;
-      right: 3.333333333333334%;
+      right: @paddingDialplan - 2%;
       transform: rotate(@rotateDeg);
-      margin-top: -25px;
+      margin-top: -30px;
       margin-right: 100px;
     }
   }
@@ -62,8 +62,8 @@
 
   &-content {
     position: absolute;
-    left: 5.333333333333334%;
-    right: 5.333333333333334%;
+    left: @paddingDialplan;
+    right: @paddingDialplan;
 
     height: 100%;
   }
@@ -73,9 +73,53 @@
     left: 0;
     right: 0;
 
+    z-index: 1;
+
     height: 7.5718015665796345%;
     transform: translate(0, -50%);
     top: 43%;
+  }
+
+  &-info {
+    position: absolute;
+    left: @paddingDialplan;
+    right: @paddingDialplan;
+
+    transform: translate(0, -50%);
+    top: 43%;
+
+    z-index: 2;
+    color: #fff;
+
+    &-photo {
+      width: 20%;
+      margin: 0 @paddingDialplan;
+      float: left;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &-text {
+      text-align: left;
+      margin-left: 30.066666666666666%;
+
+      p {
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 1.9em;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 10px;
+
+        &:first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
   }
 
   &-arrow {
@@ -87,6 +131,8 @@
 
     height: 100%;
     width: auto;
+    padding: 0;
+    outline: none;
 
     &.__left {
       left: 0;
@@ -110,7 +156,7 @@
     position: relative;
     right: 0;
     left: 0;
-    top: 17.322834645669293%;
+    top: 14.322834645669293%;
 
     text-align: left;
     color: #fff;

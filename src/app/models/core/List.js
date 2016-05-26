@@ -14,6 +14,10 @@ class List {
 
 	}
 
+	_getRandomHash() {
+		return Math.random().toString(36).substring(7);
+	}
+
 	assignAttributes(props) {
 		let defaultAttributes = this._getDefaultAttributes();
 
@@ -27,12 +31,10 @@ class List {
 	}
 
 	assignAttributesTo(model, attributes) {
-		console.log('assignAttributesTo ', attributes)
 		return $.extend(true, model, attributes);
 	}
 
 	updateWithAttributes(attributes) {
-		console.log('updateWithAttributes ', attributes)
 		return this.assignAttributesTo(this.Model, attributes);
 	}
 
@@ -40,6 +42,10 @@ class List {
 		let defaults = this['_default' + this.constructor.name + 'Item'];
 
 		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
+	}
+
+	update() {
+		return this.load();
 	}
 
 	load(options) {
@@ -50,9 +56,25 @@ class List {
 		let readMethod = options.method || 'read';
 		let params = [];
 
+		params.push({ _: this._getRandomHash() });
+
 		return resource[readMethod].apply(resource, params).done((items) => {
 			return this.assignAttributes(items[name]);
 		});
+	}
+
+	findByField(fieldName, valueOfField, returnVal) {
+		returnVal = returnVal || "_id";
+
+		let findValues = this.Model.filter((item) => {
+			return item[fieldName] === valueOfField ? item[returnVal] : false;
+		});
+
+		if (findValues.length > 1) {
+
+		} else {
+			return findValues[0][returnVal];
+		}
 	}
 
 	getFirst() {
@@ -64,18 +86,13 @@ class List {
 	}
 
 	getPrevious() {
-		console.log(this.getIndexOf(this.getCurrent()))
 		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
-
-		console.log('currentIndex ', currentIndex, this.getCurrent(), this.Model);
 
 		return this.Model[currentIndex - 1];
 	}
 
 	getNext() {
 		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
-
-		console.log(currentIndex)
 
 		return this.Model[currentIndex + 1];
 	}

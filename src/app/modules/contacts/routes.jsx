@@ -1,8 +1,6 @@
-import ContactPage from './components/ContactPage.jsx';
+import Index from './components/Index.jsx';
 
 module.exports = {
 	path: '/contacts/:name',
-	getComponent(nextState, cb) {
-		cb(null, ContactPage);
-	}
+	component: Index
 };

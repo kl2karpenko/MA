@@ -1,18 +1,18 @@
-import DialplanItem from './components/DialplanItem.jsx';
-import DialplansList from './components/DialplansList.jsx';
-import DialplanComponent from './components/DialplanComponent.jsx';
+import Item from './components/Item.jsx';
+import List from './components/List.jsx';
+import Index from './components/Index.jsx';
 
 module.exports = {
 	path: '/dialplans',
-	component: DialplanComponent,
+	component: Index,
 	childRoutes: [
 		{
 			path: '/dialplans/list',
-			component: DialplansList
+			component: List
 		},
 		{
 			path: '/dialplans/:id',
-			component: DialplanItem
+			component: Item
 		}
 	]
 };

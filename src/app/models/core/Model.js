@@ -15,6 +15,10 @@ class Model {
 
 	}
 
+	_getRandomHash() {
+		return Math.random().toString(36).substring(7);
+	}
+
 	assignAttributes(props) {
 		let defaultAttributes = this._getDefaultAttributes();
 
@@ -31,6 +35,10 @@ class Model {
 		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
 	}
 
+	update(options) {
+		return this.load(options);
+	}
+
 	load(options) {
 		options = options || {};
 
@@ -42,6 +50,8 @@ class Model {
 		if (options.id) {
 			params.push(options.id);
 		}
+
+		params.push({ _: this._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
 			return this.assignAttributesTo(this.Model, items[name]);

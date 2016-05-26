@@ -21,7 +21,7 @@ function closeKeyboard() {
 	}
 }
 
-class PinPage extends Component {
+export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
@@ -123,5 +123,3 @@ class PinPage extends Component {
 		);
 	}
 }
-
-module.exports = PinPage;

@@ -33,5 +33,45 @@
       }
     }
   }
+
+  .l {
+    &-dialplan {
+      overflow: scroll;
+
+      &-text {
+        left: 100px;
+      }
+
+      &-radio,
+      &-check {
+        width: 80px;
+        height: 80px;
+      }
+      &-check {
+        &:before {
+          top: 25px;
+          bottom: 25px;
+        }
+
+        &:after {
+          width: 45px;
+          height: 45px;
+        }
+      }
+
+      &-row {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      &__list {
+        li {
+          padding-top: 30px;
+          padding-bottom: 30px;
+
+        }
+      }
+    }
+  }
   /* MODULES */
 }
