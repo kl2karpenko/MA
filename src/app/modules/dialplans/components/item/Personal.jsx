@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
-import imageLoader from 'lib/imageLoader';
+import Dialplan from "models/Dialplan";
 
 export default class Personal extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			dialplan: props.dialplan.Model
-		};
 
 		this.actions = [
 			{

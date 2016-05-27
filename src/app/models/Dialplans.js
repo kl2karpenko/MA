@@ -22,6 +22,10 @@ class Dialplans extends List {
 		};
 	}
 
+	getCurrentUrl() {
+		return '/' + this.managedResource + '/' + this.getCurrent()._id;
+	}
+
 	getUrl(item) {
 		return '/' + this.managedResource + '/' + item._id;
 	}

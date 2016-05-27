@@ -12,7 +12,7 @@ export default class Pin extends Component {
 		return (
 			<div className="l-adaptive">
 				<div className="m-angle main">
-					<div className="m-angle-rotated">
+					<div className="m-angle-wrapper">
 						<Link className="m-angle__button btn-round btn-md" to="/pin">Log In</Link>
 					</div>
 				</div>

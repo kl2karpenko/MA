@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
 import Item from './list/Item.jsx';
 
@@ -26,8 +25,8 @@ export default class List extends Component {
 		return (
 			<div className="l-adaptive">
 				<div className="m-list m-list-dialplan">
-					{this.state.dialplans.map(function(object, i){
-						return <Item dialplan={object} key={i} />;
+					{this.state.dialplans.map((object, i) => {
+						return <Item dialplan={object} key={i} index={i}/>;
 					})}
 				</div>
 			</div>

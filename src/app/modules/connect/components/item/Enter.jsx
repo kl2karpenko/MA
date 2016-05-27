@@ -13,11 +13,10 @@ export default class Enter extends Component {
 	render() {
 		return (
 			<div className="l-adaptive">
-				<div className="m-angle main">
-					<img src={imageLoader(require("images/main-back.jpg"))} alt="Main background"/>
-					<h2 className="m-angle__header">Scan QR code</h2>
+				<div className="m-angle main main-code">
+					<div className="m-angle-wrapper">
+						<h2 className="m-angle__header">Scan QR code</h2>
 
-					<div className="m-angle-rotated">
 						<Link activeClassName="active" className="m-angle__button btn-round btn-md" to="/connect/qr">Start</Link>
 					</div>
 				</div>

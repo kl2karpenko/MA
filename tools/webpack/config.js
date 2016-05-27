@@ -123,7 +123,16 @@ module.exports = {
 };
 
 // if (isProd) {
-    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin());
+//     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+//         sourceMap: true,
+//         compress: {
+//             warnings: false,
+//             keep_fnames: true
+//         },
+//         mangle: {
+//             keep_fnames: true
+//         }
+//     }));
 // } else {
     module.exports.devtool = 'inline-source-map';
 // }

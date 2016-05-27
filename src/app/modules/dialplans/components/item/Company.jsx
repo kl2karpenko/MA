@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
-import Actions from "models/Actions";
+import Dialplan from "models/Dialplan";
 
 export default class Company extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			dialplan: props.dialplan.Model,
+			// dialplan: props.dialplan.Model,
 			flowControlId: "",
-			haveFlow: props.dialplan.actions && props.dialplan.actions.length
+			haveFlow: props.dialplan.Model.actions && props.dialplan.Model.actions.length
 		};
 
 		this.actions = [
@@ -33,24 +32,14 @@ export default class Company extends Component {
 				value: "contact"
 			}
 		];
-
-		Actions.load().then(() => {
-			this.setState({
-				flowControlId: Actions.findByField('action', 'flow_control')
-			});
-		});
 	}
 
-	componentWillMount() {
-		this.setState({
-			haveFlow: this.state.dialplan.actions && this.state.dialplan.actions.length
-		});
+	onChangeDialplanForward() {
 
-		if (this.state.haveFlow) {
-			this.setState({
-				flowControlId: Actions.Model.findByField('action', 'flow_control', '_id')
-			});
-		}
+	}
+
+	onChangeFlowControl() {
+
 	}
 
 	render() {
@@ -59,10 +48,10 @@ export default class Company extends Component {
 				<div className="l-dialplan">
 					<div className="l-dialplan__list">
 						<ul>
-							{this.actions.map(function(object, i){
+							{this.actions.map((object, i) => {
 								return <li key={i} className={object.className}>
 									<label htmlFor={object.value}>
-										<input type="radio" name="personal" value={object.value} id={object.value}/>
+										<input type="radio" name="personal" value={object.value} id={object.value} onChange={this.onChangeDialplanForward}/>
 										<div className="l-dialplan-radio"></div>
 										<div className="l-dialplan-text">
 											<div className="l-dialplan-name">{object.name}</div>
@@ -74,26 +63,23 @@ export default class Company extends Component {
 						</ul>
 					</div>
 					{(() => {
-						if(this.state.haveFlow) {
+						if(Dialplan.Model.actions && Dialplan.Model.actions.length) {
 							return <div>
 								<div className="l-dialplan-row">
 									Flow Control
 								</div>
 								<div className="l-dialplan__list">
 									<ul>
-										{this.state.dialplan.actions.map((object, i) => {
-											console.log(object, this.state.dialplan)
-											if (object.action_id === this.state.flowControlId) {
-												return <li key={i} className={object.className}>
-													<label htmlFor={"action_" + i}>
-														<input type="checkbox" name="company[]" checked={object.value.is_on} id={"action_" + i}/>
-														<div className="l-dialplan-check"></div>
-														<div className="l-dialplan-text">
-															<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
-														</div>
-													</label>
-												</li>;
-											}
+										{Dialplan.Model.actions.map((object, i) => {
+											return <li key={i} className={object.className}>
+												<label htmlFor={"action_" + i}>
+													<input type="checkbox" name="company[]" id={"action_" + i} onChange={this.onChangeFlowControl}/>
+													<div className="l-dialplan-check"></div>
+													<div className="l-dialplan-text">
+														<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
+													</div>
+												</label>
+											</li>;
 										})}
 									</ul>
 								</div>

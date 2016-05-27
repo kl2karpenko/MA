@@ -1,6 +1,6 @@
 import schema from 'schema';
 
-class Model {
+export default class Model {
 	constructor(props) {
 		this.Model = {};
 		this.assignAttributes(props);
@@ -22,17 +22,27 @@ class Model {
 	assignAttributes(props) {
 		let defaultAttributes = this._getDefaultAttributes();
 
-		return this.assignAttributesTo(this.Model, $.extend(true, defaultAttributes, props));
+		this.Model = defaultAttributes;
+		$.extend(true, this.Model, defaultAttributes, props);
+
+		return this;
 	}
 
-	assignAttributesTo(model, attributes) {
-		return $.extend(true, model, attributes);
+	assignAttributesTo(path, attributes) {
+		this.Model[path] = this._getDefaultAttributesByPath(path);
+		return $.extend(true, this.Model[path], attributes);
 	}
 
 	_getDefaultAttributes() {
 		let defaults = this['_default' + this.constructor.name];
 
-		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
+		return defaults && typeof defaults === "function" ? defaults.bind(this)() : $.extend({}, defaults);
+	}
+
+	_getDefaultAttributesByPath(path) {
+		let defaults = this['_default' + path];
+
+		return defaults && typeof defaults === "function" ? defaults.bind(this)() : $.extend({}, defaults);
 	}
 
 	update(options) {
@@ -54,7 +64,7 @@ class Model {
 		params.push({ _: this._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			return this.assignAttributesTo(this.Model, items[name]);
+			return this.assignAttributes(items[name]);
 		});
 	}
 
@@ -73,9 +83,7 @@ class Model {
 				resource = this.schema[this.managedResource][options.to];
 			}
 
-			return this.assignAttributesTo(this.Model[path], items[this.managedResource][path]);
+			return this.assignAttributesTo(path, items[this.managedResource][path]);
 		});
 	}
 }
-
-module.exports = Model;

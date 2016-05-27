@@ -606,6 +606,14 @@ app.get('/ajax/dialplans', function (req, res) {
 					"short_code": "4",
 					"is_on": true
 				}
+			},{
+				"action_id": "2678d8e9db15becc3397a47500dac7e0",
+				"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
+				"value": {
+					"label": "thhjhtyhtyjh",
+					"short_code": "4",
+					"is_on": true
+				}
 			}, {
 				"action_id": "2678d8e9db15becc3397a47500dac7e0",
 				"items": [{

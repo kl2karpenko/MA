@@ -1,5 +1,11 @@
 import Model from 'Model';
 
+import Actions from "models/Actions";
+
+Actions.load().then(() => {
+	Actions.flowControlId = Actions.findByField('action', 'flow_control');
+});
+
 class Dialplan extends Model {
 	_defaultDialplan() {
 		return {
@@ -20,6 +26,34 @@ class Dialplan extends Model {
 			"in_number": "",
 			"com_id": ""
 		};
+	}
+
+	_defaultActions() {
+		return [
+			{
+				"action_id": "",
+				"items": [ ],
+				"value": {
+					"label": "",
+					"short_code": "",
+					"is_on": false
+				}
+			}
+		];
+	}
+
+	assignAttributes(props) {
+		let defaultAttributes = this._getDefaultAttributes();
+
+		this.Model = defaultAttributes;
+
+		$.extend(true, this.Model, defaultAttributes, props);
+
+		this.Model.actions = this.Model.actions.filter((action) => {
+			return action.action_id === Actions.flowControlId && action;
+		});
+
+		return this;
 	}
 }
 

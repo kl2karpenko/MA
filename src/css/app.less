@@ -18,6 +18,7 @@ body {
   height: 100%;
 
   min-width: 320px;
+  max-width: 768px;
   min-height: 550px;
 
   position: relative;
@@ -84,6 +85,13 @@ body {
 }
 
 @paddingDialplan: 5.333333333333334%;
+
+.text-overflow(@height) {
+  white-space: nowrap;
+  max-height: @height;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @import "fluidable";
 @import "enterPage";

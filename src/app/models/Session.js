@@ -15,7 +15,10 @@ class Session extends Model {
 	_getSessionData() {
 		let userID = this.Model.user && this.Model.user.id || null;
 		// here take data from authorize
-		return this.load(userID);
+		console.log(this)
+		return this.load({
+			id: userID
+		});
 	}
 }
 

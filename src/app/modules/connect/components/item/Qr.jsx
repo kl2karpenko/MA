@@ -13,10 +13,8 @@ export default class Qr extends Component {
 	render() {
 		return (
 			<div className="l-adaptive">
-				<div className="m-angle">
-					<img src={imageLoader(require("images/qr-back.jpg"))} alt="Qr background"/>
-
-					<div className="m-angle-rotated">
+				<div className="m-angle main qr-code">
+					<div className="m-angle-wrapper">
 						<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
 					</div>
 				</div>

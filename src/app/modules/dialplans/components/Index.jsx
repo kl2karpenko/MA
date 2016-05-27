@@ -19,6 +19,7 @@ export default class Index extends Component {
 			._loadResources()
 			.done(() => {
 				Dialplans.setCurrent(Dialplans.getFirst());
+
 				Dialplan.assignAttributes(Dialplans.getCurrent());
 
 				this.setState({ ready: true });

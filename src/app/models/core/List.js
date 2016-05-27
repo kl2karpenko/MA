@@ -24,8 +24,10 @@ class List {
 		props.forEach((item, index) => {
 			this.Model[index] = {};
 
-			this.assignAttributesTo(this.Model[index], $.extend(true, defaultAttributes, item));
+			this.assignAttributesTo(this.Model[index], $.extend(true, {}, defaultAttributes, item));
 		});
+
+		console.log(this.Model);
 
 		return this;
 	}
@@ -103,6 +105,7 @@ class List {
 
 	setCurrent(current) {
 		this.active = current;
+		return this.active;
 	}
 
 	getIndexOf(item) {
