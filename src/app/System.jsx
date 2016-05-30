@@ -1,18 +1,16 @@
 // import './vendor/modernizr';
-import { Router, hashHistory } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router, hashHistory} from 'react-router';
 
-import schema from 'schema';
 import config from 'envConfig';
-
 
 export default class System {
 	// TODO: have warning: "the request of a dependency is an expression"
 	static _loadConfiguration() {
 		let
-			configList = config.mdls.map((module) => {
-				return './mdls/' + module + '/config';
+			configList = config.modules.map((module) => {
+				return './modules/' + module + '/config';
 			});
 
 		configList.forEach((config) => {
@@ -24,20 +22,27 @@ export default class System {
 		return require("../css/app.less");
 	}
 
-	_createRoutes(redirectPage) {
+	_createRoutes() {
 		this.rootRoute = {
 			component: 'div',
+			createHistory: {
+				queryKey: false
+			},
 			childRoutes: [
 				{
 					path: '/',
-					component: require('./mdls/core/components/App.jsx'),
+					component: 'div',
 					indexRoute: {
-						onEnter: (nextState, replace) => replace(redirectPage)
+						onEnter: (nextState, replace) => replace('/authorize')
 					},
+					// TODO: render from config array
 					childRoutes: [
-						require('./mdls/connect/routes.jsx'),
-						require('./mdls/pin/routes.jsx'),
-						require('./mdls/contacts/routes.jsx')
+						require('./modules/loader/routes.jsx'),
+						require('./modules/connect/routes.jsx'),
+						require('./modules/pin/routes.jsx'),
+						require('./modules/contacts/routes.jsx'),
+						require('./modules/settings/routes.jsx'),
+						require('./modules/dialplans/routes.jsx')
 					]
 				}
 			]
@@ -48,23 +53,10 @@ export default class System {
 
 	_renderApp() {
 		ReactDOM.render(
-			<Router history={hashHistory} routes={this.rootRoute} />,
+			<Router history={hashHistory} routes={this.rootRoute}/>,
 			document.getElementById('app')
 		);
 	}
-
-	/**
-	 * check if the person is already connect, if connect goto contacts page
-	 * else goto connect page
-	 * @returns {*|Promise.<TResult>}
-	 */
-	// TODO: rename to connect
-	login() {
-		return schema.login.read().then((loginInfo) => {
-			return loginInfo ? '/contacts/mobile' : '/connect/main';
-		});
-	}
-
 
 	/**
 	 * create routes for app and render app in block id="app"
@@ -79,17 +71,16 @@ export default class System {
 	/**
 	 * Init the app, and check if we are on prod set event for device ready
 	 * if we in dev env we will work in browser so just init the app
-	 * @param redirectPage
 	 */
-	init(redirectPage) {
+	init() {
 		if (process.env.NODE_ENV === "prod") {
 			/* on device ready init app */
-			document.addEventListener("deviceready",() => {
-				this._initApp(redirectPage);
+			document.addEventListener("deviceready", () => {
+				this._initApp();
 			}, false);
 			/* on device ready init app */
 		} else {
-			this._initApp(redirectPage);
+			this._initApp();
 		}
 	}
 
@@ -101,6 +92,6 @@ export default class System {
 		var constr = this.constructor;
 
 		return $.when(constr._setStyles)
-						.then(constr._loadConfiguration);
+			.then(constr._loadConfiguration);
 	}
 }

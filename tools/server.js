@@ -437,17 +437,358 @@ app.get('/ajax/contacts', function (req, res) {
 	]);
 });
 
+app.get('/ajax/authorize', function (req, res) {
+	var isAuthorize = {
+		'authorize': {
+			'user': {
+				"_id": "8ce53381732507b4aa468efb5d3d4747",
+				"id": "8ce53381732507b4aa468efb5d3d4747",
+				"username": "1030.ira_company",
+				"dialplan": {
+					"id": "1e212b17f4c01c3bb31a9b21ff896396"
+				}
+			}
+		}
+	};
+
+	var isNotAuthorize = {
+		'authorize': false
+	};
+
+	res.send(isNotAuthorize);
+});
+
+app.get('/ajax/session', function (req, res) {
+	var isAuthorize = {
+		'session': {
+			'user': {
+				"_id": "8ce53381732507b4aa468efb5d3d4747",
+				"id": "8ce53381732507b4aa468efb5d3d4747",
+				"username": "1030.ira_company",
+				"dialplan": {
+					"id": "1e212b17f4c01c3bb31a9b21ff896396"
+				}
+			}
+		}
+	};
+
+	var isNotAuthorize = {
+		'session': {}
+	};
+
+	// res.status(500);
+	res.send(isNotAuthorize);
+});
+
 app.get('/ajax/login', function (req, res) {
-	// res.send({
-	// 	'login': 'Lily',
-	// 	'isConnected': true
-	// });
+	res.send({
+		'login': {
+			'user': {
+				"_id": "8ce53381732507b4aa468efb5d3d4747",
+				"_rev": "6-8c23b8e77214df7a2c2cae2bb485be37",
+				"first_name": "Karpenko",
+				"second_name": "Lilya",
+				"email": "i.sayko@kwebbl.com",
+				"image_id": "",
+				"organization_id": "efab49adb7dc65c50f3fd58f1200290b",
+				"username": "1030.ira_company",
+				"type": "user",
+				"extension": {
+					"_id": "8ce53381732507b4aa468efb5d3d6ced",
+					"in_number": "1030",
+					"com_id": "efab49adb7dc65c50f3fd58f1200290b",
+					"caller_id": "0350fbf3555b900dbffa9d1e103dca95",
+					"caller_number": 31347202659,
+					"user_id": "8ce53381732507b4aa468efb5d3d4747",
+					"type": "extension"
+				},
+				"mailbox": {
+					"_id": "8ce53381732507b4aa468efb5d3d52f2",
+					"_rev": "3-622d7331810ddcf1225af6e8bc3cf0bc",
+					"enabled": false,
+					"number": "1030",
+					"owner_id": "8ce53381732507b4aa468efb5d3d4747"
+				},
+				"permit": {
+					"roles": ["1b579f07eb1be47e5da0c2ef305106db"]
+				}
+			}
+		}
+	});
 	res.send(false);
 });
 
+app.get('/ajax/user/:userId/', function (req, res) {
+	res.send({
+		'user': {
+			"_id": "8ce53381732507b4aa468efb5d3d4747",
+			"id": "8ce53381732507b4aa468efb5d3d4747",
+			"_rev": "6-8c23b8e77214df7a2c2cae2bb485be37",
+			"first_name": "Karpenko",
+			"second_name": "Lilya",
+			"email": "i.sayko@kwebbl.com",
+			"image_id": "",
+			"organization_id": "efab49adb7dc65c50f3fd58f1200290b",
+			"username": "1030.ira_company",
+			"type": "user",
+			"extension": {
+				"_id": "8ce53381732507b4aa468efb5d3d6ced",
+				"in_number": "1030",
+				"com_id": "efab49adb7dc65c50f3fd58f1200290b",
+				"caller_id": "0350fbf3555b900dbffa9d1e103dca95",
+				"caller_number": 31347202659,
+				"user_id": "8ce53381732507b4aa468efb5d3d4747",
+				"type": "extension"
+			},
+			"mailbox": {
+				"_id": "8ce53381732507b4aa468efb5d3d52f2",
+				"_rev": "3-622d7331810ddcf1225af6e8bc3cf0bc",
+				"enabled": false,
+				"number": "1030",
+				"owner_id": "8ce53381732507b4aa468efb5d3d4747"
+			},
+			"permit": {
+				"roles": ["1b579f07eb1be47e5da0c2ef305106db"]
+			}
+		}
+	});
+});
+
+app.get('/ajax/dialplan/:dialplanId', function (req, res) {
+	res.send({
+		"dialplan": {
+			"_id": "1",
+			"_rev": "1-007552b640d78d014d442f08c38a8116",
+			"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
+			"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
+			"actions": [{"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}],
+			"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"type": "dialplan",
+			"personal": true,
+			"in_number": "255",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
+		}
+	});
+});
+
+app.get('/ajax/dialplans', function (req, res) {
+	// setTimeout( , 1000 );
+	res.send({
+		"dialplans": [{
+			"_id": "1",
+			"_rev": "1-007552b640d78d014d442f08c38a8116",
+			"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
+			"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
+			"actions": [{
+				"items": {"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}
+			}],
+			"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
+			"type": "dialplan",
+			"title": "r ryjyt tju",
+			"personal": true,
+			"in_number": "255",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
+		}, {
+			"_id": "2",
+			"_rev": "5-4336a36f9211ec244b7bd14fbd5fb7f0",
+			"title": "1rule",
+			"color": "turquoise",
+			"ext_id": "19457038ba53984e82fc6a1f8331466f",
+			"modified": {"t": 1464266189372, "Y": 2016, "M": 5, "D": 26, "h": 12, "m": 36, "s": 29, "z": "UTC"},
+			"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
+			"type": "dialplan",
+			"actions": [{
+				"action_id": "2678d8e9db15becc3397a47500dac7e0",
+				"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
+				"value": {
+					"label": "thhjhtyhtyjh",
+					"short_code": "4",
+					"is_on": true
+				}
+			},{
+				"action_id": "2678d8e9db15becc3397a47500dac7e0",
+				"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
+				"value": {
+					"label": "thhjhtyhtyjh",
+					"short_code": "4",
+					"is_on": true
+				}
+			}, {
+				"action_id": "2678d8e9db15becc3397a47500dac7e0",
+				"items": [{
+					"action_id": "2678d8e9db15becc3397a47500dac7e0",
+					"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "3"}}],
+					"value": {"short_code": "2"}
+				}],
+				"value": {"short_code": "1"}
+			}, {
+				"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
+				"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
+			}],
+			"in_number": "1234",
+			"ex_number": 31152026029,
+			"personal": false,
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
+		}, {
+			"_id": "3",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "77",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "tthrth",
+			"color": "red",
+			"personal": false,
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "4",
+			"_rev": "3-297375d401acc96cefe64d11cb568bc2",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "1234",
+			"ex_number": 31152026029,
+			"ex_number_id": "61f7329019d10a7dd6872b42d1f5eff0",
+			"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
+			"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
+			"type": "dialplan",
+			"title": "1rule",
+			"color": "turquoise",
+			"personal": false,
+			"ext_id": "19457038ba53984e82fc6a1f8331466f",
+			"actions": [{
+				"items": [{
+					"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
+					"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
+				}]
+			}]
+		}, {
+			"_id": "5",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "77",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "tthrth",
+			"personal": false,
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}]
+	})
+});
+
+app.get('/ajax/actions', function (req, res) {
+	res.send({
+		"actions": [{
+			"action": "fax",
+			"name": "Fax",
+			"alias": "Add fax",
+			"image": "4",
+			"color": "309df0",
+			"cs": "fax",
+			"order": 1,
+			"_id": "0c2cf9ff062ff7e7d3ea4edd3c6bdb4f"
+		}, {
+			"action": "ivr",
+			"name": "Add IVR",
+			"alias": "Add IVR",
+			"image": "8",
+			"color": "fb6643",
+			"cs": "ivr",
+			"order": 2,
+			"_id": "0c2cf9ff062ff7e7d3ea4edd3c6c356d"
+		}, {
+			"action": "redirect",
+			"name": "Redirect",
+			"alias": "Add redirect",
+			"image": "7",
+			"color": "00c6d8",
+			"cs": "transfer",
+			"order": 3,
+			"_id": "0c2cf9ff062ff7e7d3ea4edd3c6c444f"
+		}, {
+			"action": "time_condition",
+			"name": "Time condition",
+			"alias": "Add time condition",
+			"image": "",
+			"color": "f0be2e",
+			"cs": "time_condition",
+			"order": 5,
+			"_id": "1b579f07eb1be47e5da0c2ef30496fa7"
+		}, {
+			"action": "hgroup",
+			"name": "Add group",
+			"alias": "Add group",
+			"color": "fb6643",
+			"image": "3",
+			"cs": "huntgroup",
+			"values": [{"value": "ring_all", "title": "Ring All"}, {
+				"value": "memory_hunt",
+				"title": "Memory Hunt"
+			}, {"value": "round_robin", "title": "Round Robin"}, {"value": "cascade", "title": "Cascade"}],
+			"order": 8,
+			"_id": "ede9eb56b9489531c9ba9e4c421e25ce"
+		}, {
+			"action": "flow_control",
+			"name": "Flow control",
+			"alias": "Add flow control",
+			"image": "11",
+			"color": "00c6d8",
+			"cs": "flow_control",
+			"order": 9,
+			"_id": "2678d8e9db15becc3397a47500dac7e0"
+		}, {
+			"action": "sound",
+			"name": "Sound",
+			"alias": "Add sound",
+			"image": "5",
+			"color": "309df0",
+			"cs": "playback",
+			"order": 10,
+			"_id": "ede9eb56b9489531c9ba9e4c421e3441"
+		}, {
+			"action": "queue",
+			"name": "Queue",
+			"alias": "Add queue",
+			"image": "6",
+			"color": "00b800",
+			"cs": "callcenter",
+			"order": 11,
+			"_id": "ede9eb56b9489531c9ba9e4c421e43dd"
+		}, {
+			"action": "prefix",
+			"name": "Prefix",
+			"alias": "Add prefix",
+			"image": "9",
+			"color": "fb6643",
+			"cs": "prefix",
+			"order": 12,
+			"_id": "c3df81582f576cfebf2b68c3af33dbbb"
+		}, {
+			"action": "voicemail",
+			"name": "Voicemail",
+			"alias": "Add voicemail",
+			"image": "9",
+			"color": "9c9fa7",
+			"cs": "voicemail",
+			"order": 13,
+			"_id": "ede9eb56b9489531c9ba9e4c421e4b4b"
+		}, {
+			"action": "hangup",
+			"name": "Hang up",
+			"alias": "Hang up",
+			"image": "",
+			"color": "fb6643",
+			"cs": "hangup",
+			"order": 14,
+			"_id": "1b579f07eb1be47e5da0c2ef304926f1"
+		}]
+	});
+});
+
 app.post('/ajax/pin', function (req, res) {
-	console.log(req);
-	
 	res.send({
 		'pin': {
 			'correct': true

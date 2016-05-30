@@ -1,5 +1,6 @@
 @import "normalize.css";
 @import "vendor/bootstrap.css";
+@import "vendor/toastr.min.css";
 
 // for theme styles
 @import "thm/main";
@@ -18,7 +19,8 @@ body {
   height: 100%;
 
   min-width: 320px;
-  min-height: 540px;
+  max-width: 768px;
+  min-height: 550px;
 
   position: relative;
   font-family: 'Roboto', sans-serif;
@@ -30,18 +32,80 @@ body {
     height: 100%;
   }
 
-  max-width: 860px;
+  max-width: 768px;
+
+  &.loading {
+    @loaderWH: 80px;
+
+    position: relative;
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      background-color: rgba(0, 0, 0, 0.6);
+
+      z-index: 10000;
+    }
+    &:after {
+      content: '';
+
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+      height: @loaderWH;
+      width: @loaderWH;
+      margin-left: -@loaderWH/2;
+      margin-top: -@loaderWH/2;
+
+      z-index: 9999;
+
+      background-image: url("../img/loader.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      animation: animateLoader 2s infinite linear;
+    }
+  }
+}
+
+@keyframes animateLoader {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@paddingDialplan: 5.333333333333334%;
+
+.text-overflow(@height) {
+  white-space: nowrap;
+  max-height: @height;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @import "fluidable";
 @import "enterPage";
 @import "btn";
 
-@import "mdls/angle";
-@import "mdls/adaptive";
-@import "mdls/connect-slider";
-@import "mdls/keyboard";
+@import "modules/angle";
+@import "modules/connect-slider";
+@import "modules/keyboard";
+@import "modules/list";
 
 @import "layouts/main";
 @import "layouts/pin";
+@import "layouts/adaptive";
+@import "layouts/fixed";
+@import "layouts/dialplan";
 @import "media/screen";

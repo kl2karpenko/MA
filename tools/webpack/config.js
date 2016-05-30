@@ -65,11 +65,15 @@ module.exports = {
             "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
-            "modules": 'src/app/mdls',
-            "scope": 'src/app/lib/scope.jsx',
+            "modules": 'src/app/modules',
+            "models": 'src/app/models',
+            "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
+            "messenger": 'src/app/lib/toastr',
             "rest-client": 'src/app/vendor/jquery.rest',
-            "components": 'src/app/lib/components'
+            "components": 'src/app/lib/components',
+            "Model": 'src/app/models/core/Model',
+            "List": 'src/app/models/core/List'
         }
     },
 
@@ -120,7 +124,16 @@ module.exports = {
 };
 
 if (isProd) {
-    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin());
+    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        compress: {
+            warnings: false,
+            keep_fnames: true
+        },
+        mangle: {
+            except: ['$super', '$', 'exports', 'require']
+        }
+    }));
 } else {
     module.exports.devtool = 'inline-source-map';
 }

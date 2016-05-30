@@ -1,18 +1,27 @@
-.thm {
-  &-main {
-    .m-angle {
-      img  {
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-      }
-    }
-
-  }
-}
-
 @LinkColor: #f97900;
 @LinkColorDisabled: #aaaaaa;
 
 @Background: #d90900;
+@ActiveColor: #06ba06;
+@ActiveColorLight: #9be39b;
 @BackgroundMainImage: "img/entry.jpg";
+
+@BackImageMain: url("../../img/main-back.jpg");
+@BackImageQr: url("../../img/qr-back.jpg");
+
+.m {
+  &-angle {
+    &.main-code {
+      background-image: @BackImageMain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 90%;
+    }
+    &.qr-code {
+      background-image: @BackImageQr;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 90%;
+    }
+  }
+}

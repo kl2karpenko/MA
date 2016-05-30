@@ -1,0 +1,211 @@
+@rotateDeg: 10deg;
+
+.m-angle {
+  position: relative;
+  text-align: center;
+  background-color: @Background;
+
+  transform: rotate(-10deg);
+  z-index: 4;
+
+  &-wrapper {
+    transform: rotate(10deg);
+
+    position: absolute;
+    left: 90px;
+    right: 100px;
+    top:  100px;
+    bottom: 0;
+    z-index: 3;
+
+    > img  {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  > img  {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+
+    transform: rotate(10deg);
+  }
+
+  &__header {
+    font-size: 2.6923076923076925em;
+    color: #fff;
+    font-weight: 100;
+
+    text-align: center;
+    margin: 0;
+
+    position: absolute;
+    top: 49%;
+    width: 100%;
+
+    transform: translateY(-50%);
+    margin-top: -10%;
+  }
+
+  &__button {
+    font-size: 1em;
+
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+
+    transform: translateX(-50%);
+
+    &.btn-md {
+      margin-bottom: -38px;
+    }
+    &.btn-sm {
+      margin-bottom: -30px;
+    }
+
+    &.btn-settings {
+      z-index: 100;
+
+      left: auto;
+      right: @paddingDialplan;
+      transform: translateX(0%);
+      margin-bottom: 0 !important;
+    }
+  }
+
+  &-content {
+    position: absolute;
+    left: @paddingDialplan;
+    right: @paddingDialplan;
+
+    height: 100%;
+  }
+
+  &__arrows {
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    z-index: 1;
+
+    height: 7.5718015665796345%;
+    transform: translate(0, -50%);
+    top: 50%;
+  }
+
+  &-info {
+    position: absolute;
+    left: @paddingDialplan;
+    right: @paddingDialplan;
+
+    transform: translate(0, -50%);
+    top: 50%;
+
+    z-index: 2;
+    color: #fff;
+
+    &-photo {
+      width: 20%;
+      margin: 0 @paddingDialplan;
+      float: left;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &-text {
+      text-align: left;
+      margin-left: 30.066666666666666%;
+
+      p {
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 1.9em;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 10px;
+        .text-overflow(50%);
+
+        &:first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  &-arrow {
+    position: absolute;
+    display: inline-block;
+
+    background-color: transparent;
+    border: 0;
+
+    height: 100%;
+    width: auto;
+    padding: 0;
+    outline: none;
+
+    &.__left {
+      left: 0;
+    }
+
+    &.__right {
+      right: 0;
+    }
+
+    &:active {
+      margin-top: 2px;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+  }
+
+  &-top {
+    position: relative;
+    right: 0;
+    left: 0;
+    top: 14.322834645669293%;
+
+    text-align: left;
+    color: #fff;
+  }
+
+  &-settings {
+    position: absolute;
+
+    top: 0;
+    width: 7.666666666666667%;
+    right: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &-border {
+    width: 10%;
+    height: 0;
+    padding-top: 10%;
+    overflow: hidden;
+    z-index: 3;
+
+    &:after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      margin-top: -500px;
+      border-top: 500px solid transparent;
+      border-right: 500px solid #4679BD;
+    }
+  }
+}
