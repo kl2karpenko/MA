@@ -69,6 +69,7 @@ module.exports = {
             "models": 'src/app/models',
             "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
+            "messenger": 'src/app/lib/toastr',
             "rest-client": 'src/app/vendor/jquery.rest',
             "components": 'src/app/lib/components',
             "Model": 'src/app/models/core/Model',
@@ -122,17 +123,17 @@ module.exports = {
     }
 };
 
-// if (isProd) {
-//     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
-//         sourceMap: true,
-//         compress: {
-//             warnings: false,
-//             keep_fnames: true
-//         },
-//         mangle: {
-//             keep_fnames: true
-//         }
-//     }));
-// } else {
+if (isProd) {
+    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        compress: {
+            warnings: false,
+            keep_fnames: true
+        },
+        mangle: {
+            except: ['$super', '$', 'exports', 'require']
+        }
+    }));
+} else {
     module.exports.devtool = 'inline-source-map';
-// }
+}

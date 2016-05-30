@@ -1,6 +1,10 @@
 import List from 'List';
 
 class Dialplans extends List {
+	init() {
+		this.managedResource = 'dialplans';
+	}
+
 	_defaultDialplansItem() {
 		return {
 			"_id": "",

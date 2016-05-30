@@ -1,4 +1,5 @@
 import schema from 'schema';
+import messenger from "messenger";
 
 export default class Model {
 	constructor(props) {
@@ -6,6 +7,7 @@ export default class Model {
 		this.assignAttributes(props);
 
 		this.schema = schema;
+		this.messenger = messenger;
 		this.managedResource = this.constructor.name.toLowerCase();
 
 		this.init();
@@ -15,7 +17,7 @@ export default class Model {
 
 	}
 
-	_getRandomHash() {
+	static _getRandomHash() {
 		return Math.random().toString(36).substring(7);
 	}
 
@@ -61,10 +63,15 @@ export default class Model {
 			params.push(options.id);
 		}
 
-		params.push({ _: this._getRandomHash() });
+		params.push({ _: Model._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
+			console.info('load =============== ' + resource + ' =================== data');
 			return this.assignAttributes(items[name]);
+		}).error((response) => {
+			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
+			return this;
 		});
 	}
 
@@ -82,8 +89,13 @@ export default class Model {
 			if (options.to) {
 				resource = this.schema[this.managedResource][options.to];
 			}
+			console.info('load ' + resource + ' data');
 
 			return this.assignAttributesTo(path, items[this.managedResource][path]);
+		}).error((response) => {
+			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
+			return this;
 		});
 	}
 }

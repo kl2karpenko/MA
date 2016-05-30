@@ -476,6 +476,7 @@ app.get('/ajax/session', function (req, res) {
 		'session': {}
 	};
 
+	// res.status(500);
 	res.send(isNotAuthorize);
 });
 

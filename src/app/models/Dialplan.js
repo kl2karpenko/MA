@@ -7,6 +7,10 @@ Actions.load().then(() => {
 });
 
 class Dialplan extends Model {
+	init() {
+		this.managedResource = 'dialplan';
+	}
+	
 	_defaultDialplan() {
 		return {
 			"_id": "",
@@ -49,9 +53,11 @@ class Dialplan extends Model {
 
 		$.extend(true, this.Model, defaultAttributes, props);
 
-		this.Model.actions = this.Model.actions.filter((action) => {
-			return action.action_id === Actions.flowControlId && action;
-		});
+		if (this.Model.actions) {
+			this.Model.actions = this.Model.actions.filter((action) => {
+				return action.action_id === Actions.flowControlId && action;
+			});
+		}
 
 		return this;
 	}

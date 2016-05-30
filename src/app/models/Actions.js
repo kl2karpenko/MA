@@ -1,6 +1,10 @@
 import List from 'List';
 
 class Actions extends List {
+	init() {
+		this.managedResource = 'actions';
+	}
+
 	_defaultActionsItem() {
 		return {
 			_id: "",

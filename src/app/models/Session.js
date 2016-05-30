@@ -1,6 +1,10 @@
 import Model from 'Model';
 
 class Session extends Model {
+	init() {
+		this.managedResource = 'session';
+	}
+
 	_defaultSession() {
 		return {
 			"_id": "",
@@ -15,7 +19,7 @@ class Session extends Model {
 	_getSessionData() {
 		let userID = this.Model.user && this.Model.user.id || null;
 		// here take data from authorize
-		console.log(this)
+
 		return this.load({
 			id: userID
 		});

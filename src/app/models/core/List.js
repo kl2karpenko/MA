@@ -14,7 +14,7 @@ class List {
 
 	}
 
-	_getRandomHash() {
+	static _getRandomHash() {
 		return Math.random().toString(36).substring(7);
 	}
 
@@ -26,8 +26,6 @@ class List {
 
 			this.assignAttributesTo(this.Model[index], $.extend(true, {}, defaultAttributes, item));
 		});
-
-		console.log(this.Model);
 
 		return this;
 	}
@@ -58,10 +56,16 @@ class List {
 		let readMethod = options.method || 'read';
 		let params = [];
 
-		params.push({ _: this._getRandomHash() });
+		params.push({ _: List._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
+			console.info('loadCollection =============== ' + resource + ' =================== data');
+
 			return this.assignAttributes(items[name]);
+		}).error((response) => {
+			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
+			return this;
 		});
 	}
 

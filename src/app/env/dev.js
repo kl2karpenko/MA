@@ -14,12 +14,3 @@ function _getContactsFromMobile(contacts, cb) {
 module.exports = $.extend(config, {
 	"hostname": "/ajax/"
 });
-
-// module.exports = {
-// 	"schema": {
-// 		"contacts": _getContactsFromMobile,
-// 		"extensions": "/ajax/extensions",
-// 		"login": "/ajax/login",
-// 		"pin": "/ajax/pin"
-// 	}
-// };

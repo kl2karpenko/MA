@@ -11,11 +11,10 @@ export default class Index extends Component {
 	componentWillMount() {
 		// here take data from authorize
 		Session._getSessionData().then((authorizeInfo) => {
-			let enterPage = authorizeInfo.session && authorizeInfo.session.user && authorizeInfo.session.user.id ? '/pin' : '/connect/main';
-			// TODO: delete settimeout
-			setTimeout(() => {
-				hashHistory.push(enterPage);
-			}, 0);
+			return authorizeInfo.session && authorizeInfo.session.user && authorizeInfo.session.user.id ? '/pin' : '/connect/main';
+		}).then((authorizeInfo) => {
+			// authorizeInfo
+			hashHistory.push('/connect/main');
 		});
 	}
 
@@ -24,7 +23,7 @@ export default class Index extends Component {
 			<div className="app-enterPage">
 				<div className="app-loader">
 					{[...Array(5)].map((x, i) =>
-						<span></span>
+						<span key={i}></span>
 					)}
 				</div>
 			</div>

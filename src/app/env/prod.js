@@ -20,19 +20,10 @@ function getAddressOfHost() {
 
 let isIOS = process.env.platformName === 'ios';
 
-let homeIPMac = 'http://192.168.4.186';
+let homeIPMac = 'http://192.168.4.186:8030';
 let workIPMac = 'http://192.168.2.105:8030';
-let workIPDesktop = 'http://192.168.3.51:8030';
+let workIPDesktop = 'http://192.168.4.42:8030';
 
 module.exports = $.extend(config, {
 	"hostname": getAddressOfHost()
 });
-
-// module.exports = {
-// 	"schema": {
-// 		"contacts": _getContactsFromMobile,
-// 		"extensions": setAddressForRequest("extensions"),
-// 		"login": setAddressForRequest("login"),
-// 		"pin": setAddressForRequest("pin")
-// 	}
-// };

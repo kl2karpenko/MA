@@ -2,6 +2,8 @@ import Model from 'Model';
 
 class User extends Model {
 	init() {
+		this.managedResource = 'user';
+		
 		this.resources = {
 			dialplan: this.schema.user.dialplan
 		};
