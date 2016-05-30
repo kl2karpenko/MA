@@ -2,4 +2,4 @@
 2. Download font to local dir
 3. Check hooks didn't run webpack before build, think why
 4. Create loader for all type of pages, to lock screen after request made
-5.
+5. Add hook for change id in config.xml depends on platform
