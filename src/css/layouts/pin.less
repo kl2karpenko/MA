@@ -2,6 +2,7 @@
   &-pin {
     height: 100%;
     position: relative;
+    overflow: hidden;
 
     color: #fff;
 
@@ -9,6 +10,37 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+
+    &-connect {
+      height: 100%;
+
+      .l-pin {
+        background-image: none;
+        &:before {
+          display: none;
+        }
+      }
+
+      .l-pin-wrapper {
+        height: 100%;
+      }
+
+      .l-pin-center {
+        top: 44%;
+        color: #fff;
+        height: 51.031088%;
+      }
+
+      .l-pin__name {
+        margin-bottom: 3.5%;
+      }
+
+      .l-pin__spaces {
+        bottom: auto;
+        height: 44.607843%;
+      }
+
+    }
 
     &:before {
       content: '';

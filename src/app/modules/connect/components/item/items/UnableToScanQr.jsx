@@ -15,7 +15,7 @@ class UnableToScanQr extends React.Component {
 					<Link activeClassName="active" className="m-connect-slider__button" key="3" to="/connect/pin"></Link>
 				</div>
 				<div className="m-connect__link">
-					<Link activeClassName="active" to="/connect/qr">I’m unable to scan the QR code</Link>
+					<Link activeClassName="active" to="/connect/pin">I’m unable to scan the QR code</Link>
 				</div>
 			</div>
 		);

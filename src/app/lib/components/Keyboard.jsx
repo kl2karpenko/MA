@@ -3,49 +3,60 @@ import React from 'react';
 function closeKeyboard() {
 	if (process.env.NODE_ENV === 'prod' && cordova && cordova.plugins) {
 		cordova.plugins.Keyboard.close();
+		cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
+		cordova.plugins.Keyboard.isVisible = false;
 	}
 }
 
 export default class Keyboard extends React.Component {
 	constructor(props) {
-		super(props);
-
-		let options = $.extend({
-			element: null,
+		super($.extend({
 			onSubmit: null,
 			onChange: null,
+			isValid: false,
 			multiple: false,
 			formName: ''
-		}, props.options);
+		}, props.options));
 
-		this.props = options;
-	}
-
-	_closeKeyBoardInMobileAndCallChange() {
-		setTimeout(closeKeyboard, 0);
-
-		if (typeof this.props.options.onChange === "function") {
-			this.props.options.onChange();
-		}
+		this.parent = props.getParentContext();
 	}
 
 	_setOneValue(number) {
-		this.props.element.value = number;
-		this._closeKeyBoardInMobileAndCallChange();
+		let context = this.parent;
+
+		context.state.element.value = number;
+
+		if (typeof this.props.options.onChange === "function") {
+			this.props.options.onChange( this, $(context.state.element).data('index'), number );
+		}
+
+		closeKeyboard();
+		setTimeout(closeKeyboard, 0);
 	}
 
 	_setMultipleValues(number) {
-		this.props.element.value += number;
-		this._closeKeyBoardInMobileAndCallChange();
+		let context = this.parent;
+		
+		context.state.element.value += number;
+
+		closeKeyboard();
+		setTimeout(closeKeyboard, 0);
 	}
 
 	_deleteValue() {
-		this.props.element.value = this.props.element.value.slice(1, -1);
-		this._closeKeyBoardInMobileAndCallChange();
+		let context = this.parent;
+
+		context.state.element.value = context.state.element.value.slice(1, -1);
+
+		closeKeyboard();
+		setTimeout(closeKeyboard, 0);
 	}
 
 	render() {
+		closeKeyboard();
 		setTimeout(closeKeyboard, 0);
+
 		let method = this.props.options.multiple ? this._setMultipleValues : this._setOneValue;
 
 		return (
@@ -69,7 +80,7 @@ export default class Keyboard extends React.Component {
 					<div className="col-xs-5 m-keyboard-digit">
 						<div className="m-keyboard__key buttons">
 							<button className="btn-round btn-sm btn-check"
-							        disabled={!this.props.isValid}
+							        disabled={!(this.parent).state.isValid}
 							        onClick={this.props.options.onSubmit}></button>
 						</div>
 					</div>
