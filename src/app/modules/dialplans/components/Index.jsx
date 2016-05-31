@@ -10,23 +10,35 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
-			ready: false
-		}
-
-		console.log('dialplans load');
+			isLoaded: false
+		};
 	}
 
 	componentWillMount() {
 		this
 			._loadResources()
 			.done(() => {
-				Dialplans.setCurrent(Dialplans.getFirst());
+				let
+					currentIdOfDialplan = this.props.params.id,
+					currentDialplan = Dialplans.getFirst();
 
-				Dialplan.assignAttributes(Dialplans.getCurrent());
+				if (currentIdOfDialplan) {
+					currentDialplan = Dialplans.findByField("_id", currentIdOfDialplan)
+				}
 
-				this.setState({ ready: true });
+				console.log(currentDialplan)
 
-				hashHistory.push(Dialplans.getUrl(Dialplans.getFirst()));
+				Dialplans
+					.setCurrent(currentDialplan);
+
+				Dialplan
+					.assignAttributes(currentDialplan);
+
+				this.setState({
+					isLoaded: true
+				});
+
+				hashHistory.replace(Dialplans.getUrl(currentDialplan));
 			});
 	}
 
@@ -37,15 +49,16 @@ export default class Index extends Component {
 	}
 
 	render() {
-		let Page;
-
-		if (this.state.ready) {
-			Page = this.props.children;
-		}
-
 		return (
 			<div style={{height: "100%"}}>
-				{Page}
+				{(() => {
+					if (this.state.isLoaded) {
+						return this.props.children;
+					} else {
+						// TODO: create loader!!!!!!! for when load smth add it to screen
+						return <div>Loading</div>;
+					}
+				})()}
 			</div>
 		);
 	}

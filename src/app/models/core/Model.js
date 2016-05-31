@@ -10,6 +10,8 @@ export default class Model {
 		this.messenger = messenger;
 		this.managedResource = this.constructor.name.toLowerCase();
 
+		this.isLoaded = false;
+
 		this.init();
 	}
 
@@ -26,6 +28,8 @@ export default class Model {
 
 		this.Model = defaultAttributes;
 		$.extend(true, this.Model, defaultAttributes, props);
+
+		this.isLoaded = true;
 
 		return this;
 	}
@@ -70,7 +74,7 @@ export default class Model {
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
-			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
+			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return this;
 		});
 	}

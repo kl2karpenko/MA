@@ -1,11 +1,12 @@
 import schema from 'schema';
-import { hashHistory } from 'react-router';
 
 class List {
 	constructor() {
 		this.Model = [];
 		this.schema = schema;
 		this.managedResource = this.constructor.name.toLowerCase();
+
+		this.isLoaded = false;
 
 		this.init();
 	}
@@ -27,6 +28,8 @@ class List {
 			this.assignAttributesTo(this.Model[index], $.extend(true, {}, defaultAttributes, item));
 		});
 
+		this.isLoaded = true;
+
 		return this;
 	}
 
@@ -38,14 +41,18 @@ class List {
 		return this.assignAttributesTo(this.Model, attributes);
 	}
 
+	updateModelWithAttributes(modelIndex, attributes) {
+		return this.assignAttributesTo(this.Model[modelIndex], attributes);
+	}
+
 	_getDefaultAttributes() {
 		let defaults = this['_default' + this.constructor.name + 'Item'];
 
 		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
 	}
 
-	update() {
-		return this.load();
+	update(options) {
+		return this.load(options);
 	}
 
 	load(options) {
@@ -64,22 +71,20 @@ class List {
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
-			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
+			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return this;
 		});
 	}
 
-	findByField(fieldName, valueOfField, returnVal) {
-		returnVal = returnVal || "_id";
-
+	findByField(fieldName, valueOfField, returnVal) {		
 		let findValues = this.Model.filter((item) => {
-			return item[fieldName] === valueOfField ? item[returnVal] : false;
+			return item[fieldName] === valueOfField ? item[returnVal || "_id"] : false;
 		});
 
 		if (findValues.length > 1) {
 
 		} else {
-			return findValues[0][returnVal];
+			return returnVal ? findValues[0][returnVal] : findValues[0];
 		}
 	}
 
@@ -109,7 +114,7 @@ class List {
 
 	setCurrent(current) {
 		this.active = current;
-		return this.active;
+		return this;
 	}
 
 	getIndexOf(item) {

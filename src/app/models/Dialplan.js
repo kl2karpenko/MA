@@ -3,7 +3,7 @@ import Model from 'Model';
 import Actions from "models/Actions";
 
 Actions.load().then(() => {
-	Actions.flowControlId = Actions.findByField('action', 'flow_control');
+	Actions.flowControlId = Actions.findByField('action', 'flow_control', '_id');
 });
 
 class Dialplan extends Model {
