@@ -12,6 +12,8 @@ export default class Index extends Component {
 		this.state = {
 			ready: false
 		}
+
+		console.log('dialplans load');
 	}
 
 	componentWillMount() {
