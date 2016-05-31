@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { hashHistory } from 'react-router';
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
+import InputPinForm from 'components/InputPinForm.jsx';
 
 export default class Pin extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			isValid: false,
+			pinValue: [],
+			element: ""
+		};
+
+		this.inputPinOptions = {
+			formName: 'connectPin',
+			name: "Enter the code",
+			inputType: "number"
+		};
+	}
+
+	loginByButton() {
+		hashHistory.push('/pin');
 	}
 
 	render() {
@@ -13,7 +30,17 @@ export default class Pin extends Component {
 			<div className="l-adaptive">
 				<div className="m-angle main">
 					<div className="m-angle-wrapper">
-						<Link className="m-angle__button btn-round btn-md" to="/pin">Log In</Link>
+						<div className="l-pin-connect">
+							<InputPinForm
+								options={this.inputPinOptions}
+								keyBoardOptions={false}
+								getParentContext={() => {
+			              return this;
+		            }}
+							/>
+						</div>
+
+						<button className="m-angle__button btn-round btn-md" onClick={this.loginByButton} disabled={!this.state.isValid}>Log In</button>
 					</div>
 				</div>
 
