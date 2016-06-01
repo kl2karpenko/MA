@@ -15,6 +15,8 @@ function findNextTabStop(el) {
 	var universe = document.querySelectorAll('form[name=' + this.props.options.formName + '] input');
 	var list = Array.prototype.filter.call(universe, function(item) {return item.tabIndex >= "0"});
 	var index = list.indexOf(el);
+	console.log(list[index+1], 'element to focus on');
+
 	return list[index + 1] || list[0];
 }
 
@@ -42,6 +44,8 @@ export default class InputPinForm extends Component {
 	}
 
 	onChangePinValue(context, indexOfInput, inputValue) {
+		console.log('onChangePinValue', inputValue);
+
 		let pinValue = this.state.pinValue;
 
 		if (inputValue.target) {
@@ -77,8 +81,6 @@ export default class InputPinForm extends Component {
 	}
 
 	_setFocusedInput(context, index, e) {
-		console.log(this.keyBoardOptions);
-
 		if (this.keyBoardOptions) {
 			closeKeyboard();
 			context._setFocusedStyles(index);
