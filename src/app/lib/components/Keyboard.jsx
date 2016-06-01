@@ -1,14 +1,5 @@
 import React from 'react';
 
-function closeKeyboard() {
-	if (process.env.NODE_ENV === 'prod' && cordova && cordova.plugins) {
-		cordova.plugins.Keyboard.close();
-		cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-		cordova.plugins.Keyboard.isVisible = false;
-	}
-}
-
 export default class Keyboard extends React.Component {
 	constructor(props) {
 		super($.extend({
@@ -25,38 +16,30 @@ export default class Keyboard extends React.Component {
 	_setOneValue(number) {
 		let context = this.parent;
 
-		context.state.element.value = number;
+		console.log(context.state.element)
 
-		if (typeof this.props.options.onChange === "function") {
-			this.props.options.onChange( this, $(context.state.element).data('index'), number );
+		if (context.state.element) {
+			context.state.element.value = number;
+
+			if (typeof this.props.options.onChange === "function") {
+				this.props.options.onChange( this, $(context.state.element).data('index'), number );
+			}
 		}
-
-		closeKeyboard();
-		setTimeout(closeKeyboard, 0);
 	}
 
 	_setMultipleValues(number) {
 		let context = this.parent;
 		
 		context.state.element.value += number;
-
-		closeKeyboard();
-		setTimeout(closeKeyboard, 0);
 	}
 
 	_deleteValue() {
 		let context = this.parent;
 
 		context.state.element.value = context.state.element.value.slice(1, -1);
-
-		closeKeyboard();
-		setTimeout(closeKeyboard, 0);
 	}
 
 	render() {
-		closeKeyboard();
-		setTimeout(closeKeyboard, 0);
-
 		let method = this.props.options.multiple ? this._setMultipleValues : this._setOneValue;
 
 		return (

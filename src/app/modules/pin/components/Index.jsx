@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import schema from 'schema';
+import messenger from "messenger";
 
 import InputPinForm from 'components/InputPinForm.jsx';
 
@@ -36,31 +37,17 @@ export default class Index extends Component {
 		};
 	}
 
-	_getPinCodeValue() {
-		return this.state.pinValue.join("");
-	}
-
-	_setIfValidPinCodeState() {
-		let pinCode = this._getPinCodeValue();
-
-		this.setState({
-			isValid: pinCode.length === 5
-		});
-	}
-
 	_renderDialplanPage() {
-		this._checkPinCode()
+		schema.pin
+			.create({
+				'pin': this.state.pinValue.join("")
+			})
 			.then((res) => {
 				if(res) {
 					hashHistory.push('/dialplans');
+				} else {
+					messenger.error('Error, bad PIN code', res.status);
 				}
-			});
-	}
-
-	_checkPinCode() {
-		return schema.pin
-			.create({
-				'pin': this._getPinCodeValue()
 			});
 	}
 

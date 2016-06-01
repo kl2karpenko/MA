@@ -24,8 +24,20 @@ export default class InputPinForm extends Component {
 
 		this.parent = this.props.getParentContext();
 
+		this.state = {
+			additionalClass: [!!this.props.keyBoardOptions, false, false, false, false]
+		};
+
 		if (this.props.keyBoardOptions) {
 			this.props.keyBoardOptions.onChange = this.onChangePinValue.bind(this.parent);
+		}
+	}
+
+	componentWillMount() {
+		if (!this.parent.state.element) {
+			this.parent.setState({
+				element: document.querySelectorAll('form[name=' + this.props.options.formName + '] input')[0]
+			});
 		}
 	}
 
@@ -54,13 +66,33 @@ export default class InputPinForm extends Component {
 		findNextTabStop.bind(context)(this.state.element).focus();
 	}
 
-	_setFocusedInput(e) {
+	_setFocusedStyles(index) {
+		let additionalClass = [false, false, false, false, false];
+
+		additionalClass[index] = true;
+
+		this.setState({
+			additionalClass: additionalClass
+		});
+	}
+
+	_setFocusedInput(context, index, e) {
+		console.log(this.keyBoardOptions);
+
+		if (this.keyBoardOptions) {
+			closeKeyboard();
+			context._setFocusedStyles(index);
+		}
+
 		this.setState({
 			element: e.target
 		});
 
-		if(this.props.keyBoardOptions) {
-			closeKeyboard();
+		if (this.keyBoardOptions) {
+			$(e.target).blur();
+			document.activeElement.blur();
+			e.preventDefault();
+			return false;
 		}
 	}
 
@@ -75,9 +107,10 @@ export default class InputPinForm extends Component {
 								<div className="col-xs-3 l-pin__space" key={i}>
 									<div>
 										<input data-index={i} autoFocus={i===0} type={this.props.options.inputType} name="pin[]"
-										       onFocus={this._setFocusedInput.bind(this.parent)}
+										       onFocus={this._setFocusedInput.bind(this.parent, this, i)}
+										       required
 										       onChange={this.onChangePinValue.bind(this.parent, this, i)}
-										       className="l-pin__pinLetters"/>
+										       className={"l-pin__pinLetters" + (this.state.additionalClass[i] ? " focusedInput" : "")}/>
 									</div>
 								</div>
 							)}

@@ -34,12 +34,13 @@ class Item extends Component {
 	}
 
 	renderDialplan(dialplan) {
-		let currentDialplan = Dialplans.setCurrent(Dialplans['get' + dialplan]());
-
-		Dialplan.assignAttributes(currentDialplan);
+		Dialplans.setCurrent(Dialplans['get' + dialplan]());
+		Dialplan.assignAttributes(Dialplans.getCurrent());
 
 		this._changePreviousAndNextState();
 		hashHistory.push(Dialplans.getCurrentUrl());
+
+		// TODO: every time update data for dialplans on render it updateModelWithAttributes() from Model
 	}
 
 	static _getButtonClass(url) {
@@ -47,6 +48,8 @@ class Item extends Component {
 	}
 
 	render() {
+		console.log(Dialplans.Model, this.state);
+
 		return (
 			<div className="l-adaptive-wrapper">
 				<div className="l-adaptive l-fixed">

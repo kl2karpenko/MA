@@ -1,6 +1,6 @@
+import Index from './components/Index.jsx';
 import Item from './components/Item.jsx';
 import List from './components/List.jsx';
-import Index from './components/Index.jsx';
 
 module.exports = {
 	path: '/dialplans',

@@ -12,9 +12,8 @@ export default class Index extends Component {
 		// here take data from authorize
 		Session._getSessionData().then((authorizeInfo) => {
 			return authorizeInfo.session && authorizeInfo.session.user && authorizeInfo.session.user.id ? '/pin' : '/connect/main';
-		}).then((authorizeInfo) => {
-			// authorizeInfo
-			hashHistory.push('/connect/main');
+		}).then((appPath) => {
+			hashHistory.push(appPath);
 		});
 	}
 
