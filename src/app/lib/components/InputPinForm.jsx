@@ -77,8 +77,6 @@ export default class InputPinForm extends Component {
 	}
 
 	_setFocusedInput(context, index, e) {
-		console.log(this.keyBoardOptions);
-
 		if (this.keyBoardOptions) {
 			closeKeyboard();
 			context._setFocusedStyles(index);
@@ -106,7 +104,7 @@ export default class InputPinForm extends Component {
 							{[...Array(5)].map((x, i) =>
 								<div className="col-xs-3 l-pin__space" key={i}>
 									<div>
-										<input data-index={i} autoFocus={i===0} type={this.props.options.inputType} name="pin[]"
+										<input data-index={i} tabIndex={i} autoFocus={i===0} type={this.props.options.inputType} name="pin[]"
 										       onFocus={this._setFocusedInput.bind(this.parent, this, i)}
 										       required
 										       onChange={this.onChangePinValue.bind(this.parent, this, i)}

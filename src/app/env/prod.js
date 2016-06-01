@@ -21,7 +21,7 @@ function getAddressOfHost() {
 let isIOS = process.env.platformName === 'ios';
 
 let homeIPMac = 'http://192.168.4.186:8030';
-let workIPMac = 'http://192.168.4.52:8030';
+let workIPMac = 'http://192.168.4.58:8030';
 let workIPDesktop = 'http://192.168.4.42:8030';
 
 module.exports = $.extend(config, {
