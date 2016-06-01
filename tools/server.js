@@ -480,7 +480,7 @@ app.get('/ajax/session', function (req, res) {
 	res.send(isNotAuthorize);
 });
 
-app.get('/ajax/login', function (req, res) {
+app.post('/ajax/login', function (req, res) {
 	res.send({
 		'login': {
 			'user': {
@@ -515,7 +515,6 @@ app.get('/ajax/login', function (req, res) {
 			}
 		}
 	});
-	res.send(false);
 });
 
 app.get('/ajax/user/:userId/', function (req, res) {

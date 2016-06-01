@@ -47,7 +47,7 @@ export default class System {
 				}
 			]
 		};
-
+		
 		return this;
 	}
 

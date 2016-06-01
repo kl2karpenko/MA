@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
+import schema from 'schema';
+import messenger from "messenger";
+
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 import InputPinForm from 'components/InputPinForm.jsx';
 
@@ -14,15 +17,26 @@ export default class Pin extends Component {
 			element: ""
 		};
 
-		this.inputPinOptions = {
+		this.pinOptions = {
 			formName: 'connectPin',
 			name: "Enter the code",
-			inputType: "number"
+			inputType: "number",
+			onSubmit: this.connectByPin.bind(this)
 		};
 	}
 
-	loginByButton() {
-		hashHistory.push('/pin');
+	connectByPin() {
+		schema.login
+			.create({
+				'pin': this.state.pinValue
+			})
+			.then((res) => {
+				if(res) {
+					hashHistory.push('/pin');
+				} else {
+					messenger.error('Error, bad PIN code', res.status);
+				}
+			});
 	}
 
 	render() {
@@ -32,7 +46,7 @@ export default class Pin extends Component {
 					<div className="m-angle-wrapper">
 						<div className="l-pin-connect">
 							<InputPinForm
-								options={this.inputPinOptions}
+								options={this.pinOptions}
 								keyBoardOptions={false}
 								getParentContext={() => {
 			              return this;
@@ -40,7 +54,7 @@ export default class Pin extends Component {
 							/>
 						</div>
 
-						<button className="m-angle__button btn-round btn-md" onClick={this.loginByButton} disabled={!this.state.isValid}>Log In</button>
+						<button className="m-angle__button btn-round btn-md" onClick={this.connectByPin} data-form disabled={!this.state.isValid} form={this.pinOptions.formName}>Log In</button>
 					</div>
 				</div>
 

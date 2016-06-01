@@ -22,25 +22,24 @@ export default class Index extends Component {
 
 		this.formName = 'pinCheck';
 
-		this.keyBoardOptions = {
-			onSubmit: this._renderDialplanPage.bind(this),
-			multiple: false,
-			element: this.state.element,
-			formName: this.formName,
-			value: this.state.pinValue
-		};
-
-		this.inputPinOptions = {
+		this.pinOptions = {
 			formName: this.formName,
 			name: "Enter the pin",
-			inputType: "password"
+			inputType: "password",
+			onSubmit: this._renderDialplanPage.bind(this),
+			keyBoardOptions: {
+				multiple: false,
+				element: this.state.element,
+				formName: this.formName,
+				value: this.state.pinValue
+			}
 		};
 	}
 
 	_renderDialplanPage() {
 		schema.pin
 			.create({
-				'pin': this.state.pinValue.join("")
+				'pin': this.state.pinValue
 			})
 			.then((res) => {
 				if(res) {
@@ -56,8 +55,7 @@ export default class Index extends Component {
 			<div className="l-adaptive-wrapper">
 				<div className="l-adaptive">
 					<InputPinForm
-						options={this.inputPinOptions}
-						keyBoardOptions={this.keyBoardOptions}
+						options={this.pinOptions}
 						getParentContext={() => {
               return this;
             }}
