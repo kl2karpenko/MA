@@ -14,6 +14,12 @@ export default class Company extends Component {
 
 		this.actions = [
 			{
+				name: "Follow original dialplan",
+				info: "",
+				className: "",
+				value: "original"
+			},
+			{
 				name: "Forward to my mobile",
 				info: "+38093 403 23 79",
 				className: "",

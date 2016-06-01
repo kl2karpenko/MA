@@ -116,14 +116,16 @@ export default class InputPinForm extends Component {
 									/>
 
 									<div className="l-pin__form-read">
-										{[...Array(5)].map((x, i) =>
-											<div className="col-xs-3 l-pin__space" key={i}>
-												<div>
-													<input readOnly="true" value={this.parent.state.pinValue[i]} type={this.props.options.inputType}
-													       className={"l-pin__pinLetters" + (this.state.additionalClass[i] ? " focusedInput" : "")}/>
-												</div>
-											</div>
-										)}
+										<div className="row">
+											{[...Array(5)].map((x, i) =>
+													<div className="col-xs-3 l-pin__space" key={i}>
+														<div>
+															<input readOnly="true" value={this.parent.state.pinValue[i]} type={this.props.options.inputType}
+															       className={"l-pin__pinLetters" + (this.state.additionalClass[i] ? " focusedInput" : "")}/>
+														</div>
+													</div>
+											)}
+										</div>
 									</div>
 								</div>
 							</div>
