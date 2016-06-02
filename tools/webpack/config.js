@@ -5,6 +5,7 @@ const webpackConfig = require('./../env/config');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 // load plugins
 
 const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
@@ -56,8 +57,14 @@ module.exports = {
             }
         }),
 
+        new webpack.optimize.DedupePlugin(),
+
         new ExtractTextPlugin("[name].css")
     ],
+
+    postcss: function () {
+        return [precss, autoprefixer];
+    },
 
     resolve: {
         root: path.resolve(dirname),
@@ -84,7 +91,13 @@ module.exports = {
             },
 
             {
-                test: require.resolve("jquery"), loader: "expose?$!expose?jQuery"
+                test: /modernizr-custom\.js$/,
+                loader: "imports?this=>window!exports?window.Modernizr"
+            },
+
+            {
+                test: require.resolve("jquery"),
+                loader: "expose?$!expose?jQuery"
             },
 
             {
@@ -111,8 +124,8 @@ module.exports = {
             },
 
             {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+                test: /\.(less|css)$/,
+                loader: ExtractTextPlugin.extract("style?sourceMap", "css?sourceMap!autoprefixer?browsers=last 2 version!less")
             },
 
             {
