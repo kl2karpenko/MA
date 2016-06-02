@@ -6,6 +6,24 @@ const webpackConfig = require('./../env/config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+var fs = require("fs");
+var precss       = require('precss');
+var autoprefixer = require('autoprefixer');
+var postcss = require("postcss");
+var atImport = require("postcss-import");
+
+var less = fs.readFileSync("src/css/app.less", "utf8");
+
+postcss()
+  .use(atImport({
+      path: ["src/css"],
+      glob: true
+  }))
+  .process(less, { from: "src/css" })
+  .then(result => {
+      console.log('======= result ======');
+  });
+
 // load plugins
 
 const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
@@ -62,8 +80,15 @@ module.exports = {
         new ExtractTextPlugin("[name].css")
     ],
 
-    postcss: function () {
-        return [precss, autoprefixer];
+    postcss: function(webpack) {
+        return [
+            require('postcss-mixins'),
+            require('postcss-import')({
+                addDependencyTo: webpack
+            }),
+            require('autoprefixer'),
+            require('precss')
+        ]
     },
 
     resolve: {
@@ -125,7 +150,7 @@ module.exports = {
 
             {
                 test: /\.(less|css)$/,
-                loader: ExtractTextPlugin.extract("style?sourceMap", "css?sourceMap!autoprefixer?browsers=last 2 version!less")
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!less-loader")
             },
 
             {
@@ -133,6 +158,10 @@ module.exports = {
                 loader: 'babel-loader!react-templates-loader'
             }
         ]
+    },
+
+    postcss: function () {
+        return [precss, autoprefixer];
     }
 };
 

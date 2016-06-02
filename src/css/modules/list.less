@@ -36,7 +36,11 @@
         font-size: 2.1em;
         font-weight: 300;
         margin-bottom: 5px;
-        .text-overflow(50%);
+
+        white-space: nowrap;
+        max-height: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &:first-letter {
           text-transform: capitalize;

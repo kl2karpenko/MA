@@ -2,7 +2,7 @@
 @import "vendor/bootstrap.css";
 @import "vendor/toastr.min.css";
 
-@import "thm/main";
+@import "thm/main.less";
 
 html {
   height:100%;
@@ -87,25 +87,18 @@ body {
 
 @paddingDialplan: 5.333333333333334%;
 
-.text-overflow(@height) {
-  white-space: nowrap;
-  max-height: @height;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+@import "fluidable.less";
+@import "enterPage.less";
+@import "btn.less";
 
-@import "fluidable";
-@import "enterPage";
-@import "btn";
+@import "modules/angle.less";
+@import "modules/connect-slider.less";
+@import "modules/keyboard.less";
+@import "modules/list.less";
 
-@import "modules/angle";
-@import "modules/connect-slider";
-@import "modules/keyboard";
-@import "modules/list";
-
-@import "layouts/main";
-@import "layouts/pin";
-@import "layouts/adaptive";
-@import "layouts/fixed";
-@import "layouts/dialplan";
-@import "media/screen";
+@import "layouts/main.less";
+@import "layouts/pin.less";
+@import "layouts/adaptive.less";
+@import "layouts/fixed.less";
+@import "layouts/dialplan.less";
+@import "media/screen.less";
