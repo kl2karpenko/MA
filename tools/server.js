@@ -585,14 +585,14 @@ app.get('/ajax/dialplans', function (req, res) {
 			"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
 			"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
 			"type": "dialplan",
-			"title": "r ryjyt tju",
+			"title": "Support",
 			"personal": true,
-			"in_number": "255",
+			"ex_number": "+32 1 234 56 78",
 			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
 		}, {
 			"_id": "2",
 			"_rev": "5-4336a36f9211ec244b7bd14fbd5fb7f0",
-			"title": "1rule",
+			"title": "Elisa Doe",
 			"color": "turquoise",
 			"ext_id": "19457038ba53984e82fc6a1f8331466f",
 			"modified": {"t": 1464266189372, "Y": 2016, "M": 5, "D": 26, "h": 12, "m": 36, "s": 29, "z": "UTC"},
@@ -602,7 +602,7 @@ app.get('/ajax/dialplans', function (req, res) {
 				"action_id": "2678d8e9db15becc3397a47500dac7e0",
 				"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
 				"value": {
-					"label": "thhjhtyhtyjh",
+					"label": "Department Closed",
 					"short_code": "4",
 					"is_on": true
 				}
@@ -610,7 +610,7 @@ app.get('/ajax/dialplans', function (req, res) {
 				"action_id": "2678d8e9db15becc3397a47500dac7e0",
 				"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
 				"value": {
-					"label": "thhjhtyhtyjh",
+					"label": "Lunch Break",
 					"short_code": "4",
 					"is_on": true
 				}
@@ -626,7 +626,7 @@ app.get('/ajax/dialplans', function (req, res) {
 				"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
 				"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
 			}],
-			"in_number": "1234",
+			"in_number": "+32 1 456 78 98",
 			"ex_number": 31152026029,
 			"personal": false,
 			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
@@ -634,11 +634,11 @@ app.get('/ajax/dialplans', function (req, res) {
 			"_id": "3",
 			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
 			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-			"in_number": "77",
+			"in_number": "+38 050 414 41 51",
 			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
 			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
 			"type": "dialplan",
-			"title": "tthrth",
+			"title": "Karpenko Liliia",
 			"color": "red",
 			"personal": false,
 			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
@@ -652,7 +652,7 @@ app.get('/ajax/dialplans', function (req, res) {
 			"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
 			"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
 			"type": "dialplan",
-			"title": "1rule",
+			"title": "Studenyak Nastia",
 			"color": "turquoise",
 			"personal": false,
 			"ext_id": "19457038ba53984e82fc6a1f8331466f",
@@ -666,11 +666,71 @@ app.get('/ajax/dialplans', function (req, res) {
 			"_id": "5",
 			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
 			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-			"in_number": "77",
+			"in_number": "+38 093 403 23 79",
 			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
 			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
 			"type": "dialplan",
-			"title": "tthrth",
+			"title": "Kebal Ivan",
+			"personal": false,
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "6",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "+38 093 403 23 79",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "Rybachok Oleksandr",
+			"personal": false,
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "7",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "+38 093 403 23 79",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "Saiko Iryna",
+			"personal": false,
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "8",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "+38 093 403 23 79",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "Berladin Ewgeny",
+			"personal": false,
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "9",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "+38 093 403 23 79",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "Yurch Yuriy",
+			"personal": false,
+			"color": "red",
+			"ext_id": "19457038ba53984e82fc6a1f837c9c43"
+		}, {
+			"_id": "10",
+			"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+			"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+			"in_number": "+38 093 403 23 79",
+			"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+			"type": "dialplan",
+			"title": "Skorohliad Ivan",
 			"personal": false,
 			"color": "red",
 			"ext_id": "19457038ba53984e82fc6a1f837c9c43"

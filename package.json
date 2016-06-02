@@ -38,6 +38,7 @@
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "plist": "^1.2.0",
+    "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "precss": "^1.4.0",
     "react-templates": "^0.4.3",
