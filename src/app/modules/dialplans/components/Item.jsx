@@ -48,8 +48,6 @@ class Item extends Component {
 	}
 
 	render() {
-		console.log(Dialplans.Model, this.state);
-
 		return (
 			<div className="l-adaptive-wrapper">
 				<div className="l-adaptive l-fixed">

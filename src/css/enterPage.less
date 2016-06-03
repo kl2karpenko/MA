@@ -25,9 +25,15 @@
     top: 50%;
     right: 0;
 
-    z-index: 3;
+    z-index: 10001;
 
     text-align: center;
+
+    display: none;
+
+    #app.loading + & {
+      display: block;
+    }
 
     span {
       display: inline-block;
@@ -43,6 +49,25 @@
       &.active {
         opacity: 1;
       }
+
+      @iterations: 5;
+      .animationLoop (@i) when (@i > 0) {
+        &:nth-child(@{i}) {
+          animation: animateLoader ~"0.8@{i}s" linear infinite;
+        }
+        .animationLoop(@i - 1);
+      }
+
+      .animationLoop(@iterations);
     }
+  }
+}
+
+@keyframes animateLoader {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
