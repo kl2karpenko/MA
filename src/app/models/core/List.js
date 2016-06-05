@@ -1,9 +1,13 @@
 import schema from 'schema';
+import messenger from "messenger";
 
 class List {
 	constructor() {
 		this.Model = [];
+		
 		this.schema = schema;
+		this.messenger = messenger;
+
 		this.managedResource = this.constructor.name.toLowerCase();
 
 		this.isLoaded = false;

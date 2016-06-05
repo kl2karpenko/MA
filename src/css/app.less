@@ -52,36 +52,6 @@ body {
 
       z-index: 10000;
     }
-    &:after {
-      content: '';
-
-      position: absolute;
-      left: 50%;
-      top: 50%;
-
-      height: @loaderWH;
-      width: @loaderWH;
-      margin-left: -@loaderWH/2;
-      margin-top: -@loaderWH/2;
-
-      z-index: 9999;
-
-      background-image: url("../img/loader.png");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-
-      animation: animateLoader 2s infinite linear;
-    }
-  }
-}
-
-@keyframes animateLoader {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
 

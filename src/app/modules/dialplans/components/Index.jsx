@@ -26,8 +26,6 @@ export default class Index extends Component {
 					currentDialplan = Dialplans.findByField("_id", currentIdOfDialplan)
 				}
 
-				console.log(currentDialplan)
-
 				Dialplans
 					.setCurrent(currentDialplan);
 
