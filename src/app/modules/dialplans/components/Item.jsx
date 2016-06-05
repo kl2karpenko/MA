@@ -87,7 +87,7 @@ class Item extends Component {
 								</div>
 							</div>
 
-							<Link activeClassName="active" className="m-angle__button btn-round btn-sm btn-settings" to="/dialplans/list">
+							<Link activeClassName="active" className="m-angle__button btn-round btn-sm btn-list" to="/dialplans/list">
 								<img src={imageLoader(require("images/icons/list.png"))} alt="Right"/>
 							</Link>
 						</div>

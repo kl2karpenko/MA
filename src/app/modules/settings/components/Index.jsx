@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { hashHistory } from 'react-router';
+import { Link, hashHistory } from 'react-router';
+
+import imageLoader from 'lib/imageLoader';
 
 import Session from "models/Session";
 
@@ -8,21 +10,35 @@ export default class Index extends Component {
 		super(props);
 	}
 
-	componentWillMount() {
-		// here take data from authorize
-		Session._getSessionData().then((authorizeInfo) => {
-			let enterPage = authorizeInfo.session && authorizeInfo.session.user && authorizeInfo.session.user.id ? '/pin' : '/connect/main';
-			// TODO: delete settimeout
-			setTimeout(() => {
-				hashHistory.push(enterPage);
-			}, 0);
-		});
-	}
-
 	render() {
 		return (
-			<div>
-				Settings
+			<div className="l-adaptive-wrapper">
+				<div className="l-adaptive l-fixed">
+					<div className="m-angle">
+						<div className="m-angle-wrapper">
+							<div className="m-angle-content">
+								<div className="m-angle-top">
+									<div className="m-angle-name">
+										Settings
+									</div>
+								</div>
+							</div>
+
+							<Link activeClassName="active" className="m-angle__button btn-round btn-sm btn-list btn-round-grey" to="/dialplans/list">
+								<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
+							</Link>
+						</div>
+					</div>
+
+					<div className="l-main l-main-settings">
+						<div className="l-grey l-grey-md">
+							<div className="l-grey-header">
+								Password at login
+							</div>
+						</div>
+					</div>
+
+				</div>
 			</div>
 		);
 	}

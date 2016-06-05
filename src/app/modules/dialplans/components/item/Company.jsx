@@ -56,9 +56,9 @@ export default class Company extends Component {
 						<ul>
 							{this.actions.map((object, i) => {
 								return <li key={i} className={object.className}>
-									<label htmlFor={object.value}>
+									<label className="m-label m-radio" htmlFor={object.value}>
 										<input type="radio" name="personal" value={object.value} id={object.value} onChange={this.onChangeDialplanForward}/>
-										<div className="l-dialplan-radio"></div>
+										<div className="m-radio-button"></div>
 										<div className="l-dialplan-text">
 											<div className="l-dialplan-name">{object.name}</div>
 											<div className="l-dialplan-info">{object.info}</div>
@@ -71,16 +71,18 @@ export default class Company extends Component {
 					{(() => {
 						if(Dialplan.Model.actions && Dialplan.Model.actions.length) {
 							return <div>
-								<div className="l-dialplan-row">
-									Flow Control
+								<div className="l-grey">
+									<div className="l-grey-header">
+										Flow Control
+									</div>
 								</div>
 								<div className="l-dialplan__list">
 									<ul>
 										{Dialplan.Model.actions.map((object, i) => {
 											return <li key={i} className={object.className}>
-												<label htmlFor={"action_" + i}>
+												<label className="m-label m-checkbox" htmlFor={"action_" + i}>
 													<input type="checkbox" name="company[]" id={"action_" + i} onChange={this.onChangeFlowControl}/>
-													<div className="l-dialplan-check"></div>
+													<div className="m-checkbox-button"></div>
 													<div className="l-dialplan-text">
 														<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
 													</div>
