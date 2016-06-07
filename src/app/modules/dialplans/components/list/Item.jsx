@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
-import Dialplans from "models/Dialplans";
+import DialplanList from "models/DialplanList";
 import Dialplan from "models/Dialplan";
 
-class DialpanListItem extends Component {
+class DialplanListItem extends Component {
 	constructor(props) {
 		super(props);
 
@@ -14,14 +14,14 @@ class DialpanListItem extends Component {
 	}
 
 	goToItem(index) {
-		Dialplans
-			.setCurrent(Dialplans.Model[index]);
+		let currentDialplan = DialplanList.getModel()[index];
 
+		DialplanList
+			.setCurrent(currentDialplan);
 		Dialplan
-			.assignAttributes(Dialplans.getCurrent());
+			.assignAttributes(currentDialplan);
 
-		hashHistory
-			.push(Dialplans.getCurrentUrl());
+		hashHistory.push(DialplanList.getCurrentUrl());
 	}
 
 	render() {
@@ -37,4 +37,4 @@ class DialpanListItem extends Component {
 	}
 }
 
-module.exports = DialpanListItem;
+module.exports = DialplanListItem;

@@ -1,18 +1,20 @@
 .btn {
-  &-round {
-    outline: none;
-    border: 0;
-    display: inline-block;
+  outline: none;
+  border: 0;
+  display: inline-block;
+  text-align: center;
+  font-weight: 300;
+  text-decoration: none;
 
+  border-radius: 0;
+
+  &-round {
     box-shadow: 3px 0 10px rgba(0,0,0,0.2);
     text-transform: uppercase;
-    text-align: center;
 
     background-color: @LinkColor;
     border-radius: 50%;
     color: #fff;
-    text-decoration: none;
-    font-weight: 300;
 
     &-grey, &:disabled {
       background-color: @LinkColorDisabled;
@@ -27,7 +29,7 @@
     &.btn-md {
       width: 77px;
       height: 77px;
-      line-height: 77px;
+      line-height: 66px;
     }
 
     &:active, &:visited {
@@ -41,7 +43,7 @@
   }
 
   &-check {
-    background-image: url("../img/icons/check.png");
+    background-image: url("../../img/icons/check.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 50%;
@@ -51,10 +53,24 @@
     text-align: center;
 
     img {
-      max-width: 65%;
+      max-width: 80%;
       display: inline-block;
 
       margin-top: -12px;
     }
+  }
+
+  &-block {
+    display: block;
+    width: 100%;
+
+    &-lg {
+      height: 40px;
+      font-size: 1.4em;
+    }
+  }
+
+  &-disconnect {
+    margin-top: 20px;
   }
 }

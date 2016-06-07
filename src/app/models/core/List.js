@@ -1,60 +1,169 @@
 import schema from 'schema';
 import messenger from "messenger";
 
+let
+	defaultAttribute = '_id';
+
 class List {
+	/** ========================   Initialization   ============================== */
 	constructor() {
-		this.Model = [];
-		
-		this.schema = schema;
-		this.messenger = messenger;
+		if (typeof this.beforeInit === "function") {
+			this.beforeInit();
+		}
 
-		this.managedResource = this.constructor.name.toLowerCase();
+		this
+			.init();
 
-		this.isLoaded = false;
+		this
+			.notLoaded()
+			._defineModel()
+			._setMainResources();
 
-		this.init();
+		if (typeof this.afterInit === "function") {
+			this.afterInit();
+		}
 	}
 
 	init() {
-
+		return this;
 	}
+	/** ========================   Initialization   ============================== */
 
+	/** ========================   Static helpers   ============================== */
 	static _getRandomHash() {
 		return Math.random().toString(36).substring(7);
 	}
+	/** ========================   Static helpers   ============================== */
 
-	assignAttributes(props) {
-		let defaultAttributes = this._getDefaultAttributes();
-
-		props.forEach((item, index) => {
-			this.Model[index] = {};
-
-			this.assignAttributesTo(this.Model[index], $.extend(true, {}, defaultAttributes, item));
-		});
-
-		this.isLoaded = true;
+	/** ========================   Change state   ============================== */
+	isLoaded() {
+		this.loading = true;
 
 		return this;
 	}
 
-	assignAttributesTo(model, attributes) {
-		return $.extend(true, model, attributes);
+	notLoaded() {
+		this.loading = false;
+
+		return this;
+	}
+	/** ========================   Change state   ============================== */
+
+	/** ========================   Setters   ============================== */
+	_setMainResources() {
+		this.schema = schema;
+		this.messenger = messenger;
+		this.managedResource = this.managedResource || this.constructor.name.toLowerCase();
+
+		return this;
 	}
 
-	updateWithAttributes(attributes) {
-		return this.assignAttributesTo(this.Model, attributes);
+	_defineModel() {
+		this[this._getModelName()] = [];
+
+		return this;
+	}
+	
+	setCurrent(current) {
+		this.active = current;
+		return this;
+	}
+	/** ========================   Setters   ============================== */
+
+	/** ========================   Getters   ============================== */
+	getModel() {
+		return this[this._getModelName()];
 	}
 
-	updateModelWithAttributes(modelIndex, attributes) {
-		return this.assignAttributesTo(this.Model[modelIndex], attributes);
+	_getModelName() {
+		return this.managedResource;
+	}
+
+	_getRecourseName() {
+		return this.schema[this._getModelName()];
 	}
 
 	_getDefaultAttributes() {
-		let defaults = this['_default' + this.constructor.name + 'Item'];
+		let
+			defNameCapitalize = this._getModelName().charAt(0).toUpperCase() + this._getModelName().slice(1),
+			defaults = this['_default' + defNameCapitalize + 'Item'];
 
 		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
 	}
 
+	getFirst() {
+		return this.getModel()[0];
+	}
+
+	getLast() {
+		return this.getModel()[this.getModel().length - 1];
+	}
+
+	getPrevious() {
+		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
+
+		return this.getModel()[currentIndex - 1];
+	}
+
+	getNext() {
+		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
+
+		return this.getModel()[currentIndex + 1];
+	}
+
+	getCurrent() {
+		return this.active;
+	}
+
+	getIndexOf(item) {
+		return this.getModel().indexOf(item);
+	}
+
+	findByField(fieldName, valueOfField, returnVal) {
+		let findValues = this.getModel().filter((item) => {
+			return item[fieldName] === valueOfField ? item[returnVal || defaultAttribute] : false;
+		});
+
+		if (findValues.length > 1) {
+
+		} else {
+			return returnVal ? findValues[0][returnVal] : findValues[0];
+		}
+	}
+	/** ========================   Getters   ============================== */
+
+	/** ========================   Data asigning   ============================== */
+	assignAttributes(props) {
+		let
+			defaultAttributes = this._getDefaultAttributes(),
+			defaultModel = this.getModel();
+
+		props.forEach((item, index) => {
+			defaultModel[index] = {};
+
+			this.assignAttributesTo(defaultModel[index], $.extend(true, {}, defaultAttributes, item));
+		});
+
+		this.isLoaded();
+		return this;
+	}
+
+	assignAttributesTo(model, attributes) {
+		$.extend(true, model, attributes);
+
+		return this;
+	}
+
+	updateWithAttributes(attributes) {
+		return this.assignAttributesTo(this.getModel(), attributes);
+	}
+
+	updateModelWithAttributes(modelIndex, attributes) {
+		return this.assignAttributesTo(this.getModel()[modelIndex], attributes);
+	}
+	/** ========================   Data asigning   ============================== */
+
+	/** ========================   Load resources   ============================== */
 	update(options) {
 		return this.load(options);
 	}
@@ -79,51 +188,7 @@ class List {
 			return this;
 		});
 	}
-
-	findByField(fieldName, valueOfField, returnVal) {		
-		let findValues = this.Model.filter((item) => {
-			return item[fieldName] === valueOfField ? item[returnVal || "_id"] : false;
-		});
-
-		if (findValues.length > 1) {
-
-		} else {
-			return returnVal ? findValues[0][returnVal] : findValues[0];
-		}
-	}
-
-	getFirst() {
-		return this.Model[0];
-	}
-
-	getLast() {
-		return this.Model[this.Model.length - 1];
-	}
-
-	getPrevious() {
-		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
-
-		return this.Model[currentIndex - 1];
-	}
-
-	getNext() {
-		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
-
-		return this.Model[currentIndex + 1];
-	}
-
-	getCurrent() {
-		return this.active;
-	}
-
-	setCurrent(current) {
-		this.active = current;
-		return this;
-	}
-
-	getIndexOf(item) {
-		return this.Model.indexOf(item);
-	}
+	/** ========================   Load resources   ============================== */
 }
 
 module.exports = List;

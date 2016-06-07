@@ -47,14 +47,13 @@ class Dialplan extends Model {
 	}
 
 	assignAttributes(props) {
-		let defaultAttributes = this._getDefaultAttributes();
+		super.assignAttributes(props);
 
-		this.Model = defaultAttributes;
+		let
+			defaultModel = this.getModel();
 
-		$.extend(true, this.Model, defaultAttributes, props);
-
-		if (this.Model.actions) {
-			this.Model.actions = this.Model.actions.filter((action) => {
+		if (defaultModel.actions) {
+			defaultModel.actions = defaultModel.actions.filter((action) => {
 				return action.action_id === Actions.flowControlId && action;
 			});
 		}

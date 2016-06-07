@@ -1,21 +1,24 @@
 @import "normalize.css";
 @import "vendor/bootstrap.css";
 @import "vendor/toastr.min.css";
+/** vendor files and plugins =========================== */
 
+/** main theme of app =========================== */
 @import "thm/main.less";
+/** main theme of app =========================== */
 
 html {
   height:100%;
   min-height:100%;
 
-  -webkit-text-size-adjust:none;
-  text-size-adjust:none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 
   font-size: 26px;
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   height: 100%;
 
   min-width: 320px;
@@ -55,22 +58,36 @@ body {
   }
 }
 
-@paddingDialplan: 5.333333333333334%;
+@paddingContent: 5.333333333333334%;
 
+/** pages =========================== */
 @import "fluidable.less";
 @import "enterPage.less";
-@import "btn.less";
+/** pages =========================== */
 
+/** modules =========================== */
 @import "modules/angle.less";
 @import "modules/connect-slider.less";
 @import "modules/keyboard.less";
 @import "modules/list.less";
-@import "modules/check.less";
+/** modules =========================== */
 
+/** layouts =========================== */
 @import "layouts/main.less";
 @import "layouts/pin.less";
 @import "layouts/adaptive.less";
 @import "layouts/fixed.less";
 @import "layouts/dialplan.less";
 @import "layouts/grey.less";
+@import "layouts/settings.less";
+/** layouts =========================== */
+
+/** features =========================== */
+@import "features/check.less";
+@import "features/btn.less";
+@import "features/input.less";
+/** features =========================== */
+
+/** media =========================== */
 @import "media/screen.less";
+/** media =========================== */

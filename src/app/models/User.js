@@ -7,6 +7,9 @@ class User extends Model {
 		this.resources = {
 			dialplan: this.schema.user.dialplan
 		};
+
+
+		return Model.prototype.init();
 	}
 
 	_defaultUser() {

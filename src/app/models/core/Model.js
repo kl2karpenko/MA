@@ -1,56 +1,134 @@
 import schema from 'schema';
 import messenger from "messenger";
 
+let
+	defaultAttribute = '_id';
+
 export default class Model {
+	/** ========================   Initialization   ============================== */
 	constructor(props) {
-		this.Model = {};
-		this.assignAttributes(props);
+		if (typeof this.beforeInit === "function") {
+			this.beforeInit();
+		}
 
-		this.schema = schema;
-		this.messenger = messenger;
-		this.managedResource = this.constructor.name.toLowerCase();
+		this
+			.init();
 
-		this.isLoaded = false;
+		this
+			.notLoaded()
+			._defineModelName()
+			._setMainResources()
+			.assignAttributes(props);
 
-		this.init();
+		if (typeof this.afterInit === "function") {
+			this.afterInit();
+		}
 	}
 
 	init() {
-
+		return this;
 	}
+	/** ========================   Initialization   ============================== */
 
+	/** ========================   Static helpers   ============================== */
 	static _getRandomHash() {
 		return Math.random().toString(36).substring(7);
 	}
 
+	static _getDefaults(pathName) {
+		let
+			defName = (pathName ? pathName : this._getModelName()),
+			defNameCapitalize = defName.charAt(0).toUpperCase() + defName.slice(1),
+			defaults = this['_default' + defNameCapitalize];
+
+		return defaults && typeof defaults === "function" ? defaults.bind(this)() : $.extend({}, defaults);
+	}
+	/** ========================   Static helpers   ============================== */
+
+	/** ========================   Change state   ============================== */
+	isLoaded() {
+		this.loading = true;
+
+		return this;
+	}
+
+	notLoaded() {
+		this.loading = false;
+
+		return this;
+	}
+	/** ========================   Change state   ============================== */
+	
+	/** ========================   Setters   ============================== */
+	_setMainResources() {
+		this.schema = schema;
+		this.messenger = messenger;
+		this.managedResource = this.managedResource || this.constructor.name.toLowerCase();
+
+		return this;
+	}
+
+	_defineModelName() {
+		this[this._getModelName()] = {};
+
+		return this;
+	}
+	/** ========================   Setters   ============================== */
+
+	/** ========================   Getters   ============================== */
+	getModel() {
+		return this[this._getModelName()];
+	}
+
+	_getModelName() {
+		return this.managedResource;
+	}
+
+	_getRecourseName() {
+		return this.schema[this._getModelName()];
+	}
+
+	_getRecourseByName(name) {
+		return this.schema[this._getModelName()][name];
+	}
+
+	_getDefaultAttributes() {
+		return Model._getDefaults.bind(this)();
+	}
+
+	_getDefaultAttributesByPath(path) {
+		return Model._getDefaults.bind(this)(path);
+	}
+	/** ========================   Getters   ============================== */
+
+	/** ========================   Data asigning   ============================== */
 	assignAttributes(props) {
-		let defaultAttributes = this._getDefaultAttributes();
+		let
+			defaultAttributes = this._getDefaultAttributes(),
+			defaultModel = this.getModel();
 
-		this.Model = defaultAttributes;
-		$.extend(true, this.Model, defaultAttributes, props);
+		Object.keys(defaultModel).forEach((name)=> {
+			defaultModel[name] = defaultAttributes[name];
+		});
 
-		this.isLoaded = true;
+		$.extend(true, defaultModel, props);
+
+		this.isLoaded();
 
 		return this;
 	}
 
 	assignAttributesTo(path, attributes) {
-		this.Model[path] = this._getDefaultAttributesByPath(path);
-		return $.extend(true, this.Model[path], attributes);
+		let
+			defaultModel = this.getModel();
+
+		$.extend(true, defaultModel[path], this._getDefaultAttributesByPath(path), attributes);
+
+		return this.isLoaded();
 	}
+	/** ========================   Data asigning   ============================== */
 
-	_getDefaultAttributes() {
-		let defaults = this['_default' + this.constructor.name];
-
-		return defaults && typeof defaults === "function" ? defaults.bind(this)() : $.extend({}, defaults);
-	}
-
-	_getDefaultAttributesByPath(path) {
-		let defaults = this['_default' + path];
-
-		return defaults && typeof defaults === "function" ? defaults.bind(this)() : $.extend({}, defaults);
-	}
-
+	/** ========================   Load resources   ============================== */
 	update(options) {
 		return this.load(options);
 	}
@@ -58,10 +136,11 @@ export default class Model {
 	load(options) {
 		options = options || {};
 
-		let name = this.managedResource;
-		let resource = this.schema[name];
-		let readMethod = options.method || 'read';
-		let params = [];
+		let
+			name = this._getModelName(),
+			resource = this._getRecourseName(),
+			readMethod = options.method || 'read',
+			params = [];
 
 		if (options.id) {
 			params.push(options.id);
@@ -79,11 +158,12 @@ export default class Model {
 		});
 	}
 
-	loadCollection(name, options) {
-		let resource = options.from || this.schema[this.managedResource][name];
-		let readMethod = options.method || 'read';
-		let params = [];
-		let path = options.to;
+	loadCollection(options) {
+		let
+			resource = options.from || this._getRecourseByName(),
+			readMethod = options.method || 'read',
+			params = [],
+			path = options.to;
 
 		if (options.id) {
 			params.push(options.id);
@@ -102,4 +182,5 @@ export default class Model {
 			return this;
 		});
 	}
+	/** ========================   Load resources   ============================== */
 }

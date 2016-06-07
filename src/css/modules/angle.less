@@ -8,6 +8,10 @@
   transform: rotate(-10deg);
   z-index: 4;
 
+  &-name {
+    font-size: 1.2em;
+  }
+
   &-wrapper {
     transform: rotate(10deg);
 
@@ -85,7 +89,7 @@
 
     &.btn-list {
       left: auto;
-      right: @paddingDialplan;
+      right: @paddingContent;
       transform: translateX(0%);
       margin-bottom: 0 !important;
     }
@@ -98,10 +102,12 @@
 
   &-content {
     position: absolute;
-    left: @paddingDialplan;
-    right: @paddingDialplan;
+    left: @paddingContent;
+    right: @paddingContent;
 
     height: 100%;
+
+    z-index: 3;
   }
 
   &__arrows {
@@ -119,8 +125,8 @@
 
   &-info {
     position: absolute;
-    left: @paddingDialplan;
-    right: @paddingDialplan;
+    left: @paddingContent;
+    right: @paddingContent;
 
     transform: translate(0, -50%);
     top: 50%;
@@ -130,7 +136,7 @@
 
     &-photo {
       width: 20%;
-      margin: 0 @paddingDialplan;
+      margin: 0 @paddingContent;
       float: left;
 
       img {
@@ -198,7 +204,7 @@
     position: relative;
     right: 0;
     left: 0;
-    top: 14.322834645669293%;
+    top: 9.322835%;
 
     text-align: left;
     color: #fff;
