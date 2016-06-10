@@ -9,11 +9,13 @@ export default class Keyboard extends React.Component {
 			multiple: false,
 			formName: ''
 		}, props.options));
+
 		this.state = {
 			value: props.options.value
 		};
 
 		this.parent = props.getParentContext();
+		console.log(this.parent);
 	}
 
 	_setValues(number) {

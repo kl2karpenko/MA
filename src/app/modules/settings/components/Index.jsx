@@ -3,11 +3,21 @@ import { Link, hashHistory } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
-import Session from "models/Session";
+import Keyboard from 'components/Keyboard.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			isValid: false,
+			pinValue: "",
+			element: ""
+		};
+
+		this.keyBoardOptions = {
+
+		}
 	}
 
 	render() {
@@ -67,17 +77,18 @@ export default class Index extends Component {
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<div className="l-keyboard">
-						<Keyboard
-							options={{
-								
-							}}
-							getParentContext={() => {
-			          return this;
-			        }}
-						/>
-					</div>
+
+				<div className="l-keyboard l-keyboard-fixed">
+					<Keyboard
+						options={{
+
+									}}
+						getParentContext={() => {
+					          return this;
+					        }}
+					/>
 				</div>
 			</div>
 		);
