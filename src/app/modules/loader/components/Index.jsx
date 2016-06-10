@@ -19,7 +19,7 @@ export default class Index extends Component {
 
 	render() {
 		return (
-			<div className="app-enterPage"></div>
+			<div className="app-loadBlock"></div>
 		);
 	}
 }

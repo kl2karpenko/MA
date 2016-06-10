@@ -15,7 +15,7 @@ export default class Qr extends Component {
 			<div className="l-adaptive">
 				<div className="m-angle main qr-code">
 					<div className="m-angle-wrapper">
-						<Link className="m-angle__button btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
+						<Link className="m-angle__button btn btn-round btn-md btn-round-grey" to="/connect/main">Cancel</Link>
 					</div>
 				</div>
 

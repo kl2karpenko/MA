@@ -9,28 +9,38 @@ export default class Keyboard extends React.Component {
 			multiple: false,
 			formName: ''
 		}, props.options));
+		this.state = {
+			value: props.options.value
+		};
 
 		this.parent = props.getParentContext();
 	}
 
 	_setValues(number) {
-		let context = this.parent;
 
-		if (context.state.pinValue !== undefined) {
-			context.state.pinValue += number;
+		if (this.state.value !== undefined) {
+
+			console.log(this.state.value + number);
+			this.setState({
+				value: this.state.value + number
+			});
 
 			if (typeof this.props.options.onChange === "function") {
-				this.props.options.onChange( context.state.pinValue );
+				this.props.options.onChange(this.state.value);
 			}
 		}
 	}
 
 	_deleteValue() {
-		let context = this.parent;
-		context.state.pinValue = context.state.pinValue.slice(0, -1);
+		// let context = this.parent;
+		// context.state.pinValue = context.state.pinValue.slice(0, -1);
+
+		this.setState({
+			value: this.state.value.slice(0, -1)
+		});
 
 		if (typeof this.props.options.onChange === "function") {
-			this.props.options.onChange( context.state.pinValue );
+			this.props.options.onChange( this.state.value );
 		}
 	}
 
@@ -55,7 +65,7 @@ export default class Keyboard extends React.Component {
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
 						<div className="m-keyboard__key buttons">
-							<button className="btn-round btn-sm btn-check"
+							<button className="btn btn-round btn-sm btn-check"
 							        disabled={!(this.parent).state.isValid}
 							        onClick={this.props.options.onSubmit}></button>
 						</div>

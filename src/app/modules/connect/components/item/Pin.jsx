@@ -13,7 +13,7 @@ export default class Pin extends Component {
 
 		this.state = {
 			isValid: false,
-			pinValue: [],
+			pinValue: "",
 			element: ""
 		};
 
@@ -23,6 +23,10 @@ export default class Pin extends Component {
 			inputType: "number",
 			onSubmit: this.connectByPin.bind(this)
 		};
+
+		this.keyBoardOptions = {
+			value: this.state.pinValue
+		}
 	}
 
 	connectByPin() {
@@ -47,14 +51,14 @@ export default class Pin extends Component {
 						<div className="l-pin-connect">
 							<InputPinForm
 								options={this.pinOptions}
-								keyBoardOptions={false}
+								keyBoardOptions={this.keyBoardOptions}
 								getParentContext={() => {
 			              return this;
 		            }}
 							/>
 						</div>
 
-						<button className="m-angle__button btn-round btn-md" onClick={this.connectByPin} data-form disabled={!this.state.isValid} form={this.pinOptions.formName}>Log In</button>
+						<button className="m-angle__button btn btn-round btn-md" onClick={this.connectByPin} data-form disabled={!this.state.isValid} form={this.pinOptions.formName}>Log In</button>
 					</div>
 				</div>
 

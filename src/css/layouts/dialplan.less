@@ -1,9 +1,5 @@
 .l {
   &-dialplan {
-    overflow: scroll;
-
-    vertical-align: middle;
-
     &-name {
       font-size: 1.2em;
       color: #1d1d26;
@@ -23,69 +19,7 @@
       text-align: left;
     }
 
-    &-radio {
-      display: inline-block;
-      content: '';
-      width: 50px;
-      height: 50px;
-      border: 1px solid #f2f2f2;
-      border-radius: 50%;
-    }
-
-    &-check {
-      display: inline-block;
-      content: '';
-      width: 50px;
-      height: 50px;
-
-      position: relative;
-
-      &:before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        left: 0;
-
-        background-color: #dedee0;
-        top: 15px;
-        bottom: 15px;
-        border-radius: 15px;
-      }
-
-      &:after {
-        content: "";
-        position: absolute;
-
-        background-color: #bebec1;
-        left: 0;
-
-        width: 26px;
-        height: 26px;
-
-        top: 50%;
-
-        transform: translateY(-50%);
-
-        border-radius: 50%;
-      }
-    }
-    
-    &-row {
-      text-transform: uppercase;
-      font-size: 0.85em;
-      color: #000;
-
-      background-color: #ededed;
-
-      padding: 10px @paddingDialplan;
-
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-
     &__list {
-      padding: 0 @paddingDialplan;
-
       ul, li {
         list-style-type: none;
         margin: 0;
@@ -100,42 +34,6 @@
           background-position: center right;
           background-size: 8%;
           background-repeat: no-repeat;
-        }
-
-        label {
-          display: block;
-
-          input {
-            visibility: hidden;
-            opacity: 0;
-            width: 0;
-            height: 0;
-
-            &:checked {
-              & + .l-dialplan-radio {
-                background-color: @ActiveColor;
-                background-image: url("../../img/icons/check.png");
-                background-position: center;
-                background-size: 60%;
-                background-repeat: no-repeat;
-                border: #fff;
-              }
-              & + .l-dialplan-check {
-                &:before {
-                  background-color: @ActiveColorLight;
-                }
-                &:after {
-                  background-color: @ActiveColor;
-                  right: 0;
-                  left: auto;
-                }
-              }
-
-              & ~ .l-dialplan-radio * {
-                color: @ActiveColor;
-              }
-            }
-          }
         }
 
         &:first-child {

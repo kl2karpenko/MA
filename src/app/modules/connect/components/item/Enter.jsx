@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import imageLoader from 'lib/imageLoader';
-
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 
 export default class Enter extends Component {
@@ -17,7 +15,7 @@ export default class Enter extends Component {
 					<div className="m-angle-wrapper">
 						<h2 className="m-angle__header">Scan QR code</h2>
 
-						<Link activeClassName="active" className="m-angle__button btn-round btn-md" to="/connect/qr">Start</Link>
+						<Link activeClassName="active" className="m-angle__button btn btn-round btn-md" to="/connect/qr">Start</Link>
 					</div>
 				</div>
 

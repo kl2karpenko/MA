@@ -17,8 +17,9 @@ class Session extends Model {
 	}
 
 	_getSessionData() {
-		let userID = this.Model.user && this.Model.user.id || null;
-		// here take data from authorize
+		let
+			defaultModel = this.getModel(),
+			userID = defaultModel.user && defaultModel.user.id || null;
 
 		return this.load({
 			id: userID
@@ -26,7 +27,7 @@ class Session extends Model {
 	}
 }
 
-let session = new Session();
+const session = new Session();
 
 module.exports = (() => {
 	return session;

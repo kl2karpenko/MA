@@ -9,15 +9,28 @@
       width: 80px;
       height: 80px;
       line-height: 80px;
-      &.btn-settings {
+      &.btn-list {
         margin-bottom: -40px;
       }
     }
     &-round.btn-md {
       width: 110px;
       height: 110px;
-      line-height: 110px;
+      line-height: 99px;
       margin-bottom: -55px;
+    }
+
+    &-block {
+      &-lg {
+        height: 70px;
+        line-height: 58px;
+      }
+    }
+  }
+
+  .input {
+    &-custom {
+      height: 80px;
     }
   }
 
@@ -45,29 +58,38 @@
       }
   }
 
+  .radio-button,
+  .checkbox-button {
+    width: 80px;
+    height: 80px;
+  }
+  .checkbox-button {
+    .l-grey-md & {
+      margin-top: -10px;
+    }
+    &:before {
+      top: 25px;
+      bottom: 25px;
+    }
+
+    &:after {
+      width: 45px;
+      height: 45px;
+    }
+  }
+
   .l {
+    &-settings {
+      &-group {
+        margin-bottom: 40px;
+      }
+    }
+
     &-dialplan {
       overflow: scroll;
 
       &-text {
         left: 100px;
-      }
-
-      &-radio,
-      &-check {
-        width: 80px;
-        height: 80px;
-      }
-      &-check {
-        &:before {
-          top: 25px;
-          bottom: 25px;
-        }
-
-        &:after {
-          width: 45px;
-          height: 45px;
-        }
       }
 
       &-row {
@@ -87,7 +109,31 @@
     &-adaptive {
       .m-angle {
         height: 40.481259%;
+
+        min-height: 350px;
       }
+
+      &-sm {
+        .m-angle.l-fixed {
+          height: 24.814814814814813%;
+        }
+      }
+    }
+
+    &-fixed {
+      .m-angle {
+        &-wrapper {
+          padding-top: 40px;
+
+          &:before {
+            height: 40px;
+          }
+        }
+      }
+    }
+
+    &-grey.l-grey-md {
+      line-height: 65px;
     }
   }
   /* MODULES */

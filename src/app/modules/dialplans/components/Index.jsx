@@ -3,14 +3,14 @@ import { hashHistory } from 'react-router';
 
 import Session from "models/Session";
 import Dialplan from "models/Dialplan";
-import Dialplans from "models/Dialplans";
+import DialplanList from "models/DialplanList";
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			isLoaded: false
+			loading: true
 		};
 	}
 
@@ -19,42 +19,49 @@ export default class Index extends Component {
 			._loadResources()
 			.done(() => {
 				let
-					currentIdOfDialplan = this.props.params.id,
-					currentDialplan = Dialplans.getFirst();
+					currentDialplan = Index._getCurrentDialplan(this.props.params.id);
 
-				if (currentIdOfDialplan) {
-					currentDialplan = Dialplans.findByField("_id", currentIdOfDialplan)
-				}
-
-				Dialplans
-					.setCurrent(currentDialplan);
-
-				Dialplan
-					.assignAttributes(currentDialplan);
+				Index._setCurrentDialplanFrom(currentDialplan);
 
 				this.setState({
-					isLoaded: true
+					loading: false
 				});
 
-				hashHistory.replace(Dialplans.getUrl(currentDialplan));
+				hashHistory.replace(DialplanList.getUrl(currentDialplan));
 			});
+	}
+
+	static _setCurrentDialplanFrom(currentDialplan) {
+		DialplanList
+			.setCurrent(currentDialplan);
+
+		Dialplan
+			.assignAttributes(currentDialplan);
+	}
+
+	static _getCurrentDialplan(currentDialplanId) {
+		if (!currentDialplanId) {
+			return DialplanList.getFirst();
+		}
+
+		return DialplanList.findByField("_id", currentDialplanId);
 	}
 
 	_loadResources() {
 		return Session
 			._getSessionData()
-			.then(Dialplans.load.bind(Dialplans));
+			.then(DialplanList.load.bind(DialplanList));
 	}
 
 	render() {
 		return (
 			<div style={{height: "100%"}}>
 				{(() => {
-					if (this.state.isLoaded) {
+					if (!this.state.loading) {
 						return this.props.children;
 					} else {
 						// TODO: create loader!!!!!!! for when load smth add it to screen
-						return <div>Loading</div>;
+						return <div className="app-loadBlock"></div>;
 					}
 				})()}
 			</div>

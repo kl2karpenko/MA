@@ -2,4 +2,5 @@
 2. Download font to local dir
 3. Check hooks didn't run webpack before build, think why
 5. Create models for React components that will work with data from server
-6. Add swipe gestures to connect page and list of dialplans page
+6. Add swipe gestures to connect page and list of dialplans page5. Create models for React components that will work with data from server
+6. Add permissions for user to get now if he has access to dialplans

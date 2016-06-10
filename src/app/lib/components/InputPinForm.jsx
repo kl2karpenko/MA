@@ -90,6 +90,8 @@ export default class InputPinForm extends Component {
 			additionalClass: InputPinForm._setCurrentFocusedInputTo(pinValueLen - 1)
 		});
 
+		console.log(inputValue, 'inputValue')
+
 		context._changePinStateValues.bind(this)(inputValue, pinValueLen === validPinLength);
 		context._checkIfValidPinCode.bind(context)(pinValueLen === validPinLength);
 	}

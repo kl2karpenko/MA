@@ -17,7 +17,7 @@ export default class Index extends Component {
 		this.state = {
 			isValid: false,
 			element: "",
-			pinValue: []
+			pinValue: ""
 		};
 
 		this.formName = 'pinCheck';
