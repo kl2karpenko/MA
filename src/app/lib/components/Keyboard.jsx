@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class Keyboard extends React.Component {
+export class Keyboard extends Component {
 	constructor(props) {
 		super($.extend({
 			onSubmit: null,
@@ -15,35 +15,59 @@ export default class Keyboard extends React.Component {
 		};
 
 		this.parent = props.getParentContext();
-		console.log(this.parent);
+	}
+
+	/* call on change props in parent scope */
+	componentWillReceiveProps(props) {
+		this.setState({
+			value: props.options.value
+		});
 	}
 
 	_setValues(number) {
+		let
+			newVal = this.state.value,
+			onChange = this.props.options.onChange;
 
-		if (this.state.value !== undefined) {
+		if (newVal !== undefined) {
+			newVal += number;
 
-			console.log(this.state.value + number);
 			this.setState({
-				value: this.state.value + number
+				value: newVal
 			});
 
-			if (typeof this.props.options.onChange === "function") {
-				this.props.options.onChange(this.state.value);
+			if (typeof onChange === "function") {
+				onChange.bind(this.parent)(newVal);
 			}
 		}
 	}
 
 	_deleteValue() {
-		// let context = this.parent;
-		// context.state.pinValue = context.state.pinValue.slice(0, -1);
+		let
+			onChange = this.props.options.onChange;
 
 		this.setState({
 			value: this.state.value.slice(0, -1)
 		});
 
-		if (typeof this.props.options.onChange === "function") {
-			this.props.options.onChange( this.state.value );
+		if (typeof onChange === "function") {
+			onChange.bind(this.parent)(this.state.value);
 		}
+	}
+	
+	static closeKeyBoard(e) {
+		if (process.env.NODE_ENV === 'prod' && cordova && cordova.plugins) {
+			cordova.plugins.Keyboard.close();
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
+			cordova.plugins.Keyboard.isVisible = false;
+		}
+
+		$(e.target).blur();
+		document.activeElement.blur();
+
+		e.preventDefault();
+		return false;
 	}
 
 	render() {
@@ -76,4 +100,11 @@ export default class Keyboard extends React.Component {
 			</div>
 		);
 	}
+}
+
+export function setCurrentFocusedInputTo(amount, index) {
+	let arrayOfFocusedClasses = new Array(amount).fill(false);
+	arrayOfFocusedClasses[index] = true;
+
+	return arrayOfFocusedClasses;
 }

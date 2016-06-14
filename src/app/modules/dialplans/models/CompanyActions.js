@@ -1,6 +1,6 @@
 import List from 'List';
 
-class PersonalActions extends List {
+class CompanyActions extends List {
 	init() {
 		this.managedResource = 'personalActions';
 	}
@@ -26,9 +26,9 @@ class PersonalActions extends List {
 				is_on: false
 			},
 			{
-				name: "Forward to my voicemail",
+				name: "Forward to voicemail",
 				info: "",
-				className: "",
+				className: "with-search",
 				value: "voicemail",
 				is_on: false
 			},
@@ -42,7 +42,7 @@ class PersonalActions extends List {
 		];
 	}
 
-	_defaultPersonalActionsItem() {
+	_defaultCompanyActionsItem() {
 		return {
 			name: "",
 			info: "",
@@ -53,7 +53,7 @@ class PersonalActions extends List {
 	}
 }
 
-let instance = new PersonalActions();
+let instance = new CompanyActions();
 
 module.exports = (() => {
 	return instance;

@@ -41,6 +41,8 @@
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "precss": "^1.4.0",
+    "react-addons": "^0.9.1-deprecated",
+    "react-addons-update": "^15.1.0",
     "react-templates": "^0.4.3",
     "react-templates-loader": "^0.4.0",
     "string-replace-webpack-plugin": "0.0.3",

@@ -1,6 +1,10 @@
 import List from 'List';
 
 class Dialplans extends List {
+	constructor(props) {
+		super(props);
+	}
+	
 	init() {
 		this.managedResource = 'dialplans';
 	}
@@ -9,41 +13,9 @@ class Dialplans extends List {
 		return {
 			"_id": "",
 			"_rev": "",
-			"settings": {
-				"call_timeout": 15,
-				"continue_on_fail": true,
-				"hangup_after_bridge": true,
-				"sleep": 500
-			},
-			"ext_id": "",
-			"actions": [],
-			"modified": {},
-			"created": {},
-			"personal": false,
-			"type": "",
 			"in_number": "",
-			"com_id": ""
+			"ex_number": ""
 		};
-	}
-
-	getCurrentUrl() {
-		return '/' + this._getModelName() + '/' + this.getCurrent()._id;
-	}
-
-	getUrl(item) {
-		return '/' + this._getModelName() + '/' + item._id;
-	}
-
-	getPreviousUrl() {
-		let previousDialplan = this.getPrevious();
-
-		return previousDialplan ? this.getUrl(this.getPrevious()) : false;
-	}
-
-	getNextUrl() {
-		let nextDialplan = this.getNext();
-
-		return nextDialplan ? this.getUrl(this.getNext()) : false;
 	}
 }
 

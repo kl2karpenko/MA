@@ -1,12 +1,15 @@
 import schema from 'schema';
 import messenger from "messenger";
+import _ from "underscore";
 
 let
 	defaultAttribute = '_id';
 
 class List {
 	/** ========================   Initialization   ============================== */
-	constructor() {
+	constructor(props) {
+		props = props || {};
+
 		if (typeof this.beforeInit === "function") {
 			this.beforeInit();
 		}
@@ -19,6 +22,9 @@ class List {
 			._defineModel()
 			._setMainResources();
 
+		this.defaultAttribute = defaultAttribute;
+		this.state = new State(props.state);
+
 		if (typeof this.afterInit === "function") {
 			this.afterInit();
 		}
@@ -27,15 +33,11 @@ class List {
 	init() {
 		return this;
 	}
-	/** ========================   Initialization   ============================== */
-
-	/** ========================   Static helpers   ============================== */
+	
 	static _getRandomHash() {
 		return Math.random().toString(36).substring(7);
 	}
-	/** ========================   Static helpers   ============================== */
-
-	/** ========================   Change state   ============================== */
+	
 	isLoaded() {
 		this.loading = true;
 
@@ -47,9 +49,7 @@ class List {
 
 		return this;
 	}
-	/** ========================   Change state   ============================== */
-
-	/** ========================   Setters   ============================== */
+	
 	_setMainResources() {
 		this.schema = schema;
 		this.messenger = messenger;
@@ -64,13 +64,6 @@ class List {
 		return this;
 	}
 	
-	setCurrent(current) {
-		this.active = current;
-		return this;
-	}
-	/** ========================   Setters   ============================== */
-
-	/** ========================   Getters   ============================== */
 	getModel() {
 		return this[this._getModelName()];
 	}
@@ -91,37 +84,59 @@ class List {
 		return defaults && typeof defaults === "function" ? defaults() : $.extend({}, defaults);
 	}
 
-	getFirst() {
-		return this.getModel()[0];
-	}
-
-	getLast() {
-		return this.getModel()[this.getModel().length - 1];
-	}
-
-	getPrevious() {
-		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
-
-		return this.getModel()[currentIndex - 1];
-	}
-
-	getNext() {
-		let currentIndex = this.getIndexOf(this.getCurrent()) || 0;
-
-		return this.getModel()[currentIndex + 1];
-	}
-
-	getCurrent() {
-		return this.active;
-	}
-
 	getIndexOf(item) {
 		return this.getModel().indexOf(item);
 	}
 
+	getByIndex(index) {
+		return this.getModel()[index];
+	}
+
+	getValueOfDefAttrByIndex(index) {
+		return this.getByIndex(index)[this.defaultAttribute];
+	}
+
+	getUrl() {
+		return '/' + this._getModelName() + '/' + this.getModel()[this.getActivePage() - 1][this.defaultAttribute];
+	}
+
+	activatePage(page){
+		this.updateState({
+			activePage: page
+		});
+	}
+
+	getActivePage() {
+		return this.state.activePage;
+	}
+
+	getPreviousPage() {
+		return this.state.previousPage;
+	}
+
+	previous() {
+		this.state._update({
+			activePage: this.getPreviousPage()
+		});
+	}
+
+	getNextPage() {
+		return this.state.nextPage;
+	}
+
+	next() {
+		this.state._update({
+			activePage: this.getNextPage()
+		});
+	}
+
+	updateState(props) {
+		this.state._update(props);
+	}
+
 	findByField(fieldName, valueOfField, returnVal) {
 		let findValues = this.getModel().filter((item) => {
-			return item[fieldName] === valueOfField ? item[returnVal || defaultAttribute] : false;
+			return item[fieldName] === valueOfField ? item[returnVal || this.defaultAttribute] : false;
 		});
 
 		if (findValues.length > 1) {
@@ -130,9 +145,11 @@ class List {
 			return returnVal ? findValues[0][returnVal] : findValues[0];
 		}
 	}
-	/** ========================   Getters   ============================== */
 
-	/** ========================   Data asigning   ============================== */
+	getIndexOfItemByDefAttrValue(valueOfAttr) {
+		return _.indexOf(_.pluck(this.getModel(), this.defaultAttribute), valueOfAttr);
+	}
+	
 	assignAttributes(props) {
 		let
 			defaultAttributes = this._getDefaultAttributes(),
@@ -161,9 +178,7 @@ class List {
 	updateModelWithAttributes(modelIndex, attributes) {
 		return this.assignAttributesTo(this.getModel()[modelIndex], attributes);
 	}
-	/** ========================   Data asigning   ============================== */
-
-	/** ========================   Load resources   ============================== */
+	
 	update(options) {
 		return this.load(options);
 	}
@@ -179,7 +194,12 @@ class List {
 		params.push({ _: List._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			console.info('loadCollection =============== ' + resource + ' =================== data');
+			console.warn('loadCollection =============== ' + resource);
+
+			this.updateState({
+				pagesCount: items[name].length,
+				activePage: 1
+			});
 
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
@@ -188,7 +208,44 @@ class List {
 			return this;
 		});
 	}
-	/** ========================   Load resources   ============================== */
+	
+}
+
+class State {
+	constructor(props) {
+		props = props || {};
+
+		this.active = props.active || false;
+		this.searchQuery = props.searchQuery || '';
+
+		this.pagesCount = props.pagesCount || 0;
+		this._setUpPages(props);
+	}
+
+	_update(props) {
+		this.pagesCount = this.pagesCount || props.pagesCount || 0;
+		this._setUpPages(props);
+	}
+
+	_setUpPages(props) {
+		this.activePage = props.activePage || 1;
+		this.previousPage = this.setPreviousPage(props.activePage || 1);
+		this.nextPage = this.setNextPage(props.activePage || 1);
+	}
+
+	setNextPage(active) {
+		let
+			nextPage = active + 1;
+
+		return nextPage > this.pagesCount ? false : nextPage;
+	}
+
+	setPreviousPage(active) {
+		let
+			previousPage = active - 1;
+
+		return previousPage <= 0 ? false : previousPage;
+	}
 }
 
 module.exports = List;

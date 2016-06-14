@@ -28,7 +28,8 @@ class Dialplan extends Model {
 			"personal": false,
 			"type": "",
 			"in_number": "",
-			"com_id": ""
+			"com_id": "",
+			"follow": {}
 		};
 	}
 

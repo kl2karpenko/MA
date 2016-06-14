@@ -1,9 +1,197 @@
 var
 	express = require('express'),
-	path = require('path');
+	path    = require('path'),
+	_       = require('underscore');
 
 var app = express();
 var port = 8030;
+
+var dialplans = [{
+	"_id": "hrththy56y5yh",
+	"_rev": "1-007552b640d78d014d442f08c38a8116",
+	"actions": [{
+		"items": {"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}
+	}],
+	"type": "dialplan",
+	"title": "Support",
+	"personal": true,
+	"ex_number": "+32 1 234 56 78",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "thrty56y56ryr5",
+	"_rev": "5-4336a36f9211ec244b7bd14fbd5fb7f0",
+	"title": "Elisa Doe",
+	"color": "turquoise",
+	"ext_id": "19457038ba53984e82fc6a1f8331466f",
+	"modified": {"t": 1464266189372, "Y": 2016, "M": 5, "D": 26, "h": 12, "m": 36, "s": 29, "z": "UTC"},
+	"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
+	"type": "dialplan",
+	"actions": [{
+		"action_id": "2678d8e9db15becc3397a47500dac7e0",
+		"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
+		"value": {
+			"label": "Department Closed",
+			"short_code": "4",
+			"is_on": true
+		}
+	},{
+		"action_id": "2678d8e9db15becc3397a47500dac7e0",
+		"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
+		"value": {
+			"label": "Lunch Break",
+			"short_code": "4",
+			"is_on": true
+		}
+	}, {
+		"action_id": "2678d8e9db15becc3397a47500dac7e0",
+		"items": [{
+			"action_id": "2678d8e9db15becc3397a47500dac7e0",
+			"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "3"}}],
+			"value": {"short_code": "2"}
+		}],
+		"value": {"short_code": "1"}
+	}, {
+		"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
+		"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
+	}],
+	"in_number": "+32 1 456 78 98",
+	"ex_number": 31152026029,
+	"personal": false,
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "5h656h65h5r6h56h",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 050 414 41 51",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Karpenko Liliia",
+	"color": "red",
+	"personal": false,
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "h46yh4hy6hh",
+	"_rev": "3-297375d401acc96cefe64d11cb568bc2",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "1234",
+	"ex_number": 31152026029,
+	"ex_number_id": "61f7329019d10a7dd6872b42d1f5eff0",
+	"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
+	"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Studenyak Nastia",
+	"color": "turquoise",
+	"personal": false,
+	"ext_id": "19457038ba53984e82fc6a1f8331466f",
+	"actions": [{
+		"items": [{
+			"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
+			"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
+		}]
+	}],
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "h5r6hy46hh4h66h",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 093 403 23 79",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Kebal Ivan",
+	"personal": false,
+	"color": "red",
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "6",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 093 403 23 79",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Rybachok Oleksandr",
+	"personal": false,
+	"color": "red",
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "7",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 093 403 23 79",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Saiko Iryna",
+	"personal": false,
+	"color": "red",
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "8",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 093 403 23 79",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Berladin Ewgeny",
+	"personal": false,
+	"color": "red",
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "9",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 093 403 23 79",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Yurch Yuriy",
+	"personal": false,
+	"color": "red",
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}, {
+	"_id": "10",
+	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
+	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"in_number": "+38 093 403 23 79",
+	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
+	"type": "dialplan",
+	"title": "Skorohliad Ivan",
+	"personal": false,
+	"color": "red",
+	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
+	"follow": {
+		"original": true
+	}
+}]
 
 app.configure(function () {
 	app.use(express.static(path.dirname(__dirname)));
@@ -555,187 +743,21 @@ app.get('/ajax/user/:userId/', function (req, res) {
 
 app.get('/ajax/dialplan/:dialplanId', function (req, res) {
 	res.send({
-		"dialplan": {
-			"_id": "1",
-			"_rev": "1-007552b640d78d014d442f08c38a8116",
-			"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
-			"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
-			"actions": [{"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}],
-			"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
-			"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
-			"type": "dialplan",
-			"personal": true,
-			"in_number": "255",
-			"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
-		}
+		"dialplan": dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
+	});
+});
+
+app.put('/ajax/dialplan/:dialplanId', function (req, res) {
+	res.send({
+		"dialplan": dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
 	});
 });
 
 app.get('/ajax/dialplans', function (req, res) {
 	setTimeout(() => {
 		res.send({
-			"dialplans": [{
-				"_id": "1",
-				"_rev": "1-007552b640d78d014d442f08c38a8116",
-				"settings": {"hangup_after_bridge": true, "sleep": 500, "call_timeout": 15, "continue_on_fail": true},
-				"ext_id": "1e212b17f4c01c3bb31a9b21ff8c53aa",
-				"actions": [{
-					"items": {"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}
-				}],
-				"modified": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
-				"created": {"t": 1436517625779, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 40, "s": 25, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Support",
-				"personal": true,
-				"ex_number": "+32 1 234 56 78",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
-			}, {
-				"_id": "2",
-				"_rev": "5-4336a36f9211ec244b7bd14fbd5fb7f0",
-				"title": "Elisa Doe",
-				"color": "turquoise",
-				"ext_id": "19457038ba53984e82fc6a1f8331466f",
-				"modified": {"t": 1464266189372, "Y": 2016, "M": 5, "D": 26, "h": 12, "m": 36, "s": 29, "z": "UTC"},
-				"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
-				"type": "dialplan",
-				"actions": [{
-					"action_id": "2678d8e9db15becc3397a47500dac7e0",
-					"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
-					"value": {
-						"label": "Department Closed",
-						"short_code": "4",
-						"is_on": true
-					}
-				},{
-					"action_id": "2678d8e9db15becc3397a47500dac7e0",
-					"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
-					"value": {
-						"label": "Lunch Break",
-						"short_code": "4",
-						"is_on": true
-					}
-				}, {
-					"action_id": "2678d8e9db15becc3397a47500dac7e0",
-					"items": [{
-						"action_id": "2678d8e9db15becc3397a47500dac7e0",
-						"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "3"}}],
-						"value": {"short_code": "2"}
-					}],
-					"value": {"short_code": "1"}
-				}, {
-					"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
-					"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
-				}],
-				"in_number": "+32 1 456 78 98",
-				"ex_number": 31152026029,
-				"personal": false,
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396"
-			}, {
-				"_id": "3",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 050 414 41 51",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Karpenko Liliia",
-				"color": "red",
-				"personal": false,
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}, {
-				"_id": "4",
-				"_rev": "3-297375d401acc96cefe64d11cb568bc2",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "1234",
-				"ex_number": 31152026029,
-				"ex_number_id": "61f7329019d10a7dd6872b42d1f5eff0",
-				"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
-				"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Studenyak Nastia",
-				"color": "turquoise",
-				"personal": false,
-				"ext_id": "19457038ba53984e82fc6a1f8331466f",
-				"actions": [{
-					"items": [{
-						"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
-						"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
-					}]
-				}]
-			}, {
-				"_id": "5",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 093 403 23 79",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Kebal Ivan",
-				"personal": false,
-				"color": "red",
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}, {
-				"_id": "6",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 093 403 23 79",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Rybachok Oleksandr",
-				"personal": false,
-				"color": "red",
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}, {
-				"_id": "7",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 093 403 23 79",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Saiko Iryna",
-				"personal": false,
-				"color": "red",
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}, {
-				"_id": "8",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 093 403 23 79",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Berladin Ewgeny",
-				"personal": false,
-				"color": "red",
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}, {
-				"_id": "9",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 093 403 23 79",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Yurch Yuriy",
-				"personal": false,
-				"color": "red",
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}, {
-				"_id": "10",
-				"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-				"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
-				"in_number": "+38 093 403 23 79",
-				"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-				"type": "dialplan",
-				"title": "Skorohliad Ivan",
-				"personal": false,
-				"color": "red",
-				"ext_id": "19457038ba53984e82fc6a1f837c9c43"
-			}]
-		})
+			"dialplans": dialplans
+		});
 	}, 1000);
 });
 

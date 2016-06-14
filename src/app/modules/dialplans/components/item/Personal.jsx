@@ -6,7 +6,18 @@ export default class Personal extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			Dialplan: props.dialplan
+		};
+
 		this.actions = PersonalActions.getModel();
+	}
+
+	/* call on change props in parent scope */
+	componentWillReceiveProps(props) {
+		this.setState({
+			Dialplan: props.dialplan
+		});
 	}
 
 	render() {
@@ -18,7 +29,7 @@ export default class Personal extends Component {
 							{this.actions.map(function(object, i){
 								return <li key={i} className={object.className}>
 									<label htmlFor={object.value} className="radio-block">
-										<input type="radio" name="personal" value={object.value} id={object.value}/>
+										<input type="radio" name={object.value} value={object.is_on} id={object.value}/>
 										<div className="radio-button"></div>
 										<div className="l-dialplan-text">
 											<div className="l-dialplan-name">{object.name}</div>

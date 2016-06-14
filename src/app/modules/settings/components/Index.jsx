@@ -1,23 +1,63 @@
 import React, {Component} from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
-import Keyboard from 'components/Keyboard.jsx';
+import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
+		this.placeholderText = [ "Enter current", "Enter new pincode" , "Reenter new pincode"];
+
 		this.state = {
 			isValid: false,
-			pinValue: "",
-			element: ""
+			element: document.querySelector('form[name=pinChange] input:first-child'),
+			classFocus: setCurrentFocusedInputTo(3, 0),
+			keyBoardOptions: {
+				value: "",
+				onChange: this._onChangeInput.bind(this)
+			}
 		};
+	}
 
-		this.keyBoardOptions = {
+	_onFocusInput(index, e) {
+		let
+			element = e.target,
+			value = element.value;
 
+		this.setState({
+			element: element,
+			classFocus: setCurrentFocusedInputTo(3, index),
+			keyBoardOptions: {
+				value: value,
+				onChange: this._onChangeInput.bind(this)
+			}
+		});
+
+		return Keyboard.closeKeyBoard(e);
+	}
+
+	_onChangeInput(newVal) {
+		newVal = Index._checkIfValidPinCode(newVal);
+
+		this.state.element.value = newVal;
+
+		this.setState({
+			keyBoardOptions: {
+				value: newVal,
+				onChange: this._onChangeInput.bind(this)
+			}
+		});
+	}
+
+	static _checkIfValidPinCode(pinValue) {
+		if (pinValue.length >= 5) {
+			pinValue = pinValue.substring(0, 5);
 		}
+
+		return pinValue;
 	}
 
 	render() {
@@ -53,16 +93,16 @@ export default class Index extends Component {
 							</div>
 
 							<div className="l-settings l-main-content">
-								<form action="">
-									<div className="l-settings-group">
-										<input type="password" className="input-custom" placeholder="Enter current" maxLength="5"/>
-									</div>
-									<div className="l-settings-group">
-										<input type="password" className="input-custom" placeholder="Enter new pincode" maxLength="5"/>
-									</div>
-									<div className="l-settings-group">
-										<input type="password" className="input-custom" placeholder="Reenter new pincode" maxLength="5"/>
-									</div>
+								<form action="" name="pinChange">
+									{[...Array(3)].map((x, i) =>
+										<div className="l-settings-group" key={i}>
+											<input type="password" autoFocus="true"
+											       onFocus={this._onFocusInput.bind(this, i)}
+											       className={"input-custom" + (this.state.classFocus[i] ? " focus" : "")}
+											       placeholder={this.placeholderText[i]}
+											       maxLength="5"/>
+										</div>
+									)}
 								</form>
 							</div>
 
@@ -80,14 +120,12 @@ export default class Index extends Component {
 				</div>
 
 
-				<div className="l-keyboard l-keyboard-fixed">
+				<div className={"l-keyboard l-keyboard-fixed" + (this.state.classFocus.some((el) => { return el; }) ? ' visible' : "") }>
 					<Keyboard
-						options={{
-
-									}}
+						options={this.state.keyBoardOptions}
 						getParentContext={() => {
-					          return this;
-					        }}
+		          return this;
+		        }}
 					/>
 				</div>
 			</div>

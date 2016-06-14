@@ -14,7 +14,7 @@ class Item extends Component {
 		super(props);
 
 		this.state = {
-			Dialplan: "",
+			Dialplan: Dialplan.getModel(),
 			previous: "",
 			next: "",
 			previousClass: "",
@@ -27,12 +27,9 @@ class Item extends Component {
 	}
 
 	_changePreviousAndNextState() {
-		console.log(DialplanList.getCurrent())
 		let
-			prevURL = DialplanList.getPreviousUrl(),
-			nextURL = DialplanList.getNextUrl();
-
-		console.log(" =============== URLS ==================", prevURL, nextURL);
+			prevURL = DialplanList.getPreviousPage(),
+			nextURL = DialplanList.getNextPage();
 
 		this.setState({
 			previous: prevURL,
@@ -43,21 +40,19 @@ class Item extends Component {
 		});
 	}
 
-	renderDialplan(dialplan) {
-		let dialplanCurrent = DialplanList['get' + dialplan]();
+	renderDialplan(activatePage) {
+		DialplanList[activatePage]();
 
-		DialplanList.setCurrent(dialplanCurrent);
-		Dialplan.assignAttributes(dialplanCurrent);
+		Dialplan.load({
+			id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
+		}).then(() => {
+			this._changePreviousAndNextState();
 
-		this._changePreviousAndNextState();
-		hashHistory.push(DialplanList.getCurrentUrl());
-
-		// TODO: every time update data for dialplans on render it updateModelWithAttributes() from Model
+			hashHistory.push(DialplanList.getUrl());
+		});
 	}
 
 	render() {
-		console.log(this.state, DialplanList.getNextUrl(), DialplanList.getPreviousUrl());
-
 		return (
 			<div className="l-adaptive-wrapper">
 				<div className="l-adaptive l-fixed">
@@ -88,10 +83,10 @@ class Item extends Component {
 								</div>
 
 								<div className="m-angle__arrows">
-									<button className={"m-angle-arrow __left" + this.state.previousClass} onClick={this.renderDialplan.bind(this, 'Previous')}>
+									<button className={"m-angle-arrow __left" + this.state.previousClass} onClick={this.renderDialplan.bind(this, 'previous')}>
 										<img className="img-responsive" src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
 									</button>
-									<button className={"m-angle-arrow __right" + this.state.nextClass} onClick={this.renderDialplan.bind(this, 'Next')}>
+									<button className={"m-angle-arrow __right" + this.state.nextClass} onClick={this.renderDialplan.bind(this, 'next')}>
 										<img className="img-responsive" src={imageLoader(require("images/icons/arrow-right.png"))} alt="Left"/>
 									</button>
 								</div>
