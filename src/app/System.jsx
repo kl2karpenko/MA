@@ -28,6 +28,11 @@ export default class System {
 			createHistory: {
 				queryKey: false
 			},
+			onChange: (nextState, replaceState) => {
+				console.group("Assemble page:");
+				console.info(`route: ${replaceState.location.pathname}`);
+				console.groupEnd();
+			},
 			childRoutes: [
 				{
 					path: '/',

@@ -1,49 +1,66 @@
 import React, { Component } from 'react';
 
+import CompanyActions from "../../models/CompanyActions";
+
 export default class Company extends Component {
 	constructor(props) {
 		super(props);
 
+		this.defaultActions = CompanyActions.getModel();
 		this.state = {
 			flowControlId: "",
 			haveFlow: props.dialplan.actions && props.dialplan.actions.length,
-			Dialplan: props.dialplan
+			Dialplan: props.dialplan,
+			actions: this.defaultActions.map((item) => {
+				if (props.dialplan.follow[item.value]) {
+					item.is_on = true;
+				}
+				return item;
+			})
 		};
+	}
 
-		this.actions = [
-			{
-				name: "Follow original dialplan",
-				info: "",
-				className: "",
-				value: "original"
-			},
-			{
-				name: "Forward to my mobile",
-				info: "+38093 403 23 79",
-				className: "",
-				value: "mobile"
-			},
-			{
-				name: "Forward to voicemail",
-				info: "",
-				className: "with-search",
-				value: "voicemail"
-			},
-			{
-				name: "Forward to",
-				info: "Tap to choose a contact",
-				className: "with-search",
-				value: "contact"
+	_setFollowDialplanState(activeAction) {
+		var actions = this.defaultActions.map((item) => {
+			if (activeAction.follow[item.value]) {
+				item.is_on = true;
 			}
-		];
+			return item;
+		});
+
+		this.setState({
+			actions: actions
+		});
 	}
 
-	onChangeDialplanForward() {
-
+	/* call on change props in parent scope */
+	componentWillReceiveProps(props) {
+		this.setState({
+			haveFlow: props.dialplan.actions && props.dialplan.actions.length,
+			Dialplan: props.dialplan
+		});
 	}
 
-	onChangeFlowControl() {
+	onChangeDialplanForward(object) {
+		var newFollowState = {};
 
+		// TODO: don't work
+		newFollowState[object.value] = true;
+		this.state.Dialplan.follow = newFollowState;
+
+		this._updateDialplan();
+	}
+
+	onChangeFlowControl(object) {
+		object.value.is_on = !object.value.is_on;
+
+		this._updateDialplan();
+	}
+
+	_updateDialplan() {
+		this.setState({
+			Dialplan: this.state.Dialplan
+		});
 	}
 
 	render() {
@@ -52,10 +69,17 @@ export default class Company extends Component {
 				<div className="l-main-scroll">
 					<div className="l-main-content l-dialplan__list">
 						<ul>
-							{this.actions.map((object, i) => {
+							{this.state.actions.map((object, i) => {
 								return <li key={i} className={object.className}>
 									<label className="m-label radio-block" htmlFor={object.value}>
-										<input type="radio" name="personal" value={object.value} id={object.value} onChange={this.onChangeDialplanForward}/>
+
+										<input type="radio"
+										       name="follow"
+										       value={object.value}
+										       checked={object.is_on ? "checked" : ""}
+										       id={object.value}
+										       onChange={this.onChangeDialplanForward.bind(this, object)}/>
+
 										<div className="radio-button"></div>
 										<div className="l-dialplan-text">
 											<div className="l-dialplan-name">{object.name}</div>
@@ -79,7 +103,13 @@ export default class Company extends Component {
 										{this.state.Dialplan.actions.map((object, i) => {
 											return <li key={i} className={object.className}>
 												<label className="m-label checkbox-block" htmlFor={"action_" + i}>
-													<input type="checkbox" name="company[]" id={"action_" + i} onChange={this.onChangeFlowControl}/>
+
+													<input type="checkbox"
+													       name="company[]"
+													       checked={object.value.is_on ? "checked": ""}
+													       id={"action_" + i}
+													       onChange={this.onChangeFlowControl.bind(this, object)}/>
+
 													<div className="checkbox-button"></div>
 													<div className="l-dialplan-text">
 														<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>

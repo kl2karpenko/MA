@@ -28,9 +28,7 @@ export default class Model {
 	init() {
 		return this;
 	}
-	/** ========================   Initialization   ============================== */
 
-	/** ========================   Static helpers   ============================== */
 	static _getRandomHash() {
 		return Math.random().toString(36).substring(7);
 	}
@@ -43,9 +41,7 @@ export default class Model {
 
 		return defaults && typeof defaults === "function" ? defaults.bind(this)() : $.extend({}, defaults);
 	}
-	/** ========================   Static helpers   ============================== */
 
-	/** ========================   Change state   ============================== */
 	isLoaded() {
 		this.loading = true;
 
@@ -57,9 +53,7 @@ export default class Model {
 
 		return this;
 	}
-	/** ========================   Change state   ============================== */
-	
-	/** ========================   Setters   ============================== */
+
 	_setMainResources() {
 		this.schema = schema;
 		this.messenger = messenger;
@@ -73,9 +67,7 @@ export default class Model {
 
 		return this;
 	}
-	/** ========================   Setters   ============================== */
 
-	/** ========================   Getters   ============================== */
 	getModel() {
 		return this[this._getModelName()];
 	}
@@ -99,9 +91,7 @@ export default class Model {
 	_getDefaultAttributesByPath(path) {
 		return Model._getDefaults.bind(this)(path);
 	}
-	/** ========================   Getters   ============================== */
 
-	/** ========================   Data asigning   ============================== */
 	assignAttributes(props) {
 		let
 			defaultAttributes = this._getDefaultAttributes(),
@@ -126,9 +116,7 @@ export default class Model {
 
 		return this.isLoaded();
 	}
-	/** ========================   Data asigning   ============================== */
 
-	/** ========================   Load resources   ============================== */
 	update(options) {
 		return this.load(options);
 	}
@@ -149,7 +137,7 @@ export default class Model {
 		params.push({ _: Model._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			console.info('load =============== ' + resource + ' =================== data');
+			console.warn('load =============== ' + resource);
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
@@ -173,7 +161,7 @@ export default class Model {
 			if (options.to) {
 				resource = this.schema[this.managedResource][options.to];
 			}
-			console.info('load ' + resource + ' data');
+			console.warn('load ' + resource);
 
 			return this.assignAttributesTo(path, items[this.managedResource][path]);
 		}).error((response) => {

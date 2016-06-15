@@ -1,5 +1,7 @@
 .m {
   &-keyboard {
+    box-shadow: 0 0 5px #928e8e;
+
     background-color: #ebebeb;
     color: #090909;
     position: absolute;
@@ -71,6 +73,25 @@
 
         transform: translate(-50%, -50%);
       }
+    }
+  }
+}
+
+.l-keyboard {
+  &-fixed {
+    position: absolute;
+    height: 44%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+
+    &.visible {
+      display: block;
+    }
+
+    .m-keyboard {
+      height: 100%;
     }
   }
 }

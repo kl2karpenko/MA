@@ -14,14 +14,15 @@ class DialplanListItem extends Component {
 	}
 
 	goToItem(index) {
-		let currentDialplan = DialplanList.getModel()[index];
+		DialplanList.updateState({
+			activePage: index + 1
+		});
 
-		DialplanList
-			.setCurrent(currentDialplan);
-		Dialplan
-			.assignAttributes(currentDialplan);
-
-		hashHistory.push(DialplanList.getCurrentUrl());
+		Dialplan.load({
+			id: DialplanList.getValueOfDefAttrByIndex(index)
+		}).then(() => {
+			hashHistory.push(DialplanList.getUrl());
+		});
 	}
 
 	render() {
