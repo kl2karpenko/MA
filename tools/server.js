@@ -872,9 +872,13 @@ app.get('/ajax/actions', function (req, res) {
 
 app.post('/ajax/pin', function (req, res) {
 	res.send({
-		'pin': {
-			'correct': true
-		}
+		'pin': Number(req.body.pin) === 11111
+	});
+});
+
+app.get('/ajax/pin', function (req, res) {
+	res.send({
+		'pin': 11111
 	});
 });
 

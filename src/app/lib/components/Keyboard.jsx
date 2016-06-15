@@ -44,14 +44,15 @@ export class Keyboard extends Component {
 
 	_deleteValue() {
 		let
-			onChange = this.props.options.onChange;
+			onChange = this.props.options.onChange,
+			newVal = this.state.value.slice(0, -1);
 
 		this.setState({
-			value: this.state.value.slice(0, -1)
+			value: newVal
 		});
 
 		if (typeof onChange === "function") {
-			onChange.bind(this.parent)(this.state.value);
+			onChange.bind(this.parent)(newVal);
 		}
 	}
 	

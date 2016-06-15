@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
+import schema from 'schema';
 
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
@@ -12,9 +13,10 @@ export default class Index extends Component {
 		this.placeholderText = [ "Enter current", "Enter new pincode" , "Reenter new pincode"];
 
 		this.state = {
+			isUsingPin: false,
 			isValid: false,
-			element: document.querySelector('form[name=pinChange] input:first-child'),
-			classFocus: setCurrentFocusedInputTo(3, 0),
+			element: "",
+			classFocus: setCurrentFocusedInputTo(3,0),
 			keyBoardOptions: {
 				value: "",
 				onChange: this._onChangeInput.bind(this)
@@ -52,6 +54,25 @@ export default class Index extends Component {
 		});
 	}
 
+	_toggleUsingPin(e) {
+		let isPinOn =  e.target.checked;
+
+		this.setState({
+			isUsingPin: isPinOn
+		});
+
+		if (isPinOn) {
+			schema.pin.read().then((res) => {
+				console.log(res.pin);
+
+				this.setState({
+					classFocus: setCurrentFocusedInputTo(3, 0),
+					element: document.querySelector('form[name=pinChange] input:first-child')
+				});
+			});
+		}
+	}
+
 	static _checkIfValidPinCode(pinValue) {
 		if (pinValue.length >= 5) {
 			pinValue = pinValue.substring(0, 5);
@@ -83,24 +104,26 @@ export default class Index extends Component {
 					<div className="l-main l-main-settings">
 						<div className="l-main-scroll">
 							<div className="l-grey l-grey-md">
-								<label htmlFor="pinOn" className="checkbox-block m-label clearfix">
+								<label htmlFor="is_have_pin" className="checkbox-block m-label clearfix">
 									<div className="l-grey-header pull-left">
 										Password at login
 									</div>
-									<input type="checkbox" name="pinOn" id="pinOn"/>
+									<input type="checkbox" name="is_have_pin" id="is_have_pin" checked={this.state.isUsingPin}
+									       onChange={this._toggleUsingPin.bind(this)}/>
 									<div className="checkbox-button pull-right"></div>
 								</label>
 							</div>
 
-							<div className="l-settings l-main-content">
+							<div className={"l-settings l-main-content" + (!this.state.isUsingPin ? " disabled" : "")}>
 								<form action="" name="pinChange">
 									{[...Array(3)].map((x, i) =>
 										<div className="l-settings-group" key={i}>
-											<input type="password" autoFocus="true"
+											<input type="number" autoFocus={i === 0}
+											       pattern="\d{5}"
 											       onFocus={this._onFocusInput.bind(this, i)}
 											       className={"input-custom" + (this.state.classFocus[i] ? " focus" : "")}
 											       placeholder={this.placeholderText[i]}
-											       maxLength="5"/>
+														 required/>
 										</div>
 									)}
 								</form>

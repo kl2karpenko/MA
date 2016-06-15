@@ -5,6 +5,7 @@ import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 export default class InputPinForm extends Component {
 	constructor(props) {
 		super(props);
+		console.log(props, this.props)
 
 		this.parent = this.props.getParentContext();
 		this.keyboard = this.props.options.keyBoardOptions;
@@ -54,9 +55,13 @@ export default class InputPinForm extends Component {
 		});
 	}
 
-	_checkIfValidPinCode(isValidPin) {
+	_checkIfValidPinCode(isValidPin, value) {
 		if (isValidPin && typeof this.props.options.onSubmit === "function") {
-			this.props.options.onSubmit();
+			this.props.options.onSubmit(value).then(() => {
+				this.setState({
+					additionalClass: setCurrentFocusedInputTo(3, 0)
+				});
+			});
 		}
 	}
 
@@ -75,13 +80,17 @@ export default class InputPinForm extends Component {
 
 		pinValueLen = inputValue.length;
 
+		if (typeof context.props.options.onChange === "function") {
+			context.props.options.onChange(inputValue);
+		}
+
 		context.setState({
 			additionalClass: setCurrentFocusedInputTo(3, pinValueLen - 1)
 		});
 
 		context._changePinStateValues.bind(this)(inputValue, pinValueLen === validPinLength);
-		context._checkIfValidPinCode.bind(context)(pinValueLen === validPinLength);
 		context._changeValueFromKeyboard.bind(context)(inputValue);
+		context._checkIfValidPinCode.bind(context)(pinValueLen === validPinLength, inputValue);
 	}
 
 	render() {

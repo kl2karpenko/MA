@@ -36,16 +36,28 @@ export default class Index extends Component {
 		};
 	}
 
-	_renderDialplanPage() {
-		schema.pin
+	_wrongPinCode(res) {
+		messenger.error('Error, wrong PIN code', res.status);
+
+		this.setState({
+			pinValue: ""
+		});
+
+		this.pinOptions.keyBoardOptions.value = "";
+	}
+
+	_renderDialplanPage(value) {
+		console.log(value);
+
+		return schema.pin
 			.create({
-				'pin': this.state.pinValue
+				'pin': value
 			})
 			.then((res) => {
-				if(res) {
+				if(res.pin) {
 					hashHistory.push('/dialplans');
 				} else {
-					messenger.error('Error, bad PIN code', res.status);
+					this._wrongPinCode(res);
 				}
 			});
 	}
