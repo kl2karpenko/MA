@@ -5,7 +5,6 @@ import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 export default class InputPinForm extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props, this.props)
 
 		this.parent = this.props.getParentContext();
 		this.keyboard = this.props.options.keyBoardOptions;
@@ -24,7 +23,7 @@ export default class InputPinForm extends Component {
 		setCurrentFocusedInputTo(3, e.target.value.length);
 
 		// close keyboard if have our custom keyboard
-		if (this.pinOptions.keyBoardOptions) {
+		if (this.props.options.keyBoardOptions) {
 			return Keyboard.closeKeyBoard(e);
 		}
 	}
@@ -99,7 +98,7 @@ export default class InputPinForm extends Component {
 				<div className="l-pin-center">
 					<div className="l-pin__name">{this.props.options.name}</div>
 					<div className="l-pin__spaces">
-						<form name={this.props.options.formName} className="row" method="POST">
+						<form name={this.props.options.formName} className="row" name="pin" method="POST">
 							<div className="col-xs-15 l-pin__space">
 								<div className="l-pin__form">
 									<input type="text"
@@ -107,8 +106,8 @@ export default class InputPinForm extends Component {
 									       type={this.props.options.inputType}
 									       name="pin"
 									       required
-									       value={this.parent.state.pinValue}
-									       onFocus={this.onFocusMainPin.bind(this.parent)}
+									       value={this.parent.state.model && this.parent.state.model.pin || this.parent.state.pinValue}
+									       onFocus={this.onFocusMainPin.bind(this)}
 									       onChange={this.onChangePinValue.bind(this.parent, this)}
 									       className="l-pin__input"
 									       maxLength="5"

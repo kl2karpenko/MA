@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import PersonalActions from "../../models/PersonalActions";
+import PersonalActions from "../../models/actions/PersonalActions";
 
 export default class Personal extends Component {
 	constructor(props) {

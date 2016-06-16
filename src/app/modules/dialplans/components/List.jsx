@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import DialplanListItem from './list/Item.jsx';
 
-import DialplanList from "models/DialplanList";
+import DialplanList from "../models/DialplanList";
 
 export default class List extends Component {
 	constructor(props) {

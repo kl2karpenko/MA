@@ -1,6 +1,6 @@
 import Model from 'Model';
 
-import Actions from "models/Actions";
+import Actions from "./Actions";
 
 Actions.load().then(() => {
 	Actions.flowControlId = Actions.findByField('action', 'flow_control', '_id');

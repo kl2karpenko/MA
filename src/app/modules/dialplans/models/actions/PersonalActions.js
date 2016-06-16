@@ -1,4 +1,5 @@
 import List from 'List';
+import CompanyActions from "../../models/actions/CompanyActions";
 
 class PersonalActions extends List {
 	init() {

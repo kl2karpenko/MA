@@ -3,8 +3,8 @@ import { Link, hashHistory } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
-import Dialplan from "models/Dialplan";
-import DialplanList from "models/DialplanList";
+import Dialplan from "../models/Dialplan";
+import DialplanList from "../models/DialplanList";
 
 import Personal from './item/Personal.jsx';
 import Company from './item/Company.jsx';

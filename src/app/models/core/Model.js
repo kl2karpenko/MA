@@ -170,5 +170,30 @@ export default class Model {
 			return this;
 		});
 	}
-	/** ========================   Load resources   ============================== */
+
+	save(options) {
+		options = options || {};
+
+		let
+			name = this._getModelName(),
+			resource = this._getRecourseName(),
+			saveMethod = 'create',
+			params = {};
+
+		params[resource] = this.toJSON();
+
+		console.log(resource, name, params);
+
+		return resource[saveMethod].call(resource, params).done((items) => {
+			console.warn('load =============== ' + resource);
+			return items[name];
+		}).error((response) => {
+			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			return response;
+		});
+	}
+
+	toJSON() {
+		return this.getModel();
+	}
 }

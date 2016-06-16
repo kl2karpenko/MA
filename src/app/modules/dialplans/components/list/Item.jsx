@@ -3,8 +3,8 @@ import { hashHistory } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
-import DialplanList from "models/DialplanList";
-import Dialplan from "models/Dialplan";
+import DialplanList from "../../models/DialplanList";
+import Dialplan from "../../models/Dialplan";
 
 class DialplanListItem extends Component {
 	constructor(props) {

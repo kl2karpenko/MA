@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import Session from "models/Session";
-import Dialplan from "models/Dialplan";
-import DialplanList from "models/DialplanList";
+import Dialplan from "../models/Dialplan";
+import DialplanList from "../models/DialplanList";
 
 export default class Index extends Component {
 	constructor(props) {

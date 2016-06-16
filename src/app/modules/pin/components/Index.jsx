@@ -1,65 +1,44 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import schema from 'schema';
-import messenger from "messenger";
-
 import InputPinForm from 'components/InputPinForm.jsx';
+
+import Pin from '../models/Pin';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
-		this.init();
-	}
-
-	init() {
 		this.state = {
+			model: Pin,
 			isValid: false,
 			element: "",
 			pinValue: ""
 		};
-
-		this.formName = 'pinCheck';
-
-		this.pinOptions = {
-			formName: this.formName,
-			name: "Enter the pin",
-			inputType: "password",
-			onSubmit: this._renderDialplanPage.bind(this),
-			keyBoardOptions: {
-				multiple: false,
-				element: this.state.element,
-				formName: this.formName,
-				value: this.state.pinValue
-			}
-		};
 	}
 
-	_wrongPinCode(res) {
-		messenger.error('Error, wrong PIN code', res.status);
+	_reset() {
+		Pin.pin = "";
 
 		this.setState({
-			pinValue: ""
+			pinValue: "",
+			isValid: false
 		});
-
-		this.pinOptions.keyBoardOptions.value = "";
 	}
 
-	_renderDialplanPage(value) {
-		console.log(value);
+	_save(value) {
+		Pin.pin = value;
 
-		return schema.pin
-			.create({
-				'pin': value
-			})
-			.then((res) => {
-				if(res.pin) {
-					hashHistory.push('/dialplans');
-				} else {
-					this._wrongPinCode(res);
-				}
-			});
+		return Pin
+						.save()
+						.then((res) => {
+							if(res.pin) {
+								hashHistory.push('/dialplans');
+							} else {
+								this._reset();
+								Pin.messenger.error('Error, wrong PIN code', res.status);
+							}
+						});
 	}
 
 	render() {
@@ -67,7 +46,18 @@ export default class Index extends Component {
 			<div className="l-adaptive-wrapper">
 				<div className="l-adaptive">
 					<InputPinForm
-						options={this.pinOptions}
+						options={{
+							formName: 'pinCheck',
+							name: "Enter the pin",
+							inputType: "password",
+							onSubmit: this._save.bind(this),
+							keyBoardOptions: {
+								multiple: false,
+								element: this.state.element,
+								formName: 'pinCheck',
+								value: this.state.pinValue
+							}
+						}}
 						getParentContext={() => {
               return this;
             }}
