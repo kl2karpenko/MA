@@ -2,32 +2,26 @@ import React, { Component } from 'react';
 
 export class Keyboard extends Component {
 	constructor(props) {
-		super($.extend({
-			onSubmit: null,
-			onChange: null,
-			isValid: false,
-			multiple: false,
-			formName: ''
-		}, props.options));
+		super(props);
 
 		this.state = {
-			value: props.options.value
+			value: this.props.value,
+			isValid: this.props.isValid
 		};
-
-		this.parent = props.getParentContext();
 	}
 
 	/* call on change props in parent scope */
 	componentWillReceiveProps(props) {
 		this.setState({
-			value: props.options.value
+			value: props.value,
+			isValid: props.isValid
 		});
 	}
 
 	_setValues(number) {
 		let
 			newVal = this.state.value,
-			onChange = this.props.options.onChange;
+			onChange = this.props.onChange;
 
 		if (newVal !== undefined) {
 			newVal += number;
@@ -37,14 +31,14 @@ export class Keyboard extends Component {
 			});
 
 			if (typeof onChange === "function") {
-				onChange.bind(this.parent)(newVal);
+				onChange(newVal);
 			}
 		}
 	}
 
 	_deleteValue() {
 		let
-			onChange = this.props.options.onChange,
+			onChange = this.props.onChange,
 			newVal = this.state.value.slice(0, -1);
 
 		this.setState({
@@ -52,7 +46,7 @@ export class Keyboard extends Component {
 		});
 
 		if (typeof onChange === "function") {
-			onChange.bind(this.parent)(newVal);
+			onChange(newVal);
 		}
 	}
 	
@@ -93,8 +87,8 @@ export class Keyboard extends Component {
 					<div className="col-xs-5 m-keyboard-digit">
 						<div className="m-keyboard__key buttons">
 							<button className="btn btn-round btn-sm btn-check"
-							        disabled={!(this.parent).state.isValid}
-							        onClick={this.props.options.onSubmit}></button>
+							        disabled={!this.state.isValid}
+							        onClick={this.props.onSubmit}></button>
 						</div>
 					</div>
 				</div>

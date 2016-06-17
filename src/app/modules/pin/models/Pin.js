@@ -9,7 +9,7 @@ class Pin extends Model {
 
 	_defaultPin() {
 		return {
-			"pin": null
+			"pin": ""
 		};
 	}
 }

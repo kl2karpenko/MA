@@ -1,9 +1,6 @@
 import schema from 'schema';
 import messenger from "messenger";
 
-let
-	defaultAttribute = '_id';
-
 export default class Model {
 	/** ========================   Initialization   ============================== */
 	constructor(props) {
@@ -76,19 +73,11 @@ export default class Model {
 		return this.managedResource;
 	}
 
-	_getRecourseName() {
-		return this.schema[this._getModelName()];
+	_getRecourseName(path) {
+		return !path ? this.schema[this._getModelName()] : this.schema[this._getModelName()][path];
 	}
 
-	_getRecourseByName(name) {
-		return this.schema[this._getModelName()][name];
-	}
-
-	_getDefaultAttributes() {
-		return Model._getDefaults.bind(this)();
-	}
-
-	_getDefaultAttributesByPath(path) {
+	_getDefaultAttributes(path) {
 		return Model._getDefaults.bind(this)(path);
 	}
 
@@ -97,7 +86,7 @@ export default class Model {
 			defaultAttributes = this._getDefaultAttributes(),
 			defaultModel = this.getModel();
 
-		Object.keys(defaultModel).forEach((name)=> {
+		Object.keys(defaultAttributes).forEach((name)=> {
 			defaultModel[name] = defaultAttributes[name];
 		});
 
@@ -112,7 +101,7 @@ export default class Model {
 		let
 			defaultModel = this.getModel();
 
-		$.extend(true, defaultModel[path], this._getDefaultAttributesByPath(path), attributes);
+		$.extend(true, defaultModel[path], this._getDefaultAttributes(path), attributes);
 
 		return this.isLoaded();
 	}
@@ -126,7 +115,7 @@ export default class Model {
 
 		let
 			name = this._getModelName(),
-			resource = this._getRecourseName(),
+			resource = this._getRecourseName(options.from),
 			readMethod = options.method || 'read',
 			params = [];
 
@@ -137,7 +126,9 @@ export default class Model {
 		params.push({ _: Model._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			console.warn('load =============== ' + resource);
+			console.groupCollapsed("load " + resource);
+			console.info("response", items[name]);
+			console.groupEnd("load");
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
@@ -148,7 +139,7 @@ export default class Model {
 
 	loadCollection(options) {
 		let
-			resource = options.from || this._getRecourseByName(),
+			resource = this._getRecourseName(options.from),
 			readMethod = options.method || 'read',
 			params = [],
 			path = options.to;
@@ -161,7 +152,9 @@ export default class Model {
 			if (options.to) {
 				resource = this.schema[this.managedResource][options.to];
 			}
-			console.warn('load ' + resource);
+			console.groupCollapsed("loadCollection " + resource);
+			console.info("response ", items[this.managedResource][path]);
+			console.groupEnd("loadCollection " + resource);
 
 			return this.assignAttributesTo(path, items[this.managedResource][path]);
 		}).error((response) => {
@@ -176,16 +169,16 @@ export default class Model {
 
 		let
 			name = this._getModelName(),
-			resource = this._getRecourseName(),
+			resource = this._getRecourseName(options.for),
 			saveMethod = 'create',
 			params = {};
 
 		params[resource] = this.toJSON();
 
-		console.log(resource, name, params);
-
 		return resource[saveMethod].call(resource, params).done((items) => {
-			console.warn('load =============== ' + resource);
+			console.groupCollapsed("save " + resource);
+			console.info("response", items[name]);
+			console.groupEnd("save " + resource);
 			return items[name];
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));

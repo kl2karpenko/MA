@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import InputPinForm from 'components/InputPinForm.jsx';
+import PinForm from './PinForm.jsx';
 
 import Pin from '../models/Pin';
 
@@ -10,34 +10,32 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
-			model: Pin,
+			model: Pin.pin,
 			isValid: false,
-			element: "",
-			pinValue: ""
+			element: ""
 		};
+
+		this._save = this._save.bind(this);
 	}
 
 	_reset() {
-		Pin.pin = "";
+		Pin.pin.pin = "";
 
 		this.setState({
-			pinValue: "",
+			model: Pin.pin,
 			isValid: false
 		});
 	}
 
-	_save(value) {
-		Pin.pin = value;
-
+	_save() {
 		return Pin
 						.save()
 						.then((res) => {
 							if(res.pin) {
 								hashHistory.push('/dialplans');
-							} else {
-								this._reset();
-								Pin.messenger.error('Error, wrong PIN code', res.status);
 							}
+
+							this._reset();
 						});
 	}
 
@@ -45,22 +43,14 @@ export default class Index extends Component {
 		return (
 			<div className="l-adaptive-wrapper">
 				<div className="l-adaptive">
-					<InputPinForm
+					<PinForm
 						options={{
-							formName: 'pinCheck',
-							name: "Enter the pin",
+							form: 'pinCheck',
+							text: "Enter the code",
 							inputType: "password",
-							onSubmit: this._save.bind(this),
-							keyBoardOptions: {
-								multiple: false,
-								element: this.state.element,
-								formName: 'pinCheck',
-								value: this.state.pinValue
-							}
+							onSubmit: this._save,
+							model: this.state.model
 						}}
-						getParentContext={() => {
-              return this;
-            }}
 					/>
 				</div>
 			</div>

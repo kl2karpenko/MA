@@ -194,13 +194,14 @@ class List {
 		params.push({ _: List._getRandomHash() });
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			console.warn('loadCollection =============== ' + resource);
-
 			this.updateState({
 				pagesCount: items[name].length,
 				activePage: 1
 			});
 
+			console.groupCollapsed("load " + resource);
+			console.info("response", items[name]);
+			console.groupEnd("load " + resource);
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));

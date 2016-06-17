@@ -200,6 +200,16 @@ app.configure(function () {
 	app.use(app.router);
 });
 
+app.post('/ajax/connect/pin', function (req, res) {
+	console.log(req.body.connect.pin);
+
+	res.send({
+		"connect": {
+			"pin": Number(req.body.connect.pin) == 11111
+		}
+	});
+});
+
 app.get('/ajax/extensions', function (req, res) {
 	res.send({
 		"users": [{
@@ -753,6 +763,19 @@ app.put('/ajax/dialplan/:dialplanId', function (req, res) {
 	});
 });
 
+app.get('/ajax/settings/pin', function (req, res) {
+	res.send({
+		"settings": {
+			"is_pin_active": false,
+			"pin": {
+				current: "",
+				newPin: "",
+				newPinReenter: ""
+			}
+		}
+	});
+});
+
 app.get('/ajax/dialplans', function (req, res) {
 	setTimeout(() => {
 		res.send({
@@ -872,7 +895,7 @@ app.get('/ajax/actions', function (req, res) {
 
 app.post('/ajax/pin', function (req, res) {
 	res.send({
-		'pin': Number(req.body.pin) === 11111
+		'pin': Number(req.body.pin.pin) === 11111
 	});
 });
 
