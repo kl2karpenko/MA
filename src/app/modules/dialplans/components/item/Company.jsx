@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import CompanyActions from "../../models/actions/CompanyActions";
-import Checkbox from 'components/buttons/Checkbox.jsx';
+import Checkbox from 'components/inputs/Checkbox.jsx';
 
 export default class Company extends Component {
 	constructor(props) {

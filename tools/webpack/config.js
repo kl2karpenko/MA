@@ -102,8 +102,8 @@ module.exports = {
             "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
             "messenger": 'src/app/lib/toastr',
-            "rest-client": 'src/app/vendor/jquery.rest',
-            "components": 'src/app/lib/components',
+            "rest-client": 'src/app/lib/vendor/jquery.rest',
+            "components": 'src/app/components',
             "Model": 'src/app/models/core/Model',
             "List": 'src/app/models/core/List'
         }

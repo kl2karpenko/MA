@@ -4,3 +4,5 @@
 5. Create models for React components that will work with data from server
 6. Add swipe gestures to connect page and list of dialplans page5. Create models for React components that will work with data from server
 6. Add permissions for user to get now if he has access to dialplans
+
+ bind your event handlers in the constructor so they are only bound once for every instance

@@ -1,4 +1,4 @@
-import './vendor/modernizr/custom';
+import './lib/vendor/modernizr/custom';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, hashHistory} from 'react-router';

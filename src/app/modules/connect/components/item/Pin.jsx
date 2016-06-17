@@ -6,6 +6,7 @@ import messenger from "messenger";
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 import InputPinForm from 'components/InputPinForm.jsx';
+import MainConnect from './items/MainConnect.jsx';
 
 export default class Pin extends Component {
 	constructor(props) {
@@ -62,15 +63,12 @@ export default class Pin extends Component {
 					</div>
 				</div>
 
-				<div className="l-main l-main-connect">
 
-					<div className="l-main-center">
-						<h2 className="l-main__header">Where can I find this this Code?</h2>
-						<p className="l-main__text">Use a computer to log in to your webinterface
-							Click on your name in the top-right corner
-							Select “Connect App” from the menu</p>
-					</div>
-				</div>
+				<MainConnect
+					header={"Where can I find this QR Code?"}
+					text={'Use a computer to log in to your webinterface Click on your' +
+					 ' name in the top-right corner Select “Connect App” from the menu'}
+					/>
 
 				<UnableToScanQr/>
 			</div>
