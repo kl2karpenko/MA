@@ -53,9 +53,9 @@ export default class Company extends Component {
 	}
 
 	onChangeFlowControl(object) {
+		console.log(object);
 		object.value.is_on = !object.value.is_on;
 
-		//TODO: dont work
 		this._updateDialplan();
 	}
 
@@ -105,20 +105,20 @@ export default class Company extends Component {
 										<ul>
 											{this.state.Dialplan.actions.map((object, i) => {
 												return <li key={i} className={object.className}>
-													<Checkbox options={{
-														id: "action_" + i,
-														name: "flow_control",
-														checked: object.value.is_on ? "checked": "",
-														text: () => {
+													<Checkbox
+														id={"action_" + i}
+														name="flow_control"
+														value="flow_control"
+														checked={object.value.is_on ? "checked": ""}
+														text={(() => {
 															return (
-															<div className="l-dialplan-text">
-																<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
-															</div>
+																<div className="l-dialplan-text">
+																	<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
+																</div>
 															);
-														},
-														onChange: this.onChangeFlowControl.bind(this, object),
-														context: this
-													}} />
+														})}
+														onChange={this.onChangeFlowControl.bind(this, object)}
+														/>
 												</li>;
 											})}
 										</ul>

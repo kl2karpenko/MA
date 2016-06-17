@@ -2,32 +2,32 @@ import React, { Component } from 'react';
 
 export default class Checkbox extends Component {
 	constructor(props) {
-		super(props.options);
+		super(props);
 
 		this.state ={
 			checked: false
 		};
 	}
 
-	onChange() {
-		// console.log(this.props.options.onChange);
+	onChange(e) {
+	 console.log(e);
 
-		if (typeof this.props.options.onChange === "function") {
-			this.props.options.onChange();
+		if (typeof this.props.onChange === "function") {
+			this.props.onChange();
 		}
 	}
 
 	render() {
-		let text = this.props.options.text;
+		let text = this.props.text;
 
 		return (
-			<label className="m-label checkbox-block" htmlFor={this.props.options.id}>
+			<label className="m-label checkbox-block" htmlFor={this.props.id}>
 				<input
 					type="checkbox"
-					name={this.props.options.name}
-					value={this.props.options.value}
+					name={this.props.name}
+					value={this.props.value}
 					checked={this.state.checked ? "checked" : ""}
-					id={this.props.options.id}
+					id={this.props.id}
 					onChange={this.onChange.bind(this)}
 				/>
 				<div className="checkbox-button"></div>
