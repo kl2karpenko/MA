@@ -6,12 +6,24 @@ import imageLoader from 'lib/imageLoader';
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 import PinSettings from '../models/PinSettings';
+import Pininput from './item/Pininput.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
 		this._init();
+
+		this.state = {
+			element: "",
+			model: PinSettings.settings,
+			isValid: false,
+			classFocus: setCurrentFocusedInputTo(3, 0),
+			value: ""
+		};
+
+		this.placeholderText = [ "Enter current", "Enter new pincode" , "Reenter new pincode"];
+		this.modelNames = [ "current", "newPin" , "newPinReenter"];
 
 		this._onChangeInput = this._onChangeInput.bind(this);
 		this._onFocusInput = this._onFocusInput.bind(this);
@@ -20,14 +32,9 @@ export default class Index extends Component {
 
 	_init() {
 		this._loadResources().then(() => {
-			this.placeholderText = [ "Enter current", "Enter new pincode" , "Reenter new pincode"];
-			this.modelNames = [ "current", "newPin" , "newPinReenter"];
-
-			this.state = {
-				model: PinSettings.settings,
-				isValid: false,
-				classFocus: setCurrentFocusedInputTo(3, 0)
-			};
+			this.setState({
+				model: PinSettings.settings
+			});
 		});
 	}
 
@@ -42,6 +49,13 @@ export default class Index extends Component {
 			element = e.target,
 			index = this.modelNames.indexOf(e.target.name);
 
+		if (this.state.element !== element) {
+			this.setState({
+				element: element,
+				value: element.value
+			});
+		}
+
 		this.setState({
 			classFocus: setCurrentFocusedInputTo(3, index)
 		});
@@ -50,26 +64,24 @@ export default class Index extends Component {
 	}
 
 	_onChangeInput(newVal) {
-		console.log('_onChangeInput ', newVal);
-
 		if (newVal.length >= 5) {
 			newVal = newVal.substring(0, 5);
 		}
 
+		this.state.model.pin[this.state.element.name] = newVal;
+		this.state.element.value = newVal;
+
 		this.setState({
-			model: PinSettings.settings
+			value: newVal,
+			model: this.state.model
 		});
 	}
 
 	_toggleUsingPin(e) {
-		let isPinOn =  e.target.checked;
-
-		console.log(isPinOn)
-
-		PinSettings.settings.is_pin_active = isPinOn;
+		this.state.model.is_pin_active = e.target.checked;
 
 		this.setState({
-			model: PinSettings.settings
+			model: this.state.model
 		});
 	}
 
@@ -96,15 +108,16 @@ export default class Index extends Component {
 					<div className="l-main l-main-settings">
 						<div className="l-main-scroll">
 							<div className="l-grey l-grey-md">
-								<label htmlFor="is_have_pin" className="checkbox-block m-label clearfix">
+								<label htmlFor="is_pin_active" className="checkbox-block m-label clearfix">
 									<div className="l-grey-header pull-left">
 										Password at login
 									</div>
-									<input type="checkbox"
-									       name="is_pin_active"
-									       id="is_pin_active"
-									       checked={this.state.model.is_pin_active}
-									       onChange={this._toggleUsingPin}
+									<input
+										 type="checkbox"
+							       name="is_pin_active"
+							       id="is_pin_active"
+							       checked={this.state.model.is_pin_active}
+							       onChange={this._toggleUsingPin}
 									/>
 									<div className="checkbox-button pull-right"></div>
 								</label>
@@ -114,13 +127,14 @@ export default class Index extends Component {
 								<form action="" name="pinChange">
 									{[...Array(3)].map((x, i) =>
 										<div className="l-settings-group" key={i}>
-											<input type="number" autoFocus={i === 0}
-											       onFocus={this._onFocusInput}
-											       onChange={this._onChangeInput}
-											       className={"input-custom" + (this.state.classFocus[i] ? " focus" : "")}
-											       placeholder={this.placeholderText[i]}
-											       name={this.modelNames[i]}
-											       value={this.state.model.pin[this.modelNames[i]]}
+											<Pininput
+												index={i}
+												focus={this.state.classFocus[i]}
+												placeholder={this.placeholderText[i]}
+												onChange={this._onChangeInput}
+												onFocus={this._onFocusInput}
+												name={this.modelNames[i]}
+												value={this.state.model.pin[this.modelNames[i]]}
 											/>
 										</div>
 									)}
