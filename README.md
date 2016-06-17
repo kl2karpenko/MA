@@ -1,22 +1,25 @@
-To create project on dev env run:
+Please make sure you have installed global:
+
+1. npm
+2. node
+3. cordova
+4. webpack
+
+After that, please install all dependencies, to create project, run from root dir:
 
 ```
 $ npm i
 ```
 
-To build project on dev env run:
+## Build prod version:
 
-```
-webpack --watch --config tools/webpack/config.js
-```
-
-To build project on prod env run:
+To build project files for prod env run:
 
 ```
 $ NODE_ENV=production webpack --config tools/webpack/config.js
 ```
 
-To build project in cordova run:
+To build project with cordova for some platform please run, where platform_name: 'ios' || 'android':
 
 ```
 $ cordova build platform_name
@@ -29,4 +32,19 @@ To run project in cordova run:
 
 ```
 $ cordova run platform_name
+```
+
+## Build dev version in browser:
+
+
+To build project files for dev env run, this will start watching all files changing:
+
+```
+webpack --watch --config tools/webpack/config.js
+```
+
+Go to build/ dir and run from there to start localhost on 8030 port:
+
+```
+node ../tools/server.js
 ```

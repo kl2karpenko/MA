@@ -6,83 +6,82 @@ import imageLoader from 'lib/imageLoader';
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 import PinSettings from '../models/PinSettings';
-import Pininput from './item/Pininput.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
-		this._init();
+		this._load();
 
 		this.state = {
-			element: "",
+			element: $('input[name=current]').get(0),
 			model: PinSettings.settings,
 			isValid: false,
 			classFocus: setCurrentFocusedInputTo(3, 0),
 			value: ""
 		};
 
-		this.placeholderText = [ "Enter current", "Enter new pincode" , "Reenter new pincode"];
 		this.modelNames = [ "current", "newPin" , "newPinReenter"];
 
-		this._onChangeInput = this._onChangeInput.bind(this);
-		this._onFocusInput = this._onFocusInput.bind(this);
+		this.onChange = this.onChange.bind(this);
+		this.onFocus = this.onFocus.bind(this);
 		this._toggleUsingPin = this._toggleUsingPin.bind(this);
+		this._updatePinSettings = this._updatePinSettings.bind(this);
 	}
 
-	_init() {
-		this._loadResources().then(() => {
-			this.setState({
-				model: PinSettings.settings
-			});
-		});
-	}
-
-	_loadResources() {
+	_load() {
 		return PinSettings.load({
-			from: 'pin'
+				from: 'pin'
+			}).then(this._updatePinSettings.bind(this));
+	}
+
+	_updatePinSettings() {
+		this.setState({
+			model: PinSettings.settings
 		});
 	}
 
-	_onFocusInput(e) {
+	componentWillUpdate(t, state) {
+		// this._checkForValidPin(state.model.pin);
+	}
+
+	_checkForValidPin(pin) {
+		let everyIsValid = Object.keys(pin).every((item) => {
+			return pin[item] && pin[item].length === 5;
+		});
+	}
+
+	onFocus(e) {
 		let
-			element = e.target,
 			index = this.modelNames.indexOf(e.target.name);
 
-		if (this.state.element !== element) {
-			this.setState({
-				element: element,
-				value: element.value
-			});
-		}
-
 		this.setState({
+			element: e.target,
+			value: e.target.value,
 			classFocus: setCurrentFocusedInputTo(3, index)
 		});
 
 		return Keyboard.closeKeyBoard(e);
 	}
 
-	_onChangeInput(newVal) {
+	onChange(newVal) {
 		if (newVal.length >= 5) {
 			newVal = newVal.substring(0, 5);
 		}
-
-		this.state.model.pin[this.state.element.name] = newVal;
-		this.state.element.value = newVal;
+		
+		PinSettings.updateAttributesFor("pin." + this.state.element.name, newVal);
 
 		this.setState({
-			value: newVal,
-			model: this.state.model
+			value: newVal
 		});
+
+		this._updatePinSettings();
 	}
 
 	_toggleUsingPin(e) {
-		this.state.model.is_pin_active = e.target.checked;
+		PinSettings.updateAttributesFor("is_pin_active", e.target.checked);
 
-		this.setState({
-			model: this.state.model
-		});
+		this._updatePinSettings();
 	}
 
 	render() {
@@ -125,19 +124,40 @@ export default class Index extends Component {
 
 							<div className={"l-settings l-main-content" + (!this.state.model.is_pin_active ? " disabled" : "")}>
 								<form action="" name="pinChange">
-									{[...Array(3)].map((x, i) =>
-										<div className="l-settings-group" key={i}>
-											<Pininput
-												index={i}
-												focus={this.state.classFocus[i]}
-												placeholder={this.placeholderText[i]}
-												onChange={this._onChangeInput}
-												onFocus={this._onFocusInput}
-												name={this.modelNames[i]}
-												value={this.state.model.pin[this.modelNames[i]]}
-											/>
-										</div>
-									)}
+									<div className="l-settings-group">
+										<input
+											type="number"
+											autoFocus="true"
+											onFocus={this.onFocus}
+											onChange={this.onChange}
+											className={"input-custom" + (this.state.classFocus[0] ? " focus" : "")}
+											placeholder="Enter current"
+											name="current"
+											value={this.state.model.pin.current}
+										/>
+									</div>
+									<div className="l-settings-group">
+										<input
+											type="number"
+											onFocus={this.onFocus}
+											onChange={this.onChange}
+											className={"input-custom" + (this.state.classFocus[1] ? " focus" : "")}
+											placeholder="Enter current"
+											name="newPin"
+											value={this.state.model.pin.newPin}
+										/>
+									</div>
+									<div className="l-settings-group">
+										<input
+											type="number"
+											onFocus={this.onFocus}
+											onChange={this.onChange}
+											className={"input-custom" + (this.state.classFocus[2] ? " focus" : "")}
+											placeholder="Enter current"
+											name="newPinReenter"
+											value={this.state.model.pin.newPinReenter}
+										/>
+									</div>
 								</form>
 							</div>
 
@@ -154,12 +174,11 @@ export default class Index extends Component {
 					</div>
 				</div>
 
-
 				<div className={"l-keyboard l-keyboard-fixed"}>
 					<Keyboard
 						value={this.state.value}
 						isValid={this.state.isValid}
-						onChange={this._onChangeInput}
+						onChange={this.onChange}
 					/>
 				</div>
 			</div>

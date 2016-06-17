@@ -1,6 +1,8 @@
 import schema from 'schema';
 import messenger from "messenger";
 
+import _ from "underscore";
+
 export default class Model {
 	/** ========================   Initialization   ============================== */
 	constructor(props) {
@@ -84,17 +86,37 @@ export default class Model {
 	assignAttributes(props) {
 		let
 			defaultAttributes = this._getDefaultAttributes(),
-			defaultModel = this.getModel();
+			defaultModel = this.getModel(),
+			newModel = {};
 
-		Object.keys(defaultAttributes).forEach((name)=> {
-			defaultModel[name] = defaultAttributes[name];
+		$.extend(true, newModel, defaultAttributes, props);
+
+		Object.keys(newModel).forEach((name)=> {
+			defaultModel[name] = newModel[name];
 		});
-
-		$.extend(true, defaultModel, props);
 
 		this.isLoaded();
 
 		return this;
+	}
+
+	updateAttributesFor(path, value) {
+		let
+			model = this.getModel(),
+			a = path.split('.');
+
+		for (var i = 0; i < a.length - 1; i++) {
+			var n = a[i];
+			if (n in model) {
+				model = model[n];
+			} else {
+				model[n] = {};
+				model = model[n];
+			}
+		}
+		model[a[a.length - 1]] = value;
+
+		return model;
 	}
 
 	assignAttributesTo(path, attributes) {

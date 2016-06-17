@@ -10,27 +10,28 @@ export default class Checkbox extends Component {
 	}
 
 	onChange() {
+		// console.log(this.props.options.onChange);
 
-
-
-		if (typeof this.props.onChange === "function") {
-			this.props.onChange();
+		if (typeof this.props.options.onChange === "function") {
+			this.props.options.onChange();
 		}
 	}
 
 	render() {
+		let text = this.props.options.text;
+
 		return (
 			<label className="m-label checkbox-block" htmlFor={this.props.options.id}>
-
-				<input type="checkbox"
-				       name={this.props.name}
-				       value={this.props.value}
-				       checked={this.state.checked ? "checked" : ""}
-				       id={this.props.id}
-				       onChange={this.onChange}/>
-
+				<input
+					type="checkbox"
+					name={this.props.options.name}
+					value={this.props.options.value}
+					checked={this.state.checked ? "checked" : ""}
+					id={this.props.options.id}
+					onChange={this.onChange.bind(this)}
+				/>
 				<div className="checkbox-button"></div>
-				{typeof this.props.text === "function" ? this.props.text() : this.props.text}
+				{typeof text === "function" ? text() : text}
 			</label>
 		);
 	}

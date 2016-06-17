@@ -15,29 +15,25 @@ class CompanyActions extends List {
 				name: "Follow original dialplan",
 				info: "",
 				className: "",
-				value: "original",
-				is_on: false
+				value: "original"
 			},
 			{
 				name: "Forward to my mobile",
 				info: "+38093 403 23 79",
 				className: "",
-				value: "mobile",
-				is_on: false
+				value: "mobile"
 			},
 			{
 				name: "Forward to voicemail",
 				info: "",
 				className: "with-search",
-				value: "voicemail",
-				is_on: false
+				value: "voicemail"
 			},
 			{
 				name: "Forward to",
 				info: "Tap to choose a contact",
 				className: "with-search",
-				value: "contact",
-				is_on: false
+				value: "contact"
 			}
 		];
 	}

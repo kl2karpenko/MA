@@ -43,21 +43,19 @@ export default class Company extends Component {
 	}
 
 	onChangeDialplanForward(object) {
-		object.is_on = true;
-		console.log(object, this.state.actions);
+		var obj = {};
 
-		var newFollowState = {};
+		obj[object.value] = true;
 
-		// TODO: don't work
-		newFollowState[object.value] = true;
-		this.state.Dialplan.follow = newFollowState;
+		this.state.Dialplan.follow = obj;
 
 		this._updateDialplan();
 	}
 
 	onChangeFlowControl(object) {
-		// object.value.is_on = !object.value.is_on;
+		object.value.is_on = !object.value.is_on;
 
+		//TODO: dont work
 		this._updateDialplan();
 	}
 
@@ -77,14 +75,14 @@ export default class Company extends Component {
 								{this.state.actions.map((object, i) => {
 									return <li key={i} className={object.className}>
 										<label className="m-label radio-block" htmlFor={object.value}>
-
-											<input type="radio"
-											       name="follow"
-											       value={object.value}
-											       checked={object.is_on ? "checked" : ""}
-											       id={object.value}
-											       onChange={this.onChangeDialplanForward.bind(this, object)}/>
-
+											<input
+												type="radio"
+												name="follow"
+												value={object.value}
+												checked={this.state.Dialplan.follow[object.value] ? "checked" : ""}
+												id={object.value}
+												onChange={this.onChangeDialplanForward.bind(this, object)}
+											/>
 											<div className="radio-button"></div>
 											<div className="l-dialplan-text">
 												<div className="l-dialplan-name">{object.name}</div>
