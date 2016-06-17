@@ -20,16 +20,35 @@ export default class Personal extends Component {
 		});
 	}
 
+	onChange(object) {
+		var obj = {};
+
+		obj[object.value] = true;
+
+		this.state.Dialplan.follow = obj;
+
+		this.setState({
+			Dialplan: this.state.Dialplan
+		});
+	}
+
 	render() {
 		return (
 			<div className="l-main">
 				<div className="l-main-scroll">
 					<div className="l-dialplan__list l-main-content">
 						<ul>
-							{this.actions.map(function(object, i){
+							{this.actions.map((object, i) => {
 								return <li key={i} className={object.className}>
 									<label htmlFor={object.value} className="radio-block">
-										<input type="radio" name={object.value} value={object.is_on} id={object.value}/>
+										<input
+											type="radio"
+											name="follow"
+											value={object.value}
+											checked={this.state.Dialplan.follow[object.value] ? "checked" : ""}
+											id={object.value}
+											onChange={this.onChange.bind(this, object)}
+											/>
 										<div className="radio-button"></div>
 										<div className="l-dialplan-text">
 											<div className="l-dialplan-name">{object.name}</div>

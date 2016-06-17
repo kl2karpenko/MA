@@ -53,7 +53,6 @@ export default class Company extends Component {
 	}
 
 	onChangeFlowControl(object) {
-		console.log(object);
 		object.value.is_on = !object.value.is_on;
 
 		this._updateDialplan();
@@ -108,8 +107,8 @@ export default class Company extends Component {
 													<Checkbox
 														id={"action_" + i}
 														name="flow_control"
-														value="flow_control"
-														checked={object.value.is_on ? "checked": ""}
+														value={object.action_id}
+														checked={object.value.is_on}
 														text={(() => {
 															return (
 																<div className="l-dialplan-text">

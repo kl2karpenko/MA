@@ -6,6 +6,7 @@ var
 var app = express();
 var port = 8030;
 
+
 var dialplans = [{
 	"_id": "hrththy56y5yh",
 	"_rev": "1-007552b640d78d014d442f08c38a8116",
@@ -13,7 +14,7 @@ var dialplans = [{
 		"items": {"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}
 	}],
 	"type": "dialplan",
-	"title": "Support",
+	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
 	"follow": {
@@ -200,7 +201,7 @@ app.configure(function () {
 	app.use(app.router);
 });
 
-app.post('/ajax/connect/pin', function (req, res) {
+app.put('/ajax/connect/pin', function (req, res) {
 	res.send({
 		"connect": {
 			"pin": Number(req.body.pin.pin) == 11111
@@ -756,8 +757,11 @@ app.get('/ajax/dialplan/:dialplanId', function (req, res) {
 });
 
 app.put('/ajax/dialplan/:dialplanId', function (req, res) {
+	console.log('index', _.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId))
+	dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)] = req.body;
+
 	res.send({
-		"dialplan": dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
+		"dialplan": req.body
 	});
 });
 

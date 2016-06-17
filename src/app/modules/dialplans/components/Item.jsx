@@ -41,6 +41,13 @@ class Item extends Component {
 	}
 
 	renderDialplan(activatePage) {
+		console.log(Dialplan.getModel()._id);
+
+		// TODO: save on leave page
+		Dialplan.save({
+			id: Dialplan.getModel()._id
+		});
+
 		DialplanList[activatePage]();
 
 		Dialplan.load({

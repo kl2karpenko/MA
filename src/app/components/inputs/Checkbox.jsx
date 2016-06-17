@@ -10,8 +10,6 @@ export default class Checkbox extends Component {
 	}
 
 	onChange(e) {
-	 console.log(e);
-
 		if (typeof this.props.onChange === "function") {
 			this.props.onChange();
 		}
@@ -26,7 +24,7 @@ export default class Checkbox extends Component {
 					type="checkbox"
 					name={this.props.name}
 					value={this.props.value}
-					checked={this.state.checked ? "checked" : ""}
+					checked={this.props.checked ? "checked" : ""}
 					id={this.props.id}
 					onChange={this.onChange.bind(this)}
 				/>

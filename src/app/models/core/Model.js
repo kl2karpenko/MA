@@ -192,12 +192,10 @@ export default class Model {
 		let
 			name = this._getModelName(),
 			resource = this._getRecourseName(options.for),
-			saveMethod = 'create',
-			params = {};
+			saveMethod = 'update',
+			data = this.toJSON();
 
-		params[resource] = this.toJSON();
-
-		return resource[saveMethod].call(resource, params).done((items) => {
+		return resource[saveMethod].call(resource, options.id, data).done((items) => {
 			console.groupCollapsed("save " + resource);
 			console.info("response", items[name]);
 			console.groupEnd("save " + resource);
