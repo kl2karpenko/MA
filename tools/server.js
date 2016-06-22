@@ -709,6 +709,7 @@ app.get('/ajax/settings/pin', function (req, res) {
 });
 
 app.put('/ajax/settings/pin', function (req, res) {
+	console.log(req.body.settings, typeof req.body.settings.pin.is_on)
 	settings.settings = req.body.settings;
 
 	res.send(settings);

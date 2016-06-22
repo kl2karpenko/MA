@@ -7,6 +7,10 @@ function ready() {
 	return $.Deferred().resolve();
 }
 
+function reject() {
+	return $.Deferred().reject();
+}
+
 export default class Model {
 	/** ========================   Initialization   ============================== */
 	constructor(props) {
@@ -20,6 +24,7 @@ export default class Model {
 		this
 			.notLoaded()
 			._defineModel()
+			._setStates()
 			._setMainResources()
 			.assignAttributes(props);
 
@@ -67,9 +72,18 @@ export default class Model {
 
 	_defineModel() {
 		this[this._getModelName()] = {};
+
+		return this;
+	}
+
+	_setStates() {
 		this.originalValues = {};
 
 		return this;
+	}
+
+	_isValid() {
+		return true;
 	}
 
 	getModel() {
@@ -186,8 +200,6 @@ export default class Model {
 			params.push(options.id);
 		}
 
-		params.push({ _: Model._getRandomHash() });
-
 		return resource[readMethod].apply(resource, params).done((items) => {
 			console.groupCollapsed("load " + resource);
 			console.info("response", items[name]);
@@ -212,11 +224,11 @@ export default class Model {
 		if (options.id) {
 			params.push(options.id);
 		}
+		if (options.to) {
+			resource = this.schema[this.managedResource][options.to];
+		}
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			if (options.to) {
-				resource = this.schema[this.managedResource][options.to];
-			}
 			console.groupCollapsed("loadCollection " + resource);
 			console.info("response ", items[this.managedResource][path]);
 			console.groupEnd("loadCollection " + resource);
@@ -231,6 +243,10 @@ export default class Model {
 
 	save(options) {
 		options = options || {};
+
+		if (!this._isValid()) {
+			return reject();
+		}
 
 		if (!this._isDirty()) {
 			return ready();
@@ -264,10 +280,9 @@ export default class Model {
 
 	toJSON() {
 		let
-			model = {},
-			modelName = this._getModelName();
+			model = {};
 
-		model[modelName] = this.getModel();
+		model[this._getModelName()] = this.getModel();
 
 		return model;
 	}

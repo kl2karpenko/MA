@@ -31,24 +31,16 @@ export default class Index extends Component {
 	}
 
 	_load() {
-		return PinSettings.load({
+		return PinSettings
+			.load({
 				from: 'pin'
-			}).then(this._updatePinSettings.bind(this));
+			})
+			.then(this._updatePinSettings.bind(this));
 	}
 
 	_updatePinSettings() {
 		this.setState({
 			model: PinSettings.settings
-		});
-	}
-
-	componentWillUpdate(t, state) {
-		// this._checkForValidPin(state.model.pin);
-	}
-
-	_checkForValidPin(pin) {
-		let everyIsValid = Object.keys(pin).every((item) => {
-			return pin[item] && pin[item].length === 5;
 		});
 	}
 
@@ -66,6 +58,10 @@ export default class Index extends Component {
 	}
 
 	onChange(newVal) {
+		if (!this.state.model.pin.is_on) {
+			return;
+		}
+
 		if (newVal.length >= 5) {
 			newVal = newVal.substring(0, 5);
 		}
@@ -96,6 +92,9 @@ export default class Index extends Component {
 			._save()
 			.then(() => {
 				hashHistory.push("/dialplans");
+			})
+			.fail(() => {
+				PinSettings.messenger.error('Enter valid PIN');
 			});
 	}
 

@@ -33,7 +33,6 @@ class Item extends Component {
 	}
 
 	_loadDialplan() {
-		console.log('load')
 		return Dialplan
 			.load({
 				id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)

@@ -12,8 +12,22 @@ class PinSettings extends Model {
 		return "settings";
 	}
 
-	_getRecourseName(path) {
-		return !path ? this.schema[this.managedResource] : this.schema[this.managedResource][path];
+	_isValid() {
+		let 
+			model = this.getModel(),
+			modelCopy = [];
+
+		if (model.pin.is_on) {
+			modelCopy.push(model.pin.current);
+			modelCopy.push(model.pin.newPin);
+			modelCopy.push(model.pin.newPinReenter);
+
+			return modelCopy.every((item) => {
+				return item.length === 5;
+			});
+		}
+
+		return true;
 	}
 
 	_defaultSettings() {

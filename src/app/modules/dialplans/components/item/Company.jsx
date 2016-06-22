@@ -90,8 +90,6 @@ export default class Company extends Component {
 							</ul>
 						</div>
 						{(() => {
-							console.log("render actions");
-
 							if(this.state.Dialplan.actions && this.state.Dialplan.actions.length) {
 								return <div>
 									<div className="l-grey">
