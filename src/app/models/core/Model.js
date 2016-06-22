@@ -3,6 +3,10 @@ import messenger from "messenger";
 
 import _ from "underscore";
 
+function ready() {
+	return $.Deferred().resolve();
+}
+
 export default class Model {
 	/** ========================   Initialization   ============================== */
 	constructor(props) {
@@ -15,7 +19,7 @@ export default class Model {
 
 		this
 			.notLoaded()
-			._defineModelName()
+			._defineModel()
 			._setMainResources()
 			.assignAttributes(props);
 
@@ -61,8 +65,9 @@ export default class Model {
 		return this;
 	}
 
-	_defineModelName() {
+	_defineModel() {
 		this[this._getModelName()] = {};
+		this.originalValues = {};
 
 		return this;
 	}
@@ -71,7 +76,7 @@ export default class Model {
 		return this[this._getModelName()];
 	}
 
-	getByPath(path) {
+	getValueByPath(path) {
 		let
 			model = this.getModel(),
 			a = path.split('.');
@@ -89,6 +94,26 @@ export default class Model {
 		return model[a[a.length - 1]];
 	}
 
+	setValueByPath(path, value) {
+		let
+			model = this.getModel(),
+			a = path.split('.');
+
+		for (var i = 0; i < a.length - 1; i++) {
+			var n = a[i];
+			if (n in model) {
+				model = model[n];
+			} else {
+				model[n] = {};
+				model = model[n];
+			}
+		}
+
+		model[a[a.length - 1]] = value;
+
+		return model;
+	}
+
 	_getModelName() {
 		return this.managedResource;
 	}
@@ -99,6 +124,14 @@ export default class Model {
 
 	_getDefaultAttributes(path) {
 		return Model._getDefaults.bind(this)(path);
+	}
+
+	_isDirty() {
+		let
+			originalValues = _.extend({}, this.originalValues),
+			changedValues = _.extend({}, this.getModel());
+
+		return !_.isEqual(originalValues, changedValues);
 	}
 
 	assignAttributes(props) {
@@ -120,10 +153,9 @@ export default class Model {
 
 	updateAttributesFor(path, value) {
 		let
-			model = this.getModel(),
-			modelPath = this.getByPath(path);
+			model = this.getModel();
 
-		modelPath = value;
+		this.setValueByPath(path, value);
 
 		return model;
 	}
@@ -160,6 +192,8 @@ export default class Model {
 			console.groupCollapsed("load " + resource);
 			console.info("response", items[name]);
 			console.groupEnd("load");
+			this.originalValues = items[name];
+
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
@@ -198,14 +232,20 @@ export default class Model {
 	save(options) {
 		options = options || {};
 
+		if (!this._isDirty()) {
+			return ready();
+		}
+
 		let
 			name = this._getModelName(),
 			resource = this._getRecourseName(options.for),
 			saveMethod = 'update',
 			params = [];
 
-		if (!options.isSingle) {
-			params.push(this.getByPath('_id'));
+		params.push(this.getValueByPath('_id'));
+
+		if (this.isSingle) {
+			params.length = params.length - 1;
 		}
 
 		params.push(this.toJSON());
@@ -214,7 +254,8 @@ export default class Model {
 			console.groupCollapsed("save " + resource);
 			console.info("response", items[name]);
 			console.groupEnd("save " + resource);
-			return items[name];
+
+			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return response;
@@ -222,6 +263,12 @@ export default class Model {
 	}
 
 	toJSON() {
-		return this.getModel();
+		let
+			model = {},
+			modelName = this._getModelName();
+
+		model[modelName] = this.getModel();
+
+		return model;
 	}
 }

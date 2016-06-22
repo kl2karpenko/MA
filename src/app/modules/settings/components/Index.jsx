@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 
 import imageLoader from 'lib/imageLoader';
 
@@ -27,6 +27,7 @@ export default class Index extends Component {
 		this.onFocus = this.onFocus.bind(this);
 		this._toggleUsingPin = this._toggleUsingPin.bind(this);
 		this._updatePinSettings = this._updatePinSettings.bind(this);
+		this._leaveSettings = this._leaveSettings.bind(this);
 	}
 
 	_load() {
@@ -79,9 +80,23 @@ export default class Index extends Component {
 	}
 
 	_toggleUsingPin(e) {
-		PinSettings.updateAttributesFor("is_pin_active", e.target.checked);
+		PinSettings.updateAttributesFor("pin.is_on", e.target.checked);
 
 		this._updatePinSettings();
+	}
+
+	_save() {
+		return PinSettings.save({
+			for: "pin"
+		});
+	}
+
+	_leaveSettings() {
+		this
+			._save()
+			.then(() => {
+				hashHistory.push("/dialplans");
+			});
 	}
 
 	render() {
@@ -98,31 +113,31 @@ export default class Index extends Component {
 								</div>
 							</div>
 
-							<Link activeClassName="active" className="m-angle__button btn btn-round btn-sm btn-list btn-round-grey" to="/dialplans/list">
+							<button className="m-angle__button btn btn-round btn-sm btn-list btn-round-grey" onClick={this._leaveSettings}>
 								<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
-							</Link>
+							</button>
 						</div>
 					</div>
 
 					<div className="l-main l-main-settings">
 						<div className="l-main-scroll">
 							<div className="l-grey l-grey-md">
-								<label htmlFor="is_pin_active" className="checkbox-block m-label clearfix">
+								<label htmlFor="pin.is_on" className="checkbox-block m-label clearfix">
 									<div className="l-grey-header pull-left">
 										Password at login
 									</div>
 									<input
 										 type="checkbox"
-							       name="is_pin_active"
-							       id="is_pin_active"
-							       checked={this.state.model.is_pin_active}
+							       name="pin.is_on"
+							       id="pin.is_on"
+							       checked={this.state.model.pin.is_on}
 							       onChange={this._toggleUsingPin}
 									/>
 									<div className="checkbox-button pull-right"></div>
 								</label>
 							</div>
 
-							<div className={"l-settings l-main-content" + (!this.state.model.is_pin_active ? " disabled" : "")}>
+							<div className={"l-settings l-main-content" + (!this.state.model.pin.is_on ? " disabled" : "")}>
 								<form action="" name="pinChange">
 									<div className="l-settings-group">
 										<input
@@ -179,6 +194,7 @@ export default class Index extends Component {
 						value={this.state.value}
 						isValid={this.state.isValid}
 						onChange={this.onChange}
+						onSubmit={this._save}
 					/>
 				</div>
 			</div>

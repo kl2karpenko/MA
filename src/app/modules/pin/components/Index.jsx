@@ -29,14 +29,14 @@ export default class Index extends Component {
 
 	_save() {
 		return Pin
-						.save({isSingle: true})
-						.then((res) => {
-							if(res.pin) {
-								hashHistory.push('/dialplans');
-							}
+			.save()
+			.then((res) => {
+				if(res.pin) {
+					hashHistory.push('/dialplans');
+				}
 
-							this._reset();
-						});
+				this._reset();
+			});
 	}
 
 	render() {

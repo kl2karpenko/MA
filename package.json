@@ -47,6 +47,7 @@
     "react-templates-loader": "^0.4.0",
     "string-replace-webpack-plugin": "0.0.3",
     "style-loader": "^0.13.1",
+    "underscore-deep-extend": "^1.1.5",
     "webpack": "^1.12.3"
   },
   "dependencies": {

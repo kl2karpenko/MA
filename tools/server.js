@@ -1,7 +1,7 @@
 var
-	express = require('express'),
-	path    = require('path'),
-	_       = require('underscore');
+	express       = require('express'),
+	path          = require('path'),
+	_             = require('underscore');
 
 var app = express();
 var port = 8030;
@@ -9,11 +9,7 @@ var port = 8030;
 
 var dialplans = [{
 	"_id": "hrththy56y5yh",
-	"_rev": "1-007552b640d78d014d442f08c38a8116",
-	"actions": [{
-		"items": {"action_id": "1b579f07eb1be47e5da0c2ef3004a0bf", "value": {"number": 60}}
-	}],
-	"type": "dialplan",
+	"actions": [],
 	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
@@ -22,13 +18,7 @@ var dialplans = [{
 	}
 }, {
 	"_id": "thrty56y56ryr5",
-	"_rev": "5-4336a36f9211ec244b7bd14fbd5fb7f0",
 	"title": "Elisa Doe",
-	"color": "turquoise",
-	"ext_id": "19457038ba53984e82fc6a1f8331466f",
-	"modified": {"t": 1464266189372, "Y": 2016, "M": 5, "D": 26, "h": 12, "m": 36, "s": 29, "z": "UTC"},
-	"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
-	"type": "dialplan",
 	"actions": [{
 		"action_id": "2678d8e9db15becc3397a47500dac7e0",
 		"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
@@ -53,146 +43,87 @@ var dialplans = [{
 			"value": {"short_code": "2"}
 		}],
 		"value": {"short_code": "1"}
-	}, {
-		"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
-		"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
 	}],
 	"in_number": "+32 1 456 78 98",
 	"ex_number": 31152026029,
 	"personal": false,
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "5h656h65h5r6h56h",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 050 414 41 51",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Karpenko Liliia",
-	"color": "red",
 	"personal": false,
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "h46yh4hy6hh",
-	"_rev": "3-297375d401acc96cefe64d11cb568bc2",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
 	"in_number": "1234",
 	"ex_number": 31152026029,
-	"ex_number_id": "61f7329019d10a7dd6872b42d1f5eff0",
-	"modified": {"t": 1455119633147, "Y": 2016, "M": 2, "D": 10, "h": 15, "m": 53, "s": 53, "z": "UTC"},
-	"created": {"t": 1436518081240, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 48, "s": 1, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Studenyak Nastia",
-	"color": "turquoise",
 	"personal": false,
-	"ext_id": "19457038ba53984e82fc6a1f8331466f",
-	"actions": [{
-		"items": [{
-			"action_id": "ede9eb56b9489531c9ba9e4c421e25ce",
-			"value": {"method": "ring_all", "timeout": 60, "extensions": ["1e212b17f4c01c3bb31a9b21ff8c53aa"]}
-		}]
-	}],
+	"actions": [],
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "h5r6hy46hh4h66h",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 093 403 23 79",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Kebal Ivan",
 	"personal": false,
-	"color": "red",
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "6",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 093 403 23 79",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Rybachok Oleksandr",
 	"personal": false,
-	"color": "red",
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "7",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 093 403 23 79",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Saiko Iryna",
 	"personal": false,
-	"color": "red",
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "8",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 093 403 23 79",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Berladin Ewgeny",
 	"personal": false,
-	"color": "red",
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "9",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 093 403 23 79",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Yurch Yuriy",
 	"personal": false,
-	"color": "red",
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
 }, {
 	"_id": "10",
-	"_rev": "1-bfa8eb3ee3f2c0e7e96967b5306ecff7",
-	"com_id": "1e212b17f4c01c3bb31a9b21ff896396",
+	"actions": [],
 	"in_number": "+38 093 403 23 79",
-	"modified": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"created": {"t": 1436518322773, "Y": 2015, "M": 7, "D": 10, "h": 8, "m": 52, "s": 2, "z": "UTC"},
-	"type": "dialplan",
 	"title": "Skorohliad Ivan",
 	"personal": false,
-	"color": "red",
-	"ext_id": "19457038ba53984e82fc6a1f837c9c43",
 	"follow": {
 		"original": true
 	}
-}]
+}];
 
 app.configure(function () {
 	app.use(express.static(path.dirname(__dirname)));
@@ -757,25 +688,30 @@ app.get('/ajax/dialplan/:dialplanId', function (req, res) {
 });
 
 app.put('/ajax/dialplan/:dialplanId', function (req, res) {
-	console.log('index', _.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId))
-	dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)] = req.body;
+	dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)] = req.body.dialplan;
 
-	res.send({
-		"dialplan": req.body
-	});
+	res.send(dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]);
 });
 
-app.get('/ajax/settings/pin', function (req, res) {
-	res.send({
-		"settings": {
-			"is_pin_active": true,
-			"pin": {
-				current: "",
-				newPin: "",
-				newPinReenter: ""
-			}
+var settings = {
+	"settings": {
+		"pin": {
+			is_on: true,
+			current: "",
+			newPin: "",
+			newPinReenter: ""
 		}
-	});
+	}
+};
+
+app.get('/ajax/settings/pin', function (req, res) {
+	res.send(settings);
+});
+
+app.put('/ajax/settings/pin', function (req, res) {
+	settings.settings = req.body.settings;
+
+	res.send(settings);
 });
 
 app.get('/ajax/dialplans', function (req, res) {
@@ -784,115 +720,6 @@ app.get('/ajax/dialplans', function (req, res) {
 			"dialplans": dialplans
 		});
 	}, 1000);
-});
-
-app.get('/ajax/actions', function (req, res) {
-	res.send({
-		"actions": [{
-			"action": "fax",
-			"name": "Fax",
-			"alias": "Add fax",
-			"image": "4",
-			"color": "309df0",
-			"cs": "fax",
-			"order": 1,
-			"_id": "0c2cf9ff062ff7e7d3ea4edd3c6bdb4f"
-		}, {
-			"action": "ivr",
-			"name": "Add IVR",
-			"alias": "Add IVR",
-			"image": "8",
-			"color": "fb6643",
-			"cs": "ivr",
-			"order": 2,
-			"_id": "0c2cf9ff062ff7e7d3ea4edd3c6c356d"
-		}, {
-			"action": "redirect",
-			"name": "Redirect",
-			"alias": "Add redirect",
-			"image": "7",
-			"color": "00c6d8",
-			"cs": "transfer",
-			"order": 3,
-			"_id": "0c2cf9ff062ff7e7d3ea4edd3c6c444f"
-		}, {
-			"action": "time_condition",
-			"name": "Time condition",
-			"alias": "Add time condition",
-			"image": "",
-			"color": "f0be2e",
-			"cs": "time_condition",
-			"order": 5,
-			"_id": "1b579f07eb1be47e5da0c2ef30496fa7"
-		}, {
-			"action": "hgroup",
-			"name": "Add group",
-			"alias": "Add group",
-			"color": "fb6643",
-			"image": "3",
-			"cs": "huntgroup",
-			"values": [{"value": "ring_all", "title": "Ring All"}, {
-				"value": "memory_hunt",
-				"title": "Memory Hunt"
-			}, {"value": "round_robin", "title": "Round Robin"}, {"value": "cascade", "title": "Cascade"}],
-			"order": 8,
-			"_id": "ede9eb56b9489531c9ba9e4c421e25ce"
-		}, {
-			"action": "flow_control",
-			"name": "Flow control",
-			"alias": "Add flow control",
-			"image": "11",
-			"color": "00c6d8",
-			"cs": "flow_control",
-			"order": 9,
-			"_id": "2678d8e9db15becc3397a47500dac7e0"
-		}, {
-			"action": "sound",
-			"name": "Sound",
-			"alias": "Add sound",
-			"image": "5",
-			"color": "309df0",
-			"cs": "playback",
-			"order": 10,
-			"_id": "ede9eb56b9489531c9ba9e4c421e3441"
-		}, {
-			"action": "queue",
-			"name": "Queue",
-			"alias": "Add queue",
-			"image": "6",
-			"color": "00b800",
-			"cs": "callcenter",
-			"order": 11,
-			"_id": "ede9eb56b9489531c9ba9e4c421e43dd"
-		}, {
-			"action": "prefix",
-			"name": "Prefix",
-			"alias": "Add prefix",
-			"image": "9",
-			"color": "fb6643",
-			"cs": "prefix",
-			"order": 12,
-			"_id": "c3df81582f576cfebf2b68c3af33dbbb"
-		}, {
-			"action": "voicemail",
-			"name": "Voicemail",
-			"alias": "Add voicemail",
-			"image": "9",
-			"color": "9c9fa7",
-			"cs": "voicemail",
-			"order": 13,
-			"_id": "ede9eb56b9489531c9ba9e4c421e4b4b"
-		}, {
-			"action": "hangup",
-			"name": "Hang up",
-			"alias": "Hang up",
-			"image": "",
-			"color": "fb6643",
-			"cs": "hangup",
-			"order": 14,
-			"_id": "1b579f07eb1be47e5da0c2ef304926f1"
-		}]
-	});
 });
 
 app.put('/ajax/pin', function (req, res) {

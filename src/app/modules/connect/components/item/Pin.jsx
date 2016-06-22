@@ -23,7 +23,6 @@ export default class Pin extends Component {
 
 	connect() {
 		return PinModel.save({
-			isSingle: true,
 			for: 'pin'
 		}).then((res) => {
 			this._reset();

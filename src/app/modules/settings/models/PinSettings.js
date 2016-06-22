@@ -3,6 +3,7 @@ import Model from 'Model';
 class PinSettings extends Model {
 	init() {
 		this.managedResource = 'settings';
+		this.isSingle = true;
 
 		return Model.prototype.init();
 	}
@@ -17,8 +18,8 @@ class PinSettings extends Model {
 
 	_defaultSettings() {
 		return {
-			"is_pin_active": false,
 			"pin": {
+				is_on: false,
 				current: null,
 				newPin: null,
 				newPinReenter: null

@@ -3,6 +3,7 @@ import Model from 'Model';
 class Pin extends Model {
 	init() {
 		this.managedResource = 'pin';
+		this.isSingle = true;
 
 		return Model.prototype.init();
 	}

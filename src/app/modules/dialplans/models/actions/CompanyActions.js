@@ -6,10 +6,10 @@ class CompanyActions extends List {
 	}
 
 	afterInit() {
-		this.assignAttributes(this._defineLoadModel());
+		this.assignAttributes(this._getStaticModel());
 	}
 
-	_defineLoadModel() {
+	_getStaticModel() {
 		return [
 			{
 				name: "Follow original dialplan",

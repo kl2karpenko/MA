@@ -29,7 +29,8 @@ export default class Index extends Component {
 				});
 
 				return Dialplan.load({
-					id: currentIdOfDialplan || DialplanList.getValueOfDefAttrByIndex( currentIndex )
+					id: currentIdOfDialplan
+							|| DialplanList.getValueOfDefAttrByIndex( currentIndex )
 				});
 			})
 			.done(() => {

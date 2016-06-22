@@ -9,8 +9,6 @@ export default class Company extends Component {
 
 		this.defaultActions = CompanyActions.getModel();
 		this.state = {
-			flowControlId: "",
-			haveFlow: props.dialplan.actions && props.dialplan.actions.length,
 			Dialplan: props.dialplan,
 			actions: this.defaultActions.map((item) => {
 				if (props.dialplan.follow[item.value]) {
@@ -36,10 +34,9 @@ export default class Company extends Component {
 
 	/* call on change props in parent scope */
 	componentWillReceiveProps(props) {
-		this.setState({
-			haveFlow: props.dialplan.actions && props.dialplan.actions.length,
-			Dialplan: props.dialplan
-		});
+		console.log(props.dialplan, 'componentWillReceiveProps');
+
+		this._updateDialplan();
 	}
 
 	onChangeDialplanForward(object) {
@@ -93,6 +90,8 @@ export default class Company extends Component {
 							</ul>
 						</div>
 						{(() => {
+							console.log("render actions");
+
 							if(this.state.Dialplan.actions && this.state.Dialplan.actions.length) {
 								return <div>
 									<div className="l-grey">
@@ -103,6 +102,7 @@ export default class Company extends Component {
 									<div className="l-dialplan__list l-main-content">
 										<ul>
 											{this.state.Dialplan.actions.map((object, i) => {
+												console.log(object)
 												return <li key={i} className={object.className}>
 													<Checkbox
 														id={"action_" + i}

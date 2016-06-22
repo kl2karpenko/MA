@@ -20,13 +20,32 @@ class Item extends Component {
 			previousClass: "",
 			nextClass: ""
 		};
+
+		this._loadDialplan = this._loadDialplan.bind(this);
 	}
 
 	componentWillMount() {
-		this._changePreviousAndNextState();
+		this._setState();
 	}
 
-	_changePreviousAndNextState() {
+	_save() {
+		return Dialplan.save();
+	}
+
+	_loadDialplan() {
+		console.log('load')
+		return Dialplan
+			.load({
+				id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
+			})
+			.then(() => {
+				this._setState();
+
+				hashHistory.push(DialplanList.getUrl());
+			});
+	}
+
+	_setState() {
 		let
 			prevURL = DialplanList.getPreviousPage(),
 			nextURL = DialplanList.getNextPage();
@@ -40,21 +59,21 @@ class Item extends Component {
 		});
 	}
 
-	renderDialplan(activatePage) {
-		console.log(Dialplan.getModel()._id);
+	_goToPath(path) {
+		this
+			._save()
+			.then(() => {
+				hashHistory.push(path);
+			});
+	}
 
-		// TODO: save on leave page
-		Dialplan.save();
-
-		DialplanList[activatePage]();
-
-		Dialplan.load({
-			id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
-		}).then(() => {
-			this._changePreviousAndNextState();
-
-			hashHistory.push(DialplanList.getUrl());
-		});
+	_renderDialplan(activatePage) {
+		this
+			._save()
+			.then(() => {
+				DialplanList[activatePage]();
+			})
+			.then(this._loadDialplan);
 	}
 
 	render() {
@@ -68,9 +87,9 @@ class Item extends Component {
 									<div className="m-angle-name">
 										Call Routing
 									</div>
-									<Link className="m-angle-settings" to="/settings">
+									<div className="m-angle-settings" onClick={this._goToPath.bind(this, "/settings")}>
 										<img src={imageLoader(require("images/icons/nav-list.png"))} alt="Qr background"/>
-									</Link>
+									</div>
 								</div>
 
 								<div className="m-angle-info">
@@ -78,28 +97,24 @@ class Item extends Component {
 										<img className="img-responsive img-circle" src={imageLoader(require("images/photo-placeholder.png"))} alt="Photo"/>
 									</div>
 									<div className="m-angle-info-text">
-										<h2>
-											{this.state.Dialplan.title}
-										</h2>
-										<p>
-											{this.state.Dialplan.ex_number || this.state.Dialplan.in_number}
-										</p>
+										<h2> {this.state.Dialplan.title} </h2>
+										<p> {this.state.Dialplan.ex_number || this.state.Dialplan.in_number} </p>
 									</div>
 								</div>
 
 								<div className="m-angle__arrows">
-									<button className={"m-angle-arrow __left" + this.state.previousClass} onClick={this.renderDialplan.bind(this, 'previous')}>
+									<button className={"m-angle-arrow __left" + this.state.previousClass} onClick={this._renderDialplan.bind(this, 'previous')}>
 										<img className="img-responsive" src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
 									</button>
-									<button className={"m-angle-arrow __right" + this.state.nextClass} onClick={this.renderDialplan.bind(this, 'next')}>
+									<button className={"m-angle-arrow __right" + this.state.nextClass} onClick={this._renderDialplan.bind(this, 'next')}>
 										<img className="img-responsive" src={imageLoader(require("images/icons/arrow-right.png"))} alt="Left"/>
 									</button>
 								</div>
 							</div>
 
-							<Link activeClassName="active" className="m-angle__button btn btn-round btn-sm btn-list" to="/dialplans/list">
+							<button className="m-angle__button btn btn-round btn-sm btn-list" onClick={this._goToPath.bind(this, "/dialplans/list")}>
 								<img src={imageLoader(require("images/icons/list.png"))} alt="Right"/>
-							</Link>
+							</button>
 						</div>
 					</div>
 
