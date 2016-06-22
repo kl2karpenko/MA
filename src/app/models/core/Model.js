@@ -71,6 +71,24 @@ export default class Model {
 		return this[this._getModelName()];
 	}
 
+	getByPath(path) {
+		let
+			model = this.getModel(),
+			a = path.split('.');
+
+		for (var i = 0; i < a.length - 1; i++) {
+			var n = a[i];
+			if (n in model) {
+				model = model[n];
+			} else {
+				model[n] = {};
+				model = model[n];
+			}
+		}
+
+		return model[a[a.length - 1]];
+	}
+
 	_getModelName() {
 		return this.managedResource;
 	}
@@ -103,18 +121,9 @@ export default class Model {
 	updateAttributesFor(path, value) {
 		let
 			model = this.getModel(),
-			a = path.split('.');
+			modelPath = this.getByPath(path);
 
-		for (var i = 0; i < a.length - 1; i++) {
-			var n = a[i];
-			if (n in model) {
-				model = model[n];
-			} else {
-				model[n] = {};
-				model = model[n];
-			}
-		}
-		model[a[a.length - 1]] = value;
+		modelPath = value;
 
 		return model;
 	}
@@ -193,9 +202,15 @@ export default class Model {
 			name = this._getModelName(),
 			resource = this._getRecourseName(options.for),
 			saveMethod = 'update',
-			data = this.toJSON();
+			params = [];
 
-		return resource[saveMethod].call(resource, options.id, data).done((items) => {
+		if (!options.isSingle) {
+			params.push(this.getByPath('_id'));
+		}
+
+		params.push(this.toJSON());
+
+		return resource[saveMethod].apply(resource, params).done((items) => {
 			console.groupCollapsed("save " + resource);
 			console.info("response", items[name]);
 			console.groupEnd("save " + resource);

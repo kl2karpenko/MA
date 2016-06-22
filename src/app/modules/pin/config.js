@@ -1,3 +1,3 @@
 import schema from 'schema';
 
-schema.add('pin');
+schema.add('pin', { isSingle: true });

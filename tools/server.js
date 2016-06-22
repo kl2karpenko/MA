@@ -204,7 +204,7 @@ app.configure(function () {
 app.put('/ajax/connect/pin', function (req, res) {
 	res.send({
 		"connect": {
-			"pin": Number(req.body.pin.pin) == 11111
+			"pin": Number(req.body.connect.pin) == 11111
 		}
 	});
 });
@@ -895,7 +895,7 @@ app.get('/ajax/actions', function (req, res) {
 	});
 });
 
-app.post('/ajax/pin', function (req, res) {
+app.put('/ajax/pin', function (req, res) {
 	res.send({
 		'pin': Number(req.body.pin.pin) === 11111
 	});

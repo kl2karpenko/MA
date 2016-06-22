@@ -29,7 +29,7 @@ export default class Index extends Component {
 
 	_save() {
 		return Pin
-						.save()
+						.save({isSingle: true})
 						.then((res) => {
 							if(res.pin) {
 								hashHistory.push('/dialplans');
