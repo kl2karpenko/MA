@@ -11,14 +11,15 @@ export default class Pin extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = PinModel.connect;
+		this.state = PinModel.getModel();
 
 		this.connect = this.connect.bind(this);
 	}
 
 	_reset() {
-		PinModel.connect.pin = "";
-		this.setState(PinModel.connect);
+		PinModel.getModel().pin.value = "";
+		this.state.pin.value = "";
+		this.setState(PinModel.getModel());
 	}
 
 	connect() {
@@ -27,11 +28,11 @@ export default class Pin extends Component {
 		}).then((res) => {
 			this._reset();
 			
-			if(res.connect.pin) {
+			if(res.connects.pin.value) {
 				hashHistory.push('/pin');
 			}
 
-			return PinModel.connect;
+			return PinModel.getModel();
 		});
 	}
 
@@ -43,7 +44,7 @@ export default class Pin extends Component {
 						<div className="l-pin-connect">
 							<div className="l-pin">
 								<PinForm
-									model={this.state}
+									model={this.state.pin}
 									text="Enter the code"
 									inputType="number"
 									form="connectPin"
@@ -56,7 +57,7 @@ export default class Pin extends Component {
 							className="m-angle__button btn btn-round btn-md"
 			        onClick={this.connect}
 			        data-form
-			        disabled={!(this.state.pin.length === 5)}
+			        disabled={!(this.state.pin.value.length === 5)}
 			        form="connectPin">Log In</button>
 					</div>
 				</div>

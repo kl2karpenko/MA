@@ -24,7 +24,7 @@ export default class List extends Component {
 	render() {
 		return (
 			<div className="l-adaptive">
-				<div className="m-list m-list-dialplan">
+				<div className="m-list m-list-dialplan m-list-withImg">
 					{this.state.DialplanList.map((object, i) => {
 						return <DialplanListItem dialplan={object} key={i} index={i}/>;
 					})}

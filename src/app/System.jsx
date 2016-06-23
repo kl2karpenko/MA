@@ -43,11 +43,12 @@ export default class System {
 					// TODO: render from config array
 					childRoutes: [
 						require('./modules/loader/routes.jsx'),
-						require('./modules/connect/routes.jsx'),
+						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
 						require('./modules/contacts/routes.jsx'),
 						require('./modules/settings/routes.jsx'),
-						require('./modules/dialplans/routes.jsx')
+						require('./modules/dialplans/routes.jsx'),
+						require('./modules/mailboxes/routes.jsx')
 					]
 				}
 			]

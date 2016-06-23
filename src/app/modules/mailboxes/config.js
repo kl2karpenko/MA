@@ -1,3 +1,3 @@
 import schema from 'schema';
 
-schema.add('extensions');
+schema.add('mailboxes');

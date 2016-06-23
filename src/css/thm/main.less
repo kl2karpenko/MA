@@ -1,6 +1,9 @@
 @LinkColor: #f97900;
 @LinkColorDisabled: #aaaaaa;
 
+@LightGrey: #f2f2f2;
+@Grey: #bfbfbf;
+
 @Background: #d90900;
 @ActiveColor: #06ba06;
 @ActiveColorLight: #9be39b;
@@ -8,6 +11,10 @@
 
 @BackImageMain: url("../../img/main-back.jpg");
 @BackImageQr: url("../../img/qr-back.jpg");
+
+.BackgroundRGB(@opacity: 1) {
+  background-color: rgba(217, 9, 0, @opacity);
+}
 
 .m {
   &-angle {

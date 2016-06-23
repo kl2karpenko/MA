@@ -155,13 +155,16 @@ class List {
 			defaultAttributes = this._getDefaultAttributes(),
 			defaultModel = this.getModel();
 
-		props.forEach((item, index) => {
-			defaultModel[index] = {};
+		if (props) {
+			props.forEach((item, index) => {
+				defaultModel[index] = {};
 
-			this.assignAttributesTo(defaultModel[index], $.extend(true, {}, defaultAttributes, item));
-		});
+				this.assignAttributesTo(defaultModel[index], $.extend(true, {}, defaultAttributes, item));
+			});
 
-		this.isLoaded();
+			this.isLoaded();
+		}
+
 		return this;
 	}
 

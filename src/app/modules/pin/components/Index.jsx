@@ -19,7 +19,7 @@ export default class Index extends Component {
 	}
 
 	_reset() {
-		Pin.pin.pin = "";
+		Pin.pin.value = "";
 
 		this.setState({
 			model: Pin.pin,

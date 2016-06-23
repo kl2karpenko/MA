@@ -2,23 +2,21 @@ import Model from 'Model';
 
 class Pin extends Model {
 	init() {
-		this.managedResource = 'connect';
+		this.managedResource = 'connects';
 		this.isSingle = true;
 
 		return Model.prototype.init();
 	}
 
 	_getModelName() {
-		return "connect";
+		return "connects";
 	}
 
-	_getRecourseName(name) {
-		return !name ? this.schema[this.managedResource] : this.schema[this.managedResource][name];
-	}
-
-	_defaultConnect() {
+	_defaultConnects() {
 		return {
-			"pin": ""
+			"pin": {
+				"value": ""
+			}
 		};
 	}
 }

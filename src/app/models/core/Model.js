@@ -24,7 +24,7 @@ export default class Model {
 		this
 			.notLoaded()
 			._defineModel()
-			._setStates()
+			._setOriginalValues()
 			._setMainResources()
 			.assignAttributes(props);
 
@@ -76,10 +76,14 @@ export default class Model {
 		return this;
 	}
 
-	_setStates() {
-		this.originalValues = {};
+	_setOriginalValues(origVal) {
+		this.originalValues = origVal || {};
 
 		return this;
+	}
+
+	_getOriginalValues() {
+		return this.originalValues;
 	}
 
 	_isValid() {
@@ -142,7 +146,7 @@ export default class Model {
 
 	_isDirty() {
 		let
-			originalValues = _.extend({}, this.originalValues),
+			originalValues = _.extend({}, this._getOriginalValues()),
 			changedValues = _.extend({}, this.getModel());
 
 		return !_.isEqual(originalValues, changedValues);
@@ -200,11 +204,13 @@ export default class Model {
 			params.push(options.id);
 		}
 
+		console.log(params);
+
 		return resource[readMethod].apply(resource, params).done((items) => {
 			console.groupCollapsed("load " + resource);
 			console.info("response", items[name]);
 			console.groupEnd("load");
-			this.originalValues = items[name];
+			this._setOriginalValues(items[name]);
 
 			return this.assignAttributes(items[name]);
 		}).error((response) => {

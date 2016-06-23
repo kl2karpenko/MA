@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, hashHistory } from 'react-router';
 
-import imageLoader from 'lib/imageLoader';
+import imageLoader from 'imageLoader';
 
 import Dialplan from "../models/Dialplan";
 import DialplanList from "../models/DialplanList";
@@ -111,7 +111,7 @@ class Item extends Component {
 								</div>
 							</div>
 
-							<button className="m-angle__button btn btn-round btn-sm btn-list" onClick={this._goToPath.bind(this, "/dialplans/list")}>
+							<button className="m-angle__button btn btn-round btn-sm btn-right" onClick={this._goToPath.bind(this, "/dialplans/list")}>
 								<img src={imageLoader(require("images/icons/list.png"))} alt="Right"/>
 							</button>
 						</div>

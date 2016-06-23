@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link, hashHistory } from 'react-router';
 
-import imageLoader from 'lib/imageLoader';
+import imageLoader from 'imageLoader';
 
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
@@ -14,14 +14,14 @@ export default class Index extends Component {
 		this._load();
 
 		this.state = {
-			element: $('input[name=current]').get(0),
+			element: $('input[name=active]').get(0),
 			model: PinSettings.settings,
 			isValid: false,
 			classFocus: setCurrentFocusedInputTo(3, 0),
 			value: ""
 		};
 
-		this.modelNames = [ "current", "newPin" , "newPinReenter"];
+		this.modelNames = [ "active", "created" , "created_copy"];
 
 		this.onChange = this.onChange.bind(this);
 		this.onFocus = this.onFocus.bind(this);
@@ -112,7 +112,7 @@ export default class Index extends Component {
 								</div>
 							</div>
 
-							<button className="m-angle__button btn btn-round btn-sm btn-list btn-round-grey" onClick={this._leaveSettings}>
+							<button className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" onClick={this._leaveSettings}>
 								<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
 							</button>
 						</div>
@@ -146,8 +146,8 @@ export default class Index extends Component {
 											onChange={this.onChange}
 											className={"input-custom" + (this.state.classFocus[0] ? " focus" : "")}
 											placeholder="Enter current"
-											name="current"
-											value={this.state.model.pin.current}
+											name="active"
+											value={this.state.model.pin.active}
 										/>
 									</div>
 									<div className="l-settings-group">
@@ -157,8 +157,8 @@ export default class Index extends Component {
 											onChange={this.onChange}
 											className={"input-custom" + (this.state.classFocus[1] ? " focus" : "")}
 											placeholder="Enter current"
-											name="newPin"
-											value={this.state.model.pin.newPin}
+											name="created"
+											value={this.state.model.pin.created}
 										/>
 									</div>
 									<div className="l-settings-group">
@@ -168,8 +168,8 @@ export default class Index extends Component {
 											onChange={this.onChange}
 											className={"input-custom" + (this.state.classFocus[2] ? " focus" : "")}
 											placeholder="Enter current"
-											name="newPinReenter"
-											value={this.state.model.pin.newPinReenter}
+											name="created_copy"
+											value={this.state.model.pin.created_copy}
 										/>
 									</div>
 								</form>

@@ -16,7 +16,7 @@ export default class Pin extends Component {
 	}
 
 	componentWillReceiveProps(s) {
-		this.onFocus(s.model.pin);
+		this.onFocus(s.model.value);
 	}
 
 	onFocus(e) {
@@ -38,7 +38,7 @@ export default class Pin extends Component {
 			inputValue = inputValue.target.value;
 		}
 
-		this.state.model.pin = inputValue;
+		this.state.model.value = inputValue;
 
 		this.setState({
 			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1),
@@ -64,19 +64,20 @@ export default class Pin extends Component {
 				<div className="l-pin-center">
 					<div className="l-pin__name">{this.props.text}</div>
 					<div className="l-pin__spaces">
-						<form name={this.props.form} className="row" name="pin" method="POST">
+						<div className="row" name="pin" method="POST">
 							<div className="col-xs-15 l-pin__space">
 								<div className="l-pin__form">
-									<input type="text"
-									       autoFocus="true"
-									       type={this.props.inputType}
-									       name="pin"
-									       required
-									       value={this.state.model.pin}
-									       onFocus={this.onFocus}
-									       onChange={this.onChange}
-									       className="l-pin__input"
-									       maxLength="5"
+									<input
+										type="text"
+										autoFocus="true"
+										type={this.props.inputType}
+										name="pin"
+										required
+										value={this.state.model.value}
+										onFocus={this.onFocus}
+										onChange={this.onChange}
+										className="l-pin__input"
+										maxLength="5"
 									/>
 
 									<div className="l-pin__form-read">
@@ -84,8 +85,12 @@ export default class Pin extends Component {
 											{[...Array(5)].map((x, i) =>
 												<div className="col-xs-3 l-pin__space" key={i}>
 													<div>
-														<input readOnly="true" value={this.state.model.pin[i]} type={this.props.inputType}
-														       className={"l-pin__pinLetters" + (this.state.additionalClass[i] ? " focus" : "")}/>
+														<input
+															readOnly="true"
+															value={this.state.model.value[i]}
+															type={this.props.inputType}
+															className={"l-pin__pinLetters" + (this.state.additionalClass[i] ? " focus" : "")}
+														/>
 													</div>
 												</div>
 											)}
@@ -93,7 +98,7 @@ export default class Pin extends Component {
 									</div>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>

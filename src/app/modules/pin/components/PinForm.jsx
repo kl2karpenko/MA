@@ -21,15 +21,15 @@ export default class PinForm extends Component {
 	}
 
 	onChange(inputValue) {
-		let pinLength = this.state.model.pin.length;
-		this.state.model.pin = inputValue;
+		let pinLength = this.state.model.value.length;
+		this.state.model.value = inputValue;
 
 		this.setState({
 			additionalClass: setCurrentFocusedInputTo(5, pinLength === 5 ? 0 : inputValue.length - 1),
 			model: this.state.model
 		});
 
-		if (this.state.model.pin.length === 5) {
+		if (this.state.model.value.length === 5) {
 			this.props.options.onSubmit();
 		}
 	}
@@ -46,10 +46,10 @@ export default class PinForm extends Component {
 			/>
 
 			<Keyboard
-				value={this.state.model.pin}
+				value={this.state.model.value}
 				onSubmit={this.props.options.onSubmit}
 				onChange={this.onChange}
-				isValid={this.state.model.pin.length === 5}
+				isValid={this.state.model.value.length === 5}
 				multiple={false}
 				form={this.props.options.form}
 			/>

@@ -18,9 +18,9 @@ class PinSettings extends Model {
 			modelCopy = [];
 
 		if (model.pin.is_on) {
-			modelCopy.push(model.pin.current);
-			modelCopy.push(model.pin.newPin);
-			modelCopy.push(model.pin.newPinReenter);
+			modelCopy.push(model.pin.active);
+			modelCopy.push(model.pin.created);
+			modelCopy.push(model.pin.created_copy);
 
 			return modelCopy.every((item) => {
 				return item.length === 5;
@@ -34,9 +34,9 @@ class PinSettings extends Model {
 		return {
 			"pin": {
 				is_on: false,
-				current: null,
-				newPin: null,
-				newPinReenter: null
+				active: null,
+				created: null,
+				created_copy: null
 			}
 		};
 	}

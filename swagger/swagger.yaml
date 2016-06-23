@@ -1,0 +1,247 @@
+swagger: '2.0'
+info:
+  title: Kwebbl Mobile App API
+  description: Kwebbl Mobile App API
+  version: "0.1.0"
+
+# the domain of the service
+host: kwebbl.mobileApp.com
+
+# array of all schemes that your API supports
+schemes:
+  - http
+  - https
+
+# will be prefixed to all paths
+basePath: /ajax/
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+securityDefinitions:
+  badge-in-header:
+    type: apiKey
+    name: badge
+    in: header
+  badge-in-query:
+    type: apiKey
+    name: badge
+    in: query
+
+security:
+  - badge-in-header: []
+  - badge-in-query: []
+
+parameters:
+  _:
+    name: _
+    in: query
+    description: "Timestamp additional parameter for requests"
+    required: true
+    type: integer
+
+paths:
+
+  /extensions:
+    get:
+      summary: List of all company extensions
+      tags:
+        - list
+      responses:
+        200:
+          description: "Returns list of users"
+          schema:
+            type: object
+            properties:
+              extensions:
+                type: array
+                items:
+                  $ref: '#/definitions/Extension'
+
+  /mailboxes:
+    get:
+      summary: List of all company mailboxes
+      tags:
+        - list
+      responses:
+        200:
+          description: "Returns list of mailboxes"
+          schema:
+            type: object
+            properties:
+              mailboxes:
+                type: array
+                items:
+                  $ref: '#/definitions/Mailbox'
+
+  /dialplans:
+    get:
+      summary: List of all company dialplans
+      tags:
+        - list
+      responses:
+        200:
+          description: "Returns list of dialplans"
+          schema:
+            type: object
+            properties:
+              dialplans:
+                type: array
+                items:
+                  $ref: '#/definitions/Dialplan'
+
+
+  /dialplans/{dialplan_id}:
+    get:
+      summary: Get certain dialplan
+      description: Return data about dialplan
+      parameters:
+        - name: dialplan_id
+          in: path
+          description: identifier of a dialplan
+          type: string
+          required: true
+      responses:
+        200:
+          description: Return detailed data about dialplan
+          schema:
+            type: object
+            properties:
+              dialplan:
+                $ref: "#/definitions/Dialplan"
+
+    put:
+      summary: Modify active dialplan
+      description: Do actions with active dialplan
+      parameters:
+        - name: dialplan_id
+          in: path
+          description: identifier of a dialplan
+          type: string
+          required: true
+        - name: dialplan
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              dialplan:
+                $ref: '#/definitions/Dialplan'
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: object
+            properties:
+              dialplan:
+                $ref: '#/definitions/Dialplan'
+
+  /settings/pin:
+    get:
+      summary: Settings for user, pin code info
+      responses:
+        200:
+          description: "Returns list of dialplans"
+          schema:
+            type: object
+            $ref: '#/definitions/SettingsPin'
+
+    put:
+      summary: Modify settings for user, pin code info
+      parameters:
+        - name: pin
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              settings:
+                $ref: '#/definitions/SettingsPin'
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: object
+            properties:
+              settings:
+                $ref: '#/definitions/SettingsPin'
+
+
+definitions:
+
+  Extension:
+    type: object
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+      in_number:
+        type: number
+      image_id:
+        type: string
+
+  Mailbox:
+    type: object
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+      color:
+        type: number
+      number:
+        type: number
+      type:
+        type: string
+
+  SettingsPin:
+    type: object
+    properties:
+      pin:
+        type: object
+        properties:
+          is_on:
+            type: boolean
+          active:
+            type: string
+          created:
+            type: string
+          created_copy:
+            type: string
+
+  Dialplan:
+    type: object
+    properties:
+      _id:
+        type: string
+      actions:
+        type: array
+        items:
+          type: object
+          properties:
+            action_id:
+              type: string
+            value:
+              type: object
+              properties:
+                label:
+                  type: string
+                short_code:
+                  type: string
+                is_on:
+                  type: boolean
+      title:
+        type: number
+      personal:
+        type: number
+      ex_number:
+        type: string
+      follow:
+        type: object
+        properties:
+          original:
+            type: string

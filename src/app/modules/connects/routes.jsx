@@ -4,19 +4,19 @@ import Qr from './components/item/Qr.jsx';
 import Pin from './components/item/Pin.jsx';
 
 module.exports = {
-	path: '/connect',
+	path: '/connects',
 	component: Index,
 	childRoutes: [
 		{
-			path: '/connect/main',
+			path: '/connects/main',
 			component: Enter
 		},
 		{
-			path: '/connect/qr',
+			path: '/connects/qr',
 			component: Qr
 		},
 		{
-			path: '/connect/pin',
+			path: '/connects/pin',
 			component: Pin
 		}
 	]

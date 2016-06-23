@@ -4,6 +4,10 @@ class Dialplan extends Model {
 	init() {
 		this.managedResource = 'dialplan';
 	}
+
+	_getRecourseName(path) {
+		return this.schema['dialplans'];
+	}
 	
 	_defaultDialplan() {
 		return {
@@ -21,7 +25,6 @@ class Dialplan extends Model {
 		return [
 			{
 				"action_id": "",
-				"items": [ ],
 				"value": {
 					"label": "",
 					"short_code": "",

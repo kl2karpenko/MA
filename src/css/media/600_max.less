@@ -9,7 +9,7 @@
       width: 80px;
       height: 80px;
       line-height: 80px;
-      &.btn-list {
+      &.btn-right {
         margin-bottom: 10px !important;
       }
     }
@@ -45,17 +45,32 @@
         }
       }
     }
-      &-list {
-        &-info {
-          left: 130px;
-        }
+    &-list {
+      &-info {
+        left: 130px;
+      }
 
-        &-dialplan &-item {
-          img {
-            height: 110px;
+      &-item {
+        img {
+          height: 110px;
+        }
+      }
+
+      &-withColor {
+        .m-list-item {
+          .m-list-info {
+            left: 85px;
+          }
+
+          .m-list-color {
+             span {
+               width: 50px;
+               height: 50px;
+             }
           }
         }
       }
+    }
   }
 
   .radio-button,

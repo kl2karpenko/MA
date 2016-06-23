@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import config from "./config";
 
-function _getContactsFromMobile(contacts, cb) {
-	return contacts.list((contactsList) => {
+function _getContactsFromMobile(cb) {
+	return navigator.contactsPhoneNumbers.list((contactsList) => {
 		contactsList = contactsList.filter((contactItem) => {
 			return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactItem : false
 		});
@@ -27,5 +27,6 @@ function getAddressOfHost() {
 }
 
 module.exports = $.extend(config, {
-	"hostname": getAddressOfHost()
+	"hostname": getAddressOfHost(),
+	mobileContacts: _getContactsFromMobile
 });

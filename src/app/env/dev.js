@@ -1,16 +1,16 @@
 import $ from 'jquery';
 import config from "./config";
 
-function _getContactsFromMobile(contacts, cb) {
+function _getContactsFromMobile() {
 	return $.get("/ajax/contacts", (contactsData) => {
-		contactsData = contactsData.map((contactItem) => {
+		contactsData.contacts = contactsData.contacts.map((contactItem) => {
 			return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactItem : false
 		});
-
-		cb(contactsData);
+		return contactsData
 	})
 }
 
 module.exports = $.extend(config, {
-	"hostname": "/ajax/"
+	"hostname": "/ajax/",
+	mobileContacts: _getContactsFromMobile
 });

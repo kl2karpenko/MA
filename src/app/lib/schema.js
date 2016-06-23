@@ -12,10 +12,13 @@ $( document ).ajaxStop(function() {
 });
 
 module.exports = (new $.RestClient(config.hostname, {
-	stringifyData: false,
+	stripTrailingSlash: true,
+
+	stringifyData: true,
+
 	autoClearCache: true,
+
 	request: function(resource, options) {
-		console.log(options)
 		return $.ajax(options);
 	}
 }));

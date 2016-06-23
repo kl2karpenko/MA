@@ -10,32 +10,13 @@
 
     &-item {
       position: relative;
-    }
-
-    &-info {
-      left: 100px;
-      top: 50%;
-      right: 0;
-
-      transform: translateY(-50%);
-      position: absolute;
-    }
-
-    padding: 0 5.733333333333333%;
-
-    &-dialplan &-item {
-      border-bottom: 1px solid rgba(256, 256, 256, 0.4);
-      padding: 2.2488755622188905% 0;
-
-      img {
-        height: 80px;
-      }
+      padding: 0 5.733333333333333%;
 
       h3 {
         margin-top: 0;
         font-size: 2.1em;
         font-weight: 300;
-        margin-bottom: 5px;
+        margin-bottom: 0px;
 
         white-space: nowrap;
         max-height: 50%;
@@ -47,8 +28,94 @@
         }
       }
 
+      &-wrap {
+        position: relative;
+        height: 100%;
+        border-bottom: 1px solid rgba(256, 256, 256, 0.4);
+      }
+
+      img {
+        height: 80px;
+      }
+
+      .m-list-phone {
+        color: @Grey;
+      }
+
+      .m-list-color {
+        float: left;
+        width: 50px;
+        height: 100%;
+        position: relative;
+
+        span {
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+
+          position: absolute;
+          left: 0;
+          top: 50%;
+
+          transform: translate(0, -50%);
+        }
+      }
+    }
+
+    &-info {
+      left: 100px;
+      top: 50%;
+      right: 0;
+
+      transform: translateY(-50%);
+      position: absolute;
+    }
+
+    &-mailbox &-item {
+      .m-list-item-wrap {
+        border-bottom: 1px solid @LightGrey;
+        padding: 4.248876% 0;
+      }
+
+      height: 110px;
+
+      &:hover, &:active {
+        .BackgroundRGB(0.1);
+      }
+
+      .m-list-phone {
+        color: @Grey;
+      }
+
+      .m-list-info {
+        left: 55px;
+      }
+    }
+
+    &-dialplan &-item {
+      .m-list-phone {
+        color: #fff;
+      }
+    }
+
+    &-withImg &-item {
+      .m-list-item-wrap {
+        padding: 2.2488755622188905% 0;
+      }
+
       .m-list-phone {
         font-size: 0.85em;
+      }
+    }
+
+    &-contacts &-item {
+      .m-list-item-wrap {
+        border-bottom: 1px solid @LightGrey;
+        padding: 4.248876% 0;
+      }
+
+      &:hover, &:active {
+        .BackgroundRGB(0.1);
       }
     }
   }

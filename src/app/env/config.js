@@ -2,9 +2,11 @@ module.exports = {
 	"modules": [
 		"core",
 		"loader",
-		"connect",
+		"connects",
 		"pin",
 		"settings",
-		"dialplans"
+		"dialplans",
+		"contacts",
+		"mailboxes"
 	]
 };
