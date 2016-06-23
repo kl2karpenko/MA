@@ -33,9 +33,7 @@ export default class Company extends Component {
 	}
 
 	/* call on change props in parent scope */
-	componentWillReceiveProps(props) {
-		console.log(props.dialplan, 'componentWillReceiveProps');
-
+	componentWillReceiveProps() {
 		this._updateDialplan();
 	}
 
