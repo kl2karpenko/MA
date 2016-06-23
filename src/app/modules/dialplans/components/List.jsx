@@ -1,23 +1,39 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 
-import DialplanListItem from './list/Item.jsx';
+import ListComponent from "components/list/Index.jsx";
 
 import DialplanList from "../models/DialplanList";
+import Dialplan from "../models/Dialplan";
+
+function _configData(data) {
+	return data.map((item) => {
+		var obj = {};
+
+		obj.number = item.ex_number || item.in_number;
+		obj.image = true;
+		obj.title = item.title;
+
+		return obj;
+	});
+}
 
 export default class List extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			DialplanList: DialplanList.getModel()
-		};
+		this.renderDialplanBy = this.renderDialplanBy.bind(this);
 	}
 
-	componentWillMount() {
-		DialplanList.update();
+	renderDialplanBy(index) {
+		DialplanList.updateState({
+			activePage: index + 1
+		});
 
-		this.setState({
-			DialplanList: DialplanList.getModel()
+		Dialplan.load({
+			id: DialplanList.getValueOfDefAttrByIndex(index)
+		}).then(() => {
+			hashHistory.push(DialplanList.getUrl());
 		});
 	}
 
@@ -25,9 +41,12 @@ export default class List extends Component {
 		return (
 			<div className="l-adaptive">
 				<div className="m-list m-list-dialplan m-list-withImg">
-					{this.state.DialplanList.map((object, i) => {
-						return <DialplanListItem dialplan={object} key={i} index={i}/>;
-					})}
+					<ListComponent
+						model={DialplanList}
+						listClass="m-list-dialplans"
+						onClick={this.renderDialplanBy}
+						configData={_configData}
+					/>
 				</div>
 			</div>
 		);

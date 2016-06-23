@@ -13,9 +13,9 @@ function _getContactsFromMobile(cb) {
 
 let isIOS = process.env.platformName === 'ios';
 
-let homeIPMac = 'http://192.168.4.186:8030';
-let workIPMac = 'http://192.168.4.22:8030';
-let workIPDesktop = 'http://192.168.4.42:8030';
+let homeIPMac = 'http://192.168.4.186:8030/';
+let workIPMac = 'http://192.168.4.22:8030/';
+let workIPDesktop = 'http://192.168.4.42:8030/';
 
 let devServerHostName = "http://mobile-app.dev.kwebbl.net:8030/";
 
