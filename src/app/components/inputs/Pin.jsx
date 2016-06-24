@@ -25,8 +25,10 @@ export default class Pin extends Component {
 			value = e.target.value
 		}
 
+		let len = value.length;
+
 		this.setState({
-			additionalClass: setCurrentFocusedInputTo(5, value.length - 1 < 0 ? value.length : value.length - 1)
+			additionalClass: setCurrentFocusedInputTo(5, len - 1 < 0 ? len : len - 1)
 		});
 	}
 
@@ -53,7 +55,7 @@ export default class Pin extends Component {
 			this.props.onSubmit().done((newPinModel) => {
 				this.setState({
 					additionalClass: setCurrentFocusedInputTo(5, 0),
-					model: newPinModel
+					model: newPinModel.pin
 				});
 			});
 		}
@@ -87,7 +89,7 @@ export default class Pin extends Component {
 													<div>
 														<input
 															readOnly="true"
-															value={this.state.model.value[i]}
+															value={this.state.model.value && this.state.model.value[i]}
 															type={this.props.inputType}
 															className={"l-pin__pinLetters" + (this.state.additionalClass[i] ? " focus" : "")}
 														/>

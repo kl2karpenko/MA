@@ -1,7 +1,7 @@
 module.exports = {
 	"modules": [
 		"core",
-		"loader",
+		"authorize",
 		"connects",
 		"pin",
 		"settings",

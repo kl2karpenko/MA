@@ -4,6 +4,9 @@ import UnableToScanQr from './items/UnableToScanQr.jsx';
 import MainConnect from './items/MainConnect.jsx';
 import LinkButton from 'components/buttons/LinkButton.jsx';
 
+import Adaptive from 'components/layouts/adaptive/Index.jsx';
+import Angle from 'components/modules/angle/Index.jsx';
+
 export default class Enter extends Component {
 	constructor(props) {
 		super(props);
@@ -11,28 +14,26 @@ export default class Enter extends Component {
 
 	render() {
 		return (
-			<div className="l-adaptive">
-				<div className="m-angle main main-code">
-					<div className="m-angle-wrapper">
-						<h2 className="m-angle__header">Scan QR code</h2>
+		<Adaptive>
+			<Angle
+				class="main main-code"
+				header="Scan QR code">
+				<LinkButton
+					text="Start"
+					className="m-angle__button btn btn-round btn-md"
+					activeClassName="active"
+					href="/connects/qr"
+				/>
+			</Angle>
 
-						<LinkButton
-							text="Start"
-							className="m-angle__button btn btn-round btn-md"
-							activeClassName="active"
-						  href="/connects/qr"
-							/>
-					</div>
-				</div>
+			<MainConnect>
+				<h2 className="l-main__header">Where can I find this QR Code?</h2>
+				<p className="l-main__text">Use a computer to log in to your webinterface Click on your name in 
+					the top-right corner Select “Connect App” from the menu</p>
+			</MainConnect>
 
-				<MainConnect
-					header={"Where can I find this QR Code?"}
-				  text={'Use a computer to log in to your webinterface Click on your name in' +
-				   ' the top-right corner Select “Connect App” from the menu'}
-					/>
-
-				<UnableToScanQr/>
-			</div>
+			<UnableToScanQr/>
+		</Adaptive>
 		);
 	}
 }

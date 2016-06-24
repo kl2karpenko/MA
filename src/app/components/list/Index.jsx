@@ -27,8 +27,6 @@ export default class Index extends Component {
 	}
 
 	render() {
-		console.log(this.state);
-		
 		return (
 			<div className={"m-list" + (this.props.listClass ? " " + this.props.listClass : "") + (this.props.withImg ? " m-list-withImg" : " m-list-withColor")}>
 				{this.state.list.map((object, i) => {

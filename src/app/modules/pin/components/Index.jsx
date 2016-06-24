@@ -5,6 +5,9 @@ import PinForm from './PinForm.jsx';
 
 import Pin from '../models/Pin';
 
+import Adaptive from 'components/layouts/adaptive/Index.jsx';
+import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
@@ -40,20 +43,18 @@ export default class Index extends Component {
 	}
 
 	render() {
-		return (
-			<div className="l-adaptive-wrapper">
-				<div className="l-adaptive">
-					<PinForm
-						options={{
+		return (<AdaptiveWrapper>
+			<Adaptive>
+				<PinForm
+					options={{
 							form: 'pinCheck',
 							text: "Enter the code",
 							inputType: "password",
 							onSubmit: this._save,
 							model: this.state.model
 						}}
-					/>
-				</div>
-			</div>
-		);
+				/>
+			</Adaptive>
+		</AdaptiveWrapper>);
 	}
 }

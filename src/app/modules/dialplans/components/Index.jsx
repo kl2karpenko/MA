@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import Session from "models/Session";
 import Dialplan from "../models/Dialplan";
 import DialplanList from "../models/DialplanList";
 
+import Loader from 'components/layouts/Loader.jsx';
+import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+
 export default class Index extends Component {
 	constructor(props) {
+		console.log('init dialplans')
 		super(props);
 
 		this.state = {
 			loading: true
 		};
+
+		this._init();
 	}
 
-	componentWillMount() {
-		this
-			._loadResources()
+	_init() {
+		console.log('load dialplans');
+
+		DialplanList
+			.load()
 			.then(() => {
 				let
 					currentIdOfDialplan = this.props.params.id,
@@ -42,24 +49,17 @@ export default class Index extends Component {
 			});
 	}
 
-	_loadResources() {
-		return Session
-			._getSessionData()
-			.then(DialplanList.load.bind(DialplanList))
-	}
-
 	render() {
 		return (
-			<div style={{height: "100%"}}>
+			<AdaptiveWrapper>
 				{(() => {
 					if (!this.state.loading) {
 						return this.props.children;
 					} else {
-						// TODO: create loader!!!!!!! add it to different file
-						return <div className="app-loadBlock"></div>;
+						return <Loader/>;
 					}
 				})()}
-			</div>
+			</AdaptiveWrapper>
 		);
 	}
 }

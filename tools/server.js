@@ -233,6 +233,33 @@ var settingsOff = {
 	}
 };
 
+var Permissions = {
+	"admin": {
+		"role": "administrator"
+	},
+	"not_admin": {
+		"role": "user"
+	}
+};
+
+var isAuthorize = {
+	'session': {
+		'user': {
+			"_id": "8ce53381732507b4aa468efb5d3d4747",
+			"id": "8ce53381732507b4aa468efb5d3d4747",
+			"username": "1030.ira_company"
+		},
+		"permissions": Permissions.not_admin,
+		"dialplan": {
+			"id": "1e212b17f4c01c3bb31a9b21ff896396"
+		}
+	}
+};
+
+var isNotAuthorize = {
+	'session': false
+};
+
 // Local data =================================== //
 
 app.configure(function () {
@@ -366,52 +393,10 @@ app.get('/ajax/contacts', function (req, res) {
 });
 
 /**
- * authorize module for development
- */
-app.get('/ajax/authorize', function (req, res) {
-	var isAuthorize = {
-		'authorize': {
-			'user': {
-				"_id": "8ce53381732507b4aa468efb5d3d4747",
-				"id": "8ce53381732507b4aa468efb5d3d4747",
-				"username": "1030.ira_company",
-				"dialplan": {
-					"id": "1e212b17f4c01c3bb31a9b21ff896396"
-				}
-			}
-		}
-	};
-
-	var isNotAuthorize = {
-		'authorize': false
-	};
-
-	res.send(isNotAuthorize);
-});
-
-/**
  * Session data
  */
 app.get('/ajax/session', function (req, res) {
-	var isAuthorize = {
-		"session": {
-			"user": {
-				"_id": "8ce53381732507b4aa468efb5d3d4747",
-				"id": "8ce53381732507b4aa468efb5d3d4747",
-				"username": "1030.ira_company",
-				"dialplan": {
-					"id": "1e212b17f4c01c3bb31a9b21ff896396"
-				}
-			}
-		}
-	};
-
-	var isNotAuthorize = {
-		"session": {}
-	};
-
-	// res.status(500);
-	res.send(isNotAuthorize);
+	res.send(isAuthorize);
 });
 
 /**

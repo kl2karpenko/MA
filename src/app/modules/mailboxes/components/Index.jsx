@@ -4,6 +4,14 @@ import { hashHistory } from 'react-router';
 import MailboxesList from "../models/MailboxesList";
 import ListComponent from "components/list/Index.jsx";
 
+import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
+import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+
+import Angle from 'components/modules/angle/Index.jsx';
+import AngleTop from 'components/modules/angle/Top.jsx';
+
+import MainScroll from 'components/layouts/main/Scroll.jsx';
+
 function _configData(data) {
 	return data.map((item) => {
 		var obj = {};
@@ -24,31 +32,24 @@ export default class Index extends Component {
 
 	render() {
 		return (
-			<div className="l-adaptive-wrapper">
-				<div className="l-adaptive l-adaptive-sm l-fixed l-mailbox">
-					<div className="m-angle">
-						<div className="m-angle-wrapper">
-							<div className="m-angle-content">
-								<div className="m-angle-top">
-									<div className="m-angle-name">
-										Forward to:
-									</div>
-								</div>
-							</div>
+			<AdaptiveWrapper>
+				<AdaptiveFixed class="l-adaptive-sm l-mailbox">
+					<Angle header={false}>
+						<div className="m-angle-content">
+							<AngleTop title="Forward to:"/>
 						</div>
-					</div>
-					<div className="l-main">
-						<div className="l-main-scroll">
-							<ListComponent
-								model={MailboxesList}
-								listClass="m-list-mailbox"
-								onClick={() => {console.log('click') }}
-								configData={_configData}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
+					</Angle>
+
+					<MainScroll>
+						<ListComponent
+							model={MailboxesList}
+							listClass="m-list-mailbox"
+							onClick={() => {console.log('click') }}
+							configData={_configData}
+						/>
+					</MainScroll>
+				</AdaptiveFixed>
+			</AdaptiveWrapper>
 		);
 	}
 }

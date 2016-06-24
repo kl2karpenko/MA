@@ -6,6 +6,8 @@ import ListComponent from "components/list/Index.jsx";
 import DialplanList from "../models/DialplanList";
 import Dialplan from "../models/Dialplan";
 
+import Adaptive from 'components/layouts/adaptive/Index.jsx';
+
 function _configData(data) {
 	return data.map((item) => {
 		var obj = {};
@@ -39,16 +41,16 @@ export default class List extends Component {
 
 	render() {
 		return (
-			<div className="l-adaptive">
-				<div className="m-list m-list-dialplan m-list-withImg">
-					<ListComponent
-						model={DialplanList}
-						listClass="m-list-dialplans"
-						onClick={this.renderDialplanBy}
-						configData={_configData}
-					/>
-				</div>
+		<Adaptive>
+			<div className="m-list m-list-dialplan m-list-withImg">
+				<ListComponent
+					model={DialplanList}
+					listClass="m-list-dialplans"
+					onClick={this.renderDialplanBy}
+					configData={_configData}
+				/>
 			</div>
+		</Adaptive>
 		);
 	}
 }

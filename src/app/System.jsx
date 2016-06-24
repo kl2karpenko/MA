@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, hashHistory} from 'react-router';
 
+import Session from "models/Session";
+
 import config from 'envConfig';
 
 export default class System {
@@ -23,6 +25,8 @@ export default class System {
 	}
 
 	_createRoutes() {
+		let isUserConnected = Session._isConnected();
+
 		this.rootRoute = {
 			component: 'div',
 			createHistory: {
@@ -31,18 +35,20 @@ export default class System {
 			onChange: (nextState, replaceState) => {
 				console.group("Assemble page:");
 				console.info(`route: ${replaceState.location.pathname}`);
-				console.groupEnd();
+				console.groupEnd("Assemble page:");
 			},
 			childRoutes: [
 				{
 					path: '/',
 					component: 'div',
 					indexRoute: {
-						onEnter: (nextState, replace) => replace('/authorize')
+						onEnter: (nextState, replace) => {
+							hashHistory.push(isUserConnected ? '/pin' : '/authorize');
+						}
 					},
 					// TODO: render from config array
 					childRoutes: [
-						require('./modules/loader/routes.jsx'),
+						require('./modules/authorize/routes.jsx'),
 						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
 						require('./modules/contacts/routes.jsx'),
@@ -91,6 +97,14 @@ export default class System {
 	}
 
 	/**
+	 *
+	 */
+	_getSessionData() {
+		// here take data from authorize
+		return Session.load();
+	}
+
+	/**
 	 * require main stylesheet and config for all modules (add schema)
 	 * @returns {*|Promise.<TResult>}
 	 */
@@ -98,6 +112,7 @@ export default class System {
 		var constr = this.constructor;
 
 		return $.when(constr._setStyles)
-			.then(constr._loadConfiguration);
+			.then(constr._loadConfiguration)
+			.done(this._getSessionData);
 	}
 }

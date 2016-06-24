@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Main from 'components/layouts/main/Index.jsx';
+
 export default class MainConnect extends React.Component {
 	constructor(props) {
 		super(props);
@@ -7,12 +9,10 @@ export default class MainConnect extends React.Component {
 
 	render() {
 		return (
-			<div className="l-main l-main-connect">
-				<div className="l-main-center">
-					<h2 className="l-main__header">{this.props.header}</h2>
-					<p className="l-main__text">{this.props.text}</p>
-				</div>
-			</div>
+		<Main 
+			class="l-main-connect" 
+      center={this.props.children}
+		/>
 		);
 	}
 }

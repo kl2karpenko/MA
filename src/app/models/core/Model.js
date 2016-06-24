@@ -204,8 +204,6 @@ export default class Model {
 			params.push(options.id);
 		}
 
-		console.log(params);
-
 		return resource[readMethod].apply(resource, params).done((items) => {
 			console.groupCollapsed("load " + resource);
 			console.info("response", items[name]);

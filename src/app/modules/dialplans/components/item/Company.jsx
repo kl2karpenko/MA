@@ -98,7 +98,6 @@ export default class Company extends Component {
 									<div className="l-dialplan__list l-main-content">
 										<ul>
 											{this.state.Dialplan.actions.map((object, i) => {
-												console.log(object)
 												return <li key={i} className={object.className}>
 													<Checkbox
 														id={"action_" + i}

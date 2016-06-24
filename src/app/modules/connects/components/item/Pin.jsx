@@ -7,6 +7,9 @@ import UnableToScanQr from './items/UnableToScanQr.jsx';
 import PinForm from 'components/inputs/Pin.jsx';
 import MainConnect from './items/MainConnect.jsx';
 
+import Adaptive from 'components/layouts/adaptive/Index.jsx';
+import Angle from 'components/modules/angle/Index.jsx';
+
 export default class Pin extends Component {
 	constructor(props) {
 		super(props);
@@ -38,39 +41,39 @@ export default class Pin extends Component {
 
 	render() {
 		return (
-			<div className="l-adaptive">
-				<div className="m-angle main">
-					<div className="m-angle-wrapper">
-						<div className="l-pin-connect">
-							<div className="l-pin">
-								<PinForm
-									model={this.state.pin}
-									text="Enter the code"
-									inputType="number"
-									form="connectPin"
-									onSubmit={this.connect}
-								/>
-							</div>
-						</div>
+		<Adaptive>
+			<Angle
+				class="main"
+				header={false}>
 
-						<button
-							className="m-angle__button btn btn-round btn-md"
-			        onClick={this.connect}
-			        data-form
-			        disabled={!(this.state.pin.value.length === 5)}
-			        form="connectPin">Log In</button>
+				<div className="l-pin-connect">
+					<div className="l-pin">
+						<PinForm
+							model={this.state.pin}
+							text="Enter the code"
+							inputType="number"
+							form="connectPin"
+							onSubmit={this.connect}
+						/>
 					</div>
 				</div>
 
+				<button
+					className="m-angle__button btn btn-round btn-md"
+					onClick={this.connect}
+					data-form
+					disabled={!(this.state.pin.value.length === 5)}
+					form="connectPin">Log In</button>
+			</Angle>
 
-				<MainConnect
-					header={"Where can I find this PIN Code?"}
-					text={'Use a computer to log in to your webinterface Click on your' +
-					 ' name in the top-right corner Select “Connect App” from the menu'}
-					/>
+			<MainConnect>
+				<h2 className="l-main__header">Where can I find this PIN Code?</h2>
+				<p className="l-main__text">Use a computer to log in to your webinterface Click on your name in
+					the top-right corner Select “Connect App” from the menu</p>
+			</MainConnect>
 
-				<UnableToScanQr/>
-			</div>
+			<UnableToScanQr/>
+		</Adaptive>
 		);
 	}
 }

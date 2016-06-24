@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
@@ -7,9 +9,9 @@ export default class Index extends Component {
 
 	render() {		
 		return (
-			<div className="l-adaptive-wrapper">
+			<AdaptiveWrapper>
 				{this.props.children}
-			</div>
+			</AdaptiveWrapper>
 		);
 	}
 }
