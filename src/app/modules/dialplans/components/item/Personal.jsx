@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 
 import PersonalActions from "../../models/actions/PersonalActions";
 

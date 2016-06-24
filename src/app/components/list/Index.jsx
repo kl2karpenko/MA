@@ -34,7 +34,7 @@ export default class Index extends Component {
 						data={object}
 						model={this.state.model}
 						key={i}
-						onClick={this.props.onClick.bind(this, i)}
+						onClick={this.props.onClick.bind(this, i, object._id)}
 					  index={i}
 					/>;
 				})}

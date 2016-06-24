@@ -9,7 +9,6 @@ import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
-		console.log('init dialplans')
 		super(props);
 
 		this.state = {
@@ -20,8 +19,6 @@ export default class Index extends Component {
 	}
 
 	_init() {
-		console.log('load dialplans');
-
 		DialplanList
 			.load()
 			.then(() => {

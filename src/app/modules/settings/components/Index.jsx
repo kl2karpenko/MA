@@ -91,7 +91,7 @@ export default class Index extends Component {
 		this
 			._save()
 			.then(() => {
-				hashHistory.push("/dialplans");
+				hashHistory.goBack();
 			})
 			.fail(() => {
 				PinSettings.messenger.error('Enter valid PIN');

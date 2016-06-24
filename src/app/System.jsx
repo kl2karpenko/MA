@@ -25,8 +25,6 @@ export default class System {
 	}
 
 	_createRoutes() {
-		let isUserConnected = Session._isConnected();
-
 		this.rootRoute = {
 			component: 'div',
 			createHistory: {
@@ -41,9 +39,11 @@ export default class System {
 				{
 					path: '/',
 					component: 'div',
+					// TODO: make on every reload page of pin code to show!!!!
 					indexRoute: {
 						onEnter: (nextState, replace) => {
-							hashHistory.push(isUserConnected ? '/pin' : '/authorize');
+							console.log('enter');
+							replace(Session._isConnected() ? '/pin' : '/authorize')
 						}
 					},
 					// TODO: render from config array
@@ -70,7 +70,7 @@ export default class System {
 		);
 	}
 
-	/**
+	/**se
 	 * create routes for app and render app in block id="app"
 	 * @param redirectPage
 	 */
@@ -113,6 +113,6 @@ export default class System {
 
 		return $.when(constr._setStyles)
 			.then(constr._loadConfiguration)
-			.done(this._getSessionData);
+			.then(this._getSessionData);
 	}
 }

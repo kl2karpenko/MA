@@ -127,6 +127,8 @@ export default class Model {
 			}
 		}
 
+		console.log(model, a, value)
+
 		model[a[a.length - 1]] = value;
 
 		return model;

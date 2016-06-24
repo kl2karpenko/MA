@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
 
+import Dialplan from "../../dialplans/models/Dialplan";
+
 import MailboxesList from "../models/MailboxesList";
 import ListComponent from "components/list/Index.jsx";
 
@@ -16,6 +18,7 @@ function _configData(data) {
 	return data.map((item) => {
 		var obj = {};
 
+		obj._id = item._id;
 		obj.number = item.number;
 		obj.image = false;
 		obj.color = item.color;
@@ -28,6 +31,15 @@ function _configData(data) {
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	_setMailBoxToDialPlan(index, id) {
+		Dialplan.updateAttributesFor("follow", {
+			"voicemail": id
+		});
+		console.log(Dialplan.getModel());
+
+		hashHistory.goBack();
 	}
 
 	render() {
@@ -44,7 +56,7 @@ export default class Index extends Component {
 						<ListComponent
 							model={MailboxesList}
 							listClass="m-list-mailbox"
-							onClick={() => {console.log('click') }}
+							onClick={this._setMailBoxToDialPlan}
 							configData={_configData}
 						/>
 					</MainScroll>

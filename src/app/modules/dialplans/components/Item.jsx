@@ -70,7 +70,7 @@ export default class Item extends Component {
 			});
 	}
 
-	_renderDialplan(event, e, a) {
+	_renderDialplan(event) {
 		let activatePage = $(event.target).hasClass('next') ? 'next' : 'previous';
 
 		this

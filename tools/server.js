@@ -214,7 +214,7 @@ var mailboxes = [{
 var settingsOn = {
 	"settings": {
 		"pin": {
-			is_on: false,
+			is_on: true,
 			active: "",
 			created: "",
 			created_copy: ""
@@ -252,7 +252,8 @@ var isAuthorize = {
 		"permissions": Permissions.not_admin,
 		"dialplan": {
 			"id": "1e212b17f4c01c3bb31a9b21ff896396"
-		}
+		},
+		"settings": settingsOn.settings
 	}
 };
 

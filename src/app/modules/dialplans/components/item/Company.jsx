@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 
 import CompanyActions from "../../models/actions/CompanyActions";
 import Checkbox from 'components/inputs/Checkbox.jsx';
+
+import MainScroll from 'components/layouts/main/Scroll.jsx';
 
 export default class Company extends Component {
 	constructor(props) {
@@ -42,6 +45,12 @@ export default class Company extends Component {
 
 		obj[object.value] = true;
 
+		if(object.value === "mobile") {
+			this._forwardToContact();
+		} else if(object.value === "voicemail") {
+			this._forwardToVoiceMail();
+		}
+
 		this.state.Dialplan.follow = obj;
 
 		this._updateDialplan();
@@ -59,70 +68,76 @@ export default class Company extends Component {
 		});
 	}
 
+	_forwardToContact() {
+		hashHistory.push('/contacts');
+	}
+
+	_forwardToVoiceMail() {
+		hashHistory.push('/mailboxes');
+	}
+
 	render() {
 		return (
-			<div className="l-main">
-				<div className="l-main-scroll">
-					<form action="">
-						<div className="l-main-content l-dialplan__list">
-							<ul>
-								{this.state.actions.map((object, i) => {
-									return <li key={i} className={object.className}>
-										<label className="m-label radio-block" htmlFor={object.value}>
-											<input
-												type="radio"
-												name="follow"
-												value={object.value}
-												checked={this.state.Dialplan.follow[object.value] ? "checked" : ""}
-												id={object.value}
-												onChange={this.onChangeDialplanForward.bind(this, object)}
-											/>
-											<div className="radio-button"></div>
-											<div className="l-dialplan-text">
-												<div className="l-dialplan-name">{object.name}</div>
-												<div className="l-dialplan-info">{object.info}</div>
-											</div>
-										</label>
-									</li>;
-								})}
-							</ul>
-						</div>
-						{(() => {
-							if(this.state.Dialplan.actions && this.state.Dialplan.actions.length) {
-								return <div>
-									<div className="l-grey">
-										<div className="l-grey-header">
-											Flow Control
+			<MainScroll>
+				<form action="">
+					<div className="l-main-content l-dialplan__list">
+						<ul>
+							{this.state.actions.map((object, i) => {
+								return <li key={i} className={object.className}>
+									<label className="m-label radio-block" htmlFor={object.value}>
+										<input
+											type="radio"
+											name="follow"
+											value={object.value}
+											checked={this.state.Dialplan.follow[object.value] ? "checked" : ""}
+											id={object.value}
+											onChange={this.onChangeDialplanForward.bind(this, object)}
+										/>
+										<div className="radio-button"></div>
+										<div className="l-dialplan-text">
+											<div className="l-dialplan-name">{object.name}</div>
+											<div className="l-dialplan-info">{object.info}</div>
 										</div>
+									</label>
+								</li>;
+							})}
+						</ul>
+					</div>
+					{(() => {
+						if(this.state.Dialplan.actions && this.state.Dialplan.actions.length) {
+							return <div>
+								<div className="l-grey">
+									<div className="l-grey-header">
+										Flow Control
 									</div>
-									<div className="l-dialplan__list l-main-content">
-										<ul>
-											{this.state.Dialplan.actions.map((object, i) => {
-												return <li key={i} className={object.className}>
-													<Checkbox
-														id={"action_" + i}
-														name="flow_control"
-														value={object.action_id}
-														checked={object.value.is_on}
-														text={(() => {
+								</div>
+								<div className="l-dialplan__list l-main-content">
+									<ul>
+										{this.state.Dialplan.actions.map((object, i) => {
+											return <li key={i} className={object.className}>
+												<Checkbox
+													id={"action_" + i}
+													name="flow_control"
+													value={object.action_id}
+													checked={object.value.is_on}
+													text={(() => {
 															return (
 																<div className="l-dialplan-text">
 																	<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
 																</div>
 															);
 														})}
-														onChange={this.onChangeFlowControl.bind(this, object)}
-														/>
-												</li>;
-											})}
-										</ul>
-									</div>
+													onChange={this.onChangeFlowControl.bind(this, object)}
+												/>
+											</li>;
+										})}
+									</ul>
 								</div>
-							}
-						})()}
-					</form>
-				</div>
-			</div>
+							</div>
+						}
+					})()}
+				</form>
+			</MainScroll>
 		);
 	}
 }
