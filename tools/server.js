@@ -15,7 +15,10 @@ var dialplans = [{
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "thrty56y56ryr5",
@@ -48,7 +51,10 @@ var dialplans = [{
 	"ex_number": 31152026029,
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "5h656h65h5r6h56h",

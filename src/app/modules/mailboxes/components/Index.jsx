@@ -37,6 +37,7 @@ export default class Index extends Component {
 		Dialplan.updateAttributesFor("follow", {
 			"voicemail": id
 		});
+
 		console.log(Dialplan.getModel());
 
 		hashHistory.goBack();

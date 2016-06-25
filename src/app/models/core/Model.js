@@ -127,9 +127,9 @@ export default class Model {
 			}
 		}
 
-		console.log(model, a, value)
-
 		model[a[a.length - 1]] = value;
+
+		console.log(a[a.length - 1], model.follow, model);
 
 		return model;
 	}
