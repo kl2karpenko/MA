@@ -68,12 +68,16 @@ class List {
 		return this[this._getModelName()];
 	}
 
+	getRecourse() {
+		return this.schema[this._getModelName()];
+	}
+
 	_getModelName() {
 		return this.managedResource;
 	}
 
 	_getRecourseName() {
-		return this.schema[this._getModelName()];
+		return this.managedResource;
 	}
 
 	_getDefaultAttributes() {
@@ -189,10 +193,11 @@ class List {
 	load(options) {
 		options = options || {};
 
-		let name = this.managedResource;
-		let resource = this.schema[name];
-		let readMethod = options.method || 'read';
-		let params = [];
+		let
+			name = this.managedResource,
+			resource = this.getRecourse(),
+			readMethod = options.method || 'read',
+			params = [];
 
 		params.push({ _: List._getRandomHash() });
 

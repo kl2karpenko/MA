@@ -2,56 +2,39 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import CompanyActions from "../../models/actions/CompanyActions";
-import Checkbox from 'components/inputs/Checkbox.jsx';
+
+import Dialplan from "models/Dialplan";
+import Mailbox from "models/Mailbox";
 
 import MainScroll from 'components/layouts/main/Scroll.jsx';
+
+import Follow from './actions/Follow.jsx';
+import FlowControl from './actions/FlowControl.jsx';
 
 export default class Company extends Component {
 	constructor(props) {
 		super(props);
 
-		this.defaultActions = CompanyActions.getModel();
 		this.state = {
-			Dialplan: props.dialplan,
-			actions: this.defaultActions.map((item) => {
-				if (props.dialplan.follow[item.value]) {
-					item.is_on = true;
-				}
-				return item;
-			})
+			Dialplan: Dialplan.getModel(),
+			actions: CompanyActions.getModel()
 		};
 	}
 
-	_setFollowDialplanState(activeAction) {
-		var actions = this.defaultActions.map((item) => {
-			if (activeAction.follow[item.value]) {
-				item.is_on = true;
-			}
-			return item;
-		});
-
-		this.setState({
-			actions: actions
-		});
-	}
-
-	/* call on change props in parent scope */
-	componentWillReceiveProps() {
-		this._updateDialplan();
+	_reset() {
+		Mailbox.resetToDefault();
 	}
 
 	onChangeDialplanForward(object) {
-		var obj = {};
+		this._reset();
 
-		obj[object.value] = true;
-
-		if(object.value === "mobile") {
-			this._forwardToContact();
+		if(object.value === "contact") {
+			hashHistory.push('/contacts');
 		} else if(object.value === "voicemail") {
-			this._forwardToVoiceMail();
+			hashHistory.push('/mailboxes');
+		} else {
+			Dialplan._followTo(object.value, true);
 		}
-
-		this.state.Dialplan.follow = obj;
 
 		this._updateDialplan();
 	}
@@ -64,16 +47,8 @@ export default class Company extends Component {
 
 	_updateDialplan() {
 		this.setState({
-			Dialplan: this.state.Dialplan
+			Dialplan: Dialplan.getModel()
 		});
-	}
-
-	_forwardToContact() {
-		hashHistory.push('/contacts');
-	}
-
-	_forwardToVoiceMail() {
-		hashHistory.push('/mailboxes');
 	}
 
 	render() {
@@ -83,23 +58,11 @@ export default class Company extends Component {
 					<div className="l-main-content l-dialplan__list">
 						<ul>
 							{this.state.actions.map((object, i) => {
-								return <li key={i} className={object.className}>
-									<label className="m-label radio-block" htmlFor={object.value}>
-										<input
-											type="radio"
-											name="follow"
-											value={object.value}
-											checked={this.state.Dialplan.follow[object.value] ? "checked" : ""}
-											id={object.value}
-											onChange={this.onChangeDialplanForward.bind(this, object)}
-										/>
-										<div className="radio-button"></div>
-										<div className="l-dialplan-text">
-											<div className="l-dialplan-name">{object.name}</div>
-											<div className="l-dialplan-info">{object.info}</div>
-										</div>
-									</label>
-								</li>;
+								return <Follow
+									key={i}
+									options={object}
+									onChange={this.onChangeDialplanForward.bind(this, object)}
+								/>;
 							})}
 						</ul>
 					</div>
@@ -114,22 +77,12 @@ export default class Company extends Component {
 								<div className="l-dialplan__list l-main-content">
 									<ul>
 										{this.state.Dialplan.actions.map((object, i) => {
-											return <li key={i} className={object.className}>
-												<Checkbox
-													id={"action_" + i}
-													name="flow_control"
-													value={object.action_id}
-													checked={object.value.is_on}
-													text={(() => {
-															return (
-																<div className="l-dialplan-text">
-																	<div className="l-dialplan-name">{object.value.label || "1234*" + object.value.short_code}</div>
-																</div>
-															);
-														})}
-													onChange={this.onChangeFlowControl.bind(this, object)}
-												/>
-											</li>;
+											return <FlowControl
+												index={i}
+												key={i}
+												options={object}
+												onChange={this.onChangeFlowControl.bind(this, object)}
+											/>;
 										})}
 									</ul>
 								</div>

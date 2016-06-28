@@ -3,7 +3,7 @@ import { Link, hashHistory } from 'react-router';
 
 import imageLoader from 'imageLoader';
 
-import Dialplan from "../models/Dialplan";
+import Dialplan from "models/Dialplan";
 import DialplanList from "../models/DialplanList";
 
 import Personal from './item/Personal.jsx';
@@ -117,9 +117,9 @@ export default class Item extends Component {
 
 				{(() => {
 					if (this.state.Dialplan.personal) {
-						return <Personal dialplan={this.state.Dialplan}/>;
+						return <Personal/>;
 					} else {
-						return <Company dialplan={this.state.Dialplan}/>;
+						return <Company/>;
 					}
 				})()}
 			</AdaptiveFixed>

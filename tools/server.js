@@ -73,8 +73,11 @@ var dialplans = [{
 	"personal": false,
 	"actions": [],
 	"follow": {
-		"original": true
-	}
+	"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
+}
 }, {
 	"_id": "h5r6hy46hh4h66h",
 	"actions": [],
@@ -82,7 +85,10 @@ var dialplans = [{
 	"title": "Kebal Ivan",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "6",
@@ -91,7 +97,10 @@ var dialplans = [{
 	"title": "Rybachok Oleksandr",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "7",
@@ -100,7 +109,10 @@ var dialplans = [{
 	"title": "Saiko Iryna",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "8",
@@ -109,7 +121,10 @@ var dialplans = [{
 	"title": "Berladin Ewgeny",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "9",
@@ -118,7 +133,10 @@ var dialplans = [{
 	"title": "Yurch Yuriy",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }, {
 	"_id": "10",
@@ -127,7 +145,10 @@ var dialplans = [{
 	"title": "Skorohliad Ivan",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": true,
+		"mobile": false,
+		"voicemail": false,
+		"contact": false
 	}
 }];
 
@@ -416,6 +437,15 @@ app.get('/ajax/mailboxes', function (req, res) {
 });
 
 /**
+ * List of company mailboxes
+ */
+app.get('/ajax/mailboxes/:mailboxId', function (req, res) {
+	res.send({
+		"mailbox": mailboxes[_.indexOf(_.pluck(mailboxes, '_id'), req.params.mailboxId)]
+	});
+});
+
+/**
  * List of company dialplans
  */
 app.get('/ajax/dialplans', function (req, res) {
@@ -439,7 +469,9 @@ app.get('/ajax/dialplans/:dialplanId', function (req, res) {
 app.put('/ajax/dialplans/:dialplanId', function (req, res) {
 	dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)] = req.body.dialplan;
 
-	res.send(dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]);
+	res.send({
+		"dialplan": dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
+	});
 });
 
 /**

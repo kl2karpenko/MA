@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 import ListComponent from "components/list/Index.jsx";
 
 import DialplanList from "../models/DialplanList";
-import Dialplan from "../models/Dialplan";
+import Dialplan from "models/Dialplan";
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
 

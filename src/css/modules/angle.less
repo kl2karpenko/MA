@@ -12,6 +12,27 @@
     font-size: 1.2em;
   }
 
+  &-links {
+    position: relative;
+
+    top: 23%;
+    font-size: 1.6em;
+
+    text-align: left;
+    font-weight: 200;
+
+    a {
+      margin-right: 6%;
+      color: rgba(256, 256, 256, 0.7);
+      text-decoration: none;
+
+      &:active, &.active {
+        color: rgba(256, 256, 256, 1);
+        text-decoration: underline;
+      }
+    }
+  }
+
   &-wrapper {
     transform: rotate(10deg);
 

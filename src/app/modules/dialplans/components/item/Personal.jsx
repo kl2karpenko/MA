@@ -2,35 +2,45 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import PersonalActions from "../../models/actions/PersonalActions";
+import Follow from './actions/Follow.jsx';
+
+import Dialplan from "models/Dialplan";
 
 export default class Personal extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			Dialplan: props.dialplan
+			Dialplan: Dialplan.getModel(),
+			actions: PersonalActions.getModel()
 		};
-
-		this.actions = PersonalActions.getModel();
 	}
 
 	/* call on change props in parent scope */
-	componentWillReceiveProps(props) {
+	componentWillReceiveProps() {
 		this.setState({
-			Dialplan: props.dialplan
+			Dialplan: Dialplan.getModel()
 		});
 	}
 
 	onChange(object) {
-		var obj = {};
+		if(object.value === "contact") {
+			this._forwardToContact();
+		} else {
+			Dialplan._followTo(object.value, true);
+		}
 
-		obj[object.value] = true;
+		this._updateDialplan();
+	}
 
-		this.state.Dialplan.follow = obj;
-
+	_updateDialplan() {
 		this.setState({
-			Dialplan: this.state.Dialplan
+			Dialplan: Dialplan.getModel()
 		});
+	}
+
+	_forwardToContact() {
+		hashHistory.push('/contacts');
 	}
 
 	render() {
@@ -39,24 +49,12 @@ export default class Personal extends Component {
 				<div className="l-main-scroll">
 					<div className="l-dialplan__list l-main-content">
 						<ul>
-							{this.actions.map((object, i) => {
-								return <li key={i} className={object.className}>
-									<label htmlFor={object.value} className="radio-block">
-										<input
-											type="radio"
-											name="follow"
-											value={object.value}
-											checked={this.state.Dialplan.follow[object.value] ? "checked" : ""}
-											id={object.value}
-											onChange={this.onChange.bind(this, object)}
-											/>
-										<div className="radio-button"></div>
-										<div className="l-dialplan-text">
-											<div className="l-dialplan-name">{object.name}</div>
-											<div className="l-dialplan-info">{object.info}</div>
-										</div>
-									</label>
-								</li>;
+							{this.state.actions.map((object, i) => {
+								return <Follow
+									key={i}
+									options={object}
+									onChange={this.onChange.bind(this, object)}
+								/>;
 							})}
 						</ul>
 					</div>

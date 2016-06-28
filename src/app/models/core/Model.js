@@ -94,6 +94,12 @@ export default class Model {
 		return this[this._getModelName()];
 	}
 
+	getRecourse() {
+		let resourceName = this._getRecourseName() || this._getModelName();
+
+		return this.schema[resourceName];
+	}
+
 	getValueByPath(path) {
 		let
 			model = this.getModel(),
@@ -112,34 +118,33 @@ export default class Model {
 		return model[a[a.length - 1]];
 	}
 
-	setValueByPath(path, value) {
+	setValueByPath(path, val) {
 		let
-			model = this.getModel(),
-			a = path.split('.');
+			obj = this.getModel(),
+			fields = path.split('.'),
+			result = obj;
 
-		for (var i = 0; i < a.length - 1; i++) {
-			var n = a[i];
-			if (n in model) {
-				model = model[n];
+		for (var i = 0, n = fields.length; i < n && result !== undefined; i++) {
+			var field = fields[i];
+			if (i === n - 1) {
+				result[field] = val;
 			} else {
-				model[n] = {};
-				model = model[n];
+				if (typeof result[field] === 'undefined' || !_.isObject(result[field])) {
+					result[field] = {};
+				}
+				result = result[field];
 			}
 		}
 
-		model[a[a.length - 1]] = value;
-
-		console.log(a[a.length - 1], model.follow, model);
-
-		return model;
+		return obj;
 	}
 
 	_getModelName() {
 		return this.managedResource;
 	}
 
-	_getRecourseName(path) {
-		return !path ? this.schema[this._getModelName()] : this.schema[this._getModelName()][path];
+	_getRecourseName() {
+		return this.managedResource;
 	}
 
 	_getDefaultAttributes(path) {
@@ -171,6 +176,10 @@ export default class Model {
 		return this;
 	}
 
+	resetToDefault() {
+		this[this._getModelName()] = this._getDefaultAttributes();
+	}
+
 	updateAttributesFor(path, value) {
 		let
 			model = this.getModel();
@@ -198,12 +207,16 @@ export default class Model {
 
 		let
 			name = this._getModelName(),
-			resource = this._getRecourseName(options.from),
+			resource = this.getRecourse(),
 			readMethod = options.method || 'read',
 			params = [];
 
 		if (options.id) {
 			params.push(options.id);
+		}
+
+		if (options.from) {
+			resource = resource[options.from];
 		}
 
 		return resource[readMethod].apply(resource, params).done((items) => {
@@ -222,7 +235,7 @@ export default class Model {
 
 	loadCollection(options) {
 		let
-			resource = this._getRecourseName(options.from),
+			resource = this.getRecourse(),
 			readMethod = options.method || 'read',
 			params = [],
 			path = options.to;
@@ -260,7 +273,7 @@ export default class Model {
 
 		let
 			name = this._getModelName(),
-			resource = this._getRecourseName(options.for),
+			resource = this.getRecourse(),
 			saveMethod = 'update',
 			params = [];
 
@@ -268,6 +281,10 @@ export default class Model {
 
 		if (this.isSingle) {
 			params.length = params.length - 1;
+		}
+
+		if (options.for) {
+			resource = resource[options.for];
 		}
 
 		params.push(this.toJSON());

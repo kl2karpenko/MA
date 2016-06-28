@@ -8,7 +8,6 @@ import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
 import Angle from 'components/modules/angle/Index.jsx';
 import AngleTop from 'components/modules/angle/Top.jsx';
-import AngleInfo from 'components/modules/angle/InfoCenter.jsx';
 
 import MainScroll from 'components/layouts/main/Scroll.jsx';
 
@@ -25,10 +24,10 @@ export default class ContactPage extends Component {
 					<div className="m-angle-content">
 						<AngleTop title="Forward to:"/>
 
-						<AngleInfo>
-							<Link to="/contacts/mobile">Mobile</Link>
-							<Link to="/contacts/extensions">Extensions</Link>
-						</AngleInfo>
+						<div className="m-angle-links">
+							<Link activeClassName="active" to="/contacts/mobile">Mobile</Link>
+							<Link activeClassName="active" to="/contacts/extensions">Extensions</Link>
+						</div>
 					</div>
 
 					<button className="m-angle__button btn btn-round btn-sm btn-right">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import Dialplan from "../models/Dialplan";
+import Dialplan from "models/Dialplan";
 import DialplanList from "../models/DialplanList";
 
 import Loader from 'components/layouts/Loader.jsx';
@@ -14,27 +14,40 @@ export default class Index extends Component {
 		this.state = {
 			loading: true
 		};
+		this._config = this._config.bind(this);
 
 		this._init();
+	}
+
+	_config() {
+		let
+			currentIdOfDialplan = this.props.params.id || Dialplan.getValueByPath("_id"),
+			currentIndex = DialplanList.getIndexOfItemByDefAttrValue(currentIdOfDialplan);
+
+		currentIndex = currentIndex !== -1 ? currentIndex : 0;
+
+		DialplanList.updateState({
+			activePage: currentIndex + 1
+		});
+
+		return {
+			id: currentIdOfDialplan,
+			index: currentIndex
+		}
 	}
 
 	_init() {
 		DialplanList
 			.load()
-			.then(() => {
-				let
-					currentIdOfDialplan = this.props.params.id,
-					currentIndex = DialplanList.getIndexOfItemByDefAttrValue(currentIdOfDialplan);
-
-				currentIndex = currentIndex !== -1 ? currentIndex : 0;
-
+			.then(this._config)
+			.then((options) => {
 				DialplanList.updateState({
-					activePage: currentIndex + 1
+					activePage: options.index + 1
 				});
 
 				return Dialplan.load({
-					id: currentIdOfDialplan
-							|| DialplanList.getValueOfDefAttrByIndex( currentIndex )
+					id: options.id
+							|| DialplanList.getValueOfDefAttrByIndex( options.index )
 				});
 			})
 			.done(() => {

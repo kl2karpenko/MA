@@ -5,8 +5,18 @@ class Dialplan extends Model {
 		this.managedResource = 'dialplan';
 	}
 
-	_getRecourseName(path) {
-		return this.schema['dialplans'];
+	_getRecourseName() {
+		return 'dialplans';
+	}
+
+	_followTo(path, value) {
+		let followModel = $.extend({}, this._defaultDialplan().follow);
+
+		Object.keys(followModel).forEach((item) => {
+			followModel[item] = item === path ? value : false;
+		});
+
+		this.updateAttributesFor('follow', followModel);
 	}
 	
 	_defaultDialplan() {
@@ -16,7 +26,12 @@ class Dialplan extends Model {
 			"in_number": "",
 			"ex_number": "",
 			"title": "",
-			"follow": {},
+			"follow": {
+				original: false,
+				mobile: false,
+				voicemail: false,
+				contact: false
+			},
 			"actions": []
 		};
 	}

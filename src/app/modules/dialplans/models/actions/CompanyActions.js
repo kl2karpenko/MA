@@ -19,7 +19,7 @@ class CompanyActions extends List {
 			},
 			{
 				name: "Forward to my mobile",
-				info: "+38093 403 23 79",
+				info: "",
 				className: "",
 				value: "mobile"
 			},
@@ -31,7 +31,7 @@ class CompanyActions extends List {
 			},
 			{
 				name: "Forward to",
-				info: "Tap to choose a contact",
+				info: "",
 				className: "with-search",
 				value: "contact"
 			}

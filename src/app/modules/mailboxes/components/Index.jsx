@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
 
-import Dialplan from "../../dialplans/models/Dialplan";
+import Dialplan from "models/Dialplan";
+import Mailbox from "models/Mailbox";
 
 import MailboxesList from "../models/MailboxesList";
 import ListComponent from "components/list/Index.jsx";
@@ -31,16 +32,25 @@ function _configData(data) {
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
+
+		this._setActiveMailbox = this._setActiveMailbox.bind(this);
 	}
 
-	_setMailBoxToDialPlan(index, id) {
-		Dialplan.updateAttributesFor("follow", {
-			"voicemail": id
-		});
+	_activateMailbox(id) {
+		Dialplan._followTo("voicemail", id);
+	}
 
-		console.log(Dialplan.getModel());
+	_setActiveMailbox(i, id) {
+		this._activateMailbox(id);
 
-		hashHistory.goBack();
+		Mailbox
+			.load({
+				id: id
+			})
+			.then(Dialplan.save.bind(Dialplan))
+			.then(() => {
+				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+			});
 	}
 
 	render() {
@@ -57,7 +67,7 @@ export default class Index extends Component {
 						<ListComponent
 							model={MailboxesList}
 							listClass="m-list-mailbox"
-							onClick={this._setMailBoxToDialPlan}
+							onClick={this._setActiveMailbox}
 							configData={_configData}
 						/>
 					</MainScroll>
