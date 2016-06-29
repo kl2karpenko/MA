@@ -15,7 +15,7 @@ class List {
 		}
 
 		this
-			.init();
+			.init(props);
 
 		this
 			.notLoaded()

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import PersonalActions from "../../models/actions/PersonalActions";
+import PersonalActions from "../../models/actions/Personal";
 import Follow from './actions/Follow.jsx';
 
 import Dialplan from "models/Dialplan";
@@ -24,10 +24,13 @@ export default class Personal extends Component {
 	}
 
 	onChange(object) {
-		if(object.value === "contact") {
-			this._forwardToContact();
-		} else {
-			Dialplan._followTo(object.value, true);
+		switch(object.name) {
+			case "contact":
+				hashHistory.push('/contacts');
+				break;
+			default:
+				Dialplan._followTo(object.name);
+				break;
 		}
 
 		this._updateDialplan();
@@ -37,10 +40,6 @@ export default class Personal extends Component {
 		this.setState({
 			Dialplan: Dialplan.getModel()
 		});
-	}
-
-	_forwardToContact() {
-		hashHistory.push('/contacts');
 	}
 
 	render() {

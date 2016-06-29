@@ -19,7 +19,7 @@ export default class ContactPage extends Component {
 	render() {
 		return (
 		<AdaptiveWrapper>
-			<AdaptiveFixed>
+			<AdaptiveFixed class="l-adaptive-md">
 				<Angle header={false}>
 					<div className="m-angle-content">
 						<AngleTop title="Forward to:"/>

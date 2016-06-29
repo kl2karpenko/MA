@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import CompanyActions from "../../models/actions/CompanyActions";
+import CompanyActions from "../../models/actions/Company";
 
 import Dialplan from "models/Dialplan";
-import Mailbox from "models/Mailbox";
 
 import MainScroll from 'components/layouts/main/Scroll.jsx';
 
@@ -21,21 +20,19 @@ export default class Company extends Component {
 		};
 	}
 
-	_reset() {
-		Mailbox.resetToDefault();
-	}
-
 	onChangeDialplanForward(object) {
-		this._reset();
-
-		if(object.value === "contact") {
-			hashHistory.push('/contacts');
-		} else if(object.value === "voicemail") {
-			hashHistory.push('/mailboxes');
-		} else {
-			Dialplan._followTo(object.value, true);
+		switch(object.name) {
+			case "contact":
+				hashHistory.push('/contacts');
+				break;
+			case "voicemail":
+				hashHistory.push('/mailboxes');
+				break;
+			default:
+				Dialplan._followTo(object.name);
+				break;
 		}
-
+		
 		this._updateDialplan();
 	}
 

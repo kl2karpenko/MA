@@ -15,10 +15,25 @@ var dialplans = [{
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": false
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": true
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "thrty56y56ryr5",
@@ -51,10 +66,28 @@ var dialplans = [{
 	"ex_number": 31152026029,
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "5h656h65h5r6h56h",
@@ -63,7 +96,28 @@ var dialplans = [{
 	"title": "Karpenko Liliia",
 	"personal": false,
 	"follow": {
-		"original": true
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "h46yh4hy6hh",
@@ -73,11 +127,29 @@ var dialplans = [{
 	"personal": false,
 	"actions": [],
 	"follow": {
-	"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
-}
+		"original": {
+			"selected": false
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": true,
+			"value": {
+				"_id": "95c50c4e05cf7993ea326f813f007385",
+				"name": "36368 555888 (5223)",
+				"type": "extension"
+			}
+		}
+	}
 }, {
 	"_id": "h5r6hy46hh4h66h",
 	"actions": [],
@@ -85,10 +157,28 @@ var dialplans = [{
 	"title": "Kebal Ivan",
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "6",
@@ -97,10 +187,28 @@ var dialplans = [{
 	"title": "Rybachok Oleksandr",
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "7",
@@ -109,10 +217,28 @@ var dialplans = [{
 	"title": "Saiko Iryna",
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "8",
@@ -121,10 +247,28 @@ var dialplans = [{
 	"title": "Berladin Ewgeny",
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "9",
@@ -133,10 +277,28 @@ var dialplans = [{
 	"title": "Yurch Yuriy",
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }, {
 	"_id": "10",
@@ -145,10 +307,28 @@ var dialplans = [{
 	"title": "Skorohliad Ivan",
 	"personal": false,
 	"follow": {
-		"original": true,
-		"mobile": false,
-		"voicemail": false,
-		"contact": false
+		"original": {
+			"selected": true
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"type": ""
+			}
+		}
 	}
 }];
 
@@ -242,20 +422,9 @@ var settingsOn = {
 	"settings": {
 		"pin": {
 			is_on: true,
-			active: "",
+			active: 11111,
 			created: "",
 			created_copy: ""
-		}
-	}
-};
-
-var settingsOff = {
-	"settings": {
-		"pin": {
-			is_on: false,
-			current: "",
-			newPin: "",
-			newPinReenter: ""
 		}
 	}
 };
@@ -478,16 +647,43 @@ app.put('/ajax/dialplans/:dialplanId', function (req, res) {
  * Get pin code info
  */
 app.get('/ajax/settings/pin', function (req, res) {
-	res.send(settingsOn);
+	res.send({
+		"settings": {
+			"pin": {
+				is_on: settingsOn.settings.pin.is_on,
+				active: "",
+				created: "",
+				created_copy: ""
+			}
+		}
+	});
 });
 
 /**
  * Save pin code info
  */
 app.put('/ajax/settings/pin', function (req, res) {
-	settingsOn.settings = req.body.settings;
+	if (req.body.settings.pin.is_on) {
+		if (Number(req.body.settings.pin.active) !== settingsOn.settings.pin.active) {
+			res.status(400).send({
+				message: "Current pin code is not match"
+			});
+		}
 
-	res.send(settingsOn);
+		settingsOn.settings.pin.is_on = req.body.settings.pin.is_on;
+		settingsOn.settings.pin.active = Number(req.body.settings.pin.created);
+	}
+
+	res.send({
+		"settings": {
+			"pin": {
+				is_on: settingsOn.settings.pin.is_on,
+				active: "",
+				created: "",
+				created_copy: ""
+			}
+		}
+	});
 });
 
 /**
@@ -495,7 +691,7 @@ app.put('/ajax/settings/pin', function (req, res) {
  */
 app.put('/ajax/pin', function (req, res) {
 	res.send({
-		'pin': Number(req.body.pin.value) === 11111
+		'pin': Number(req.body.pin.value) === Number(settingsOn.settings.pin.active)
 	});
 });
 

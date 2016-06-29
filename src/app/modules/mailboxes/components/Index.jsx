@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
 
 import Dialplan from "models/Dialplan";
-import Mailbox from "models/Mailbox";
 
 import MailboxesList from "../models/MailboxesList";
 import ListComponent from "components/list/Index.jsx";
@@ -36,18 +35,20 @@ export default class Index extends Component {
 		this._setActiveMailbox = this._setActiveMailbox.bind(this);
 	}
 
-	_activateMailbox(id) {
-		Dialplan._followTo("voicemail", id);
-	}
+	_setActiveMailbox(i, mailboxData) {
+		let id = Dialplan.getValueByPath("_id");
 
-	_setActiveMailbox(i, id) {
-		this._activateMailbox(id);
+		if (!id) {
+			hashHistory.push('/dialplans');
+			return;
+		}
 
-		Mailbox
-			.load({
-				id: id
+		Dialplan
+			._followTo("voicemail", {
+				_id: mailboxData._id,
+				name: mailboxData.title + ` (${mailboxData.number})`
 			})
-			.then(Dialplan.save.bind(Dialplan))
+			.save()
 			.then(() => {
 				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});

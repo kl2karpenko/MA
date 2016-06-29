@@ -7,7 +7,7 @@ export default class MainScroll extends Component {
 
 	render() {
 		return (
-			<div className="l-main">
+			<div className={"l-main" + (this.props.class ? " " + this.props.class : "")}>
 				<div className="l-main-scroll">
 					{this.props.children}
 				</div>

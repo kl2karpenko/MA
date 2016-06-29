@@ -1,77 +1,69 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+
+import config from 'envConfig';
 
 import Dialplan from "models/Dialplan";
-import Mailbox from "models/Mailbox";
 
 export default class Follow extends Component {
 	constructor(props) {
 		super(props);
 
+		props.options.info = this._configInfo(props.options.name);
+		props.options.mobileNumber = "";
+
 		this.state = props.options;
 	}
 
 	componentWillReceiveProps() {
-		this._updateData();
+		this.setState({
+			info: this._configInfo(this.state.name)
+		});
+
+		config.mobileSIMNumber().done((number) => {
+			this.setState({
+				mobileNumber: number
+			})
+		});
 	}
 
-	_updateData() {
+	_configInfo(dataName) {
 		let
-			follow = Dialplan.getModel().follow,
-			mailboxId = follow.voicemail;
+			info = "";
 
-		if (follow[this.state.value]) {
-			this.setState({
-				is_on: true
-			})
-		}
-
-		switch(this.state.value) {
+		switch(dataName) {
 			case "voicemail":
-				if (mailboxId && !this.state.personal) {
-					Mailbox.load({
-						id: mailboxId
-					}).then(() => {
-						this._setInfoText(Mailbox._getName());
-					})
-				} else {
-					this._setInfoText("");
-				}
+				info = Dialplan.getValueByPath("follow.voicemail.value.name");
 				break;
 			case "contact":
-				this._setInfoText("Tap to choose a contact");
-				break;
-			case "original":
-				this._setInfoText("");
+				info = Dialplan.getValueByPath("follow.contact.value.name") || "Tap to choose a contact";
 				break;
 			case "mobile":
-				this._setInfoText("+38 093 403 23 79");
+				info = Dialplan.getValueByPath("follow.mobile.value");
+				break;
+			default:
+				info = "";
 				break;
 		}
-	}
 
-	_setInfoText(value) {
-		this.setState({
-			info: value
-		});
+		return info;
 	}
 
 	render() {
 		return (
 			<li className={this.state.className}>
-				<label className="m-label radio-block" htmlFor={this.state.value}>
+				<label className="m-label radio-block" htmlFor={this.state.name}>
 					<input
 						type="radio"
 						name="follow"
-						value={this.state.value}
-						checked={Dialplan.getModel().follow[this.state.value] ? "checked" : ""}
-						id={this.state.value}
+						value={this.state.name}
+						checked={Dialplan.getValueByPath("follow." + this.state.name + ".selected") ? "checked" : ""}
+						id={this.state.name}
 						onChange={this.props.onChange}
 						/>
 					<div className="radio-button"></div>
 					<div className="l-dialplan-text">
-						<div className="l-dialplan-name">{this.state.name}</div>
-						<div className="l-dialplan-info">{this.state.info}</div>
+						<div className="l-dialplan-name">{this.state.title}</div>
+						<div className="l-dialplan-info">{this.state.name === "mobile" ? this.state.mobileNumber || this.state.info : this.state.info}</div>
 					</div>
 				</label>
 			</li>

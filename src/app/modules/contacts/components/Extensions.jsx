@@ -24,28 +24,24 @@ export default class Contacts extends Component {
 		super(props);
 	}
 
-	_setActiveContact(i, id) {
-		Dialplan._followTo("contact", id);
-		console.log(id, '_setActiveContact');
+	_setActiveContact(i, contactData) {
+		let id = Dialplan.getValueByPath("_id");
 
-		Mailbox
-			.load({
-				id: id
-			})
-			.then(Dialplan.save.bind(Dialplan))
-			.then(() => {
-				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
-			});
-	}
-
-	_setActiveContact(i, id) {
-		console.log(i ,id);
-
-		Dialplan.updateAttributesFor("follow.contact", id);
+		if (!id) {
+			hashHistory.push('/dialplans');
+			return;
+		}
+		
 		Dialplan
+			._followTo("contact", {
+				_id: contactData._id,
+				name: contactData.title + ` (${contactData.number})`,
+				number: contactData.number,
+				type: "extension"
+			})
 			.save()
 			.then(() => {
-				hashHistory.goBack();
+				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});
 	}
 

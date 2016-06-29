@@ -34,6 +34,8 @@ export default class Model {
 	}
 
 	init() {
+		this.errorMessage = false;
+		
 		return this;
 	}
 
@@ -262,8 +264,9 @@ export default class Model {
 
 	save(options) {
 		options = options || {};
+		let isValid = this._isValid();
 
-		if (!this._isValid()) {
+		if (!isValid) {
 			return reject();
 		}
 
@@ -296,7 +299,7 @@ export default class Model {
 
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
-			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));
 			return response;
 		});
 	}

@@ -6,7 +6,9 @@
     z-index: 1;
 
     &-scroll {
-      overflow: auto;
+      overflow-y: scroll;
+      overflow-x: hidden;
+
       vertical-align: middle;
     }
 
@@ -55,6 +57,12 @@
 
       color: #8d8d8d;
       line-height: 1.7em;
+    }
+
+    &-settings {
+      .l-main-scroll {
+        padding-bottom: 85%;
+      }
     }
   }
 
