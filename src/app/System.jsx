@@ -5,6 +5,8 @@ import {Router, hashHistory} from 'react-router';
 
 import Session from "models/Session";
 
+import Main from "./modules/core/components/Enter.jsx";
+
 import config from 'envConfig';
 
 export default class System {
@@ -33,13 +35,7 @@ export default class System {
 			childRoutes: [
 				{
 					path: '/',
-					component: 'div',
-					indexRoute: {
-						onEnter: (nextState, replace) => {
-							replace(Session._isConnected() ? '/pin' : '/authorize')
-						}
-					},
-					// TODO: render from config array
+					component: Main,
 					childRoutes: [
 						require('./modules/authorize/routes.jsx'),
 						require('./modules/connects/routes.jsx'),
@@ -94,7 +90,7 @@ export default class System {
 	 */
 	_getSessionData() {
 		// here take data from authorize
-		return Session.load();
+		return Session._getSessionData();
 	}
 
 	/**
@@ -102,10 +98,8 @@ export default class System {
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
-		var constr = this.constructor;
-
-		return $.when(constr._setStyles)
-			.then(constr._loadConfiguration)
-			.then(this._getSessionData);
+		return $.when(System._setStyles)
+						.then(System._loadConfiguration)
+						.then(this._getSessionData);
 	}
 }

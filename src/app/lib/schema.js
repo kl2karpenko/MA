@@ -19,6 +19,8 @@ module.exports = (new $.RestClient(config.hostname, {
 	autoClearCache: true,
 
 	request: function(resource, options) {
+		options.timeout = 3000;
+
 		return $.ajax(options);
 	}
 }));

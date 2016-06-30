@@ -19,10 +19,7 @@ postcss()
       path: ["src/css"],
       glob: true
   }))
-  .process(less, { from: "src/css" })
-  .then(result => {
-      console.log('======= result ======');
-  });
+  .process(less, { from: "src/css" });
 
 // load plugins
 

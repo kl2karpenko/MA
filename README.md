@@ -29,6 +29,7 @@ Plugin list:
 5. cordova-plugin-compat
 6. cordova-plugin-browsersync
 7. cordova-plugin-splashscreen
+8. cordova-plugin-network-information
 
 To build project with cordova for some platform please run, where platform_name: 'ios' || 'android':
 

@@ -1,5 +1,28 @@
 .l-adaptive {
 
+  &-top {
+    height: 100%;
+
+    &.fail {
+      position: relative;
+      background-color: @Background;
+      height: 100%;
+      
+      .fail-block {
+        position: absolute;
+        top:50%;
+        left: 50%;
+        min-width: 80%;
+        transform: translate(-50%, -50%);
+
+        text-align: center;
+
+        font-size: 2em;
+        color: @LightGrey;
+      }
+    }
+  }
+
   overflow-y: auto;
   height: 100%;
   overflow-x: hidden;

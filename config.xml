@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- com.kwebbl.androidapp || kwebblMobileApp -->
-<widget id="com.kwebbl.androidapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
+<widget id="kwebblMobileApp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>mobileApp</name>
     <description>
@@ -32,6 +32,7 @@
         <allow-intent href="itms-apps:*"/>
 
         <splash src="res/main.png" width="320" height="480"/>
+        <splash src="res/main.png" width="640" height="960"/>
     </platform>
     <preference name="SplashScreen" value="screen"/>
     <preference name="AutoHideSplashScreen" value="true"/>

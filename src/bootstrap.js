@@ -1,7 +1,14 @@
 import System from './app/System.jsx';
+import messenger from "messenger";
 
 var app = new System();
 
 app
 	.boot()
-	.then(app.init.bind(app));
+	.always((data) => {
+		if (data && data.message) {
+			messenger.error(data.message);
+		} else {
+			app.init();
+		}
+	});
