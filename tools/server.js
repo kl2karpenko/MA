@@ -1,7 +1,7 @@
 var
 	express = require('express'),
-	path = require('path'),
-	_ = require('underscore');
+	path    = require('path'),
+	_       = require('underscore');
 
 var app = express();
 var port = 8030;
@@ -361,6 +361,8 @@ var dialplansOnlyPersonal = [{
 	}
 }];
 
+var dialplansList = dialplans;
+
 var mailboxes = [{
 	"_id": "2e02c973dae6a3e0b5ff2493ff993873",
 	"name": "Lily Mailbox",
@@ -648,7 +650,7 @@ app.get('/ajax/mailboxes/:mailboxId', function (req, res) {
  */
 app.get('/ajax/dialplans', function (req, res) {
 	res.send({
-		"dialplans": dialplans
+		"dialplans": dialplansList
 	});
 });
 
@@ -657,7 +659,7 @@ app.get('/ajax/dialplans', function (req, res) {
  */
 app.get('/ajax/dialplans/:dialplanId', function (req, res) {
 	res.send({
-		"dialplan": dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
+		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
 	});
 });
 
@@ -665,10 +667,10 @@ app.get('/ajax/dialplans/:dialplanId', function (req, res) {
  * Save detail info about dialplan
  */
 app.put('/ajax/dialplans/:dialplanId', function (req, res) {
-	dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)] = req.body.dialplan;
+	dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)] = req.body.dialplan;
 
 	res.send({
-		"dialplan": dialplans[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
+		"dialplan": dialplansList[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
 	});
 });
 

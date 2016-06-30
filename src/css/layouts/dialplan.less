@@ -14,18 +14,36 @@
     &-name {
       font-size: 1.2em;
       color: #1d1d26;
+
+      overflow: hidden;
+      position: relative;
+      max-height: 20px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 98%;
+
+      margin-bottom: 4px;
     }
 
     &-info {
       font-size: 0.8em;
       color: #8e8e92;
+
+      overflow: hidden;
+      position: relative;
+      max-height: 20px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 98%;
     }
 
     &-text {
       position: absolute;
       z-index: 1;
       left: 70px;
+      right: 0;
       top: 50%;
+
       transform: translateY(-50%);
       text-align: left;
     }

@@ -6,24 +6,8 @@
         height: 80px;
       }
     }
-
-    &-list-mailbox .m-list-item {
-      height: 80px;
-    }
   }
   /* MODULES */
-
-  .btn-round.btn-sm {
-    width: 45px;
-    height: 45px;
-    line-height: 45px;
-  }
-
-  .input {
-    &-custom {
-      height: 40px;
-    }
-  }
 
   .l {
     &-grey {
@@ -44,5 +28,19 @@
         }
       }
     }
+  }
+
+  .btn-round.btn-sm:not(.btn-right) {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .btn-round.btn-sm {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
   }
 }

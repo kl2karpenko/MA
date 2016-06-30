@@ -32,7 +32,7 @@ export default class Follow extends Component {
 
 		switch(dataName) {
 			case "voicemail":
-				info = Dialplan.getValueByPath("follow.voicemail.value.name");
+				info = Dialplan.getValueByPath("follow.voicemail.value.name") || "Tap to choose a mailbox";
 				break;
 			case "contact":
 				info = Dialplan.getValueByPath("follow.contact.value.name") || "Tap to choose a contact";

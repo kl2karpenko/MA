@@ -53,9 +53,9 @@ let devServerHostName = "http://mobile-app.dev.kwebbl.net:8030/";
 
 function getAddressOfHost() {
 // TODO: only for development, delete after deploy
-	let Ip =  isIOS ? workIPMac : workIPDesktop;
+	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
-	return workIPMac + "ajax/";
+	return hostName + "ajax/";
 }
 
 module.exports = $.extend(config, {

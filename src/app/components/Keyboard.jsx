@@ -70,6 +70,18 @@ export class Keyboard extends Component {
 		return false;
 	}
 
+	static addEventHide() {
+		document.addEventListener("showkeyboard", function(){
+			Keyboard.closeKeyBoard();
+		}, false);
+	}
+
+	static removeEventHide() {
+		document.removeEventListener("showkeyboard", function(){
+			Keyboard.closeKeyBoard();
+		}, false);
+	}
+
 	render() {
 		return (
 			<div className="m-keyboard">

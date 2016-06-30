@@ -15,6 +15,23 @@ class PinSettings extends Model {
 	_isValid() {
 		let 
 			model = this.getModel(),
+			allIsValid = this._checkIsValid();
+
+		if (!allIsValid) {
+			this.messenger.error('Please enter valid Pin value');
+		} else {
+			if (!allIsValid && model.pin.created !== model.pin.created_copy) {
+				this.messenger.error('Please enter Pin that match');
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	_checkIsValid() {
+		let
+			model = this.getModel(),
 			modelCopy = [];
 
 		if (model.pin.is_on) {
@@ -23,23 +40,15 @@ class PinSettings extends Model {
 				modelCopy.push(model.pin.created);
 				modelCopy.push(model.pin.created_copy);
 
-				let allIsValid = modelCopy.every((item) => {
+				return modelCopy.every((item) => {
 					return item.length === 5;
 				});
-
-				if (!allIsValid) {
-					this.messenger.error('Please enter valid Pin value');
-				}
-
-				return allIsValid;
-			} else {
-				this.messenger.error('Please enter Pin that match');
-				return false;
 			}
 		}
 
 		return true;
 	}
+
 
 	_defaultSettings() {
 		return {

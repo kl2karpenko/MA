@@ -30,19 +30,12 @@ export default class System {
 			createHistory: {
 				queryKey: false
 			},
-			onChange: (nextState, replaceState) => {
-				console.group("Assemble page:");
-				console.info(`route: ${replaceState.location.pathname}`);
-				console.groupEnd("Assemble page:");
-			},
 			childRoutes: [
 				{
 					path: '/',
 					component: 'div',
-					// TODO: make on every reload page of pin code to show!!!!
 					indexRoute: {
 						onEnter: (nextState, replace) => {
-							console.log('enter');
 							replace(Session._isConnected() ? '/pin' : '/authorize')
 						}
 					},

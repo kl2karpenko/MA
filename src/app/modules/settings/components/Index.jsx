@@ -48,7 +48,8 @@ export default class Index extends Component {
 
 	_updatePinSettings() {
 		this.setState({
-			model: PinSettings.settings
+			model: PinSettings.settings,
+			isValid: PinSettings._checkIsValid()
 		});
 	}
 

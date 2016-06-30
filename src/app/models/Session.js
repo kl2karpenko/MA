@@ -39,8 +39,6 @@ class Session extends Model {
 	}
 
 	_hasPinCode() {
-		console.log(this.getModel().settings.pin.is_on);
-		
 		return this.getModel().settings.pin.is_on;
 	}
 }

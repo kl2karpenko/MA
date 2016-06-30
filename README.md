@@ -19,6 +19,17 @@ To build project files for prod env run:
 $ NODE_ENV=production webpack --config tools/webpack/config.js
 ```
 
+## Add cordova plugins
+
+Plugin list:
+1. cordova-plugin-contacts
+2. cordova-plugin-sim
+3. ionic-plugin-keyboard
+4. cordova-plugin-contacts-phonenumbers
+5. cordova-plugin-compat
+6. cordova-plugin-browsersync
+7. cordova-plugin-splashscreen
+
 To build project with cordova for some platform please run, where platform_name: 'ios' || 'android':
 
 ```

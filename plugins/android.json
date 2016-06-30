@@ -21,6 +21,12 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.kwebbl.androidapp"
+        },
+        "cordova-plugin-sim": {
+            "PACKAGE_NAME": "com.kwebbl.androidapp"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.kwebbl.androidapp"
         }
     },
     "dependent_plugins": {
