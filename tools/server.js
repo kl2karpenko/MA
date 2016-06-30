@@ -332,6 +332,35 @@ var dialplans = [{
 	}
 }];
 
+var dialplansOnlyPersonal = [{
+	"_id": "hrththy56y5yh",
+	"actions": [],
+	"title": "Your personal",
+	"personal": true,
+	"ex_number": "+32 1 234 56 78",
+	"follow": {
+		"original": {
+			"selected": false
+		},
+		"mobile": {
+			"selected": false,
+			"value": ""
+		},
+		"voicemail": {
+			"selected": true
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": "",
+				"type": ""
+			}
+		}
+	}
+}];
+
 var mailboxes = [{
 	"_id": "2e02c973dae6a3e0b5ff2493ff993873",
 	"name": "Lily Mailbox",

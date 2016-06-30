@@ -107,6 +107,8 @@ export default class Index extends Component {
 	}
 
 	render() {
+		Keyboard.closeKeyBoard();
+
 		return (<AdaptiveWrapper>
 			<AdaptiveFixed class="l-adaptive-sm">
 				<Angle>

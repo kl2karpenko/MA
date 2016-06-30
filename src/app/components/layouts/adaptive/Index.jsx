@@ -7,7 +7,7 @@ export default class Adaptive extends Component {
 
 	render() {
 		return (
-			<div className="l-adaptive">
+			<div className={"l-adaptive" + (this.props.class ? " " + this.props.class : "")}>
 				{this.props.children}
 			</div>
 		);

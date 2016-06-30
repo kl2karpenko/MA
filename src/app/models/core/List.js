@@ -110,6 +110,10 @@ class List {
 		});
 	}
 
+	getState() {
+		return this.state;
+	}
+
 	getActivePage() {
 		return this.state.activePage;
 	}

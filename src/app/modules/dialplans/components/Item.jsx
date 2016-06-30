@@ -83,7 +83,7 @@ export default class Item extends Component {
 
 	render() {
 		return (
-			<AdaptiveFixed>
+			<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
 				<Angle header={false}>
 					<div className="m-angle-content">
 

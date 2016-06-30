@@ -41,7 +41,7 @@ export default class List extends Component {
 
 	render() {
 		return (
-		<Adaptive>
+		<Adaptive class="dialplans">
 			<div className="m-list m-list-dialplan m-list-withImg">
 				<ListComponent
 					model={DialplanList}

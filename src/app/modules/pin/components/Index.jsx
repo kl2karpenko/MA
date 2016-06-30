@@ -8,6 +8,8 @@ import Pin from '../models/Pin';
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
+import { Keyboard } from 'components/Keyboard.jsx';
+
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
@@ -43,6 +45,8 @@ export default class Index extends Component {
 	}
 
 	render() {
+		Keyboard.closeKeyBoard();
+
 		return (<AdaptiveWrapper>
 			<Adaptive>
 				<PinForm

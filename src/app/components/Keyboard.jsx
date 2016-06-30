@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import imageLoader from 'imageLoader';
+
 export class Keyboard extends Component {
 	constructor(props) {
 		super(props);
@@ -58,10 +60,13 @@ export class Keyboard extends Component {
 			cordova.plugins.Keyboard.isVisible = false;
 		}
 
-		$(e.target).blur();
-		document.activeElement.blur();
+		if (e) {
+			$(e.target).blur();
+			document.activeElement.blur();
 
-		e.preventDefault();
+			e.preventDefault();
+		}
+
 		return false;
 	}
 
@@ -78,7 +83,7 @@ export class Keyboard extends Component {
 				<div className="m-keyboard-buttons">
 					<div className="col-xs-5 m-keyboard-digit">
 						<button className="m-keyboard__key buttons" onClick={this._deleteValue.bind(this)}>
-							<span>Delete</span>
+							<img className="img-responsive" src={imageLoader(require("images/icons/delete.jpg"))} alt="Delete"/>
 						</button>
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
