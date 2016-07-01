@@ -26,7 +26,7 @@ export default class System {
 		return require("../css/app.less");
 	}
 
-	_reload() {
+	_load() {
 		Session
 			._getSessionData()
 			.then(() => {
@@ -51,7 +51,7 @@ export default class System {
 					path: '/',
 					component: Main,
 					indexRoute: {
-						onEnter: this._reload
+						onEnter: this._load
 					},
 					childRoutes: [
 						require('./modules/fail/routes.jsx'),
@@ -104,20 +104,12 @@ export default class System {
 	}
 
 	/**
-	 *
-	 */
-	_getSessionData() {
-		// here take data from authorize
-		return Session._getSessionData();
-	}
-
-	/**
 	 * require main stylesheet and config for all modules (add schema)
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
 		return $.when(System._setStyles)
 						.then(System._loadConfiguration)
-						.then(this._getSessionData);
+						.then(Session._getSessionData.bind(Session));
 	}
 }
