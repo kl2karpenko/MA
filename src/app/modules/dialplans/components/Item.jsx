@@ -22,8 +22,8 @@ export default class Item extends Component {
 
 		this.state = {
 			Dialplan: Dialplan.getModel(),
-			previous: "",
-			next: ""
+			previous: DialplanList.getPreviousPage(),
+			next: DialplanList.getNextPage()
 		};
 
 		this._loadDialplan = this._loadDialplan.bind(this);
@@ -31,7 +31,7 @@ export default class Item extends Component {
 	}
 
 	componentWillMount() {
-		this._setState();
+		this._changeState();
 	}
 
 	_save() {
@@ -44,20 +44,16 @@ export default class Item extends Component {
 				id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
 			})
 			.then(() => {
-				this._setState();
+				this._changeState();
 
 				hashHistory.push(DialplanList.getUrl());
 			});
 	}
 
-	_setState() {
-		let
-			prevURL = DialplanList.getPreviousPage(),
-			nextURL = DialplanList.getNextPage();
-
+	_changeState() {
 		this.setState({
-			previous: prevURL,
-			next: nextURL,
+			previous: DialplanList.getPreviousPage(),
+			next: DialplanList.getNextPage(),
 			Dialplan: Dialplan.getModel()
 		});
 	}
@@ -71,7 +67,7 @@ export default class Item extends Component {
 	}
 
 	_renderDialplan(event) {
-		let activatePage = $(event.target).hasClass('next') ? 'next' : 'previous';
+		let activatePage = ($(event.target).hasClass('next') || $(event.target).hasClass('__right')) ? 'next' : 'previous';
 
 		this
 			._save()
@@ -115,13 +111,7 @@ export default class Item extends Component {
 					</button>
 				</Angle>
 
-				{(() => {
-					if (this.state.Dialplan.personal) {
-						return <Personal/>;
-					} else {
-						return <Company/>;
-					}
-				})()}
+				{this.state.Dialplan.personal ? <Personal/> : <Company/>}
 			</AdaptiveFixed>
 		);
 	}

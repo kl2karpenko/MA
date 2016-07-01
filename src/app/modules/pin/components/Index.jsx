@@ -3,7 +3,8 @@ import { hashHistory } from 'react-router';
 
 import PinForm from './PinForm.jsx';
 
-import Pin from '../models/Pin';
+import Pin from 'models/Pin';
+import Storage from "models/Storage";
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
@@ -33,15 +34,18 @@ export default class Index extends Component {
 	}
 
 	_save() {
-		return Pin
-			.save()
-			.then((res) => {
-				if(res.pin) {
-					hashHistory.push('/dialplans');
-				}
+		let currentPin = Storage.getValue('pin');
 
-				this._reset();
-			});
+		if (currentPin === Pin.pin.value) {
+			return Pin
+				.save()
+				.then(() => {
+					hashHistory.push('/dialplans');
+				})
+		} else {
+			this._reset();
+			Pin.messenger.error('Wrong Pin');
+		}
 	}
 
 	render() {

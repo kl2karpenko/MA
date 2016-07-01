@@ -37,7 +37,7 @@ class Session extends Model {
 	}
 
 	_isConnected() {
-		return this.getModel().user !== undefined;
+		return this.getModel().user;
 	}
 
 	_hasPinCode() {

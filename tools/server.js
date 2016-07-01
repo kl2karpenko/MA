@@ -500,7 +500,7 @@ app.configure(function () {
 /**
  * Connect by pin code
  */
-app.put('/ajax/connects/pin', function (req, res) {
+app.put('/connects/pin', function (req, res) {
 	res.send({
 		"connects": {
 			"pin": {
@@ -513,7 +513,7 @@ app.put('/ajax/connects/pin', function (req, res) {
 /**
  * List of company extensions
  */
-app.get('/ajax/extensions', function (req, res) {
+app.get('/extensions', function (req, res) {
 	res.send({
 		"extensions": [{
 			"_id": "95c50c4e05cf7993ea326f813f007385",
@@ -596,7 +596,7 @@ app.get('/ajax/extensions', function (req, res) {
 /**
  * List of contacts from user mobile, only for development needs
  */
-app.get('/ajax/contacts', function (req, res) {
+app.get('/contacts', function (req, res) {
 	res.send({
 		"contacts": [
 			{
@@ -623,14 +623,14 @@ app.get('/ajax/contacts', function (req, res) {
 /**
  * Session data
  */
-app.get('/ajax/session', function (req, res) {
+app.get('/session', function (req, res) {
 	res.send(isAuthorize);
 });
 
 /**
  * List of company mailboxes
  */
-app.get('/ajax/mailboxes', function (req, res) {
+app.get('/mailboxes', function (req, res) {
 	res.send({
 		"mailboxes": mailboxes
 	});
@@ -639,7 +639,7 @@ app.get('/ajax/mailboxes', function (req, res) {
 /**
  * List of company mailboxes
  */
-app.get('/ajax/mailboxes/:mailboxId', function (req, res) {
+app.get('/mailboxes/:mailboxId', function (req, res) {
 	res.send({
 		"mailbox": mailboxes[_.indexOf(_.pluck(mailboxes, '_id'), req.params.mailboxId)]
 	});
@@ -648,7 +648,7 @@ app.get('/ajax/mailboxes/:mailboxId', function (req, res) {
 /**
  * List of company dialplans
  */
-app.get('/ajax/dialplans', function (req, res) {
+app.get('/dialplans', function (req, res) {
 	res.send({
 		"dialplans": dialplansList
 	});
@@ -657,7 +657,7 @@ app.get('/ajax/dialplans', function (req, res) {
 /**
  * Detail info about dialplan
  */
-app.get('/ajax/dialplans/:dialplanId', function (req, res) {
+app.get('/dialplans/:dialplanId', function (req, res) {
 	res.send({
 		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
 	});
@@ -666,7 +666,7 @@ app.get('/ajax/dialplans/:dialplanId', function (req, res) {
 /**
  * Save detail info about dialplan
  */
-app.put('/ajax/dialplans/:dialplanId', function (req, res) {
+app.put('/dialplans/:dialplanId', function (req, res) {
 	dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)] = req.body.dialplan;
 
 	res.send({
@@ -675,52 +675,9 @@ app.put('/ajax/dialplans/:dialplanId', function (req, res) {
 });
 
 /**
- * Get pin code info
- */
-app.get('/ajax/settings/pin', function (req, res) {
-	res.send({
-		"settings": {
-			"pin": {
-				is_on: settingsOn.settings.pin.is_on,
-				active: "",
-				created: "",
-				created_copy: ""
-			}
-		}
-	});
-});
-
-/**
- * Save pin code info
- */
-app.put('/ajax/settings/pin', function (req, res) {
-	if (req.body.settings.pin.is_on) {
-		if (Number(req.body.settings.pin.active) !== settingsOn.settings.pin.active) {
-			res.status(400).send({
-				message: "Current pin code is not match"
-			});
-		}
-
-		settingsOn.settings.pin.is_on = req.body.settings.pin.is_on;
-		settingsOn.settings.pin.active = Number(req.body.settings.pin.created);
-	}
-
-	res.send({
-		"settings": {
-			"pin": {
-				is_on: settingsOn.settings.pin.is_on,
-				active: "",
-				created: "",
-				created_copy: ""
-			}
-		}
-	});
-});
-
-/**
  * Save pin code for authorization
  */
-app.put('/ajax/pin', function (req, res) {
+app.put('/pin', function (req, res) {
 	res.send({
 		'pin': Number(req.body.pin.value) === Number(settingsOn.settings.pin.active)
 	});

@@ -20,8 +20,8 @@ export default class Pin extends Component {
 	}
 
 	_reset() {
-		PinModel.getModel().pin.value = "";
-		this.state.pin.value = "";
+		PinModel.updateAttributesFor('pin.value', '');
+
 		this.setState(PinModel.getModel());
 	}
 

@@ -1,6 +1,6 @@
 import Index from './components/Index.jsx';
 
-import Session from "models/Session";
+import Storage from "models/Storage";
 
 import { Keyboard } from 'components/Keyboard.jsx';
 
@@ -10,7 +10,7 @@ module.exports = {
 	onEnter: (nextState, replace) => {
 		Keyboard.addEventHide();
 
-		if (!Session._hasPinCode()) {
+		if (!Storage.getValue("pin")) {
 			replace('/dialplans');
 		}
 	},

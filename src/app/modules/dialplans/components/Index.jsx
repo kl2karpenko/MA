@@ -4,12 +4,15 @@ import { hashHistory } from 'react-router';
 import Dialplan from "models/Dialplan";
 import DialplanList from "../models/DialplanList";
 
-import Loader from 'components/layouts/Loader.jsx';
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			loading: true
+		};
 
 		this._init();
 
@@ -48,6 +51,10 @@ export default class Index extends Component {
 				});
 			})
 			.done(() => {
+				this.setState({
+					loading: false
+				});
+
 				hashHistory.replace(DialplanList.getUrl())
 			});
 	}
@@ -55,7 +62,7 @@ export default class Index extends Component {
 	render() {
 		return (
 			<AdaptiveWrapper>
-				{this.props.children}
+				{!this.state.loading && this.props.children}
 			</AdaptiveWrapper>
 		);
 	}

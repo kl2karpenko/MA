@@ -221,18 +221,25 @@ export default class Model {
 			resource = resource[options.from];
 		}
 
-		return resource[readMethod].apply(resource, params).done((items) => {
-			console.groupCollapsed("load " + resource);
-			console.info("response", items[name]);
-			console.groupEnd("load");
-			this._setOriginalValues(items[name]);
+		return resource[readMethod].apply(resource, params)
+			.done((items) => {
+				console.groupCollapsed("load " + resource);
+				console.info("response", items[name]);
+				console.groupEnd("load");
+				this._setOriginalValues(items[name]);
 
-			return this.assignAttributes(items[name]);
-		}).error((response) => {
-			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
-			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
-			return this;
-		});
+				return this.assignAttributes(items[name]);
+			})
+			.error((response) => {
+				console.log(response && response.status);
+
+				response && response.status && this.messenger.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+				return this;
+			})
+			.fail(() => {
+				this.messenger.info('Server in unavailable, please try again later', '', {timeOut: 5000});
+			});
 	}
 
 	loadCollection(options) {
@@ -292,16 +299,25 @@ export default class Model {
 
 		params.push(this.toJSON());
 
-		return resource[saveMethod].apply(resource, params).done((items) => {
-			console.groupCollapsed("save " + resource);
-			console.info("response", items[name]);
-			console.groupEnd("save " + resource);
+		return resource[saveMethod].apply(resource, params)
+			.done((items) => {
+				console.groupCollapsed("save " + resource);
+				console.info("response", items[name]);
+				console.groupEnd("save " + resource);
 
-			return this.assignAttributes(items[name]);
-		}).error((response) => {
-			this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));
-			return response;
-		});
+				options.message && this.messenger.success("Save " + resource);
+
+				return this.assignAttributes(items[name]);
+			})
+			.error((response) => {
+				response && response.status && this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));
+				return response;
+			})
+			.fail(() => {
+				this.messenger.info('Server in unavailable, please try again later', '', {
+					timeOut: 0
+				});
+			});
 	}
 
 	toJSON() {

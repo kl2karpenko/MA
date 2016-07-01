@@ -5,7 +5,7 @@ toastr.options = {
 	"debug": false,
 	"newestOnTop": false,
 	"progressBar": false,
-	"positionClass": "toast-top-full-width",
+	"positionClass": "toast-bottom-full-width",
 	"preventDuplicates": true,
 	"onclick": null,
 	"showDuration": "300",
@@ -14,8 +14,9 @@ toastr.options = {
 	"extendedTimeOut": "1000",
 	"showEasing": "swing",
 	"hideEasing": "linear",
-	"showMethod": "fadeIn",
-	"hideMethod": "fadeOut"
+	"showMethod": "slideDown",
+	"hideMethod": "slideUp",
+	"closeMethod": "slideUp"
 };
 
 module.exports = toastr;

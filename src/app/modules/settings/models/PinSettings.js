@@ -19,14 +19,13 @@ class PinSettings extends Model {
 
 		if (!allIsValid) {
 			this.messenger.error('Please enter valid Pin value');
-		} else {
-			if (!allIsValid && model.pin.created !== model.pin.created_copy) {
+			if (model.pin.created !== model.pin.created_copy) {
 				this.messenger.error('Please enter Pin that match');
 				return false;
 			}
 		}
 
-		return true;
+		return allIsValid;
 	}
 
 	_checkIsValid() {
@@ -41,8 +40,10 @@ class PinSettings extends Model {
 				modelCopy.push(model.pin.created_copy);
 
 				return modelCopy.every((item) => {
-					return item.length === 5;
+					return item && item.length === 5;
 				});
+			} else {
+				return false;
 			}
 		}
 
@@ -54,9 +55,9 @@ class PinSettings extends Model {
 		return {
 			"pin": {
 				is_on: false,
-				active: null,
-				created: null,
-				created_copy: null
+				active: "",
+				created: "",
+				created_copy: ""
 			}
 		};
 	}

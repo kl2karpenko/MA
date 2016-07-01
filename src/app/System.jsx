@@ -26,6 +26,20 @@ export default class System {
 		return require("../css/app.less");
 	}
 
+	_reload() {
+		Session
+			._getSessionData()
+			.then(() => {
+				let
+					failLoadData = Session.failConnection,
+					isConnected = Session._isConnected();
+
+				if (!failLoadData) {
+					hashHistory.replace(isConnected ? '/pin' : '/authorize')
+				}
+			});
+	}
+
 	_createRoutes() {
 		this.rootRoute = {
 			component: 'div',
@@ -36,7 +50,11 @@ export default class System {
 				{
 					path: '/',
 					component: Main,
+					indexRoute: {
+						onEnter: this._reload
+					},
 					childRoutes: [
+						require('./modules/fail/routes.jsx'),
 						require('./modules/authorize/routes.jsx'),
 						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),

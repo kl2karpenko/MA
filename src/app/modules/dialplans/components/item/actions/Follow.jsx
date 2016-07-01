@@ -40,7 +40,7 @@ export default class Follow extends Component {
 				break;
 			default:
 				info = "";
-				break;
+				break; 
 		}
 
 		return info;

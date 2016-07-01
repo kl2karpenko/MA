@@ -3,12 +3,17 @@
   &-top {
     height: 100%;
 
+    .fail-block {
+      display: none;
+    }
+
     &.fail {
       position: relative;
       background-color: @Background;
       height: 100%;
       
       .fail-block {
+        display: block;
         position: absolute;
         top:50%;
         left: 50%;

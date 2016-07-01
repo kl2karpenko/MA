@@ -1,6 +1,7 @@
 module.exports = {
 	"modules": [
 		"core",
+		"fail",
 		"authorize",
 		"connects",
 		"pin",

@@ -123,8 +123,6 @@ class List {
 	}
 
 	previous() {
-		console.log('next getPreviousPage' , this.getPreviousPage());
-
 		this.state._update({
 			activePage: this.getPreviousPage()
 		});
@@ -135,8 +133,6 @@ class List {
 	}
 
 	next() {
-		console.log('next page' , this.getNextPage());
-		
 		this.state._update({
 			activePage: this.getNextPage()
 		});
@@ -151,9 +147,7 @@ class List {
 			return item[fieldName] === valueOfField ? item[returnVal || this.defaultAttribute] : false;
 		});
 
-		if (findValues.length > 1) {
-
-		} else {
+		if (findValues.length === 1) {
 			return returnVal ? findValues[0][returnVal] : findValues[0];
 		}
 	}

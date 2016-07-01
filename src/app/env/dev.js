@@ -19,7 +19,7 @@ function configContact (data) {
 }
 
 function _getContactsFromMobile() {
-	return $.get("/ajax/contacts", (contactsData) => {
+	return $.get("/contacts", (contactsData) => {
 		contactsData.contacts = contactsData.contacts.map((contactItem) => {
 			return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? configContact(contactItem) : false
 		});
@@ -28,7 +28,7 @@ function _getContactsFromMobile() {
 }
 
 module.exports = $.extend(config, {
-	hostname: "/ajax/",
+	hostname: "/",
 	mobileContacts: _getContactsFromMobile,
 	mobileSIMNumber: getMobileNumber
 });

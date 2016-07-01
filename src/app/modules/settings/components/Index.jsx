@@ -5,7 +5,6 @@ import imageLoader from 'imageLoader';
 
 import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
-
 import Angle from 'components/modules/angle/Index.jsx';
 
 import MainScroll from 'components/layouts/main/Scroll.jsx';
@@ -13,61 +12,63 @@ import MainScroll from 'components/layouts/main/Scroll.jsx';
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 import PinSettings from '../models/PinSettings';
+import Pin from "models/Pin";
 import Dialplan from "models/Dialplan";
+import Storage from "models/Storage";
+
+let defaultPIN = "00000";
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
-		this._load();
-
 		this.state = {
 			element: $('input[name=active]').get(0),
-			model: PinSettings.settings,
+			pin: {
+				is_on: !!Storage.getValue('pin'),
+				active: !Storage.getValue('pin') ? defaultPIN : "",
+				created: "",
+				created_copy: ""
+			},
 			isValid: false,
 			classFocus: setCurrentFocusedInputTo(3, 0),
 			value: ""
 		};
 
+		PinSettings.updateAttributesFor("pin.active", !Storage.getValue('pin') ? defaultPIN : "");
+		PinSettings.updateAttributesFor("pin.is_on", !!Storage.getValue('pin'));
+
 		this.modelNames = [ "active", "created" , "created_copy"];
 
 		this.onChange = this.onChange.bind(this);
 		this.onFocus = this.onFocus.bind(this);
+		this._save = this._save.bind(this);
 		this._toggleUsingPin = this._toggleUsingPin.bind(this);
 		this._updatePinSettings = this._updatePinSettings.bind(this);
 		this._leaveSettings = this._leaveSettings.bind(this);
 	}
 
-	_load() {
-		return PinSettings
-			.load({
-				from: 'pin'
-			})
-			.then(this._updatePinSettings.bind(this));
-	}
-
 	_updatePinSettings() {
+		let pinModel = PinSettings.getModel().pin;
+
 		this.setState({
-			model: PinSettings.settings,
-			isValid: PinSettings._checkIsValid()
+			pin: pinModel,
+			isValid: PinSettings._checkIsValid() && pinModel.is_on
 		});
 	}
 
 	onFocus(e) {
-		let
-			index = this.modelNames.indexOf(e.target.name);
-
 		this.setState({
 			element: e.target,
 			value: e.target.value,
-			classFocus: setCurrentFocusedInputTo(3, index)
+			classFocus: setCurrentFocusedInputTo(3, this.modelNames.indexOf(e.target.name))
 		});
 
 		return Keyboard.closeKeyBoard(e);
 	}
 
 	onChange(newVal) {
-		if (!this.state.model.pin.is_on) {
+		if (!this.state.pin.is_on) {
 			return;
 		}
 
@@ -91,20 +92,26 @@ export default class Index extends Component {
 	}
 
 	_save() {
-		return PinSettings.save({
-			for: "pin"
-		});
+		Pin.setValueByPath('value', this.state.pin.created);
+		Pin.messenger.success('Save pin code, current = ' + this.state.pin.created);
+
+		return Pin.save();
+	}
+
+	_leave() {
+		PinSettings.assignAttributes(PinSettings._getDefaultAttributes());
+
+		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
 
 	_leaveSettings() {
-		this
-			._save()
-			.then(() => {
-				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
-			})
-			.fail(() => {
-				console.error('fail save Pincode');
-			});
+		if (Pin._isDirty()) {
+			this
+				._save()
+				.then(this._leave);
+		} else {
+			this._leave();
+		}
 	}
 
 	render() {
@@ -136,14 +143,14 @@ export default class Index extends Component {
 								type="checkbox"
 								name="pin.is_on"
 								id="pin.is_on"
-								checked={this.state.model.pin.is_on}
+								checked={this.state.pin.is_on}
 								onChange={this._toggleUsingPin}
 							/>
 							<div className="checkbox-button pull-right"></div>
 						</label>
 					</div>
 
-					<div className={"l-settings l-main-content" + (!this.state.model.pin.is_on ? " disabled" : "")}>
+					<div className={"l-settings l-main-content" + (!this.state.pin.is_on ? " disabled" : "")}>
 						<form action="" name="pinChange">
 							<div className="l-settings-group">
 								<input
@@ -154,7 +161,7 @@ export default class Index extends Component {
 									className={"input-custom" + (this.state.classFocus[0] ? " focus" : "")}
 									placeholder="Enter current"
 									name="active"
-									value={this.state.model.pin.active}
+									value={this.state.pin.active}
 								/>
 							</div>
 							<div className="l-settings-group">
@@ -165,18 +172,18 @@ export default class Index extends Component {
 									className={"input-custom" + (this.state.classFocus[1] ? " focus" : "")}
 									placeholder="Enter new pincode"
 									name="created"
-									value={this.state.model.pin.created}
+									value={this.state.pin.created}
 								/>
 							</div>
 							<div className="l-settings-group">
 								<input
 									type="number"
 									onFocus={this.onFocus}
-									onChange={this.onChange}sc
+									onChange={this.onChange}
 									className={"input-custom" + (this.state.classFocus[2] ? " focus" : "")}
 									placeholder="Reenter new pincode"
 									name="created_copy"
-									value={this.state.model.pin.created_copy}
+									value={this.state.pin.created_copy}
 								/>
 							</div>
 						</form>
