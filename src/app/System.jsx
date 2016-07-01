@@ -34,6 +34,7 @@ export default class System {
 			})
 			.fail(() => {
 				hashHistory.replace('/fail');
+				Session.messenger.hide();
 			});
 	}
 
@@ -89,6 +90,10 @@ export default class System {
 	 * if we in dev env we will work in browser so just init the app
 	 */
 	init() {
+		document.addEventListener("offline", () => {
+			Session.messenger.info("You have gone offline, please check your connection");
+		}, false);
+
 		if (process.env.NODE_ENV === "prod") {
 			/* on device ready init app */
 			document.addEventListener("deviceready", () => {

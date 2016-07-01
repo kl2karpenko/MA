@@ -5,10 +5,6 @@ var app = new System();
 
 app
 	.boot()
-	.always((data) => {
-		if (data && data.message) {
-			messenger.error(data.message);
-		} else {
-			app.init();
-		}
+	.always(() => {
+		app.init();
 	});

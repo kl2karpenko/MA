@@ -11,6 +11,10 @@ $( document ).ajaxStop(function() {
 	$('#app').removeClass('loading');
 });
 
+$( document ).ajaxError(function() {
+	$('#app').removeClass('loading');
+});
+
 module.exports = (new $.RestClient(config.hostname, {
 	stripTrailingSlash: true,
 

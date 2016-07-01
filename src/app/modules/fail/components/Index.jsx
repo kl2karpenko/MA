@@ -4,7 +4,7 @@ import {hashHistory} from 'react-router';
 
 import Session from "models/Session";
 
-export default class Keyboard extends Component {
+export default class Fail extends Component {
 	constructor(props) {
 		super(props);
 	}

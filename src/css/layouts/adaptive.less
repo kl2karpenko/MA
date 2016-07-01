@@ -7,10 +7,14 @@
       display: none;
     }
 
-    &.fail {
+    .fail {
       position: relative;
       background-color: @Background;
       height: 100%;
+
+      &.info {
+        background-color: @Dark;
+      }
       
       .fail-block {
         display: block;
