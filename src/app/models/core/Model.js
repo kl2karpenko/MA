@@ -24,9 +24,9 @@ export default class Model {
 		this
 			.notLoaded()
 			._defineModel()
-			._setOriginalValues()
 			._setMainResources()
-			.assignAttributes(props);
+			.assignAttributes(props)
+			._setOriginalValues();
 
 		if (typeof this.afterInit === "function") {
 			this.afterInit();
@@ -78,8 +78,8 @@ export default class Model {
 		return this;
 	}
 
-	_setOriginalValues(origVal) {
-		this.originalValues = origVal || {};
+	_setOriginalValues() {
+		this.originalValues = $.extend(true, {}, this.getModel()) || {};
 
 		return this;
 	}
@@ -155,8 +155,10 @@ export default class Model {
 
 	_isDirty() {
 		let
-			originalValues = _.extend({}, this._getOriginalValues()),
-			changedValues = _.extend({}, this.getModel());
+			originalValues = $.extend(true, {}, this._getOriginalValues()),
+			changedValues = $.extend(true, {}, this.getModel());
+
+		console.log(originalValues, changedValues)
 
 		return !_.isEqual(originalValues, changedValues);
 	}
@@ -226,19 +228,17 @@ export default class Model {
 				console.groupCollapsed("load " + resource);
 				console.info("response", items[name]);
 				console.groupEnd("load");
-				this._setOriginalValues(items[name]);
+				this.assignAttributes(items[name]);
 
-				return this.assignAttributes(items[name]);
+				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
-				console.log(response && response.status);
-
 				response && response.status && this.messenger.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 				return this;
 			})
 			.fail(() => {
-				this.messenger.info('Server in unavailable, please try again later', '', {timeOut: 5000});
+				this.messenger.info('Server in unavailable, please try again later', '', {timeOut: 0});
 			});
 	}
 
@@ -307,7 +307,8 @@ export default class Model {
 
 				options.message && this.messenger.success("Save " + resource);
 
-				return this.assignAttributes(items[name]);
+				this.assignAttributes(items[name]);
+				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
 				response && response.status && this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));

@@ -1,4 +1,5 @@
 import Model from 'Model';
+import Storage from "models/Storage";
 
 class PinSettings extends Model {
 	init() {
@@ -54,7 +55,7 @@ class PinSettings extends Model {
 	_defaultSettings() {
 		return {
 			"pin": {
-				is_on: false,
+				is_on: !!Storage.getValue('pin'),
 				active: "",
 				created: "",
 				created_copy: ""

@@ -92,8 +92,7 @@ export default class Index extends Component {
 	}
 
 	_save() {
-		Pin.setValueByPath('value', this.state.pin.created);
-		Pin.messenger.success('Save pin code, current = ' + this.state.pin.created);
+		Pin.updateAttributesFor('value', this.state.pin.created);
 
 		return Pin.save();
 	}
@@ -105,12 +104,16 @@ export default class Index extends Component {
 	}
 
 	_leaveSettings() {
-		if (Pin._isDirty()) {
-			this
-				._save()
-				.then(this._leave);
-		} else {
+		this
+			._save()
+			.then(this._leave);
+
+		if (!PinSettings._isDirty()) {
 			this._leave();
+		} else {
+			if (this.state.pin.is_on && !this.state.isValid){
+				return PinSettings.messenger.error('Enter valid pin');
+			}
 		}
 	}
 

@@ -19,7 +19,10 @@ class Pin extends Model {
 
 		deferred.then(() => {
 			Storage.setValue('pin', this.pin.value);
-		});		
+			this._setOriginalValues({
+				value: this.pin.value
+			});
+		});
 
 		return deferred;
 	}
@@ -29,9 +32,12 @@ class Pin extends Model {
 
 		deferred.resolve();
 		deferred.then(() => {
-			this.assignAttributes({
-				value: Storage.getItem('pin')
-			})
+			let newPin = {
+				value: Storage.getValue('pin')
+			};
+
+			this._setOriginalValues(newPin);
+			this.assignAttributes(newPin)
 		});
 
 		return deferred;

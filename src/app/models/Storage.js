@@ -5,7 +5,6 @@ export default class Storage {
 
 	setValue(name, value) {
 		this.storage.setItem(name, value);
-		console.log(this.storage);
 	}
 
 	getValue(name) {
