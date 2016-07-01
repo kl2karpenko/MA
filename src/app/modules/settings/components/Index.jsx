@@ -104,9 +104,12 @@ export default class Index extends Component {
 	}
 
 	_leaveSettings() {
-		this
-			._save()
-			.then(this._leave);
+
+		if (!this.state.pin.is_on) {
+			this
+				._save()
+				.then(this._leave);
+		}
 
 		if (!PinSettings._isDirty()) {
 			this._leave();

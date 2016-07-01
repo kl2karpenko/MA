@@ -30,13 +30,10 @@ export default class System {
 		Session
 			._getSessionData()
 			.then(() => {
-				let
-					failLoadData = Session.failConnection,
-					isConnected = Session._isConnected();
-
-				if (!failLoadData) {
-					hashHistory.replace(isConnected ? '/pin' : '/authorize')
-				}
+				hashHistory.replace(Session._isConnected() ? '/pin' : '/authorize');
+			})
+			.fail(() => {
+				hashHistory.replace('/fail');
 			});
 	}
 
