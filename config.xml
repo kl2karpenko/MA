@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- com.kwebbl.androidapp || kwebblMobileApp -->
-<widget id="kwebblMobileApp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
+<widget id="com.kwebbl.androidapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>mobileApp</name>
     <description>
@@ -26,6 +26,11 @@
         <splash src="res/main.png" density="port-mdpi"/>
         <splash src="res/main.png" density="port-xhdpi"/>
         <splash src="res/main.png" density="port-hdpi"/>
+
+        <icon src="res/favicon.png" density="ldpi" />
+        <icon src="res/favicon.png" density="mdpi" />
+        <icon src="res/favicon.png" density="hdpi" />
+        <icon src="res/favicon.png" density="xhdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*"/>
@@ -33,6 +38,11 @@
 
         <splash src="res/main.png" width="320" height="480"/>
         <splash src="res/main.png" width="640" height="960"/>
+
+        <icon src="res/favicon.png" width="60" height="60"/>
+        <icon src="res/favicon.png" width="120" height="120"/>
+        <icon src="res/favicon.png" width="152" height="152"/>
+        <icon src="res/favicon.png" width="180" height="180"/>
     </platform>
     <preference name="SplashScreen" value="screen"/>
     <preference name="AutoHideSplashScreen" value="true"/>

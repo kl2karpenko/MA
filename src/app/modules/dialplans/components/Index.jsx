@@ -11,17 +11,14 @@ export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			loading: true
-		};
-		this._config = this._config.bind(this);
-
 		this._init();
+
+		this._config = this._config.bind(this);
 	}
 
 	_config() {
 		let
-			currentIdOfDialplan = this.props.params.id || Dialplan.getValueByPath("_id"),
+			currentIdOfDialplan = (this.props && this.props.params.id) || Dialplan.getValueByPath("_id"),
 			currentIndex = DialplanList.getIndexOfItemByDefAttrValue(currentIdOfDialplan);
 
 		currentIndex = currentIndex !== -1 ? currentIndex : 0;
@@ -51,10 +48,6 @@ export default class Index extends Component {
 				});
 			})
 			.done(() => {
-				this.setState({
-					loading: false
-				});
-
 				hashHistory.replace(DialplanList.getUrl())
 			});
 	}
@@ -62,13 +55,7 @@ export default class Index extends Component {
 	render() {
 		return (
 			<AdaptiveWrapper>
-				{(() => {
-					if (!this.state.loading) {
-						return this.props.children;
-					} else {
-						return <Loader/>;
-					}
-				})()}
+				{this.props.children}
 			</AdaptiveWrapper>
 		);
 	}

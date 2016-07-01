@@ -28,7 +28,7 @@ function _getContactsFromMobile() {
 }
 
 module.exports = $.extend(config, {
-	"hostname": "/ajax/",
+	hostname: "/ajax/",
 	mobileContacts: _getContactsFromMobile,
 	mobileSIMNumber: getMobileNumber
 });

@@ -8,21 +8,18 @@ export default class Follow extends Component {
 	constructor(props) {
 		super(props);
 
-		props.options.info = this._configInfo(props.options.name);
 		props.options.mobileNumber = "";
+		props.options.info = this._configInfo(props.options.name);
 
 		this.state = props.options;
 	}
 
 	componentWillReceiveProps() {
-		this.setState({
-			info: this._configInfo(this.state.name)
-		});
-
 		config.mobileSIMNumber().done((number) => {
 			this.setState({
-				mobileNumber: number
-			})
+				mobileNumber: number,
+				info: this._configInfo(this.state.name)
+			});
 		});
 	}
 
@@ -37,8 +34,9 @@ export default class Follow extends Component {
 			case "contact":
 				info = Dialplan.getValueByPath("follow.contact.value.name") || "Tap to choose a contact";
 				break;
+			// TODO: didn't work mobile number when came from list!!!!
 			case "mobile":
-				info = Dialplan.getValueByPath("follow.mobile.value");
+				info = Dialplan.getValueByPath("follow.mobile.value") || this.state && this.state.mobileNumber;
 				break;
 			default:
 				info = "";

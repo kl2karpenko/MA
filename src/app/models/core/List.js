@@ -123,6 +123,8 @@ class List {
 	}
 
 	previous() {
+		console.log('next getPreviousPage' , this.getPreviousPage());
+
 		this.state._update({
 			activePage: this.getPreviousPage()
 		});
@@ -133,6 +135,8 @@ class List {
 	}
 
 	next() {
+		console.log('next page' , this.getNextPage());
+		
 		this.state._update({
 			activePage: this.getNextPage()
 		});

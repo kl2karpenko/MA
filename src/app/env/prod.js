@@ -55,11 +55,11 @@ function getAddressOfHost() {
 // TODO: only for development, delete after deploy
 	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
-	return workIPMac + "ajax/";
+	return hostName + "ajax/";
 }
 
 module.exports = $.extend(config, {
-	"hostname": getAddressOfHost(),
+	hostname: getAddressOfHost(),
 	mobileContacts: _getContactsFromMobile,
 	mobileSIMNumber: getMobileNumber
 });

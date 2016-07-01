@@ -189,7 +189,7 @@ export default class Index extends Component {
 					</div>
 
 					<div className="l-main-content">
-						<Link className="btn btn-block btn-block-lg btn-disconnect" to="/">Disconnect app</Link>
+						<Link className="btn btn-block btn-block-lg btn-disconnect" to="/authorize">Disconnect app</Link>
 					</div>
 				</MainScroll>
 			</AdaptiveFixed>
