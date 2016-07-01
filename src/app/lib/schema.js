@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import config from 'envConfig';
+import {hashHistory} from 'react-router';
 
 import 'rest-client';
 
@@ -7,11 +8,7 @@ $( document ).ajaxStart(function() {
 	$('#app').addClass('loading');
 });
 
-$( document ).ajaxStop(function() {
-	$('#app').removeClass('loading');
-});
-
-$( document ).ajaxError(function() {
+$( document ).ajaxComplete(function() {
 	$('#app').removeClass('loading');
 });
 
@@ -25,6 +22,8 @@ module.exports = (new $.RestClient(config.hostname, {
 	request: function(resource, options) {
 		options.timeout = 3000;
 
-		return $.ajax(options);
+		return $.ajax(options).fail(() => {
+			hashHistory.replace('/offline');
+		});
 	}
 }));

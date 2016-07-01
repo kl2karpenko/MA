@@ -231,12 +231,9 @@ export default class Model {
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
-				response && response.status && this.messenger.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+				// response && response.status && this.messenger.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 				return this;
-			})
-			.fail(() => {
-				this.messenger.info('Server in unavailable, please try again later', '', {timeOut: 0});
 			});
 	}
 
@@ -261,7 +258,7 @@ export default class Model {
 
 			return this.assignAttributesTo(path, items[this.managedResource][path]);
 		}).error((response) => {
-			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			// this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
 			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return this;
 		});
@@ -309,14 +306,9 @@ export default class Model {
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
-				response && response.status && this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));
+				// response && response.status && this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));
 				return response;
 			})
-			.fail(() => {
-				this.messenger.info('Server in unavailable, please try again later', '', {
-					timeOut: 0
-				});
-			});
 	}
 
 	toJSON() {

@@ -53,6 +53,7 @@ export default class System {
 					},
 					childRoutes: [
 						require('./modules/fail/routes.jsx'),
+						require('./modules/offline/routes.jsx'),
 						require('./modules/authorize/routes.jsx'),
 						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
@@ -91,7 +92,8 @@ export default class System {
 	 */
 	init() {
 		document.addEventListener("offline", () => {
-			Session.messenger.info("You have gone offline, please check your connection");
+			hashHistory.replace('/offline');
+			// Session.messenger.info("You have gone offline, please check your connection");
 		}, false);
 
 		if (process.env.NODE_ENV === "prod") {

@@ -10,7 +10,11 @@ export default class Offline extends Component {
 	}
 
 	_reload() {
-		if (navigator.connection.type !== Connection.NONE) {
+		Session.load().done(() => {
+			hashHistory.goBack();
+		});
+
+		if ((navigator.connection && navigator.connection.type) !== (Connection && Connection.NONE)) {
 			hashHistory.goBack();
 		}
 	}

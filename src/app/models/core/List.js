@@ -214,7 +214,7 @@ class List {
 			console.groupEnd("load " + resource);
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
-			this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
+			// this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
 			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return this;
 		});
