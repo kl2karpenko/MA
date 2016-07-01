@@ -11,6 +11,10 @@ export default class Enter extends Component {
 			fail: Session.failConnection
 		};
 
+		if (!Session.failConnection) {
+			hashHistory.replace(Session._isConnected() ? '/pin' : '/authorize')
+		}
+
 		this._reloadApp = this._reloadApp.bind(this);
 	}
 

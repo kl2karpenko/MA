@@ -670,7 +670,7 @@ app.put('/ajax/dialplans/:dialplanId', function (req, res) {
 	dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)] = req.body.dialplan;
 
 	res.send({
-		"dialplan": dialplansList[_.indexOf(_.pluck(dialplans, '_id'), req.params.dialplanId)]
+		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
 	});
 });
 
