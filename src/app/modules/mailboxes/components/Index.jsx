@@ -44,11 +44,11 @@ export default class Index extends Component {
 		}
 
 		Dialplan
-			._followTo("voicemail", {
+			._followTo("mailbox", {
 				_id: mailboxData._id,
-				name: mailboxData.title + ` (${mailboxData.number})`
+				name: mailboxData.title + ` (${mailboxData.number})`,
+				number: mailboxData.number
 			})
-			.save()
 			.then(() => {
 				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});

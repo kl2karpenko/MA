@@ -16,22 +16,48 @@
   }
 
   &-loader {
-    position: absolute;
-
-    height: 20px;
-    margin-top: -10px;
-
-    left: 0;
-    top: 50%;
-    right: 0;
-
-    z-index: 10001;
-
-    text-align: center;
-
     display: none;
+    position: absolute;
+    height: 100%;
 
-    #app.loading + & {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 6;
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      background-color: rgba(0, 0, 0, 0.6);
+
+      z-index: 10000;
+    }
+
+    & > div {
+      position: absolute;
+
+      height: 20px;
+      margin-top: -10px;
+
+      left: 0;
+      top: 50%;
+      right: 0;
+
+      z-index: 7;
+
+      text-align: center;
+    }
+
+
+    &.loading {
       display: block;
     }
 

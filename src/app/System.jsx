@@ -31,10 +31,10 @@ export default class System {
 			._getSessionData()
 			.then(() => {
 				hashHistory.replace(Session._isConnected() ? '/pin' : '/authorize');
+				$(document).trigger('system:unfail');
 			})
 			.fail(() => {
-				hashHistory.replace('/fail');
-				Session.messenger.hide();
+				$(document).trigger('system:fail');
 			});
 	}
 
@@ -52,8 +52,6 @@ export default class System {
 						onEnter: this._load
 					},
 					childRoutes: [
-						require('./modules/fail/routes.jsx'),
-						require('./modules/offline/routes.jsx'),
 						require('./modules/authorize/routes.jsx'),
 						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
@@ -91,11 +89,6 @@ export default class System {
 	 * if we in dev env we will work in browser so just init the app
 	 */
 	init() {
-		document.addEventListener("offline", () => {
-			hashHistory.replace('/offline');
-			// Session.messenger.info("You have gone offline, please check your connection");
-		}, false);
-
 		if (process.env.NODE_ENV === "prod") {
 			/* on device ready init app */
 			document.addEventListener("deviceready", () => {

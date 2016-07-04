@@ -28,6 +28,11 @@ export default class Personal extends Component {
 			case "contact":
 				hashHistory.push('/contacts');
 				break;
+			case "mobile":
+				Dialplan._followTo("mobile", {
+					number: object.info
+				});
+				break;
 			default:
 				Dialplan._followTo(object.name);
 				break;
@@ -50,6 +55,7 @@ export default class Personal extends Component {
 						<ul>
 							{this.state.actions.map((object, i) => {
 								return <Follow
+									personal={true}
 									key={i}
 									options={object}
 									onChange={this.onChange.bind(this, object)}

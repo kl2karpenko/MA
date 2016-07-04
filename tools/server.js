@@ -16,14 +16,22 @@ var dialplans = [{
 	"ex_number": "+32 1 234 56 78",
 	"follow": {
 		"original": {
-			"selected": false
+			"selected": true
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": true
+		"mailbox": {
+			"is_on": true,
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": ""
+			}
 		},
 		"contact": {
 			"selected": false,
@@ -71,13 +79,17 @@ var dialplans = [{
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
+		"mailbox": {
+			"is_on": true,
 			"selected": false,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -85,6 +97,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -97,17 +110,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -115,6 +132,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -132,21 +150,26 @@ var dialplans = [{
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
-			"selected": true,
+			"selected": false,
 			"value": {
-				"_id": "95c50c4e05cf7993ea326f813f007385",
-				"name": "36368 555888 (5223)",
-				"type": "extension"
+				"_id": "",
+				"name": "",
+				"number": "",
+				"type": ""
 			}
 		}
 	}
@@ -158,17 +181,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -176,6 +203,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -188,17 +216,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -206,6 +238,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -218,17 +251,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -236,6 +273,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -248,17 +286,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -266,6 +308,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -278,17 +321,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -296,6 +343,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -308,17 +356,21 @@ var dialplans = [{
 	"personal": false,
 	"follow": {
 		"original": {
-			"selected": true
+			"selected": false
 		},
 		"mobile": {
 			"selected": false,
-			"value": ""
+			"value": {
+				"number": ""
+			}
 		},
-		"voicemail": {
-			"selected": false,
+		"mailbox": {
+			"is_on": true,
+			"selected": true,
 			"value": {
 				"_id": "",
-				"name": ""
+				"name": "",
+				"number": ""
 			}
 		},
 		"contact": {
@@ -326,6 +378,7 @@ var dialplans = [{
 			"value": {
 				"_id": "",
 				"name": "",
+				"number": "",
 				"type": ""
 			}
 		}
@@ -346,7 +399,7 @@ var dialplansOnlyPersonal = [{
 			"selected": false,
 			"value": ""
 		},
-		"voicemail": {
+		"mailbox": {
 			"selected": true
 		},
 		"contact": {
@@ -667,10 +720,12 @@ app.get('/dialplans/:dialplanId', function (req, res) {
  * Save detail info about dialplan
  */
 app.put('/dialplans/:dialplanId', function (req, res) {
-	dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)] = req.body.dialplan;
+	var activeDialplan = dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)];
+
+	activeDialplan = _.extend(activeDialplan, req.body.dialplan);
 
 	res.send({
-		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
+		"dialplan": activeDialplan
 	});
 });
 

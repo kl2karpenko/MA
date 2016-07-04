@@ -20,6 +20,7 @@ class PinSettings extends Model {
 
 		if (!allIsValid) {
 			this.messenger.error('Please enter valid Pin value');
+			
 			if (model.pin.created !== model.pin.created_copy) {
 				this.messenger.error('Please enter Pin that match');
 				return false;

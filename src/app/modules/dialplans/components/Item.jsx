@@ -69,12 +69,8 @@ export default class Item extends Component {
 	_renderDialplan(event) {
 		let activatePage = ($(event.target).hasClass('next') || $(event.target).hasClass('__right')) ? 'next' : 'previous';
 
-		this
-			._save()
-			.then(() => {
-				DialplanList[activatePage]();
-			})
-			.then(this._loadDialplan);
+		DialplanList[activatePage]();
+		this._loadDialplan();
 	}
 
 	render() {

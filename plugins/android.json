@@ -27,6 +27,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.kwebbl.androidapp"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.kwebbl.androidapp"
         }
     },
     "dependent_plugins": {

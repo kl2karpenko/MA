@@ -23,16 +23,33 @@ export default class Company extends Component {
 	onChangeDialplanForward(object) {
 		switch(object.name) {
 			case "contact":
-				hashHistory.push('/contacts');
+				let contact = Dialplan.getValueByPath('follow.contact');
+
+				if (contact.value._id) {
+					Dialplan._followTo("contact", contact.value);
+				} else {
+					hashHistory.push('/contacts');
+				}
 				break;
-			case "voicemail":
-				hashHistory.push('/mailboxes');
+			case "mailbox":
+				let mailbox = Dialplan.getValueByPath('follow.mailbox');
+
+				if (mailbox.value._id) {
+					Dialplan._followTo("mailbox", mailbox.value);
+				} else {
+					hashHistory.push('/mailboxes');
+				}
+				break;
+			case "mobile":
+				Dialplan._followTo("mobile", {
+					number: object.info
+				});
 				break;
 			default:
 				Dialplan._followTo(object.name);
 				break;
 		}
-		
+
 		this._updateDialplan();
 	}
 
@@ -40,6 +57,7 @@ export default class Company extends Component {
 		object.value.is_on = !object.value.is_on;
 
 		this._updateDialplan();
+		Dialplan._changeFlowControlAction(object.name);
 	}
 
 	_updateDialplan() {
@@ -56,6 +74,7 @@ export default class Company extends Component {
 						<ul>
 							{this.state.actions.map((object, i) => {
 								return <Follow
+									personal={false}
 									key={i}
 									options={object}
 									onChange={this.onChangeDialplanForward.bind(this, object)}

@@ -37,26 +37,6 @@ body {
   }
 
   max-width: 600px;
-
-  &.loading {
-    @loaderWH: 80px;
-
-    position: relative;
-
-    &:before {
-      content: '';
-
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-
-      background-color: rgba(0, 0, 0, 0.6);
-
-      z-index: 10000;
-    }
-  }
 }
 
 @paddingContent: 5.333333333333334%;
@@ -67,6 +47,7 @@ body {
 /** pages =========================== */
 
 /** modules =========================== */
+@import "fail";
 @import "modules/angle.less";
 @import "modules/connect-slider.less";
 @import "modules/keyboard.less";

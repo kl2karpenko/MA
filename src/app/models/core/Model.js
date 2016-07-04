@@ -231,7 +231,6 @@ export default class Model {
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
-				// response && response.status && this.messenger.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 				return this;
 			});
@@ -258,7 +257,6 @@ export default class Model {
 
 			return this.assignAttributesTo(path, items[this.managedResource][path]);
 		}).error((response) => {
-			// this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
 			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return this;
 		});
@@ -282,6 +280,8 @@ export default class Model {
 			saveMethod = 'update',
 			params = [];
 
+		console.log('save dialplans', saveMethod);
+
 		params.push(this.getValueByPath('_id'));
 
 		if (this.isSingle) {
@@ -292,7 +292,7 @@ export default class Model {
 			resource = resource[options.for];
 		}
 
-		params.push(this.toJSON());
+		params.push(options && options.data || this.toJSON());
 
 		return resource[saveMethod].apply(resource, params)
 			.done((items) => {
@@ -301,12 +301,8 @@ export default class Model {
 				console.groupEnd("save " + resource);
 
 				options.message && this.messenger.success("Save " + resource);
-
-				this.assignAttributes(items[name]);
-				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
-				// response && response.status && this.messenger['error']((response.responseJSON && response.responseJSON.message) || 'Error for ' + resource + ' status of response: ' + (response && response.status));
 				return response;
 			})
 	}

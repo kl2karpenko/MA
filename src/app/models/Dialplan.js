@@ -9,20 +9,69 @@ class Dialplan extends Model {
 		return 'dialplans';
 	}
 
+	_getJSONFollowModel(path) {
+		let
+			model = {},
+			pathName = this._getModelName();
+
+		model[pathName] = {};
+		model[pathName]._id = this.getValueByPath('_id');
+		model[pathName].follow = {};
+		model[pathName].follow[path] = this.getValueByPath('follow.' + path);
+
+		return model;
+	}
+
 	_followTo(path, dataForSave) {
-		let followModel = $.extend({}, this._defaultDialplan().follow);
+		let followModel = $.extend({}, this.getModel().follow);
 
 		Object.keys(followModel).forEach((item) => {
+			followModel[item].selected = false;
+
 			if (item === path) {
 				followModel[item].selected = true;
-				if (dataForSave) {
-					followModel[item].value = dataForSave;
+
+				switch(item) {
+					case "mailbox":
+						followModel[item].is_on = this.getModel().follow.mailbox.is_on;
+						if (dataForSave) {
+							followModel[item].value._id = dataForSave._id;
+							followModel[item].value.name = dataForSave.name;
+							followModel[item].value.number = dataForSave.number;
+						}
+						break;
+					case "contact":
+						followModel[item].value = dataForSave;
+						break;
+					case "mobile":
+						followModel[item].value.number = dataForSave.number;
+						break;
+					default:
+						followModel[item].value = dataForSave;
+						break;
 				}
 			}
 		});
 
 		this.updateAttributesFor('follow', followModel);
-		
+		return this.save({
+			data: this._getJSONFollowModel(path)
+		});
+	}
+	
+	_changeFlowControlAction() {
+		let
+			model = {},
+			pathName = this._getModelName();
+
+		model[pathName] = {};
+		model[pathName]._id = this.getValueByPath('_id');
+		model.actions = this.getValueByPath('actions');
+
+		this.save({
+			data: model
+		});
+
 		return this;
 	}
 	
@@ -39,13 +88,17 @@ class Dialplan extends Model {
 				},
 				"mobile": {
 					"selected": false,
-					"value": ""
+					"value": {
+						"number": ""
+					}
 				},
-				"voicemail": {
+				"mailbox": {
+					"is_on": true,
 					"selected": false,
 					"value": {
 						"_id": "",
-						"name": ""
+						"name": "",
+						"number": ""
 					}
 				},
 				"contact": {
@@ -53,6 +106,7 @@ class Dialplan extends Model {
 					"value": {
 						"_id": "",
 						"name": "",
+						"number": "",
 						"type": ""
 					}
 				}
