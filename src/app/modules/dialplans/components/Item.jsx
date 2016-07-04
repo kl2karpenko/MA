@@ -58,14 +58,6 @@ export default class Item extends Component {
 		});
 	}
 
-	_goTo(path) {
-		this
-			._save()
-			.then(() => {
-				hashHistory.push(path);
-			});
-	}
-
 	_renderDialplan(event) {
 		let activatePage = ($(event.target).hasClass('next') || $(event.target).hasClass('__right')) ? 'next' : 'previous';
 
@@ -80,9 +72,9 @@ export default class Item extends Component {
 					<div className="m-angle-content">
 
 						<AngleTop title="Call Routing">
-							<div className="m-angle-settings" onClick={this._goTo.bind(this, "/settings")}>
+							<Link className="m-angle-settings" to="/settings">
 								<img src={imageLoader(require("images/icons/nav-list.png"))} alt="Qr background"/>
-							</div>
+							</Link>
 						</AngleTop>
 
 						<AngleInfo>
@@ -102,9 +94,9 @@ export default class Item extends Component {
 						/>
 					</div>
 
-					<button className="m-angle__button btn btn-round btn-sm btn-right" onClick={this._goTo.bind(this, "/dialplans/list")}>
+					<Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
 						<img src={imageLoader(require("images/icons/list.png"))} alt="List of dialplans"/>
-					</button>
+					</Link>
 				</Angle>
 
 				{this.state.Dialplan.personal ? <Personal/> : <Company/>}

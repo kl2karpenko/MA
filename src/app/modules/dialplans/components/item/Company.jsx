@@ -25,7 +25,7 @@ export default class Company extends Component {
 			case "contact":
 				let contact = Dialplan.getValueByPath('follow.contact');
 
-				if (contact.value._id) {
+				if (contact.value.number) {
 					Dialplan._followTo("contact", contact.value);
 				} else {
 					hashHistory.push('/contacts');

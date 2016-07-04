@@ -59,10 +59,23 @@
         position: relative;
 
         &.with-search {
-          background-image: url("../../img/icons/search-grey.png");
-          background-position: center right;
-          background-size: 8%;
-          background-repeat: no-repeat;
+          position: relative;
+          
+          a {
+            width: 45px;
+            height: 40px;
+            position: absolute;
+            z-index: 2;
+
+            background-image: url("../../img/icons/search-grey.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
         }
 
         &:first-child {

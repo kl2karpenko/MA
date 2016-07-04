@@ -1951,19 +1951,6 @@ body {
 .app > div {
   height: 100%;
 }
-.app.loading {
-  position: relative;
-}
-.app.loading:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 10000;
-}
 /** pages =========================== */
 /*!
  * Fluidable Grid System 1.2.5
@@ -2892,17 +2879,36 @@ body {
   background-size: cover;
 }
 .app-loader {
+  display: none;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+}
+.app-loader:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+}
+.app-loader > div {
   position: absolute;
   height: 20px;
   margin-top: -10px;
   left: 0;
   top: 50%;
   right: 0;
-  z-index: 10001;
+  z-index: 7;
   text-align: center;
-  display: none;
 }
-#app.loading + .app-loader {
+.app-loader.loading {
   display: block;
 }
 .app-loader span {
@@ -2955,6 +2961,35 @@ body {
 }
 /** pages =========================== */
 /** modules =========================== */
+.fail {
+  display: none;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  background-color: #d90900;
+}
+.fail.offline {
+  background-color: #333333;
+}
+.fail.visible {
+  display: block;
+}
+.fail-block {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 80%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 2em;
+  color: #f2f2f2;
+}
 .m-angle {
   position: relative;
   text-align: center;
@@ -3569,29 +3604,7 @@ body {
 }
 .l-adaptive-top {
   height: 100%;
-}
-.l-adaptive-top .fail-block {
-  display: none;
-}
-.l-adaptive-top .fail {
   position: relative;
-  background-color: #d90900;
-  height: 100%;
-}
-.l-adaptive-top .fail.info {
-  background-color: #333;
-}
-.l-adaptive-top .fail .fail-block {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 80%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 2em;
-  color: #f2f2f2;
 }
 .l-adaptive-wrapper {
   height: 100%;
@@ -3690,10 +3703,21 @@ body {
   padding-bottom: 15px;
 }
 .l-dialplan__list li.with-search {
+  position: relative;
+}
+.l-dialplan__list li.with-search a {
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  z-index: 2;
   background-image: url(img/search-grey.png);
-  background-position: center right;
-  background-size: 8%;
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: contain;
+  right: 6px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 .l-dialplan__list li:first-child {
   border-top: 1px solid #f2f2f2;

@@ -26,7 +26,13 @@ export default class Personal extends Component {
 	onChange(object) {
 		switch(object.name) {
 			case "contact":
-				hashHistory.push('/contacts');
+				let contact = Dialplan.getValueByPath('follow.contact');
+
+				if (contact.value.number) {
+					Dialplan._followTo("contact", contact.value);
+				} else {
+					hashHistory.push('/contacts');
+				}
 				break;
 			case "mobile":
 				Dialplan._followTo("mobile", {

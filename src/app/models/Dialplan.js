@@ -34,7 +34,7 @@ class Dialplan extends Model {
 				switch(item) {
 					case "mailbox":
 						followModel[item].is_on = this.getModel().follow.mailbox.is_on;
-						if (dataForSave) {
+						if (dataForSave && followModel[item].is_on) {
 							followModel[item].value._id = dataForSave._id;
 							followModel[item].value.name = dataForSave.name;
 							followModel[item].value.number = dataForSave.number;
@@ -68,11 +68,11 @@ class Dialplan extends Model {
 		model[pathName]._id = this.getValueByPath('_id');
 		model.actions = this.getValueByPath('actions');
 
-		this.save({
+		this.updateAttributesFor('actions', model);
+
+		return this.save({
 			data: model
 		});
-
-		return this;
 	}
 	
 	_defaultDialplan() {

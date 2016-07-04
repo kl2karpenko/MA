@@ -17,6 +17,7 @@ export default class Index extends Component {
 		this._init();
 
 		this._config = this._config.bind(this);
+		this._goToActiveDialplan = this._goToActiveDialplan.bind(this);
 	}
 
 	_config() {
@@ -25,6 +26,8 @@ export default class Index extends Component {
 			currentIndex = DialplanList.getIndexOfItemByDefAttrValue(currentIdOfDialplan);
 
 		currentIndex = currentIndex !== -1 ? currentIndex : 0;
+
+		console.log(this.props, this.props && this.props.params);
 
 		DialplanList.updateState({
 			activePage: currentIndex + 1
@@ -36,6 +39,14 @@ export default class Index extends Component {
 		}
 	}
 
+	_goToActiveDialplan() {
+		this.setState({
+			loading: false
+		});
+
+		hashHistory.replace(DialplanList.getUrl())
+	}
+
 	_init() {
 		DialplanList
 			.load()
@@ -45,18 +56,20 @@ export default class Index extends Component {
 					activePage: options.index + 1
 				});
 
-				return Dialplan.load({
-					id: options.id
-							|| DialplanList.getValueOfDefAttrByIndex( options.index )
-				});
-			})
-			.done(() => {
-				this.setState({
-					loading: false
-				});
+				let id = options.id
+					|| DialplanList.getValueOfDefAttrByIndex( options.index );
 
-				hashHistory.replace(DialplanList.getUrl())
-			});
+				if (id === Dialplan.getValueByPath('_id')) {
+					this._goToActiveDialplan();
+				} else {
+					Dialplan
+						.load({
+							id: options.id
+							|| DialplanList.getValueOfDefAttrByIndex( options.index )
+						})
+						.done(this._goToActiveDialplan);
+				}
+			})
 	}
 
 	render() {

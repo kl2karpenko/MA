@@ -270,17 +270,11 @@ export default class Model {
 			return reject();
 		}
 
-		if (!this._isDirty()) {
-			return ready();
-		}
-
 		let
 			name = this._getModelName(),
 			resource = this.getRecourse(),
 			saveMethod = 'update',
 			params = [];
-
-		console.log('save dialplans', saveMethod);
 
 		params.push(this.getValueByPath('_id'));
 
@@ -292,7 +286,7 @@ export default class Model {
 			resource = resource[options.for];
 		}
 
-		params.push(options && options.data || this.toJSON());
+		params.push((options && options.data) || this.toJSON());
 
 		return resource[saveMethod].apply(resource, params)
 			.done((items) => {

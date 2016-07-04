@@ -8,6 +8,38 @@ var port = 8030;
 
 // Local data =================================== //
 
+var dialplanFollowDefault = {
+	"follow": {
+		"original": {
+			"selected": false
+		},
+		"mobile": {
+			"selected": false,
+			"value": {
+				"number": ""
+			}
+		},
+		"mailbox": {
+			"is_on": true,
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": "",
+				"type": ""
+			}
+		}
+	}
+}
+
 var dialplans = [{
 	"_id": "hrththy56y5yh",
 	"actions": [],
@@ -722,7 +754,13 @@ app.get('/dialplans/:dialplanId', function (req, res) {
 app.put('/dialplans/:dialplanId', function (req, res) {
 	var activeDialplan = dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)];
 
-	activeDialplan = _.extend(activeDialplan, req.body.dialplan);
+	Object.keys(activeDialplan.follow).forEach(function (path) {
+		activeDialplan.follow[path].selected = false;
+	});
+
+	activeDialplan.follow = _.extend({}, dialplanFollowDefault.follow, req.body.dialplan.follow);
+
+	console.log(JSON.stringify(activeDialplan));
 
 	res.send({
 		"dialplan": activeDialplan
