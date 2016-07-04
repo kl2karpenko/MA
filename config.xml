@@ -4,7 +4,7 @@
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>mobileApp</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Kwebbl mobile app for company/users changing dialplans state
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
