@@ -14,6 +14,14 @@ export default class Follow extends Component {
 		this.state = props.options;
 	}
 
+	componentWillReceiveProps(props) {
+		let config = this._config(props.options.name);
+
+		props.options.info = config.info;
+
+		this.setState(props.options);
+	}
+
 	_getClassName(props) {
 		return props.options.name === "mailbox" && (!Dialplan.getValueByPath("follow.mailbox.is_on") ? " hidden" : "");
 	}
@@ -40,6 +48,8 @@ export default class Follow extends Component {
 	}
 
 	render() {
+		console.log(this);
+
 		return (
 			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
 				<label className="m-label radio-block" htmlFor={this.state.name}>

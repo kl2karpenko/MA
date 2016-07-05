@@ -67,6 +67,8 @@ export default class Company extends Component {
 	}
 
 	render() {
+		console.log(this.state.actions);
+
 		return (
 			<MainScroll>
 				<form action="">

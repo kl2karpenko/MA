@@ -45,7 +45,7 @@ export default class Index extends Component {
 		this._save = this._save.bind(this);
 		this._toggleUsingPin = this._toggleUsingPin.bind(this);
 		this._updatePinSettings = this._updatePinSettings.bind(this);
-		this._leaveSettings = this._leaveSettings.bind(this);
+		this._leave = this._leave.bind(this);
 	}
 
 	_updatePinSettings() {
@@ -99,15 +99,10 @@ export default class Index extends Component {
 
 	_save() {
 		Pin.updateAttributesFor('value', this.state.pin.created);
-		this.setState({
-			isValid: false
-		});
 
 		return Pin
 				.save()
 				.then(() => {
-					PinSettings.assignAttributes('pin', PinSettings._defaultSettings());
-
 					let pinModel = PinSettings.getModel().pin;
 
 					this.setState({
@@ -120,22 +115,6 @@ export default class Index extends Component {
 		PinSettings.assignAttributes(PinSettings._getDefaultAttributes());
 
 		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
-	}
-
-	_leaveSettings() {
-		if (!this.state.pin.is_on) {
-			this
-				._save()
-				.then(this._leave);
-		}
-
-		if (!PinSettings._isDirty()) {
-			this._leave();
-		} else {
-			if (this.state.pin.is_on && !this.state.isValid){
-				return PinSettings.messenger.error('Enter valid pin');
-			}
-		}
 	}
 
 	render() {
@@ -152,7 +131,7 @@ export default class Index extends Component {
 						</div>
 					</div>
 
-					<button className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" onClick={this._leaveSettings}>
+					<button className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" onClick={this._leave}>
 						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
 					</button>
 				</Angle>

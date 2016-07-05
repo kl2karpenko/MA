@@ -23,7 +23,7 @@ $ NODE_ENV=production webpack --config tools/webpack/config.js
 
 Plugin list:
 1. cordova-plugin-contacts
-2. cordova-plugin-sim
+2. cordova-plugin-sim only for Android
 3. ionic-plugin-keyboard
 4. cordova-plugin-contacts-phonenumbers
 5. cordova-plugin-compat
