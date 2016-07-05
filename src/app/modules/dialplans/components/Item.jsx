@@ -34,10 +34,6 @@ export default class Item extends Component {
 		this._changeState();
 	}
 
-	_save() {
-		return Dialplan.save();
-	}
-
 	_loadDialplan() {
 		return Dialplan
 			.load({

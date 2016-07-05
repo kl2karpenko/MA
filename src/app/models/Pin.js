@@ -37,7 +37,7 @@ class Pin extends Model {
 			};
 
 			this._setOriginalValues(newPin);
-			this.assignAttributes(newPin)
+			this.assignAttributes(newPin);
 		});
 
 		return deferred;

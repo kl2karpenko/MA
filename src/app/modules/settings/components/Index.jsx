@@ -89,12 +89,31 @@ export default class Index extends Component {
 		PinSettings.updateAttributesFor("pin.is_on", e.target.checked);
 
 		this._updatePinSettings();
+
+		if (!e.target.checked) {
+			this.setState({
+				isValid: true
+			});
+		}
 	}
 
 	_save() {
 		Pin.updateAttributesFor('value', this.state.pin.created);
+		this.setState({
+			isValid: false
+		});
 
-		return Pin.save();
+		return Pin
+				.save()
+				.then(() => {
+					PinSettings.assignAttributes('pin', PinSettings._defaultSettings());
+
+					let pinModel = PinSettings.getModel().pin;
+
+					this.setState({
+						pin: pinModel
+					});
+				});
 	}
 
 	_leave() {
@@ -104,7 +123,6 @@ export default class Index extends Component {
 	}
 
 	_leaveSettings() {
-
 		if (!this.state.pin.is_on) {
 			this
 				._save()

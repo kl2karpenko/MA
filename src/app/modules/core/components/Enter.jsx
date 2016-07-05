@@ -19,42 +19,27 @@ export default class Enter extends Component {
 		this._listen();
 	}
 
+	_changeLoadStateTo(state) {
+		this.setState({ loading: state });
+	}
+
+	_changeOfflineStateTo(state) {
+		this.setState({ offline: state });
+	}
+
+	_changeFailStateTo(state) {
+		this.setState({ fail: state });
+	}
+
 	_listen() {
-		$(document).ajaxStart(() => {
-			this.setState({
-				loading: true
-			});
-		});
+		$(document).ajaxStart(this._changeLoadStateTo.bind(this, true));
+		$(document).ajaxComplete(this._changeLoadStateTo.bind(this, false));
 
-		$(document).ajaxComplete(() =>{
-			this.setState({
-				loading: false
-			});
-		});
+		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true), false);
+		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false), false);
 
-		document.addEventListener("offline", () => {
-			this.setState({
-				offline: true
-			});
-		}, false);
-
-		document.addEventListener("online", () => {
-			this.setState({
-				offline: false
-			});
-		}, false);
-
-		$(document).on('system:fail', () => {
-			this.setState({
-				fail: true
-			});
-		});
-
-		$(document).on('system:unfail', () => {
-			this.setState({
-				fail: false
-			});
-		});
+		$(document).on('system:fail', this._changeFailStateTo.bind(this, true));
+		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
 	}
 
 	_checkConnection() {

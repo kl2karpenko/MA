@@ -9,7 +9,7 @@ class Dialplan extends Model {
 		return 'dialplans';
 	}
 
-	_getJSONFollowModel(path) {
+	_getJSONForFollow(path) {
 		let
 			model = {},
 			pathName = this._getModelName();
@@ -22,7 +22,7 @@ class Dialplan extends Model {
 		return model;
 	}
 
-	_followTo(path, dataForSave) {
+	saveForFollowTo(path, dataForSave) {
 		let followModel = $.extend({}, this.getModel().follow);
 
 		Object.keys(followModel).forEach((item) => {
@@ -34,6 +34,7 @@ class Dialplan extends Model {
 				switch(item) {
 					case "mailbox":
 						followModel[item].is_on = this.getModel().follow.mailbox.is_on;
+						console.log('followModel[item].is_on', followModel[item].is_on);
 						if (dataForSave && followModel[item].is_on) {
 							followModel[item].value._id = dataForSave._id;
 							followModel[item].value.name = dataForSave.name;
@@ -55,21 +56,20 @@ class Dialplan extends Model {
 
 		this.updateAttributesFor('follow', followModel);
 		return this.save({
-			data: this._getJSONFollowModel(path)
+			data: this._getJSONForFollow(path)
 		});
 	}
 	
-	_changeFlowControlAction() {
+	saveForFlowControl() {
 		let
 			model = {},
 			pathName = this._getModelName();
 
 		model[pathName] = {};
 		model[pathName]._id = this.getValueByPath('_id');
-		model.actions = this.getValueByPath('actions');
+		model[pathName].actions = this.getValueByPath('actions');
 
-		this.updateAttributesFor('actions', model);
-
+		this.updateAttributesFor('actions', model[pathName].actions);
 		return this.save({
 			data: model
 		});

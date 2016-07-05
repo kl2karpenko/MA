@@ -14,18 +14,8 @@ export default class Follow extends Component {
 		this.state = props.options;
 	}
 
-	componentWillReceiveProps(props) {
-		let config = this._config(props.options.name);
-
-		props.options.info = config.info;
-
-		this.setState(props.options);
-	}
-
-	_getClassName() {
-		this.setState({
-			className: this.props.options.className + (!Dialplan.getValueByPath("follow.mailbox.is_on") ? " hidden" : "")
-		});
+	_getClassName(props) {
+		return props.options.name === "mailbox" && (!Dialplan.getValueByPath("follow.mailbox.is_on") ? " hidden" : "");
 	}
 
 	_config(dataName) {
@@ -51,7 +41,7 @@ export default class Follow extends Component {
 
 	render() {
 		return (
-			<li className={this.state.className}>
+			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
 				<label className="m-label radio-block" htmlFor={this.state.name}>
 					<input
 						type="radio"
@@ -66,7 +56,7 @@ export default class Follow extends Component {
 						<div className="l-dialplan-name">{this.state.title}</div>
 						<div className="l-dialplan-info">{this.state.info}</div>
 					</div>
-					{this.state.className && <Link to={this.state.link}/>}
+					{this.state.search && <Link to={this.state.link}/>}
 				</label>
 			</li>
 		);

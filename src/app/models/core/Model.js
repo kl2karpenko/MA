@@ -294,11 +294,12 @@ export default class Model {
 				console.info("response", items[name]);
 				console.groupEnd("save " + resource);
 
+				this._setOriginalValues(this.getModel());
 				options.message && this.messenger.success("Save " + resource);
 			})
 			.error((response) => {
 				return response;
-			})
+			});
 	}
 
 	toJSON() {

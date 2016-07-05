@@ -32,7 +32,7 @@ export default class Contacts extends Component {
 		}
 		
 		Dialplan
-			._followTo("contact", {
+			.saveForFollowTo("contact", {
 				_id: null,
 				name: contactData.title + ` (${contactData.number})`,
 				number: contactData.number,

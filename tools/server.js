@@ -38,7 +38,7 @@ var dialplanFollowDefault = {
 			}
 		}
 	}
-}
+};
 
 var dialplans = [{
 	"_id": "hrththy56y5yh",
@@ -116,7 +116,7 @@ var dialplans = [{
 			}
 		},
 		"mailbox": {
-			"is_on": true,
+			"is_on": false,
 			"selected": false,
 			"value": {
 				"_id": "",
@@ -187,7 +187,7 @@ var dialplans = [{
 			}
 		},
 		"mailbox": {
-			"is_on": true,
+			"is_on": false,
 			"selected": true,
 			"value": {
 				"_id": "",
@@ -754,13 +754,15 @@ app.get('/dialplans/:dialplanId', function (req, res) {
 app.put('/dialplans/:dialplanId', function (req, res) {
 	var activeDialplan = dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)];
 
-	Object.keys(activeDialplan.follow).forEach(function (path) {
-		activeDialplan.follow[path].selected = false;
-	});
+	if (req.body.dialplan.follow) {
+		Object.keys(activeDialplan.follow).forEach(function (path) {
+			activeDialplan.follow[path].selected = false;
+		});
 
-	activeDialplan.follow = _.extend({}, dialplanFollowDefault.follow, req.body.dialplan.follow);
-
-	console.log(JSON.stringify(activeDialplan));
+		activeDialplan.follow = _.extend({}, dialplanFollowDefault.follow, req.body.dialplan.follow);
+	} else if (req.body.dialplan.actions) {
+		activeDialplan.actions = req.body.dialplan.actions;
+	}
 
 	res.send({
 		"dialplan": activeDialplan

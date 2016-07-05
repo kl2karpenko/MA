@@ -29,18 +29,18 @@ export default class Personal extends Component {
 				let contact = Dialplan.getValueByPath('follow.contact');
 
 				if (contact.value.number) {
-					Dialplan._followTo("contact", contact.value);
+					Dialplan.saveForFollowTo("contact", contact.value);
 				} else {
 					hashHistory.push('/contacts');
 				}
 				break;
 			case "mobile":
-				Dialplan._followTo("mobile", {
+				Dialplan.saveForFollowTo("mobile", {
 					number: object.info
 				});
 				break;
 			default:
-				Dialplan._followTo(object.name);
+				Dialplan.saveForFollowTo(object.name);
 				break;
 		}
 

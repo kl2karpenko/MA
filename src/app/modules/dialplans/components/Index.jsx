@@ -11,7 +11,8 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
-			loading: true
+			loading: true,
+			id: props.params.id
 		};
 
 		this._init();
@@ -22,12 +23,10 @@ export default class Index extends Component {
 
 	_config() {
 		let
-			currentIdOfDialplan = (this.props && this.props.params.id) || Dialplan.getValueByPath("_id"),
+			currentIdOfDialplan = this.state.id || Dialplan.getValueByPath("_id"),
 			currentIndex = DialplanList.getIndexOfItemByDefAttrValue(currentIdOfDialplan);
 
 		currentIndex = currentIndex !== -1 ? currentIndex : 0;
-
-		console.log(this.props, this.props && this.props.params);
 
 		DialplanList.updateState({
 			activePage: currentIndex + 1
@@ -50,22 +49,20 @@ export default class Index extends Component {
 	_init() {
 		DialplanList
 			.load()
-			.then(this._config)
+			.then(this._config.bind(this))
 			.then((options) => {
 				DialplanList.updateState({
 					activePage: options.index + 1
 				});
 
-				let id = options.id
-					|| DialplanList.getValueOfDefAttrByIndex( options.index );
+				let id = options.id || DialplanList.getValueOfDefAttrByIndex(options.index);
 
 				if (id === Dialplan.getValueByPath('_id')) {
 					this._goToActiveDialplan();
 				} else {
 					Dialplan
 						.load({
-							id: options.id
-							|| DialplanList.getValueOfDefAttrByIndex( options.index )
+							id: id
 						})
 						.done(this._goToActiveDialplan);
 				}

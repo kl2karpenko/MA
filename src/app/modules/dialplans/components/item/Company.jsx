@@ -26,7 +26,7 @@ export default class Company extends Component {
 				let contact = Dialplan.getValueByPath('follow.contact');
 
 				if (contact.value.number) {
-					Dialplan._followTo("contact", contact.value);
+					Dialplan.saveForFollowTo("contact", contact.value);
 				} else {
 					hashHistory.push('/contacts');
 				}
@@ -35,18 +35,18 @@ export default class Company extends Component {
 				let mailbox = Dialplan.getValueByPath('follow.mailbox');
 
 				if (mailbox.value._id) {
-					Dialplan._followTo("mailbox", mailbox.value);
+					Dialplan.saveForFollowTo("mailbox", mailbox.value);
 				} else {
 					hashHistory.push('/mailboxes');
 				}
 				break;
 			case "mobile":
-				Dialplan._followTo("mobile", {
+				Dialplan.saveForFollowTo("mobile", {
 					number: object.info
 				});
 				break;
 			default:
-				Dialplan._followTo(object.name);
+				Dialplan.saveForFollowTo(object.name);
 				break;
 		}
 
@@ -57,7 +57,7 @@ export default class Company extends Component {
 		object.value.is_on = !object.value.is_on;
 
 		this._updateDialplan();
-		Dialplan._changeFlowControlAction(object.name);
+		Dialplan.saveForFlowControl(object.name);
 	}
 
 	_updateDialplan() {
