@@ -13,13 +13,8 @@ function getMobileNumber() {
 function configContact (data) {
 	let object = {};
 
-	if (isIOS) {
-		object.name = data.name && data.name.formatted;
-		object.number = data.phoneNumbers[0].value;
-	} else {
-		object.name = data.displayName;
-		object.number = data.phoneNumbers[0].normalizedNumber;
-	}
+	object.name = data.name && data.name.formatted;
+	object.number = data.phoneNumbers[0].value;
 
 	return object;
 }
@@ -27,26 +22,26 @@ function configContact (data) {
 function _getContactsFromMobile() {
 	let deferred = $.Deferred();
 
+	$(document).trigger('system:ajaxStart');
+
 	navigator.contacts.find([
 		navigator.contacts.fieldType.displayName,
 		navigator.contacts.fieldType.phoneNumbers,
-		navigator.contacts.fieldType.nickname,
 		navigator.contacts.fieldType.photos,
 		navigator.contacts.fieldType.name
 	], (contactsList) => {
-		console.log(contactsList);
-
 		contactsList = contactsList.filter((contactItem) => {
 			return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactItem : false
 		});
 
 		contactsList = contactsList.map((contactItem) => {
-			return configContact(contactItem)
+			return configContact(contactItem);
 		});
 
 		deferred.resolve({
 			contacts: contactsList
 		});
+		$(document).trigger('system:ajaxComplete');
 	});
 
 	return deferred;

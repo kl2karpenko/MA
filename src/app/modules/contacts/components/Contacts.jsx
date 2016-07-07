@@ -12,7 +12,7 @@ function _configData(data) {
 
 		obj.number = item.number;
 		obj.image = true;
-		obj.title = item.name;
+		obj.name = item.name;
 
 		return obj;
 	});
@@ -34,7 +34,7 @@ export default class Contacts extends Component {
 		Dialplan
 			.saveForFollowTo("contact", {
 				_id: null,
-				name: contactData.title + ` (${contactData.number})`,
+				name: contactData.name + ` (${contactData.number})`,
 				number: contactData.number,
 				type: "mobile_contact"
 			})
@@ -44,6 +44,8 @@ export default class Contacts extends Component {
 	}
 
 	render() {
+		console.log(MobileContacts);
+		
 		return (
 			<ListComponent
 				model={MobileContacts}

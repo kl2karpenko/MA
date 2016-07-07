@@ -13,13 +13,8 @@ class MobileContacts extends List {
 
 	_defaultContactsItem() {
 		return {
-			"displayName": "",
 			"name": "",
-			"phoneNumbers": [
-				{
-					"normalizedNumber": ""
-				}
-			]
+			"number": ""
 		};
 	}
 	

@@ -48,8 +48,6 @@ export default class Follow extends Component {
 	}
 
 	render() {
-		console.log(this);
-
 		return (
 			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
 				<label className="m-label radio-block" htmlFor={this.state.name}>

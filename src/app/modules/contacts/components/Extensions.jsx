@@ -13,7 +13,7 @@ function _configData(data) {
 		obj._id = item._id;
 		obj.number = item.in_number;
 		obj.image = true;
-		obj.title = item.name;
+		obj.name = item.name;
 
 		return obj;
 	});

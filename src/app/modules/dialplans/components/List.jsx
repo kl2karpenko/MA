@@ -14,7 +14,7 @@ function _configData(data) {
 
 		obj.number = item.ex_number || item.in_number;
 		obj.image = true;
-		obj.title = item.title;
+		obj.name = item.title;
 
 		return obj;
 	});

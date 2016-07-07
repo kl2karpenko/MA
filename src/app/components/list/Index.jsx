@@ -15,6 +15,14 @@ export default class Index extends Component {
 		this._load.bind(this)();
 	}
 
+	componentWillReceiveProps(props) {
+		this.setState({
+			model: props.model,
+			list: props.model.getModel(),
+			config: props.configData
+		});
+	}
+
 	_load() {
 		return this.state.model
 			.load()

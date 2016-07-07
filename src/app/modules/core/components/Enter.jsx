@@ -32,8 +32,17 @@ export default class Enter extends Component {
 	}
 
 	_listen() {
-		$(document).ajaxStart(this._changeLoadStateTo.bind(this, true));
-		$(document).ajaxComplete(this._changeLoadStateTo.bind(this, false));
+		$(document).ajaxStart(() => {
+			$(document).trigger('system:ajaxStart');
+			this._changeLoadStateTo.bind(this)(true);
+		});
+		$(document).ajaxComplete(() => {
+			$(document).trigger('system:ajaxComplete');
+			this._changeLoadStateTo.bind(this)(false);
+		});
+
+		$(document).on('system:ajaxStart',this._changeLoadStateTo.bind(this, true));
+		$(document).on('system:ajaxComplete',this._changeLoadStateTo.bind(this, false));
 
 		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true), false);
 		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false), false);

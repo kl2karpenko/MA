@@ -45,9 +45,15 @@ parameters:
 
 paths:
 
-  /extensions:
+  /organization/{organization_id}/extensions:
     get:
       summary: List of all company extensions
+      parameters:
+        - name: organization_id
+          in: path
+          description: identifier of a organization
+          type: string
+          required: true
       tags:
         - list
       responses:
@@ -61,9 +67,15 @@ paths:
                 items:
                   $ref: '#/definitions/Extension'
 
-  /mailboxes:
+  /organization/{organization_id}/mailboxes:
     get:
       summary: List of all company mailboxes
+      parameters:
+        - name: organization_id
+          in: path
+          description: identifier of a organization
+          type: string
+          required: true
       tags:
         - list
       responses:
@@ -77,9 +89,15 @@ paths:
                 items:
                   $ref: '#/definitions/Mailbox'
 
-  /dialplans:
+  /organization/{organization_id}/dialplans:
     get:
       summary: List of all company dialplans
+      parameters:
+        - name: organization_id
+          in: path
+          description: identifier of a organization
+          type: string
+          required: true
       tags:
         - list
       responses:
@@ -94,11 +112,16 @@ paths:
                   $ref: '#/definitions/Dialplan'
 
 
-  /dialplans/{dialplan_id}:
+  /organization/{organization_id}/dialplans/{dialplan_id}:
     get:
       summary: Get certain dialplan
       description: Return data about dialplan
       parameters:
+        - name: organization_id
+          in: path
+          description: identifier of a organization
+          type: string
+          required: true
         - name: dialplan_id
           in: path
           description: identifier of a dialplan
@@ -117,6 +140,11 @@ paths:
       summary: Modify active dialplan
       description: Do actions with active dialplan
       parameters:
+        - name: organization_id
+          in: path
+          description: identifier of a organization
+          type: string
+          required: true
         - name: dialplan_id
           in: path
           description: identifier of a dialplan
@@ -138,36 +166,6 @@ paths:
             properties:
               dialplan:
                 $ref: '#/definitions/Dialplan'
-
-  /settings/pin:
-    get:
-      summary: Settings for user, pin code info
-      responses:
-        200:
-          description: "Returns list of dialplans"
-          schema:
-            type: object
-            $ref: '#/definitions/SettingsPin'
-
-    put:
-      summary: Modify settings for user, pin code info
-      parameters:
-        - name: pin
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              settings:
-                $ref: '#/definitions/SettingsPin'
-      responses:
-        200:
-          description: "OK"
-          schema:
-            type: object
-            properties:
-              settings:
-                $ref: '#/definitions/SettingsPin'
 
 
 definitions:
@@ -197,21 +195,6 @@ definitions:
         type: number
       type:
         type: string
-
-  SettingsPin:
-    type: object
-    properties:
-      pin:
-        type: object
-        properties:
-          is_on:
-            type: boolean
-          active:
-            type: string
-          created:
-            type: string
-          created_copy:
-            type: string
 
   Dialplan:
     type: object
@@ -244,4 +227,49 @@ definitions:
         type: object
         properties:
           original:
-            type: string
+            type: object
+            properties:
+              selected:
+                type: boolean
+          mobile:
+            type: object
+            properties:
+              selected:
+                type: boolean
+              value:
+                type: object
+                properties:
+                  number:
+                    type: string
+          mailbox:
+            type: object
+            properties:
+              is_on:
+                type: boolean
+              selected:
+                type: boolean
+              value:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  number:
+                    type: string
+          contact:
+            type: object
+            properties:
+              selected:
+                type: boolean
+              value:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  number:
+                    type: string
+                  type:
+                    type: string
