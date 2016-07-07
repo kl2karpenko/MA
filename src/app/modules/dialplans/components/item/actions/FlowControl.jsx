@@ -20,7 +20,7 @@ export default class FlowControl extends Component {
 					text={(() => {
 						return (
 							<div className="l-dialplan-text">
-								<div className="l-dialplan-name">{this.state.value.label || "1234*" + this.state.value.short_code}</div>
+								<div className="l-dialplan-name">{this.state.value.label || (this.props.in_number + "*" + this.state.value.short_code)}</div>
 							</div>
 						);
 					})}

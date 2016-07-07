@@ -11,8 +11,10 @@ function _configData(data) {
 		var obj = {};
 
 		obj.number = item.number;
-		obj.image = true;
+		obj.image = item.image;
 		obj.name = item.name;
+
+		console.log(item);
 
 		return obj;
 	});

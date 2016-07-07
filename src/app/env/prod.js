@@ -15,34 +15,42 @@ function configContact (data) {
 
 	object.name = data.name && data.name.formatted;
 	object.number = data.phoneNumbers[0].value;
+	object.image = data.photos && data.photos[0] && data.photos[0].value || true;
 
 	return object;
 }
+
+let contactsFromMobileGlobal = [];
 
 function _getContactsFromMobile() {
 	let deferred = $.Deferred();
 
 	$(document).trigger('system:ajaxStart');
+	console.log(contactsFromMobileGlobal, '_getContactsFromMobile');
 
-	navigator.contacts.find([
-		navigator.contacts.fieldType.displayName,
-		navigator.contacts.fieldType.phoneNumbers,
-		navigator.contacts.fieldType.photos,
-		navigator.contacts.fieldType.name
-	], (contactsList) => {
-		contactsList = contactsList.filter((contactItem) => {
-			return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactItem : false
+	if (contactsFromMobileGlobal.length === 0) {
+		navigator.contacts.find([
+			navigator.contacts.fieldType.displayName,
+			navigator.contacts.fieldType.phoneNumbers,
+			navigator.contacts.fieldType.photos,
+			navigator.contacts.fieldType.name
+		], (contactsList) => {
+			contactsList.forEach((contactItem) => {
+				contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactsFromMobileGlobal.push(configContact(contactItem)) : false;
+			});
+
+			deferred.resolve({
+				contacts: contactsFromMobileGlobal
+			});
+
+			$(document).trigger('system:ajaxComplete');
 		});
-
-		contactsList = contactsList.map((contactItem) => {
-			return configContact(contactItem);
-		});
-
+	} else {
 		deferred.resolve({
-			contacts: contactsList
+			contacts: contactsFromMobileGlobal
 		});
 		$(document).trigger('system:ajaxComplete');
-	});
+	}
 
 	return deferred;
 }

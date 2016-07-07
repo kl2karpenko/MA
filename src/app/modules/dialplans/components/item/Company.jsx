@@ -67,8 +67,6 @@ export default class Company extends Component {
 	}
 
 	render() {
-		console.log(this.state.actions);
-
 		return (
 			<MainScroll>
 				<form action="">
@@ -99,6 +97,7 @@ export default class Company extends Component {
 												index={i}
 												key={i}
 												options={object}
+												in_number={this.state.Dialplan.in_number}
 												onChange={this.onChangeFlowControl.bind(this, object)}
 											/>;
 										})}

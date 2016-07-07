@@ -26,7 +26,7 @@ export default class DialplanListItem extends Component {
 				<div className="m-list-item-wrap clearfix">
 					{(() => {
 						if (this.state.data.image) {
-							return <Image title={this.state.data.name}/>;
+							return <Image title={this.state.data.name} src={this.state.data.image}/>;
 						} else {
 							return <Color color={this.state.data.color}/>;
 						}

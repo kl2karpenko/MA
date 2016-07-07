@@ -102,7 +102,7 @@ var dialplans = [{
 		}],
 		"value": {"short_code": "1"}
 	}],
-	"in_number": "+32 1 456 78 98",
+	"in_number": "2134",
 	"ex_number": 31152026029,
 	"personal": false,
 	"follow": {
@@ -178,7 +178,7 @@ var dialplans = [{
 	"actions": [],
 	"follow": {
 		"original": {
-			"selected": false
+			"selected": true
 		},
 		"mobile": {
 			"selected": false,
@@ -188,7 +188,7 @@ var dialplans = [{
 		},
 		"mailbox": {
 			"is_on": false,
-			"selected": true,
+			"selected": false,
 			"value": {
 				"_id": "",
 				"name": "",
@@ -685,6 +685,7 @@ app.get('/contacts', function (req, res) {
 	res.send({
 		"contacts": [
 			{
+				image: true,
 				displayName: "Lily",
 				name: "Lily",
 				phoneNumbers: [
@@ -694,6 +695,7 @@ app.get('/contacts', function (req, res) {
 				]
 			},
 			{
+				image: true,
 				displayName: "Lily",
 				name: "Lily",
 				phoneNumbers: [

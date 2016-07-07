@@ -32,13 +32,13 @@ export default class Enter extends Component {
 	}
 
 	_listen() {
+
 		$(document).ajaxStart(() => {
 			$(document).trigger('system:ajaxStart');
-			this._changeLoadStateTo.bind(this)(true);
 		});
+
 		$(document).ajaxComplete(() => {
 			$(document).trigger('system:ajaxComplete');
-			this._changeLoadStateTo.bind(this)(false);
 		});
 
 		$(document).on('system:ajaxStart',this._changeLoadStateTo.bind(this, true));
@@ -64,7 +64,7 @@ export default class Enter extends Component {
 	}
 
 	render() {
-		return (<div className="l-adaptive-top">
+		return (<div className={"l-adaptive-top " + process.env.platformName}>
 			{this.props.children}
 
 			<LoadingBlock

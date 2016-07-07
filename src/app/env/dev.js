@@ -13,6 +13,7 @@ function configContact (data) {
 	let object = {};
 
 	object.name = data.displayName;
+	object.image = data.image;
 	object.number = data.phoneNumbers[0].normalizedNumber;
 
 	return object;
