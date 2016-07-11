@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
+import Storage from "models/Storage";
+
 import PersonalActions from "../../models/actions/Personal";
 import Follow from './actions/Follow.jsx';
 
@@ -23,6 +25,19 @@ export default class Personal extends Component {
 		});
 	}
 
+	_getNumber() {
+		let phoneValue = Storage.getValue('phone');
+
+		if (!phoneValue) {
+			if (process.env.platformName === 'ios' || process.env.NODE_ENV === 'dev' ) {
+				phoneValue = prompt("Please enter your phone number");
+				Storage.setValue('phone', phoneValue);
+			}
+		}
+
+		return phoneValue;
+	}
+
 	onChange(object) {
 		switch(object.name) {
 			case "contact":
@@ -36,7 +51,7 @@ export default class Personal extends Component {
 				break;
 			case "mobile":
 				Dialplan.saveForFollowTo("mobile", {
-					number: object.info
+					number: this._getNumber()
 				});
 				break;
 			default:

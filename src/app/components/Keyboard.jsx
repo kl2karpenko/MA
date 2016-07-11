@@ -14,8 +14,6 @@ export class Keyboard extends Component {
 
 	/* call on change props in parent scope */
 	componentWillReceiveProps(props) {
-		console.log(props);
-		
 		this.setState({
 			value: props.value,
 			isValid: props.isValid

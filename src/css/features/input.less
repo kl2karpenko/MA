@@ -26,11 +26,21 @@
     }
 
     &.focus, &:focus {
+      border-bottom-width: 3px;
       border-bottom-color: #736B72;
     }
 
     &.valid {
       border-bottom-color: #736B72;
+    }
+
+    &.error {
+      border-bottom-color: red;
+
+      & + span {
+        color: red;
+        margin-top: 4px;
+      }
     }
   }
 }

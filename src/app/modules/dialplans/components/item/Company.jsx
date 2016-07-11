@@ -9,6 +9,7 @@ import MainScroll from 'components/layouts/main/Scroll.jsx';
 
 import Follow from './actions/Follow.jsx';
 import FlowControl from './actions/FlowControl.jsx';
+import Storage from "models/Storage";
 
 export default class Company extends Component {
 	constructor(props) {
@@ -18,6 +19,19 @@ export default class Company extends Component {
 			Dialplan: Dialplan.getModel(),
 			actions: CompanyActions.getModel()
 		};
+	}
+
+	_getNumber() {
+		let phoneValue = Storage.getValue('phone');
+
+		if (!phoneValue) {
+			if (process.env.platformName === 'ios' || process.env.NODE_ENV === 'dev' ) {
+				phoneValue = prompt("Please enter your phone number");
+				Storage.setValue('phone', phoneValue);
+			}
+		}
+
+		return phoneValue;
 	}
 
 	onChangeDialplanForward(object) {
@@ -42,7 +56,7 @@ export default class Company extends Component {
 				break;
 			case "mobile":
 				Dialplan.saveForFollowTo("mobile", {
-					number: object.info
+					number: this._getNumber()
 				});
 				break;
 			default:

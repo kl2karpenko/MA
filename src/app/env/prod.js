@@ -1,11 +1,19 @@
 import $ from 'jquery';
 import config from "./config";
 
+import Storage from 'models/Storage';
+
 let isIOS = process.env.platformName === 'ios';
 
 function getMobileNumber() {
 	let deferred = $.Deferred();
-	deferred.resolve("094");
+
+	window.plugins.sim && window.plugins.sim.getSimInfo((result) => {
+		Storage.setValue('phone', result.phoneNumber);
+		deferred.resolve(result.phoneNumber);
+	}, (result) => {
+		console.error(result);
+	});
 
 	return deferred;
 }
@@ -45,7 +53,7 @@ function _getContactsFromMobile() {
 		$(document).trigger('system:ajaxComplete');
 	}, () => {
 		deferred.resolve({
-			contacts: false
+			contacts: []
 		});
 
 		$(document).trigger('system:ajaxComplete');
@@ -64,7 +72,7 @@ function getAddressOfHost() {
 // TODO: only for development, delete after deploy
 	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
-	return hostName;
+	return workIPDesktop;
 }
 
 module.exports = $.extend(config, {

@@ -17,6 +17,8 @@
 
     &-content {
       padding: 0 @paddingContent;
+
+      margin-bottom: 20px;
     }
 
     &-center {
@@ -63,8 +65,10 @@
     }
 
     &-settings {
-      .l-main-scroll {
-        padding-bottom: 85%;
+      &.keyboardIsVisible {
+        .l-main-scroll {
+          padding-bottom: 85%;
+        }
       }
     }
   }

@@ -1,10 +1,12 @@
 import $ from 'jquery';
 import config from "./config";
+import Storage from 'models/Storage';
 
 function getMobileNumber() {
 	let deferred = $.Deferred();
 
-	deferred.resolve("+380934032379");
+	// Storage.setValue('phone', "+380934032379");
+	deferred.resolve(null);
 
 	return deferred;
 }

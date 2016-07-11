@@ -8,8 +8,6 @@ module.exports = {
 	path: '/pin',
 	component: Index,
 	onEnter: (nextState, replace) => {
-		Keyboard.addEventHide();
-
 		if (!Storage.getValue("pin")) {
 			replace('/dialplans');
 		}

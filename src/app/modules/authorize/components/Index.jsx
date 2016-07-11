@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
 
-import Storage from 'models/Storage';
-
 import Loader from 'components/layouts/Loader.jsx';
 
 export default class Index extends Component {
@@ -12,10 +10,8 @@ export default class Index extends Component {
 		/**
 		 * delete pin from storage
 		 */
-		Storage.deleteValue('pin');
+		Storage.clear();
 		hashHistory.push('/connects/main');
-
-		console.log(this);
 	}
 
 	render() {

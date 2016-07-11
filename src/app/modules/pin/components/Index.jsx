@@ -49,7 +49,10 @@ export default class Index extends Component {
 	}
 
 	render() {
-		Keyboard.closeKeyBoard();
+		setTimeout(function () {
+			Keyboard.addEventHide();
+			Keyboard.closeKeyBoard();
+		}, 0);
 
 		return (<AdaptiveWrapper>
 			<Adaptive>

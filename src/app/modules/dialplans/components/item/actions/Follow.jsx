@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import Dialplan from "models/Dialplan";
+import Storage from "models/Storage";
 
 export default class Follow extends Component {
 	constructor(props) {
@@ -27,7 +28,9 @@ export default class Follow extends Component {
 	}
 
 	_config(dataName) {
-		let config = {};
+		let
+			config = {},
+			mobileNumber = Storage.getValue('phone');
 
 		switch(dataName) {
 			case "mailbox":
@@ -37,7 +40,7 @@ export default class Follow extends Component {
 				config.info = Dialplan.getValueByPath("follow.contact.value.name") || "Tap to choose a contact";
 				break;
 			case "mobile":
-				config.info = this.props.options.info || Dialplan.getValueByPath("follow.mobile.value.number");
+				config.info = mobileNumber || this.props.options.info || Dialplan.getValueByPath("follow.mobile.value.number");
 				break;
 			case "original":
 				config.info = "";
