@@ -28,6 +28,9 @@
     }
 
     &-buttons {
+      -webkit-transform: translate3d(0px,0px,0px);
+      transform: translate3d(0px,0px,0px);
+
       height: 25%;
       position: relative;
 
@@ -50,6 +53,8 @@
     }
 
     &__key {
+      -webkit-transform: translate3d(0px,0px,0px);
+      transform: translate3d(0px,0px,0px);
       position: absolute;
 
       left: 0;
@@ -91,13 +96,14 @@
 }
 
 .l-keyboard {
+  transform: translate(0, 0);
+
   &.hiden {
-    opacity: 0;
-    height: 0;
+    transform: translate(-100%, -100%);
   }
 
   &-fixed {
-    position: fixed;
+    position: absolute;
     height: 44%;
     left: 0;
     right: 0;

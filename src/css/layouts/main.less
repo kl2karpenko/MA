@@ -4,11 +4,21 @@
     background: #fff;
     position: relative;
     z-index: 1;
+    -webkit-overflow-scrolling: touch;
 
     &-scroll {
       vertical-align: middle;
 
-      -webkit-overflow-scrolling: touch;
+      //position: absolute;
+      //left: 0;
+      //right: 0;
+      //bottom: 0;
+      //top: 0;
+      //z-index: 2;
+
+      //overflow-y: auto;
+      //overflow-x: hidden;
+      //-webkit-overflow-scrolling: touch;
 
       .ios & > * {
         -webkit-transform: translateZ(0px);

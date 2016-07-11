@@ -66,7 +66,7 @@ function _getContactsFromMobile() {
 	return deferred;
 }
 
-let homeIPMac = 'http://192.168.4.186:8030/';
+let homeIPMac = 'http://192.168.2.105:8030/';
 let workIPMac = 'http://10.10.201.49:8030/';
 let workIPDesktop = 'http://10.10.200.28:8030/';
 
@@ -76,7 +76,7 @@ function getAddressOfHost() {
 // TODO: only for development, delete after deploy
 	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
-	return workIPDesktop;
+	return homeIPMac;
 }
 
 module.exports = $.extend(config, {
