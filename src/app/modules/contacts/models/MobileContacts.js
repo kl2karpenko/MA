@@ -20,7 +20,11 @@ class MobileContacts extends List {
 	
 	load() {
 		return config.mobileContacts().done((data) => {
-			this.assignAttributes(data.contacts);
+			let type = Array.isArray(data.contacts);
+
+			console.log(type, data.contacts);
+
+			type && this.assignAttributes(data.contacts);
 		});
 	}
 }

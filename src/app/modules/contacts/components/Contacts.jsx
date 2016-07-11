@@ -7,14 +7,12 @@ import ListComponent from "components/list/Index.jsx";
 import Dialplan from "models/Dialplan";
 
 function _configData(data) {	
-	return data.map((item) => {
+	return data && data.map((item) => {
 		var obj = {};
 
 		obj.number = item.number;
 		obj.image = item.image;
 		obj.name = item.name;
-
-		console.log(item);
 
 		return obj;
 	});
@@ -46,8 +44,6 @@ export default class Contacts extends Component {
 	}
 
 	render() {
-		console.log(MobileContacts);
-		
 		return (
 			<ListComponent
 				model={MobileContacts}
@@ -55,6 +51,7 @@ export default class Contacts extends Component {
 				onClick={this._setActiveContact}
 				configData={_configData}
 				withImg={true}
+				onError={"No permission to your contact list"}
 			/>
 		);
 	}

@@ -21,9 +21,11 @@ function configContact (data) {
 
 function _getContactsFromMobile() {
 	return $.get("/contacts", (contactsData) => {
-		contactsData.contacts = contactsData.contacts.map((contactItem) => {
-			return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? configContact(contactItem) : false
-		});
+		if (Array.isArray(contactsData.contacts)) {
+			contactsData.contacts = contactsData.contacts.map((contactItem) => {
+				return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? configContact(contactItem) : false
+			});
+		}
 		return contactsData;
 	})
 }

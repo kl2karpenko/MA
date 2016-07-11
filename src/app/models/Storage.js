@@ -11,6 +11,10 @@ export default class Storage {
 		return this.storage.getItem(name);
 	}
 
+	existValue(name) {
+		return !!this.storage.getItem(name);
+	}
+
 	deleteValue(name) {
 		this.storage.removeItem(name);
 	}

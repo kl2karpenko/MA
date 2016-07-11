@@ -35,18 +35,28 @@ export default class Index extends Component {
 	}
 
 	render() {
+		let lengthOfContacts = this.state.list.length;
+
+		console.log(this.state.list, 'this.state.list');
+
 		return (
 			<div className={"m-list" + (this.props.listClass ? " " + this.props.listClass : "") + (this.props.withImg ? " m-list-withImg" : " m-list-withColor")}>
-				{this.state.list.map((object, i) => {
-					return <Item
-						data={object}
-						model={this.state.model}
-						key={i}
-						onClick={this.props.onClick.bind(this, i, object)}
-					  index={i}
-					/>;
-				})}
+				{(() => {
+					if (lengthOfContacts) {
+							return (this.state.list.map((object, i) => {
+								return <Item
+									data={object}
+									model={this.state.model}
+									key={i}
+									onClick={this.props.onClick.bind(this, i, object)}
+									index={i}
+									/>
+							}));
+					} else {
+						return <div className="permission-denied">No permission to your contact list</div>
+					}
+				})()}
 			</div>
-		);
+		)
 	}
 }

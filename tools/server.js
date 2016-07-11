@@ -683,28 +683,8 @@ app.get('/extensions', function (req, res) {
  */
 app.get('/contacts', function (req, res) {
 	res.send({
-		"contacts": [
-			{
-				image: true,
-				displayName: "Lily",
-				name: "Lily",
-				phoneNumbers: [
-					{
-						normalizedNumber: "+380504144151"
-					}
-				]
-			},
-			{
-				image: true,
-				displayName: "Lily",
-				name: "Lily",
-				phoneNumbers: [
-					{
-						normalizedNumber: "+380934032379"
-					}
-				]
-			}
-		]});
+		"contacts": false
+	});
 });
 
 /**

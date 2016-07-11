@@ -25,8 +25,8 @@ export default class Index extends Component {
 		this.state = {
 			element: $('input[name=active]').get(0),
 			pin: {
-				is_on: !!Storage.getValue('pin'),
-				active: !Storage.getValue('pin') ? defaultPIN : "",
+				is_on: Storage.existValue('pin'),
+				active: Storage.getValue('pin') ? "" : false,
 				created: "",
 				created_copy: ""
 			},
@@ -35,10 +35,10 @@ export default class Index extends Component {
 			value: ""
 		};
 
-		PinSettings.updateAttributesFor("pin.active", !Storage.getValue('pin') ? defaultPIN : "");
-		PinSettings.updateAttributesFor("pin.is_on", !!Storage.getValue('pin'));
+		PinSettings.updateAttributesFor("pin.active", Storage.getValue('pin') ? "" : false);
+		PinSettings.updateAttributesFor("pin.is_on", Storage.existValue('pin'));
 
-		this.modelNames = [ "active", "created" , "created_copy"];
+		this.modelNames = ["active", "created", "created_copy"];
 
 		this.onChange = this.onChange.bind(this);
 		this.onFocus = this.onFocus.bind(this);
@@ -53,8 +53,10 @@ export default class Index extends Component {
 
 		this.setState({
 			pin: pinModel,
-			isValid: PinSettings._checkIsValid() && pinModel.is_on
+			isValid: PinSettings._checkIsValid()
 		});
+
+		return this;
 	}
 
 	onFocus(e) {
@@ -86,15 +88,15 @@ export default class Index extends Component {
 	}
 
 	_toggleUsingPin(e) {
-		PinSettings.updateAttributesFor("pin.is_on", e.target.checked);
+		let isPinOn = e.target.checked;
+
+		PinSettings.updateAttributesFor("pin.is_on", isPinOn);
+
+		if (!isPinOn) {
+			this._save();
+		}
 
 		this._updatePinSettings();
-
-		if (!e.target.checked) {
-			this.setState({
-				isValid: true
-			});
-		}
 	}
 
 	_save() {
@@ -103,16 +105,17 @@ export default class Index extends Component {
 		return Pin
 				.save()
 				.then(() => {
-					let pinModel = PinSettings.getModel().pin;
-
-					this.setState({
-						pin: pinModel
-					});
+					this._resetPinValues();
+					this._updatePinSettings();
 				});
 	}
 
-	_leave() {
+	_resetPinValues() {
 		PinSettings.assignAttributes(PinSettings._getDefaultAttributes());
+	}
+
+	_leave() {
+		this._resetPinValues();
 
 		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
@@ -155,7 +158,7 @@ export default class Index extends Component {
 
 					<div className={"l-settings l-main-content" + (!this.state.pin.is_on ? " disabled" : "")}>
 						<form action="" name="pinChange">
-							<div className="l-settings-group">
+							<div className={"l-settings-group" + (!Storage.existValue('pin') ? " hidden" : "")}>
 								<input
 									type="number"
 									autoFocus="true"

@@ -36,8 +36,12 @@ class PinSettings extends Model {
 			modelCopy = [];
 
 		if (model.pin.is_on) {
+			let hadPrevValue = Storage.existValue('pin');
+
+			console.log(hadPrevValue);
+
 			if (model.pin.created === model.pin.created_copy) {
-				modelCopy.push(model.pin.active);
+				hadPrevValue && modelCopy.push(model.pin.active);
 				modelCopy.push(model.pin.created);
 				modelCopy.push(model.pin.created_copy);
 
@@ -56,7 +60,7 @@ class PinSettings extends Model {
 	_defaultSettings() {
 		return {
 			"pin": {
-				is_on: !!Storage.getValue('pin'),
+				is_on: Storage.existValue('pin'),
 				active: "",
 				created: "",
 				created_copy: ""

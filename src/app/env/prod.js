@@ -28,29 +28,28 @@ function _getContactsFromMobile() {
 	$(document).trigger('system:ajaxStart');
 	console.log(contactsFromMobileGlobal, '_getContactsFromMobile');
 
-	if (contactsFromMobileGlobal.length === 0) {
-		navigator.contacts.find([
-			navigator.contacts.fieldType.displayName,
-			navigator.contacts.fieldType.phoneNumbers,
-			navigator.contacts.fieldType.photos,
-			navigator.contacts.fieldType.name
-		], (contactsList) => {
-			contactsList.forEach((contactItem) => {
-				contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactsFromMobileGlobal.push(configContact(contactItem)) : false;
-			});
-
-			deferred.resolve({
-				contacts: contactsFromMobileGlobal
-			});
-
-			$(document).trigger('system:ajaxComplete');
+	navigator.contacts.find([
+		navigator.contacts.fieldType.displayName,
+		navigator.contacts.fieldType.phoneNumbers,
+		navigator.contacts.fieldType.photos,
+		navigator.contacts.fieldType.name
+	], (contactsList) => {
+		contactsList.forEach((contactItem) => {
+			contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactsFromMobileGlobal.push(configContact(contactItem)) : false;
 		});
-	} else {
+
 		deferred.resolve({
 			contacts: contactsFromMobileGlobal
 		});
+
 		$(document).trigger('system:ajaxComplete');
-	}
+	}, () => {
+		deferred.resolve({
+			contacts: false
+		});
+
+		$(document).trigger('system:ajaxComplete');
+	});
 
 	return deferred;
 }
@@ -65,7 +64,7 @@ function getAddressOfHost() {
 // TODO: only for development, delete after deploy
 	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
-	return hostName;
+	return workIPMac;
 }
 
 module.exports = $.extend(config, {

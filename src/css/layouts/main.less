@@ -7,6 +7,12 @@
 
     &-scroll {
       vertical-align: middle;
+
+      -webkit-overflow-scrolling: touch;
+
+      .ios & > * {
+        -webkit-transform: translateZ(0px);
+      }
     }
 
     &-content {
