@@ -58,12 +58,12 @@ export default class Index extends Component {
 			<Adaptive>
 				<PinForm
 					options={{
-							form: 'pinCheck',
-							text: "Enter the code",
-							inputType: "password",
-							onSubmit: this._save,
-							model: this.state.model
-						}}
+						form: 'pinCheck',
+						text: "Enter the code",
+						inputType: "password",
+						onSubmit: this._save,
+						model: this.state.model
+					}}
 				/>
 			</Adaptive>
 		</AdaptiveWrapper>);

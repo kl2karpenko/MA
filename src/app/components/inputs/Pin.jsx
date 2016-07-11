@@ -40,6 +40,10 @@ export default class Pin extends Component {
 			inputValue = inputValue.target.value;
 		}
 
+		if (!inputValue.match(/^\d+$/)) {
+			return;
+		}
+
 		this.state.model.value = inputValue;
 
 		this.setState({
