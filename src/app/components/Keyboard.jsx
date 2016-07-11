@@ -7,8 +7,9 @@ export class Keyboard extends Component {
 		super(props);
 
 		this.state = {
-			value: this.props.value,
-			isValid: this.props.isValid
+			value: props.value,
+			isValid: props.isValid,
+			element: props.element
 		};
 	}
 
@@ -16,7 +17,8 @@ export class Keyboard extends Component {
 	componentWillReceiveProps(props) {
 		this.setState({
 			value: props.value,
-			isValid: props.isValid
+			isValid: props.isValid,
+			element: props.element
 		});
 	}
 
@@ -72,6 +74,7 @@ export class Keyboard extends Component {
 
 	static addEventHide() {
 		document.addEventListener("showkeyboard", function(){
+			console.log('show');
 			Keyboard.closeKeyBoard();
 		}, false);
 	}

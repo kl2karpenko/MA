@@ -31,7 +31,7 @@ export default class Personal extends Component {
 		if (!phoneValue) {
 			if (process.env.platformName === 'ios' || process.env.NODE_ENV === 'dev' ) {
 				phoneValue = prompt("Please enter your phone number");
-				Storage.setValue('phone', phoneValue);
+				phoneValue && Storage.setValue('phone', phoneValue);
 			}
 		}
 
@@ -45,21 +45,28 @@ export default class Personal extends Component {
 
 				if (contact.value.number) {
 					Dialplan.saveForFollowTo("contact", contact.value);
+					this._updateDialplan();
 				} else {
 					hashHistory.push('/contacts');
 				}
 				break;
 			case "mobile":
-				Dialplan.saveForFollowTo("mobile", {
-					number: this._getNumber()
-				});
+				let number = this._getNumber();
+
+				console.log('set for number', number);
+
+				if (number) {
+					Dialplan.saveForFollowTo("mobile", {
+						number: number
+					});
+					this._updateDialplan();
+				}
 				break;
 			default:
 				Dialplan.saveForFollowTo(object.name);
+				this._updateDialplan();
 				break;
 		}
-
-		this._updateDialplan();
 	}
 
 	_updateDialplan() {

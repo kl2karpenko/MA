@@ -40,7 +40,7 @@ export default class Follow extends Component {
 				config.info = Dialplan.getValueByPath("follow.contact.value.name") || "Tap to choose a contact";
 				break;
 			case "mobile":
-				config.info = mobileNumber || this.props.options.info || Dialplan.getValueByPath("follow.mobile.value.number");
+				config.info = mobileNumber;
 				break;
 			case "original":
 				config.info = "";

@@ -5,7 +5,6 @@ import Storage from 'models/Storage';
 function getMobileNumber() {
 	let deferred = $.Deferred();
 
-	// Storage.setValue('phone', "+380934032379");
 	deferred.resolve(null);
 
 	return deferred;

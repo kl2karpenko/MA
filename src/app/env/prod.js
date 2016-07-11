@@ -8,12 +8,16 @@ let isIOS = process.env.platformName === 'ios';
 function getMobileNumber() {
 	let deferred = $.Deferred();
 
-	window.plugins.sim && window.plugins.sim.getSimInfo((result) => {
-		Storage.setValue('phone', result.phoneNumber);
-		deferred.resolve(result.phoneNumber);
-	}, (result) => {
-		console.error(result);
-	});
+	if (!isIOS) {
+		window.plugins.sim.getSimInfo((result) => {
+			Storage.setValue('phone', result.phoneNumber);
+			deferred.resolve(result.phoneNumber);
+		}, (result) => {
+			console.error(result);
+		});
+	} else {
+		deferred.resolve(null);
+	}
 
 	return deferred;
 }
