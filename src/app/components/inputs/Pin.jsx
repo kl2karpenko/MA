@@ -37,11 +37,12 @@ export default class Pin extends Component {
 			validPinLength = 5;
 
 		if (inputValue.target) {
-			inputValue = inputValue.target.value;
-		}
 
-		if (!inputValue.match(/^\d+$/)) {
-			return;
+			if (!inputValue.target.value.match(/^\d+$/)) {
+				inputValue.target.value = inputValue.target.value.slice(0, -1);
+			}
+
+			inputValue = inputValue.target.value;
 		}
 
 		this.state.model.value = inputValue;
@@ -74,7 +75,7 @@ export default class Pin extends Component {
 							<div className="col-xs-15 l-pin__space">
 								<div className="l-pin__form">
 									<input
-										type="text"
+										type="number"
 										autoFocus="true"
 										type={this.props.inputType}
 										name="pin"
