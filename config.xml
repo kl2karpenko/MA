@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- com.kwebbl.androidapp || kwebblMobileApp -->
-<widget id="com.kwebbl.androidapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
+<widget id="kwebbl" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>mobileApp</name>
+    <name>Kwebbl</name>
     <description>
         Kwebbl mobile app for company/users changing dialplans state
     </description>
@@ -50,6 +50,7 @@
 
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen"/>
+        <param name="ios-package" value="CDVSplashScreen" />
         <param name="onload" value="true"/>
     </feature>
 

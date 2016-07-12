@@ -62,6 +62,10 @@ export default class Item extends Component {
 		this._loadDialplan();
 	}
 
+	static _goToSettings() {
+		hashHistory.push("/settings");
+	}
+
 	render() {
 		return (
 		<AdaptiveWrapper>
@@ -69,9 +73,14 @@ export default class Item extends Component {
 				<div className="m-angle-content">
 
 					<AngleTop title="Call Routing">
-						<Link className="m-angle-settings" to="/settings">
+						<Tappable
+							pressDelay={500}
+							component="button"
+							className="m-angle-settings"
+							onTap={Item._goToSettings}
+							>
 							<img src={imageLoader(require("images/icons/nav-list.png"))} alt="Qr background"/>
-						</Link>
+						</Tappable>
 					</AngleTop>
 
 					<AngleInfo>
@@ -88,7 +97,7 @@ export default class Item extends Component {
 						previous={this.state.previous}
 						next={this.state.next}
 						onClick={this._renderDialplan}
-						/>
+					/>
 				</div>
 
 				<Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
