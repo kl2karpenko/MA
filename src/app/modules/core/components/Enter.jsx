@@ -64,7 +64,7 @@ export default class Enter extends Component {
 	}
 
 	render() {
-		return (<div className={"l-adaptive-top " + process.env.platformName}>
+		return (<div className={"l-adaptive-top" + (process.env.platformName ? (" " + process.env.platformName) : "")}>
 			{this.props.children}
 
 			<LoadingBlock
