@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { hashHistory } from 'react-router';
 import Tappable from 'react-tappable';
 
 import Dialplan from "models/Dialplan";
@@ -14,6 +14,8 @@ export default class Follow extends Component {
 		props.options.info = config.info;
 
 		this.state = props.options;
+
+		this._goToList = this._goToList.bind(this);
 	}
 
 	componentWillReceiveProps(props) {
@@ -51,6 +53,10 @@ export default class Follow extends Component {
 		return config;
 	}
 
+	_goToList() {
+		hashHistory.push(this.state.link);
+	}
+
 	render() {
 		return (
 			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
@@ -73,7 +79,11 @@ export default class Follow extends Component {
 						<div className="l-dialplan-name">{this.state.title}</div>
 						<div className="l-dialplan-info">{this.state.info}</div>
 					</div>
-					{this.state.search && <Link to={this.state.link}/>}
+					{this.state.search && <Tappable
+						component="button"
+						pressDelay={500}
+						onTap={this._goToList}
+						stopPropagation={true}/>}
 				</Tappable>
 			</li>
 		);
