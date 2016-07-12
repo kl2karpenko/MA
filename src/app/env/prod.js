@@ -74,7 +74,7 @@ function getAddressOfHost() {
 // TODO: only for development, delete after deploy
 	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
-	return hostName;
+	return workIPMac;
 }
 
 module.exports = $.extend(config, {
