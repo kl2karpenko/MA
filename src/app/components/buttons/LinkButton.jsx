@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
+
+import Tappable from 'react-tappable';
 
 export default class LinkButton extends Component {
 	constructor(props) {
@@ -13,12 +15,14 @@ export default class LinkButton extends Component {
 	}
 
 	render() {
-		return (
-			<button
-			      className={this.props.className}
-			      onTouchStart={this._goto}>
-				{this.props.text}
-			</button>
+		return (<Tappable
+				component="button"
+			pressDelay={500}
+			className={this.props.className}
+			onTap={this._goto}
+		>
+			{this.props.text}
+		</Tappable>
 		);
 	}
 }

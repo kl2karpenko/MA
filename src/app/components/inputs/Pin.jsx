@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import Tappable from 'react-tappable';
 
 export default class Pin extends Component {
 	constructor(props) {
@@ -74,14 +75,16 @@ export default class Pin extends Component {
 						<div className="row" name="pin" method="POST">
 							<div className="col-xs-15 l-pin__space">
 								<div className="l-pin__form">
-									<input
+									<Tappable
+										component="input"
+										pressDelay={500}
 										type="number"
 										autoFocus="true"
 										type={this.props.inputType}
 										name="pin"
 										required
 										value={this.state.model.value}
-										onTouchStart={this.onFocus}
+										onTap={this.onFocus}
 										onChange={this.onChange}
 										className="l-pin__input"
 										maxLength="5"

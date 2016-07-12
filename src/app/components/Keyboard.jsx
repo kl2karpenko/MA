@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tappable from 'react-tappable';
 
 import imageLoader from 'imageLoader';
 
@@ -91,24 +92,47 @@ export class Keyboard extends Component {
 				<div className="m-keyboard-digits">
 					{[...Array(9)].map((x, i) =>
 						<div className="col-xs-5 m-keyboard-digit" key={i}>
-							<button className="m-keyboard__key" data-val={i+1} onTouchStart={this._setValues.bind(this, i+1)}>{i + 1}</button>
+							<Tappable
+								pressDelay={0}
+								component="button"
+								className="m-keyboard__key"
+								data-val={i+1}
+								onTap={this._setValues.bind(this, i+1)}
+							>{i + 1}</Tappable>
 						</div>
 					)}
 				</div>
 				<div className="m-keyboard-buttons">
 					<div className="col-xs-5 m-keyboard-digit">
-						<button className="m-keyboard__key buttons" onTouchStart={this._deleteValue.bind(this)}>
+						<Tappable
+							pressDelay={0}
+							component="button"
+							className="m-keyboard__key buttons"
+							onTap={this._deleteValue.bind(this)}
+						>
 							<img className="img-responsive" src={imageLoader(require("images/icons/delete.jpg"))} alt="Delete"/>
-						</button>
+						</Tappable>
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
-						<button className="m-keyboard__key" data-val="0" onTouchStart={this._setValues.bind(this, 0)}>0</button>
+						<Tappable
+							pressDelay={0}
+							component="button"
+							className="m-keyboard__key"
+							data-val="0"
+							onTap={this._setValues.bind(this, 0)}
+						>
+							0
+						</Tappable>
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
 						<div className="m-keyboard__key buttons">
-							<button className="btn btn-round btn-sm btn-check"
-							        disabled={!this.state.isValid}
-							        onTouchStart={this.props.onSubmit}></button>
+							<Tappable
+								pressDelay={0}
+								component="button"
+								className="btn btn-round btn-sm btn-check"
+								disabled={!this.state.isValid}
+								onTap={this.props.onSubmit}
+							/>
 						</div>
 					</div>
 				</div>
