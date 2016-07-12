@@ -91,24 +91,24 @@ export class Keyboard extends Component {
 				<div className="m-keyboard-digits">
 					{[...Array(9)].map((x, i) =>
 						<div className="col-xs-5 m-keyboard-digit" key={i}>
-							<button className="m-keyboard__key" data-val={i+1} onClick={this._setValues.bind(this, i+1)}>{i + 1}</button>
+							<button className="m-keyboard__key" data-val={i+1} onTouchStart={this._setValues.bind(this, i+1)}>{i + 1}</button>
 						</div>
 					)}
 				</div>
 				<div className="m-keyboard-buttons">
 					<div className="col-xs-5 m-keyboard-digit">
-						<button className="m-keyboard__key buttons" onClick={this._deleteValue.bind(this)}>
+						<button className="m-keyboard__key buttons" onTouchStart={this._deleteValue.bind(this)}>
 							<img className="img-responsive" src={imageLoader(require("images/icons/delete.jpg"))} alt="Delete"/>
 						</button>
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
-						<button className="m-keyboard__key" data-val="0" onClick={this._setValues.bind(this, 0)}>0</button>
+						<button className="m-keyboard__key" data-val="0" onTouchStart={this._setValues.bind(this, 0)}>0</button>
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
 						<div className="m-keyboard__key buttons">
 							<button className="btn btn-round btn-sm btn-check"
 							        disabled={!this.state.isValid}
-							        onClick={this.props.onSubmit}></button>
+							        onTouchStart={this.props.onSubmit}></button>
 						</div>
 					</div>
 				</div>

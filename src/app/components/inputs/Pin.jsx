@@ -81,7 +81,7 @@ export default class Pin extends Component {
 										name="pin"
 										required
 										value={this.state.model.value}
-										onFocus={this.onFocus}
+										onTouchStart={this.onFocus}
 										onChange={this.onChange}
 										className="l-pin__input"
 										maxLength="5"

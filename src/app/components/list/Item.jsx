@@ -22,7 +22,7 @@ export default class DialplanListItem extends Component {
 
 	render() {
 		return (
-			<div className="m-list-item clearfix" onClick={this.props.onClick}>
+			<div className="m-list-item clearfix" onTouchStart={this.props.onClick}>
 				<div className="m-list-item-wrap clearfix">
 					{(() => {
 						if (this.state.data.image) {

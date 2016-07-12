@@ -27,7 +27,11 @@ export default class Keyboard extends Component {
 		return (<div className={"fail" + (this.state.fail ? " visible" : "") + (this.state.isOffline ? " offline visible" : "")}>
 				<div className="fail-block">
 					<div>{this._getText()}</div>
-					<a href="#" onClick={this.props.onFail} className={"btn btn-danger btn-lg" + (this.state.isOffline  ? " hidden" : "")} style={{marginTop: "15px"}}>Reload</a>
+					<a
+						href="#"
+						onTouchStart={this.props.onFail}
+					  className={"btn btn-danger btn-lg" + (this.state.isOffline  ? " hidden" : "")}
+					  style={{marginTop: "15px"}}>Reload</a>
 				</div>
 			</div>
 		);

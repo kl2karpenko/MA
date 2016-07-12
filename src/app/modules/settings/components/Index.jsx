@@ -168,6 +168,10 @@ export default class Index extends Component {
 		}
 	}
 
+	_disconnect() {
+		hashHistory.push('/authorize');
+	}
+
 	render() {
 		return (
 			<AdaptiveWrapper class="l-adaptive-sm">
@@ -180,7 +184,7 @@ export default class Index extends Component {
 						</div>
 					</div>
 
-					<button className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" onClick={Index._leave}>
+					<button className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" onTouchStart={Index._leave}>
 						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
 					</button>
 				</Angle>
@@ -221,7 +225,7 @@ export default class Index extends Component {
 					</div>
 
 					<div className="l-main-content">
-						<Link className="btn btn-block btn-block-lg btn-disconnect" to="/authorize">Disconnect app</Link>
+						<button className="btn btn-block btn-block-lg btn-disconnect" onTouchStart={this._disconnect}>Disconnect app</button>
 					</div>
 				</MainScroll>
 			</AdaptiveFixed>

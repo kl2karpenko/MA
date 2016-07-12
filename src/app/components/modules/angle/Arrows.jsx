@@ -21,10 +21,10 @@ export default class Angle extends Component {
 	render() {
 		return (
 			<div className="m-angle__arrows">
-				<button className={"m-angle-arrow __left" + this.state.previous} onClick={this.props.onClick}>
+				<button className={"m-angle-arrow __left" + this.state.previous} onTouchStart={this.props.onClick}>
 					<img className="img-responsive previous" src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
 				</button>
-				<button className={"m-angle-arrow __right" + this.state.next} onClick={this.props.onClick}>
+				<button className={"m-angle-arrow __right" + this.state.next} onTouchStart={this.props.onClick}>
 					<img className="img-responsive next" src={imageLoader(require("images/icons/arrow-right.png"))} alt="Left"/>
 				</button>
 			</div>

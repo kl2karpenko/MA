@@ -86,7 +86,7 @@ export default class Item extends Component {
 
 					<AngleArrows
 						previous={this.state.previous}
-						next={this.state.next}
+						next={this.state.next}>
 						onClick={this._renderDialplan}
 						/>
 				</div>

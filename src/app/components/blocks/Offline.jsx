@@ -8,7 +8,7 @@ export default class Keyboard extends Component {
 	render() {
 		return (<div className="fail-block">
 				<div>Server is unavailable, please try again later =(</div>
-				<a href="#" onClick={this.props.onClick} className="btn btn-danger btn-lg" style={{marginTop: "15px"}}>Reload</a>
+				<a href="#" onTouchStart={this.props.onClick} className="btn btn-danger btn-lg" style={{marginTop: "15px"}}>Reload</a>
 			</div>
 		);
 	}

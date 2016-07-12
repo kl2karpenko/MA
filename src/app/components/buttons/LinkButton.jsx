@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 
 export default class LinkButton extends Component {
 	constructor(props) {
 		super(props);
+
+		this._goto = this._goto.bind(this);
+	}
+
+	_goto() {
+		hashHistory.push(this.props.href);
 	}
 
 	render() {
 		return (
-			<Link
-				activeClassName={this.props.activeClassName}
+			<button
 			      className={this.props.className}
-			      to={this.props.href}>
+			      onTouchStart={this._goto}>
 				{this.props.text}
-			</Link>
+			</button>
 		);
 	}
 }
