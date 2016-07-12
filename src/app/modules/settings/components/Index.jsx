@@ -111,9 +111,8 @@ export default class Index extends Component {
 	_checkIsValid() {
 		let
 			model = this.pin,
-			modelCopy = [];
-
-		let hadPrevValue = Storage.existValue('pin');
+			modelCopy = [],
+			hadPrevValue = Storage.existValue('pin');
 
 		if (model.created === model.created_copy) {
 			if (hadPrevValue) {
@@ -137,7 +136,7 @@ export default class Index extends Component {
 		return true;
 	}
 
-	onFocus(index, e) {
+	onTouch(index, e) {
 		setTimeout(function () {
 			Keyboard.closeKeyBoard();
 		}, 0);
@@ -190,7 +189,7 @@ export default class Index extends Component {
 				<MainScroll class={"l-main-settings" + (this.state.keyboardIsVisible ? " keyboardIsVisible" : "")}>
 					<PinForm
 						pin={this.pin}
-						onFocus={this.onFocus}
+						onTouch={this.onTouch}
 						parentScope={this}
 					/>
 					
@@ -206,12 +205,12 @@ export default class Index extends Component {
 								type="tel"
 								className={"input-custom" + (this.pin.classFocus[3] ? " focus" : "")}
 								placeholder="Please enter your telephone number"
-								onFocus={this.onFocus.bind(this, 3)}
+								onTouchStart={this.onTouch.bind(this, 3)}
 								onChange={function() {}}
 								name="phone"
 								value={this.state.phoneNumber}
 								defaultValue={this.state.phoneNumber}
-								/>
+							/>
 						</div>
 					</div>
 

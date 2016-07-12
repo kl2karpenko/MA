@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import config from "./config";
-import Storage from 'models/Storage';
 
 function getMobileNumber() {
 	let deferred = $.Deferred();
@@ -31,8 +30,15 @@ function _getContactsFromMobile() {
 	})
 }
 
+function getAddressOfHost() {
+// TODO: only for development, delete after deploy
+	let hostName =  "/";
+
+	return hostName;
+}
+
 module.exports = $.extend(config, {
-	hostname: "/",
+	hostname: getAddressOfHost(),
 	mobileContacts: _getContactsFromMobile,
 	mobileSIMNumber: getMobileNumber
 });

@@ -34,18 +34,18 @@ export default class PinForm extends Component {
 		});
 	}
 
-	onFocus(index, e) {
+	onTouch(index, e) {
 		Keyboard.closeKeyBoard(e);
 
 		this.setState({
 			keyboardIsVisible: true
 		});
 
-		return this.props.onFocus.call(this.state.parent, index, e);
+		return this.props.onTouch.call(this.state.parent, index, e);
 	}
 
-	_toggleUsingPin(e) {
-		let isPinOn = e.target.checked;
+	_toggleUsingPin() {
+		let isPinOn = !this.state.is_on;
 
 		this.setState({
 			is_on: isPinOn
@@ -70,9 +70,9 @@ export default class PinForm extends Component {
 						name="pin.is_on"
 						id="pin.is_on"
 						checked={this.state.is_on}
-						onChange={this._toggleUsingPin}
+						onChange={function() {}}
 					/>
-					<div className="checkbox-button pull-right"></div>
+					<div className="checkbox-button pull-right" onTouchStart={this._toggleUsingPin}></div>
 				</label>
 			</div>
 
@@ -81,7 +81,7 @@ export default class PinForm extends Component {
 					<div className={"l-settings-group" + (Storage.existValue('pin') ? "" : " hidden")}>
 						<input
 							type="number"
-							onFocus={this.onFocus.bind(this, 0)}
+							onTouchStart={this.onTouch.bind(this, 0)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[0] ? " focus" : "") + (this.state.messages.active.show ? " error" : "")}
 							placeholder="Enter current"
@@ -93,7 +93,7 @@ export default class PinForm extends Component {
 					<div className="l-settings-group">
 						<input
 							type="number"
-							onFocus={this.onFocus.bind(this, 1)}
+							onTouchStart={this.onTouch.bind(this, 1)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[1] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
 							placeholder="Enter new pincode"
@@ -105,7 +105,7 @@ export default class PinForm extends Component {
 					<div className="l-settings-group">
 						<input
 							type="number"
-							onFocus={this.onFocus.bind(this, 2)}
+							onTouchStart={this.onTouch.bind(this, 2)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[2] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
 							placeholder="Reenter new pincode"
