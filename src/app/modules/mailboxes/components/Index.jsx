@@ -56,14 +56,13 @@ export default class Index extends Component {
 
 	render() {
 		return (
-			<AdaptiveWrapper>
-				<AdaptiveFixed class="l-adaptive-sm l-mailbox">
-					<Angle header={false}>
-						<div className="m-angle-content">
-							<AngleTop title="Forward to:"/>
-						</div>
-					</Angle>
-
+			<AdaptiveWrapper class="l-adaptive-sm">
+				<Angle header={false}>
+					<div className="m-angle-content">
+						<AngleTop title="Forward to:"/>
+					</div>
+				</Angle>
+				<AdaptiveFixed class="l-mailbox">
 					<MainScroll>
 						<ListComponent
 							model={MailboxesList}

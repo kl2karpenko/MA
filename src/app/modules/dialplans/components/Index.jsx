@@ -4,8 +4,6 @@ import { hashHistory } from 'react-router';
 import Dialplan from "models/Dialplan";
 import DialplanList from "../models/DialplanList";
 
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
-
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
@@ -70,10 +68,6 @@ export default class Index extends Component {
 	}
 
 	render() {
-		return (
-			<AdaptiveWrapper>
-				{!this.state.loading && this.props.children}
-			</AdaptiveWrapper>
-		);
+		return !this.state.loading && this.props.children;
 	}
 }

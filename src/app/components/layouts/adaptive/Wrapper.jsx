@@ -7,7 +7,7 @@ export default class AdaptiveWrapper extends Component {
 
 	render() {
 		return (
-			<div className="l-adaptive-wrapper">
+			<div className={"l-adaptive-wrapper" + (this.props.class ? " " + this.props.class : "")}>
 				{this.props.children}
 			</div>
 		);

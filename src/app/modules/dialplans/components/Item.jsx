@@ -10,6 +10,7 @@ import Personal from './item/Personal.jsx';
 import Company from './item/Company.jsx';
 
 import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
+import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
 import Angle from 'components/modules/angle/Index.jsx';
 import AngleTop from 'components/modules/angle/Top.jsx';
@@ -63,40 +64,41 @@ export default class Item extends Component {
 
 	render() {
 		return (
-			<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
-				<Angle header={false}>
-					<div className="m-angle-content">
+		<AdaptiveWrapper>
+			<Angle header={false}>
+				<div className="m-angle-content">
 
-						<AngleTop title="Call Routing">
-							<Link className="m-angle-settings" to="/settings">
-								<img src={imageLoader(require("images/icons/nav-list.png"))} alt="Qr background"/>
-							</Link>
-						</AngleTop>
+					<AngleTop title="Call Routing">
+						<Link className="m-angle-settings" to="/settings">
+							<img src={imageLoader(require("images/icons/nav-list.png"))} alt="Qr background"/>
+						</Link>
+					</AngleTop>
 
-						<AngleInfo>
-							<div className="m-angle-info-photo">
-								<img className="img-responsive img-circle" src={imageLoader(require("images/photo-placeholder.png"))} alt="Photo"/>
-							</div>
-							<div className="m-angle-info-text">
-								<h2> {this.state.Dialplan.title} </h2>
-								<p> {this.state.Dialplan.ex_number || this.state.Dialplan.in_number} </p>
-							</div>
-						</AngleInfo>
+					<AngleInfo>
+						<div className="m-angle-info-photo">
+							<img className="img-responsive img-circle" src={imageLoader(require("images/photo-placeholder.png"))} alt="Photo"/>
+						</div>
+						<div className="m-angle-info-text">
+							<h2> {this.state.Dialplan.title} </h2>
+							<p> {this.state.Dialplan.ex_number || this.state.Dialplan.in_number} </p>
+						</div>
+					</AngleInfo>
 
-						<AngleArrows
-							previous={this.state.previous}
-							next={this.state.next}
-						  onClick={this._renderDialplan}
+					<AngleArrows
+						previous={this.state.previous}
+						next={this.state.next}
+						onClick={this._renderDialplan}
 						/>
-					</div>
+				</div>
 
-					<Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
-						<img src={imageLoader(require("images/icons/list.png"))} alt="List of dialplans"/>
-					</Link>
-				</Angle>
-
+				<Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
+					<img src={imageLoader(require("images/icons/list.png"))} alt="List of dialplans"/>
+				</Link>
+			</Angle>
+			<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
 				{this.state.Dialplan.personal ? <Personal/> : <Company/>}
 			</AdaptiveFixed>
+		</AdaptiveWrapper>
 		);
 	}
 }

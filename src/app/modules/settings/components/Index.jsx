@@ -170,8 +170,8 @@ export default class Index extends Component {
 	}
 
 	render() {
-		return (<AdaptiveWrapper>
-			<AdaptiveFixed class="l-adaptive-sm">
+		return (
+			<AdaptiveWrapper class="l-adaptive-sm">
 				<Angle>
 					<div className="m-angle-content">
 						<div className="m-angle-top">
@@ -185,6 +185,7 @@ export default class Index extends Component {
 						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
 					</button>
 				</Angle>
+			<AdaptiveFixed>
 
 				<MainScroll class={"l-main-settings" + (this.state.keyboardIsVisible ? " keyboardIsVisible" : "")}>
 					<PinForm

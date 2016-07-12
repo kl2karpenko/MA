@@ -6,7 +6,8 @@
 
   position: relative;
   height: 100%;
-  overflow-y: scroll;
+
+  overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 
@@ -15,48 +16,45 @@
 
     overflow: hidden;
     position: relative;
-  }
 
-  .m-angle {
-    position: fixed;
-    height: 47.481259%;
-
-    left: -100px;
-    right: -100px;
-    top: -100px;
-  }
-
-  &-md {
     .m-angle {
-      height: 38.481259%;
-      min-height: 175px;
-    }
-  }
+      position: fixed;
+      height: 47.481259%;
 
-  &-sm {
-    .m-angle {
-      height: 30.814814814814813%;
-      min-height: 175px;
+      left: -100px;
+      right: -100px;
+      top: -100px;
     }
 
-    &.l-fixed .l-main {
-      top: 20.814814814814813%;
-      padding-top: 20px;
-    }
-  }
-}
+    &.l-adaptive-md {
+      .m-angle {
+        height: 38.481259%;
+        min-height: 175px;
+      }
 
-.l {
-  &-adaptive {
-    &-sm {
-      &.l-fixed.l-mailbox .l-main {
-        top: 18.814815%;
-        padding-top: 0 !important;
+      .l-fixed {
+        .l-main {
+          top: 29.481259%;
+        }
       }
     }
-    &-md.l-fixed {
-      .l-main {
-        top: 29.481259%;
+
+    &.l-adaptive-sm {
+      .m-angle {
+        height: 30.814814814814813%;
+        min-height: 175px;
+      }
+
+      .l-fixed {
+        &.l-mailbox .l-main {
+          top: 18.814815%;
+          padding-top: 0 !important;
+        }
+
+        .l-main {
+          top: 20.814814814814813%;
+          padding-top: 20px;
+        }
       }
     }
   }

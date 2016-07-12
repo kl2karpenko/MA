@@ -8,6 +8,7 @@ import DialplanList from "../models/DialplanList";
 import Dialplan from "models/Dialplan";
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
+import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
 function _configData(data) {
 	return data.map((item) => {
@@ -42,21 +43,23 @@ export default class List extends Component {
 
 	render() {
 		return (
-		<Adaptive class="dialplans">
-			<div className="m-list m-list-dialplan m-list-withImg">
-				<div className="dialplan-button">
-					<Link className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" to={DialplanList.getUrl()}>
-						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
-					</Link>
-				</div>
-				<ListComponent
-					model={DialplanList}
-					listClass="m-list-dialplans"
-					onClick={this.renderDialplanBy}
-					configData={_configData}
-				/>
+		<AdaptiveWrapper>
+			<div className="dialplan-button">
+				<Link className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" to={DialplanList.getUrl()}>
+					<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
+				</Link>
 			</div>
-		</Adaptive>
+			<Adaptive class="dialplans">
+				<div className="m-list m-list-dialplan m-list-withImg">
+					<ListComponent
+						model={DialplanList}
+						listClass="m-list-dialplans"
+						onClick={this.renderDialplanBy}
+						configData={_configData}
+						/>
+				</div>
+			</Adaptive>
+		</AdaptiveWrapper>
 		);
 	}
 }

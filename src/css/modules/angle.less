@@ -8,6 +8,22 @@
   transform: rotate(-10deg);
   z-index: 4;
 
+  &:not(.main) &-wrapper {
+    padding-top: 20px;
+
+    &:before {
+      position: absolute;
+      content: '';
+      height: 20px;
+      background-color: #6c0400;
+
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 2;
+    }
+  }
+
   &-name {
     font-size: 1.2em;
   }

@@ -18,23 +18,22 @@ export default class ContactPage extends Component {
 
 	render() {
 		return (
-		<AdaptiveWrapper>
-			<AdaptiveFixed class="l-adaptive-md">
-				<Angle header={false}>
-					<div className="m-angle-content">
-						<AngleTop title="Forward to:"/>
+		<AdaptiveWrapper class="l-adaptive-md">
+			<Angle header={false}>
+				<div className="m-angle-content">
+					<AngleTop title="Forward to:"/>
 
-						<div className="m-angle-links">
-							<Link activeClassName="active" to="/contacts/mobile">Mobile</Link>
-							<Link activeClassName="active" to="/contacts/extensions">Extensions</Link>
-						</div>
+					<div className="m-angle-links">
+						<Link activeClassName="active" to="/contacts/mobile">Mobile</Link>
+						<Link activeClassName="active" to="/contacts/extensions">Extensions</Link>
 					</div>
+				</div>
 
-					<button className="m-angle__button btn btn-round btn-sm btn-right">
-						<img src={imageLoader(require("images/icons/search.png"))} alt="Right"/>
-					</button>
-				</Angle>
-
+				<button className="m-angle__button btn btn-round btn-sm btn-right">
+					<img src={imageLoader(require("images/icons/search.png"))} alt="Right"/>
+				</button>
+			</Angle>
+			<AdaptiveFixed>
 				<MainScroll>
 					{this.props.children}
 				</MainScroll>
