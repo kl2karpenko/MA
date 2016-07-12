@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import { Link, hashHistory } from 'react-router';
+import imageLoader from 'imageLoader';
 
 import ListComponent from "components/list/Index.jsx";
 
@@ -43,6 +44,11 @@ export default class List extends Component {
 		return (
 		<Adaptive class="dialplans">
 			<div className="m-list m-list-dialplan m-list-withImg">
+				<div className="dialplan-button">
+					<Link className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" to={DialplanList.getUrl()}>
+						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
+					</Link>
+				</div>
 				<ListComponent
 					model={DialplanList}
 					listClass="m-list-dialplans"

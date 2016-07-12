@@ -36,16 +36,14 @@ let contactsFromMobileGlobal = [];
 
 function _getContactsFromMobile() {
 	let deferred = $.Deferred();
+	let options = {};
+
+	options.multiple = true;
 
 	$(document).trigger('system:ajaxStart');
 	console.log(contactsFromMobileGlobal, '_getContactsFromMobile');
 
-	navigator.contacts.find([
-		navigator.contacts.fieldType.displayName,
-		navigator.contacts.fieldType.phoneNumbers,
-		navigator.contacts.fieldType.photos,
-		navigator.contacts.fieldType.name
-	], (contactsList) => {
+	navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
 		contactsList.forEach((contactItem) => {
 			contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactsFromMobileGlobal.push(configContact(contactItem)) : false;
 		});
@@ -61,7 +59,7 @@ function _getContactsFromMobile() {
 		});
 
 		$(document).trigger('system:ajaxComplete');
-	});
+	}, options);
 
 	return deferred;
 }
