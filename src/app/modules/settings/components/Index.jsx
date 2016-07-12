@@ -29,6 +29,8 @@ export default class Index extends Component {
 			phoneNumber: Storage.getValue('phone') || ""
 		};
 
+		console.log(Storage.getValue('phone'));
+
 		this.setPin();
 
 		this._save = this._save.bind(this);
@@ -200,13 +202,14 @@ export default class Index extends Component {
 					<div className="l-main-content">
 						<div className="l-settings-group">
 							<input
-								type="number"
+								type="tel"
 								className={"input-custom" + (this.pin.classFocus[3] ? " focus" : "")}
 								placeholder="Please enter your telephone number"
 								onFocus={this.onFocus.bind(this, 3)}
 								onChange={function() {}}
 								name="phone"
 								value={this.state.phoneNumber}
+								defaultValue={this.state.phoneNumber}
 								/>
 						</div>
 					</div>
