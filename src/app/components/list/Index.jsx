@@ -44,7 +44,7 @@ export default class Index extends Component {
 									data={object}
 									model={this.state.model}
 									key={i}
-									onTouchStart={this.props.onClick.bind(this, i, object)}
+									onClick={this.props.onClick.bind(this, i, object)}
 									index={i}
 									/>
 							}));

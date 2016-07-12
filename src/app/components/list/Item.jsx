@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tappable from 'react-tappable';
 
 import Image from "./item/Image.jsx";
 import Color from "./item/Color.jsx";
@@ -22,8 +23,12 @@ export default class DialplanListItem extends Component {
 
 	render() {
 		return (
-			<div className="m-list-item clearfix" onTouchStart={this.props.onClick}>
-				<div className="m-list-item-wrap clearfix">
+			<div className="m-list-item clearfix">
+				<Tappable
+					pressDelay={500}
+					component="div" 
+					className="m-list-item-wrap clearfix" 
+					onTap={this.props.onClick}>
 					{(() => {
 						if (this.state.data.image) {
 							return <Image title={this.state.data.name} src={this.state.data.image}/>;
@@ -35,7 +40,7 @@ export default class DialplanListItem extends Component {
 						<h3 className="m-list-name">{this.state.data.name}</h3>
 						<div className="m-list-phone">{this.state.data.number}</div>
 					</div>
-				</div>
+				</Tappable>
 			</div>
 		);
 	}

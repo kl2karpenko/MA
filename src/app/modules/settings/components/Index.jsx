@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Link, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
+import Tappable from 'react-tappable';
 
 import imageLoader from 'imageLoader';
 
@@ -205,11 +206,12 @@ export default class Index extends Component {
 
 					<div className="l-main-content">
 						<div className="l-settings-group">
-							<input
+							<Tappable
+								component="input"
 								type="tel"
 								className={"input-custom" + (this.pin.classFocus[3] ? " focus" : "")}
 								placeholder="Please enter your telephone number"
-								onTouchStart={this.onTouch.bind(this, 3)}
+								onTap={this.onTouch.bind(this, 3)}
 								onChange={function() {}}
 								name="phone"
 								value={this.state.phoneNumber}
@@ -225,7 +227,13 @@ export default class Index extends Component {
 					</div>
 
 					<div className="l-main-content">
-						<button className="btn btn-block btn-block-lg btn-disconnect" onTouchStart={this._disconnect}>Disconnect app</button>
+						<Tappable
+							component="button"
+		          className="btn btn-block btn-block-lg btn-disconnect"
+		          onTap={this._disconnect}
+						>
+							Disconnect app
+						</Tappable>
 					</div>
 				</MainScroll>
 			</AdaptiveFixed>

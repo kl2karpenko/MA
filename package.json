@@ -57,6 +57,7 @@
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "^2.3.0",
+    "react-tappable": "^0.8.1",
     "xml-loader": "^1.1.0"
   }
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Tappable from 'react-tappable';
 
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 import Storage from "models/Storage";
@@ -72,16 +73,21 @@ export default class PinForm extends Component {
 						checked={this.state.is_on}
 						onChange={function() {}}
 					/>
-					<div className="checkbox-button pull-right" onTouchStart={this._toggleUsingPin}></div>
+					<Tappable
+						component="div"
+						className="checkbox-button pull-right"
+						onTap={this._toggleUsingPin}
+					/>
 				</label>
 			</div>
 
 			<div className={"l-settings l-main-content" + (!this.state.is_on ? " disabled" : "")}>
 				<form action="" name="pinChange">
 					<div className={"l-settings-group" + (Storage.existValue('pin') ? "" : " hidden")}>
-						<input
+						<Tappable
+							component="input"
 							type="number"
-							onTouchStart={this.onTouch.bind(this, 0)}
+							onTap={this.onTouch.bind(this, 0)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[0] ? " focus" : "") + (this.state.messages.active.show ? " error" : "")}
 							placeholder="Enter current"
@@ -91,9 +97,10 @@ export default class PinForm extends Component {
 						<span style={{display: (this.state.messages.active.show ? "block" : "none")}}>{this.state.messages.active.text}</span>
 					</div>
 					<div className="l-settings-group">
-						<input
+						<Tappable
+							component="input"
 							type="number"
-							onTouchStart={this.onTouch.bind(this, 1)}
+							onTap={this.onTouch.bind(this, 1)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[1] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
 							placeholder="Enter new pincode"
@@ -103,9 +110,10 @@ export default class PinForm extends Component {
 						<span style={{display: (this.state.messages.created.show ? "block" : "none")}}>{this.state.messages.created.text}</span>
 					</div>
 					<div className="l-settings-group">
-						<input
+						<Tappable
+							component="input"
 							type="number"
-							onTouchStart={this.onTouch.bind(this, 2)}
+							onTap={this.onTouch.bind(this, 2)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[2] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
 							placeholder="Reenter new pincode"

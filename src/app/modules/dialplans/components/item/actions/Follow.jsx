@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Tappable from 'react-tappable';
 
 import Dialplan from "models/Dialplan";
 import Storage from "models/Storage";
@@ -53,14 +54,19 @@ export default class Follow extends Component {
 	render() {
 		return (
 			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
-				<label className="m-label radio-block" htmlFor={this.state.name}>
+				<Tappable
+					pressDelay={0}
+					component="label"
+					className="m-label radio-block"
+					htmlFor={this.state.name}
+					onTap={this.props.onChange}>
 					<input
 						type="radio"
 						name="follow"
 						value={this.state.name}
 						checked={Dialplan.getValueByPath("follow." + this.state.name + ".selected") ? "checked" : ""}
+						onChange={function() { }}
 						id={this.state.name}
-						onChange={this.props.onChange}
 					/>
 					<div className="radio-button"></div>
 					<div className="l-dialplan-text">
@@ -68,7 +74,7 @@ export default class Follow extends Component {
 						<div className="l-dialplan-info">{this.state.info}</div>
 					</div>
 					{this.state.search && <Link to={this.state.link}/>}
-				</label>
+				</Tappable>
 			</li>
 		);
 	}
