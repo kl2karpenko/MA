@@ -56,7 +56,7 @@ export default class List extends Component {
 						listClass="m-list-dialplans"
 						onClick={this.renderDialplanBy}
 						configData={_configData}
-						/>
+					/>
 				</div>
 			</Adaptive>
 		</AdaptiveWrapper>
