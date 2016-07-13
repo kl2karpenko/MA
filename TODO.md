@@ -6,3 +6,5 @@
 6. Add permissions for user to get now if he has access to dialplans
 
  bind your event handlers in the constructor so they are only bound once for every instance
+
+* issue with png: removed ', pngquant:{quality: "65-90", speed: 4}' from 'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false}'

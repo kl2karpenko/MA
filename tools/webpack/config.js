@@ -146,7 +146,7 @@ module.exports = {
                 test: /.*\.(gif|png|jpe?g|svg)$/i,
                 loaders: [
                     'file?hash=sha512&digest=hex&name=img/[name].[ext]',
-                    'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+                    'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false}'
                 ]
             },
 
