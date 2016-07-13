@@ -4,7 +4,7 @@ import {hashHistory} from 'react-router';
 
 import 'rest-client';
 
-module.exports = (new $.RestClient(config.hostname, {
+module.exports = (new $.RestClient(config.schema.hostname, {
 	stripTrailingSlash: true,
 
 	stringifyData: true,

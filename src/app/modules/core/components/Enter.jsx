@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {hashHistory} from 'react-router';
+import config from 'envConfig';
 
 import Session from "models/Session";
 import FailBlock from 'components/blocks/Fail.jsx';
@@ -64,7 +65,9 @@ export default class Enter extends Component {
 	}
 
 	render() {
-		return (<div className={"l-adaptive-top" + (process.env.platformName ? (" " + process.env.platformName) : "")}>
+		let platformName = config.process.getActivePlatform();
+
+		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
 			{this.props.children}
 
 			<LoadingBlock

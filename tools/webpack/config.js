@@ -1,40 +1,59 @@
-const path = require('path');
-const webpack = require('webpack');
-
-const webpackConfig = require('./../env/config');
-
+const path              = require('path');
+const webpack           = require('webpack');
+const webpackConfig     = require('./../env/config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const fs                = require("fs");
+const precss            = require('precss');
+const autoprefixer      = require('autoprefixer');
+const postcss           = require("postcss");
+const atImport          = require("postcss-import");
 
-var fs = require("fs");
-var precss       = require('precss');
-var autoprefixer = require('autoprefixer');
-var postcss = require("postcss");
-var atImport = require("postcss-import");
-
-var less = fs.readFileSync("src/css/app.less", "utf8");
-
+/**
+ * ==========================================================
+ * Post css all less files, add suffix
+ * ==========================================================
+ */
 postcss()
   .use(atImport({
       path: ["src/css"],
       glob: true
   }))
-  .process(less, { from: "src/css" })
-  .then(result => {
-      console.log('======= result ======');
-  });
+  .process(fs.readFileSync("src/css/app.less", "utf8"), { from: "src/css" });
+/**
+ * ==========================================================
+ * Post css all less files, add suffix
+ * ==========================================================
+ */
 
-// load plugins
+/**
+ * ==========================================================
+ * Define environment variables
+ *
+ * ENVIRONMENT:
+ *  * local: run on localhost in browser
+ *  * dev: run on development server in browser
+ *  * prod: run on production server on mobile
+ * ==========================================================
+ */
 
-const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
+const ProcessInfo = require('../../src/app/env/process');
+const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnvironment();
+
+/**
+ * ==========================================================
+ * Define environment variables
+ * ==========================================================
+ */
+
+console.log(" ================ are on >> "
+  + ACTIVE_ENVIRONMENT.toUpperCase() + 
+  " << environment =====================");
+
+/**
+ * Set begin path for run
+ */
 const dirname = path.join(__dirname, '../../');
-
-var isProd = ENVIRONMENT === "prod";
-
-// if we have prod we will set all to ww dir if dev all to build dir
-var distDir = isProd ? 'www' : 'build';
-
-console.log(" ========================== Your are on >> " + ENVIRONMENT.toUpperCase() + " << environment ================================");
 
 module.exports = {
     context: dirname,
@@ -44,7 +63,7 @@ module.exports = {
     },
 
     output: {
-        path: path.join(dirname, distDir),
+        path: path.join(dirname, ProcessInfo.getDestinationDir()),
         filename: "[name].js",
         library: "[name]"
     },
@@ -59,20 +78,20 @@ module.exports = {
 
         new webpack.DefinePlugin({
             'process.env': {
-              'NODE_ENV': JSON.stringify(ENVIRONMENT),
-              'platformName': JSON.stringify(process.env.platformName)
+              'NODE_ENV': JSON.stringify(ACTIVE_ENVIRONMENT),
+              'platformName': JSON.stringify(ProcessInfo.getActivePlatform())
             }
         }),
 
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'src/template.html', // Load a custom template
+            template: 'src/template.html',
             inject: false,
             assets: {
-                "scripts": webpackConfig[ENVIRONMENT].filesPath.scripts,
-                "connect": webpackConfig[ENVIRONMENT].filesPath.connect,
-                "modernizr": webpackConfig[ENVIRONMENT].filesPath.modernizr,
-                "styles": webpackConfig[ENVIRONMENT].filesPath.styles
+                "scripts": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.scripts,
+                "connect": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.connect,
+                "modernizr": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.modernizr,
+                "styles": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.styles
             }
         }),
 
@@ -95,7 +114,7 @@ module.exports = {
     resolve: {
         root: path.resolve(dirname),
         alias: {
-            "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
+            "envConfig": "src/app/env/" + ACTIVE_ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
             "modules": 'src/app/modules',
@@ -167,7 +186,7 @@ module.exports = {
     }
 };
 
-if (isProd) {
+if (ProcessInfo.isProd()) {
     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         compress: {
@@ -178,6 +197,9 @@ if (isProd) {
             except: ['$super', '$', 'exports', 'require']
         }
     }));
+} else if (ProcessInfo.isLocal()) {
+    module.exports.watch = true;
+    module.exports.devtool = 'inline-source-map';
 } else {
     module.exports.devtool = 'inline-source-map';
 }

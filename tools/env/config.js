@@ -1,5 +1,5 @@
 module.exports = {
-	"dev": {
+	"local": {
 		filesPath: {
 			"scripts": "/build/app.js",
 			"connect": "/build/connect.js",
@@ -7,7 +7,15 @@ module.exports = {
 			"styles": "/build/app.css"
 		}
 	},
-	"prod": {
+	"development": {
+		filesPath: {
+			"scripts": "/build/app.js",
+			"connect": "/build/connect.js",
+			"modernizr": "/build/modernizr.js",
+			"styles": "/build/app.css"
+		}
+	},
+	"production": {
 		filesPath: {
 			"scripts": "app.js",
 			"connect": "connect.js",

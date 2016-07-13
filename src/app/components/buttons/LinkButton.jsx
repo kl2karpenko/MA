@@ -18,6 +18,7 @@ export default class LinkButton extends Component {
 		return (
 			<Tappable
 				component="button"
+				classBase={this.props.activeClassName}
 				pressDelay={500}
 				className={this.props.className}
 				onTap={this._goto}

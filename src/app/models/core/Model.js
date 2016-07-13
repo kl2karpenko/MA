@@ -165,12 +165,14 @@ export default class Model {
 		let
 			defaultAttributes = this._getDefaultAttributes(),
 			defaultModel = this.getModel(),
-			newModel = {};
+			newModel = {},
+			mappingOptions = this._mappingOptions();
 
 		$.extend(true, newModel, defaultAttributes, props);
 
 		Object.keys(newModel).forEach((name)=> {
-			defaultModel[name] = newModel[name];
+			// TODO think about mapping options
+			defaultModel[name] = mappingOptions[name] || newModel[name];
 		});
 
 		this.isLoaded();
@@ -198,6 +200,10 @@ export default class Model {
 		$.extend(true, defaultModel[path], this._getDefaultAttributes(path), attributes);
 
 		return this.isLoaded();
+	}
+
+	_mappingOptions() {
+		return {};
 	}
 
 	update(options) {

@@ -8,6 +8,7 @@ export default class FlowControl extends Component {
 		super(props);
 
 		this.state = props.options;
+		console.log(props.options)
 	}
 
 	render() {
@@ -21,13 +22,12 @@ export default class FlowControl extends Component {
 					<Checkbox
 						id={"action_" + this.props.index}
 						name="flow_control"
-						value={this.state.action_id}
-						checked={this.state.value.is_on}
+						checked={this.state.is_on}
 						onChange={function() { }}
 						text={(() => {
 						return (
 							<div className="l-dialplan-text">
-								<div className="l-dialplan-name">{this.state.value.label || (this.props.in_number + "*" + this.state.value.short_code)}</div>
+								<div className="l-dialplan-name">{this.state.label || (this.props.in_number + "*" + this.state.short_code)}</div>
 							</div>
 						);
 					})}

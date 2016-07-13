@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
+import config from 'envConfig';
 
 import CompanyActions from "../../models/actions/Company";
 
@@ -25,7 +26,7 @@ export default class Company extends Component {
 		let phoneValue = Storage.getValue('phone');
 
 		if (!phoneValue) {
-			if (process.env.platformName === 'ios' || process.env.NODE_ENV === 'dev' ) {
+			if (config.process.isIOS() || config.process.isDev() || config.process.isLocal() ) {
 				phoneValue = prompt("Please enter your phone number");
 				phoneValue && Storage.setValue('phone', phoneValue);
 			}
@@ -59,8 +60,6 @@ export default class Company extends Component {
 			case "mobile":
 				let number = this._getNumber();
 
-				console.log('set for number', number);
-
 				if (number) {
 					Dialplan.saveForFollowTo("mobile", {
 						number: number
@@ -76,10 +75,12 @@ export default class Company extends Component {
 	}
 
 	onChangeFlowControl(object) {
-		object.value.is_on = !object.value.is_on;
+		object.is_on = !object.is_on;
 
 		this._updateDialplan();
-		Dialplan.saveForFlowControl(object.name);
+		console.log(Dialplan.getModel(), 'Dialplan.getModel()');
+
+		Dialplan.saveForFlowControl(object);
 	}
 
 	_updateDialplan() {

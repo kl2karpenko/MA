@@ -89,7 +89,7 @@ export default class System {
 	 * if we in dev env we will work in browser so just init the app
 	 */
 	init() {
-		if (process.env.NODE_ENV === "prod") {
+		if (config.process.isProd()) {
 			/* on device ready init app */
 			document.addEventListener("deviceready", () => {
 				this._initApp();

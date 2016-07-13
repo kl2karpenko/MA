@@ -66,17 +66,16 @@ let homeIPMac = 'http://192.168.2.105:8030/';
 let workIPMac = 'http://10.10.201.49:8030/';
 let workIPDesktop = 'http://10.10.200.28:8030/';
 
-let devServerHostName = "http://mobile-app.dev.kwebbl.net:8030/";
-
 function getAddressOfHost() {
-// TODO: only for development, delete after deploy
 	let hostName =  isIOS ? workIPMac : workIPDesktop;
 
 	return hostName;
 }
 
 module.exports = $.extend(config, {
-	hostname: getAddressOfHost(),
-	mobileContacts: _getContactsFromMobile,
-	mobileSIMNumber: getMobileNumber
+	schema: {
+		hostname: getAddressOfHost(),
+		mobileContacts: _getContactsFromMobile,
+		mobileSIMNumber: getMobileNumber
+	}
 });

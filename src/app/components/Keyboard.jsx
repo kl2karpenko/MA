@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import config from 'envConfig';
+
 import Tappable from 'react-tappable';
 
 import imageLoader from 'imageLoader';
@@ -56,7 +58,7 @@ export class Keyboard extends Component {
 	}
 	
 	static closeKeyBoard(e) {
-		if (process.env.NODE_ENV === 'prod' && cordova && cordova.plugins) {
+		if (config.process.isProd() && cordova && cordova.plugins) {
 			cordova.plugins.Keyboard.close();
 			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
