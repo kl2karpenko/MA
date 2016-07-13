@@ -13,7 +13,7 @@ export default class FlowControl extends Component {
 	render() {
 		return (
 			<Tappable
-				pressDelay={0}
+				pressDelay={500}
 				component="li"
 				className={this.state.className}
 				onTap={this.props.onChange}

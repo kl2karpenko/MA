@@ -61,7 +61,7 @@ export default class Follow extends Component {
 		return (
 			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
 				<Tappable
-					pressDelay={0}
+					pressDelay={500}
 					component="label"
 					className="m-label radio-block"
 					htmlFor={this.state.name}

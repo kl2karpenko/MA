@@ -185,9 +185,14 @@ export default class Index extends Component {
 						</div>
 					</div>
 
-					<button className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" onTouchStart={Index._leave}>
-						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
-					</button>
+					<Tappable
+						pressDelay={500}
+						component="button"
+						className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
+						onTap={Index._leave}
+						>
+						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Quit settings"/>
+					</Tappable>
 				</Angle>
 			<AdaptiveFixed>
 
@@ -207,6 +212,7 @@ export default class Index extends Component {
 					<div className="l-main-content">
 						<div className="l-settings-group">
 							<Tappable
+								pressDelay={500}
 								component="input"
 								type="tel"
 								className={"input-custom" + (this.pin.classFocus[3] ? " focus" : "")}
@@ -228,6 +234,7 @@ export default class Index extends Component {
 
 					<div className="l-main-content">
 						<Tappable
+							pressDelay={500}
 							component="button"
 		          className="btn btn-block btn-block-lg btn-disconnect"
 		          onTap={this._disconnect}
