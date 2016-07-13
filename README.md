@@ -1,8 +1,8 @@
 Please make sure you have installed global:
 
-1. npm
-2. node
-3. cordova
+1. npm (v 3.8.6)
+2. node (v5.12.0)
+3. cordova (v6.1.1)
 4. webpack
 
 After that, please install all dependencies, to create project, run from root dir:
@@ -11,15 +11,7 @@ After that, please install all dependencies, to create project, run from root di
 $ npm i
 ```
 
-## Build prod version:
-
-To build project files for prod env run:
-
-```
-$ NODE_ENV=production platformName=platform webpack --config tools/webpack/config.js
-```
-
-## Add cordova plugins
+## Adding cordova plugins:
 
 Plugin list:
 1. cordova-plugin-contacts
@@ -30,6 +22,15 @@ Plugin list:
 6. cordova-plugin-splashscreen
 7. cordova-plugin-network-information
 
+## Production
+
+To build project files for production environment run:
+
+```
+$ NODE_ENV='production' platformName='platform' webpack --config tools/webpack/config.js
+```
+
+
 To build project with cordova for some platform please run, where platform_name: 'ios' || 'android':
 
 ```
@@ -38,24 +39,33 @@ $ cordova build platform_name
 
 after this the cordova will run prod build and create build app for platform
 
-
-To run project in cordova run:
+To run project (run = build + install => device or simulator):
 
 ```
 $ cordova run platform_name
 ```
 
-## Build dev version in browser:
+## Development:
 
-
-To build project files for dev env run, this will start watching all files changing:
+To build project files for development environment run:
 
 ```
-webpack --watch --config tools/webpack/config.js
+$ NODE_ENV='development' platformName='platform' webpack --config tools/webpack/config.js
 ```
 
-Go to build/ dir and run from there to start localhost on 8030 port:
+## Local:
+
+To build project files for development environment run:
+
+```
+$ webpack --config tools/webpack/config.js
+```
+
+#### Run a local server:
+Go to build/ dir and run from there node server
 
 ```
 node ../tools/server.js
 ```
+
+This will start localhost on 8030 port.
