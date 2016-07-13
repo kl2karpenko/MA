@@ -74,6 +74,7 @@ export default class PinForm extends Component {
 						onChange={function() {}}
 					/>
 					<Tappable
+						pressDelay={500}
 						component="div"
 						className="checkbox-button pull-right"
 						onTap={this._toggleUsingPin}
@@ -87,6 +88,7 @@ export default class PinForm extends Component {
 						<Tappable
 							component="input"
 							type="number"
+							pressDelay={500}
 							onTap={this.onTouch.bind(this, 0)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[0] ? " focus" : "") + (this.state.messages.active.show ? " error" : "")}
@@ -100,6 +102,7 @@ export default class PinForm extends Component {
 						<Tappable
 							component="input"
 							type="number"
+							pressDelay={500}
 							onTap={this.onTouch.bind(this, 1)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[1] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
@@ -113,6 +116,7 @@ export default class PinForm extends Component {
 						<Tappable
 							component="input"
 							type="number"
+							pressDelay={500}
 							onTap={this.onTouch.bind(this, 2)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[2] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}

@@ -3,6 +3,8 @@ import { Link, hashHistory } from 'react-router';
 
 import imageLoader from 'imageLoader';
 
+import Tappable from 'react-tappable';
+
 import Dialplan from "models/Dialplan";
 import DialplanList from "../models/DialplanList";
 
@@ -75,7 +77,7 @@ export default class Item extends Component {
 					<AngleTop title="Call Routing">
 						<Tappable
 							pressDelay={500}
-							component="button"
+							component="a"
 							className="m-angle-settings"
 							onTap={Item._goToSettings}
 							>

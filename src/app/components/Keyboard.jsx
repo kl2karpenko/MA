@@ -93,7 +93,7 @@ export class Keyboard extends Component {
 					{[...Array(9)].map((x, i) =>
 						<div className="col-xs-5 m-keyboard-digit" key={i}>
 							<Tappable
-								pressDelay={0}
+								pressDelay={500}
 								component="button"
 								className="m-keyboard__key"
 								data-val={i+1}
@@ -105,7 +105,7 @@ export class Keyboard extends Component {
 				<div className="m-keyboard-buttons">
 					<div className="col-xs-5 m-keyboard-digit">
 						<Tappable
-							pressDelay={0}
+							pressDelay={500}
 							component="button"
 							className="m-keyboard__key buttons"
 							onTap={this._deleteValue.bind(this)}
@@ -115,7 +115,7 @@ export class Keyboard extends Component {
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">
 						<Tappable
-							pressDelay={0}
+							pressDelay={500}
 							component="button"
 							className="m-keyboard__key"
 							data-val="0"
@@ -127,7 +127,7 @@ export class Keyboard extends Component {
 					<div className="col-xs-5 m-keyboard-digit">
 						<div className="m-keyboard__key buttons">
 							<Tappable
-								pressDelay={0}
+								pressDelay={500}
 								component="button"
 								className="btn btn-round btn-sm btn-check"
 								disabled={!this.state.isValid}

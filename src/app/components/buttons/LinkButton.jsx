@@ -15,12 +15,13 @@ export default class LinkButton extends Component {
 	}
 
 	render() {
-		return (<Tappable
+		return (
+			<Tappable
 				component="button"
-			pressDelay={500}
-			className={this.props.className}
-			onTap={this._goto}
-		>
+				pressDelay={500}
+				className={this.props.className}
+				onTap={this._goto}
+			>
 			{this.props.text}
 		</Tappable>
 		);

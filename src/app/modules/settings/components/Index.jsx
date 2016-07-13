@@ -212,6 +212,7 @@ export default class Index extends Component {
 					<div className="l-main-content">
 						<div className="l-settings-group">
 							<Tappable
+								pressDelay={500}
 								component="input"
 								type="tel"
 								className={"input-custom" + (this.pin.classFocus[3] ? " focus" : "")}
@@ -233,6 +234,7 @@ export default class Index extends Component {
 
 					<div className="l-main-content">
 						<Tappable
+							pressDelay={500}
 							component="button"
 		          className="btn btn-block btn-block-lg btn-disconnect"
 		          onTap={this._disconnect}
