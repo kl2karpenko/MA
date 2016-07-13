@@ -683,7 +683,7 @@ app.get('/extensions', function (req, res) {
  */
 app.get('/contacts', function (req, res) {
 	res.send({
-		"contacts": []
+		"contacts": null
 	});
 });
 

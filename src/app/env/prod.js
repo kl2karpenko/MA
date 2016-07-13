@@ -32,8 +32,6 @@ function configContact (data) {
 	return object;
 }
 
-let contactsFromMobileGlobal = [];
-
 function _getContactsFromMobile() {
 	let deferred = $.Deferred();
 	let options = {};
@@ -41,21 +39,21 @@ function _getContactsFromMobile() {
 	options.multiple = true;
 
 	$(document).trigger('system:ajaxStart');
-	console.log(contactsFromMobileGlobal, '_getContactsFromMobile');
 
 	navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
+		let contacts = [];
 		contactsList.forEach((contactItem) => {
-			contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contactsFromMobileGlobal.push(configContact(contactItem)) : false;
+			contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
 		});
 
 		deferred.resolve({
-			contacts: contactsFromMobileGlobal
+			contacts: contacts
 		});
 
 		$(document).trigger('system:ajaxComplete');
 	}, () => {
 		deferred.resolve({
-			contacts: []
+			contacts: null
 		});
 
 		$(document).trigger('system:ajaxComplete');

@@ -38,7 +38,7 @@ export default class Index extends Component {
 		return (
 			<div className={"m-list" + (this.props.listClass ? " " + this.props.listClass : "") + (this.props.withImg ? " m-list-withImg" : " m-list-withColor")}>
 				{(() => {
-					if (this.state.list.length) {
+					if (this.state.list && this.state.list.length) {
 							return (this.state.list.map((object, i) => {
 								return <Item
 									data={object}
