@@ -202,9 +202,6 @@ if (ProcessInfo.isProd()) {
             except: ['$super', '$', 'exports', 'require']
         }
     }));
-} else if (ProcessInfo.isLocal()) {
-    module.exports.watch = true;
-    module.exports.devtool = 'inline-source-map';
 } else {
     module.exports.devtool = 'inline-source-map';
 }
