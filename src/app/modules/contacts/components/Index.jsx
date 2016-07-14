@@ -10,6 +10,7 @@ import Angle from 'components/modules/angle/Index.jsx';
 import AngleTop from 'components/modules/angle/Top.jsx';
 
 import MainScroll from 'components/layouts/main/Scroll.jsx';
+import LinkButton from 'components/buttons/LinkButton.jsx';
 
 export default class ContactPage extends Component {
 	constructor(props) {

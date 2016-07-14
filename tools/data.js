@@ -1,6 +1,25 @@
 
 // Local data =================================== //
 
+var activeActionsPossibleValues = {
+	"active_action_key": {
+		"name": "original",
+		"value": {
+
+		},
+
+		"name": "mailbox",
+		"value": {
+			"_id": "jthrhrthh89h8rt7hr7th"
+		},
+
+		"name": "transfer",
+		"value": {
+			"number": "934589038459435"
+		}
+	}
+};
+
 var dialplanFollowDefault = {
 	"follow": {
 		"original": {
@@ -39,128 +58,41 @@ var dialplans = [{
 	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
-	"follow": {
-		"original": {
-			"selected": true
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "thrty56y56ryr5",
 	"title": "Elisa Doe",
 	"actions": [{
-		"action_id": "2678d8e9db15becc3397a47500dac7e0",
-		"value": {
-			"label": "Department Closed",
-			"short_code": "4",
-			"is_on": true
-		}
+		"label": "Department Closed",
+		"short_code": "4",
+		"is_on": true
 	}, {
-		"action_id": "2678d8e9db15becc3397a47500dac7e0",
-		"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "5"}}],
-		"value": {
-			"label": "Lunch Break",
-			"short_code": "4",
-			"is_on": true
-		}
+		"label": "Lunch Break",
+		"short_code": "3",
+		"is_on": true
 	}, {
-		"action_id": "2678d8e9db15becc3397a47500dac7e0",
-		"items": [{
-			"action_id": "2678d8e9db15becc3397a47500dac7e0",
-			"items": [{"action_id": "2678d8e9db15becc3397a47500dac7e0", "items": [], "value": {"short_code": "3"}}],
-			"value": {"short_code": "2"}
-		}],
-		"value": {"short_code": "1"}
+		"short_code": "2",
+		"is_on": false
 	}],
+	"active_action_key": {
+		"name": "original",
+		"value": {}
+	},
 	"in_number": "2134",
 	"ex_number": 31152026029,
-	"personal": false,
-	"follow": {
-		"original": {
-			"selected": true
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": false,
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
-	}
+	"personal": false
 }, {
 	"_id": "5h656h65h5r6h56h",
 	"actions": [],
 	"in_number": "+38 050 414 41 51",
 	"title": "Karpenko Liliia",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "h46yh4hy6hh",
@@ -169,34 +101,9 @@ var dialplans = [{
 	"title": "Studenyak Nastia",
 	"personal": false,
 	"actions": [],
-	"follow": {
-		"original": {
-			"selected": true
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": false,
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "h5r6hy46hh4h66h",
@@ -204,34 +111,9 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Kebal Ivan",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "6",
@@ -239,34 +121,9 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Rybachok Oleksandr",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "7",
@@ -274,34 +131,9 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Saiko Iryna",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "8",
@@ -309,34 +141,9 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Berladin Ewgeny",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "9",
@@ -344,34 +151,9 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Yurch Yuriy",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }, {
 	"_id": "10",
@@ -379,34 +161,9 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Skorohliad Ivan",
 	"personal": false,
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": {
-				"number": ""
-			}
-		},
-		"mailbox": {
-			"is_on": true,
-			"selected": true,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": ""
-			}
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }];
 
@@ -416,26 +173,9 @@ var dialplansOnlyPersonal = [{
 	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
-	"follow": {
-		"original": {
-			"selected": false
-		},
-		"mobile": {
-			"selected": false,
-			"value": ""
-		},
-		"mailbox": {
-			"selected": true
-		},
-		"contact": {
-			"selected": false,
-			"value": {
-				"_id": "",
-				"name": "",
-				"number": "",
-				"type": ""
-			}
-		}
+	"active_action_key": {
+		"name": "original",
+		"value": {}
 	}
 }];
 
@@ -527,6 +267,7 @@ var mailboxes = [{
 	"type": "mailbox"
 }];
 
+
 var settingsOn = {
 	"settings": {
 		"pin": {
@@ -567,7 +308,6 @@ var isNotAuthorize = {
 };
 
 // Local data =================================== //
-
 
 
 /**
@@ -668,10 +408,39 @@ var extensions = {
 			"name": "rert345 222222",
 			"image_id": null,
 			"in_number": "6533"
-    }]
+		}]
 	}
 
+var contacts = {
+	"contacts": [
+		{
+			image: true,
+			displayName: "Lily",
+			name: "Lily",
+			phoneNumbers: [
+				{
+					normalizedNumber: "+380504144151"
+				}
+			]
+		},
+		{
+			image: true,
+			displayName: "Lily",
+			name: "Lily",
+			phoneNumbers: [
+				{
+					normalizedNumber: "+380934032379"
+				}
+			]
+		}
+	]
+};
+
+var active_action_key = "active_action_key";
+
 module.exports = {
+	active_action_key,
+	activeActionsPossibleValues,
   dialplanFollowDefault,
   dialplans,
   dialplansOnlyPersonal,
@@ -684,4 +453,5 @@ module.exports = {
   connectsPin,
   connectsPinBad,
   extensions,
+	contacts
 }

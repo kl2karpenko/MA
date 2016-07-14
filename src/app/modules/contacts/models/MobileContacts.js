@@ -19,11 +19,9 @@ class MobileContacts extends List {
 	}
 	
 	load() {
-		return config.mobileContacts().done((data) => {
+		return config.schema.mobileContacts().done((data) => {
 			let type = Array.isArray(data.contacts);
-
-			console.log(type, data.contacts);
-
+			
 			type && this.assignAttributes(data.contacts);
 		});
 	}

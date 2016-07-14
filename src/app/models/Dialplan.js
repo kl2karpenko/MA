@@ -1,4 +1,37 @@
 import Model from 'Model';
+import Storage from "models/Storage";
+
+const
+	FOLLOW_MODEL = {
+		"original": {
+			"selected": false
+		},
+		"mobile": {
+			"selected": false,
+			"value": {
+				"number": ""
+			}
+		},
+		"mailbox": {
+			"is_on": true,
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": ""
+			}
+		},
+		"contact": {
+			"selected": false,
+			"value": {
+				"_id": "",
+				"name": "",
+				"number": "",
+				"type": ""
+			}
+		}
+	},
+	ACTIVE_ACTION_KEY = 'active_action_key';
 
 class Dialplan extends Model {
 	init() {
@@ -9,110 +42,119 @@ class Dialplan extends Model {
 		return 'dialplans';
 	}
 
-	_getJSONForFollow(path) {
-		let
-			model = {},
-			pathName = this._getModelName();
-
-		model[pathName] = {};
-		model[pathName]._id = this.getValueByPath('_id');
-		model[pathName].follow = {};
-		model[pathName].follow[path] = this.getValueByPath('follow.' + path);
-
-		return model;
-	}
-
 	saveForFollowTo(path, dataForSave) {
-		let followModel = $.extend({}, this.getModel().follow);
-
-		Object.keys(followModel).forEach((item) => {
-			followModel[item].selected = false;
-
-			if (item === path) {
-				followModel[item].selected = true;
-
-				switch(item) {
-					case "mailbox":
-						followModel[item].is_on = this.getModel().follow.mailbox.is_on;
-						console.log('followModel[item].is_on', followModel[item].is_on);
-						if (dataForSave && followModel[item].is_on) {
-							followModel[item].value._id = dataForSave._id;
-							followModel[item].value.name = dataForSave.name;
-							followModel[item].value.number = dataForSave.number;
-						}
-						break;
-					case "contact":
-						followModel[item].value = dataForSave;
-						break;
-					case "mobile":
-						followModel[item].value.number = dataForSave.number;
-						break;
-					default:
-						followModel[item].value = dataForSave;
-						break;
-				}
-			}
-		});
-
-		this.updateAttributesFor('follow', followModel);
-		return this.save({
-			data: this._getJSONForFollow(path)
-		});
-	}
-	
-	saveForFlowControl() {
 		let
 			model = {},
-			pathName = this._getModelName();
+			modelName = this._getModelName(),
+			saveData = {
+				name: path,
+				value: dataForSave
+			};
 
-		model[pathName] = {};
-		model[pathName]._id = this.getValueByPath('_id');
-		model[pathName].actions = this.getValueByPath('actions');
+		model[modelName] = {};
+		model[modelName][ACTIVE_ACTION_KEY] = {};
+		model[modelName]._id = this.getValueByPath('_id');
+		model[modelName][ACTIVE_ACTION_KEY] = saveData;
 
-		this.updateAttributesFor('actions', model[pathName].actions);
+		this._getFollowModel(path, dataForSave);
+		this.updateAttributesFor(ACTIVE_ACTION_KEY, this._setFollowModel(path, dataForSave));
+
 		return this.save({
 			data: model
 		});
 	}
 	
+	saveForFlowControl(changedFlowControl) {
+		let
+			model = {},
+			pathName = this._getModelName();
+
+		model[pathName] = {};
+		model[pathName]._id = this.getValueByPath('_id');
+		model[pathName].actions = changedFlowControl;
+
+		return this.save({
+			data: model
+		});
+	}
+
+	toJSON() {
+		let
+			model = {};
+
+		model[this._getModelName()] = $.extend({}, this.getModel());
+		delete model[this._getModelName()].follow;
+
+		return model;
+	}
+
+	assignAttributes(props) {
+		super.assignAttributes.call(this, props);
+
+		let activeForward = this.getValueByPath(ACTIVE_ACTION_KEY);
+		this._setFollowModel(activeForward.name, activeForward.value);
+
+		return this;
+	}
+
+	_setFollowModel(path, followData) {
+		let
+			forwardModel = $.extend({}, this.getValueByPath('follow'));
+
+		if (path === "mobile" && followData.type === "contact") {
+			// If user phone number match with contact phone number
+			if (Storage.getValue('phone') !== followData.number) {
+				path = "contact";
+			}
+		}
+
+		if (path) {
+			forwardModel[path].selected = true;
+			forwardModel[path].value = followData
+		}
+
+		this.updateAttributesFor('follow', forwardModel);
+	}
+
+	_getFollowModel(path, followData) {
+		let
+			forwardModel = $.extend({}, this.getValueByPath('follow'));
+
+		// If we set data from component, change path to mobile for backend
+		if (path === "contact") {
+			path = "mobile";
+			if (!followData.type) {
+				followData.type = "contact";
+			}
+		}
+
+		if (path) {
+			forwardModel[path].selected = true;
+			forwardModel[path].value = followData
+		}
+
+		this.updateAttributesFor('follow', forwardModel);
+	}
+	
 	_defaultDialplan() {
-		return {
+		let defaultDialplan = {
 			"_id": "",
 			"personal": false,
 			"in_number": "",
 			"ex_number": "",
 			"title": "",
-			"follow": {
-				"original": {
-					"selected": false
-				},
-				"mobile": {
-					"selected": false,
-					"value": {
-						"number": ""
-					}
-				},
-				"mailbox": {
-					"is_on": true,
-					"selected": false,
-					"value": {
-						"_id": "",
-						"name": "",
-						"number": ""
-					}
-				},
-				"contact": {
-					"selected": false,
-					"value": {
-						"_id": "",
-						"name": "",
-						"number": "",
-						"type": ""
-					}
-				}
-			},
-			"actions": []
+			"follow": FOLLOW_MODEL,
+			"actions": []			
 		};
+
+		defaultDialplan[ACTIVE_ACTION_KEY] = {
+			"name": "",
+			"value": {
+				
+			}
+		};
+		
+		return defaultDialplan;
 	}
 
 	_defaultActions() {

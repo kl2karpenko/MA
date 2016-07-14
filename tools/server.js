@@ -4,6 +4,7 @@ var _       = require('underscore');
 
 var data = require('./data.js');
 
+var activeActionsPossibleValues = data.activeActionsPossibleValues;
 var dialplanFollowDefault = data.dialplanFollowDefault;
 var dialplans = data.dialplans;
 var dialplansOnlyPersonal = data.dialplansOnlyPersonal;
@@ -16,6 +17,8 @@ var isNotAuthorize = data.isNotAuthorize;
 var connectsPin = data.connectsPin;
 var connectsPinBad = data.connectsPinBad;
 var extensions = data.extensions;
+var ACTIVE_ACTION_KEY = data.active_action_key;
+
 
 var app = express();
 var port = 8030;
@@ -24,19 +27,19 @@ var root = path.resolve(__dirname, '../build');
 
 app.configure(() => {
 
+
 	// app.use(express.static('build', root));
 	app.use(express.static(root));
 	app.use(express.bodyParser());
 	app.use(express.logger('dev'));
 	app.use(app.router);
 });
+
 /**
  * List of contacts from user mobile, only for development needs
  */
 app.get('/contacts', function (req, res) {
-	res.send({
-		"contacts": null
-	});
+	res.send(data.contacts);
 });
 
 /**
@@ -88,12 +91,8 @@ app.get('/dialplans/:dialplanId', function (req, res) {
 app.put('/dialplans/:dialplanId', function (req, res) {
 	var activeDialplan = dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)];
 
-	if (req.body.dialplan.follow) {
-		Object.keys(activeDialplan.follow).forEach(function (path) {
-			activeDialplan.follow[path].selected = false;
-		});
-
-		activeDialplan.follow = _.extend({}, dialplanFollowDefault.follow, req.body.dialplan.follow);
+	if (req.body.dialplan[ACTIVE_ACTION_KEY]) {
+		activeDialplan[ACTIVE_ACTION_KEY] = req.body.dialplan[ACTIVE_ACTION_KEY];
 	} else if (req.body.dialplan.actions) {
 		activeDialplan.actions = req.body.dialplan.actions;
 	}

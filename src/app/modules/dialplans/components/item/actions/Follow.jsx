@@ -37,10 +37,10 @@ export default class Follow extends Component {
 
 		switch(dataName) {
 			case "mailbox":
-				config.info = Dialplan.getValueByPath("follow.mailbox.value.name") || (!this.props.personal && "Tap to choose a mailbox");
+				config.info = Dialplan.getValueByPath("follow.mailbox.value.number") || (!this.props.personal && "Tap to choose a mailbox");
 				break;
 			case "contact":
-				config.info = Dialplan.getValueByPath("follow.contact.value.name") || "Tap to choose a contact";
+				config.info = Dialplan.getValueByPath("follow.contact.value.number") || "Tap to choose a contact";
 				break;
 			case "mobile":
 				config.info = mobileNumber;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
+import config from 'envConfig';
 
 import Storage from "models/Storage";
 
@@ -29,7 +30,7 @@ export default class Personal extends Component {
 		let phoneValue = Storage.getValue('phone');
 
 		if (!phoneValue) {
-			if (process.env.platformName === 'ios' || process.env.NODE_ENV === 'dev' ) {
+			if (config.process.isIOS() || config.process.isDev() ) {
 				phoneValue = prompt("Please enter your phone number");
 				phoneValue && Storage.setValue('phone', phoneValue);
 			}
