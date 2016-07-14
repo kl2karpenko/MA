@@ -41,7 +41,7 @@ postcss()
  * ==========================================================
  */
 
-const ProcessInfo = require('../../src/app/env/process');
+const ProcessInfo = require('../../env/process');
 const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnvironment();
 const webpackConfig = require('./../env/config')[ACTIVE_ENVIRONMENT];
 
@@ -119,7 +119,7 @@ module.exports = {
     resolve: {
         root: path.resolve(dirname),
         alias: {
-            "envConfig": "src/app/env/" + ACTIVE_ENVIRONMENT +  ".js",
+            "envConfig": "env/" + ACTIVE_ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
             "modules": 'src/app/modules',
