@@ -431,7 +431,7 @@ app.get('/contacts', function (req, res) {
 				name: "Lily",
 				phoneNumbers: [
 					{
-						normalizedNumber: "+380504144151"
+						normalizedNumber: "380504144151"
 					}
 				]
 			},
@@ -441,7 +441,7 @@ app.get('/contacts', function (req, res) {
 				name: "Lily",
 				phoneNumbers: [
 					{
-						normalizedNumber: "+380934032379"
+						normalizedNumber: "380934032379"
 					}
 				]
 			}
