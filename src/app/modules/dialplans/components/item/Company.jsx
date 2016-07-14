@@ -5,7 +5,7 @@ import config               from 'envConfig';
 
 import CompanyActions       from "../../models/actions/Company";
 import Dialplan             from "models/Dialplan";
-import Storage              from "models/Storage";
+import PhoneNumber          from "models/PhoneNumber";
 
 import MainScroll           from 'components/layouts/main/Scroll.jsx';
 
@@ -23,12 +23,15 @@ export default class Company extends Component {
 	}
 
 	static _getUserNumber() {
-		let phoneValue = Storage.getValue('phone');
+		let phoneValue = PhoneNumber.getValueByPath('value');
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || !config.process.isProd() ) {
 				phoneValue = prompt("Please enter your phone number");
-				phoneValue && Storage.setValue('phone', phoneValue);
+				if (phoneValue) {
+					PhoneNumber.updateAttributesFor('value', phoneValue);
+					PhoneNumber.save();
+				}
 			}
 		}
 

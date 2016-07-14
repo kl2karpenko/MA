@@ -5,7 +5,7 @@ import MobileContacts from "../models/MobileContacts";
 import ListComponent from "components/list/Index.jsx";
 
 import Dialplan from "models/Dialplan";
-import Storage from "models/Storage";
+import PhoneNumber from "models/PhoneNumber";
 
 function _configData(data) {	
 	return data && data.map((item) => {
@@ -40,7 +40,7 @@ export default class Contacts extends Component {
 		/**
 		 * if person takes from list of contacts his own number
 		 */
-		if (contactData.number === Storage.getValue('phone')) {
+		if (contactData.number === PhoneNumber.getValueByPath('value')) {
 			followPath = "mobile";
 		}
 		

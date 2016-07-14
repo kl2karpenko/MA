@@ -18,7 +18,12 @@ class Pin extends Model {
 		});
 
 		deferred.then(() => {
-			Storage.setValue('pin', this.pin.value);
+			if (this.pin.value) {
+				Storage.setValue('pin', this.pin.value);
+			} else {
+				Storage.deleteValue('pin');
+			}
+
 			this._setOriginalValues({
 				value: this.pin.value
 			});

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Tappable from 'react-tappable';
 
-import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import { Keyboard } from 'components/Keyboard.jsx';
 import Storage from "models/Storage";
 
 export default class PinForm extends Component {
@@ -16,7 +16,7 @@ export default class PinForm extends Component {
 		this._toggleUsingPin = this._toggleUsingPin.bind(this);
 	}
 
-	componentWillReceiveProps(props) {
+	_setState(props) {
 		this.setState({
 			classFocus: props.pin.classFocus,
 			active: props.pin.active,
@@ -25,14 +25,18 @@ export default class PinForm extends Component {
 			messages: {
 				active: {
 					show: props.pin.messages.active,
-					text: "Current value didn't not match"
+					text: "Wrong pin code"
 				},
 				created: {
 					show: props.pin.messages.created,
-					text: "Pin code value didn't match"
+					text: "Code didn't match"
 				}
 			}
 		});
+	}
+
+	componentWillReceiveProps(props) {
+		this._setState(props);
 	}
 
 	onTouch(index, e) {
@@ -53,9 +57,14 @@ export default class PinForm extends Component {
 		});
 
 		if (!isPinOn) {
+			this.state.parent.setPin();
+
 			this.state.parent.setState({
-				keyboardIsVisible: false
+				keyboardIsVisible: false,
+				type: "pin"
 			});
+
+			this.state.parent._save();
 		}
 	}
 

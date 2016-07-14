@@ -1,5 +1,5 @@
 import Model from 'Model';
-import Storage from "models/Storage";
+import PhoneNumber from "models/PhoneNumber";
 
 const
 	FOLLOW_MODEL = {
@@ -104,13 +104,12 @@ class Dialplan extends Model {
 
 		if (path === "mobile" && followData.type === "contact") {
 			// If user phone number match with contact phone number
-			if (Storage.getValue('phone') !== followData.number) {
+			if (PhoneNumber.getValueByPath('value') !== followData.number) {
 				path = "contact";
 			}
 		}
 
 		Object.keys(forwardModel).forEach((keyForward) => {
-			console.log(forwardModel[keyForward], keyForward)
 			forwardModel[keyForward].selected = false;
 		});
 

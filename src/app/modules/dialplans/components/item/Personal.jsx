@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 import config from 'envConfig';
 
-import Storage from "models/Storage";
+import PhoneNumber from "models/PhoneNumber";
 
 import PersonalActions from "../../models/actions/Personal";
 import Follow from './actions/Follow.jsx';
@@ -27,12 +27,15 @@ export default class Personal extends Component {
 	}
 
 	_getNumber() {
-		let phoneValue = Storage.getValue('phone');
+		let phoneValue = PhoneNumber.getValueByPath('value');
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || config.process.isDev() ) {
 				phoneValue = prompt("Please enter your phone number");
-				phoneValue && Storage.setValue('phone', phoneValue);
+				if (phoneValue) {
+					PhoneNumber.updateAttributesFor('value', phoneValue);
+					PhoneNumber.save();
+				}
 			}
 		}
 

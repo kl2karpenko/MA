@@ -94,7 +94,16 @@ app.put('/dialplans/:dialplanId', function (req, res) {
 	if (req.body.dialplan[ACTIVE_ACTION_KEY]) {
 		activeDialplan[ACTIVE_ACTION_KEY] = req.body.dialplan[ACTIVE_ACTION_KEY];
 	} else if (req.body.dialplan.actions) {
-		activeDialplan.actions = req.body.dialplan.actions;
+		var actionsArray = activeDialplan.actions;
+
+		actionsArray = actionsArray.map((action) => {
+			if (action.short_code === req.body.dialplan.actions.short_code) {
+				return req.body.dialplan.actions;
+			}
+			return action;
+		});
+
+		activeDialplan.actions = actionsArray;
 	}
 
 	res.send({

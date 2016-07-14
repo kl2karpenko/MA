@@ -15,6 +15,7 @@ import MainScroll from 'components/layouts/main/Scroll.jsx';
 import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 import Pin from "models/Pin";
+import PhoneNumber from "models/PhoneNumber";
 import Dialplan from "models/Dialplan";
 import Storage from "models/Storage";
 
@@ -23,11 +24,12 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
+			type: "",
 			element: $('input[name=active]').get(0),
 			keyboardIsVisible: false,
 			isValid: false,
 			value: "",
-			phoneNumber: Storage.getValue('phone') || ""
+			phoneNumber: PhoneNumber.getValueByPath('value')
 		};
 
 		this.setPin();
@@ -35,7 +37,6 @@ export default class Index extends Component {
 		this._save = this._save.bind(this);
 		this.closeCustomKeyboard = this.closeCustomKeyboard.bind(this);
 		this.onChange = this.onChange.bind(this);
-		this._enterPhone = this._enterPhone.bind(this);
 	}
 
 	setPin() {
@@ -59,19 +60,34 @@ export default class Index extends Component {
 	}
 
 	_save() {
-		Pin.updateAttributesFor('value', this.pin.created);
+		if (this.state.type === "pin") {
+			Pin.updateAttributesFor('value', this.pin.created);
 
-		return Pin
+			return Pin
 				.save()
 				.then(() => {
 					this.closeCustomKeyboard();
 					this.setPin();
 				});
+		} else if (this.state.type === "phone") {
+			PhoneNumber.updateAttributesFor('value', this.state.phoneNumber);
+
+			return PhoneNumber
+				.save()
+				.then(() => {
+					this.closeCustomKeyboard();
+				});
+		}
 	}
 
 	onChange(newVal) {
 		if (this.state.element.name === "phone") {
-			this._enterPhone(newVal);
+			this.setState({
+				type: "phone",
+				value: newVal,
+				phoneNumber: newVal,
+				isValid: newVal !== "" && (PhoneNumber.getValueByPath('value') !== newVal)
+			});
 		} else {
 			if (newVal.length >= 5) {
 				newVal = newVal.substring(0, 5);
@@ -81,6 +97,7 @@ export default class Index extends Component {
 
 			this._addValidation();
 			this.setState({
+				type: "pin",
 				value: newVal,
 				isValid: this._checkIsValid()
 			});
@@ -139,12 +156,14 @@ export default class Index extends Component {
 		setTimeout(function () {
 			Keyboard.closeKeyBoard();
 		}, 0);
+
 		this.pin.classFocus = setCurrentFocusedInputTo(4, index);
 
 		this.setState({
 			element: e.target,
 			value: e.target.value,
-			keyboardIsVisible: true
+			keyboardIsVisible: true,
+			type: e.target.name == "phone" ? "phone" : "pin"
 		});
 
 		return Keyboard.closeKeyBoard(e);
@@ -154,21 +173,9 @@ export default class Index extends Component {
 		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
 
-	_enterPhone(value) {
-		this.setState({
-			value: value,
-			phoneNumber: value
-		});
-
-		if (value) {
-			Storage.setValue('phone', value);
-		} else {
-			Storage.deleteValue('phone');
-		}
-	}
-
-	_disconnect() {
+	static _disconnect() {
 		hashHistory.push('/authorize');
+		location.reload();
 	}
 
 	render() {
@@ -235,7 +242,7 @@ export default class Index extends Component {
 							pressDelay={500}
 							component="button"
 		          className="btn btn-block btn-block-lg btn-disconnect"
-		          onTap={this._disconnect}
+		          onTap={Index._disconnect}
 						>
 							Disconnect app
 						</Tappable>

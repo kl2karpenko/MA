@@ -3,7 +3,7 @@ import { hashHistory } from 'react-router';
 import Tappable from 'react-tappable';
 
 import Dialplan from "models/Dialplan";
-import Storage from "models/Storage";
+import PhoneNumber from "models/PhoneNumber";
 
 export default class Follow extends Component {
 	constructor(props) {
@@ -33,11 +33,11 @@ export default class Follow extends Component {
 	_config(dataName) {
 		let
 			config = {},
-			mobileNumber = Storage.getValue('phone');
+			mobileNumber = PhoneNumber.getValueByPath('value');
 
 		switch(dataName) {
 			case "mailbox":
-				config.info = Dialplan.getValueByPath("follow.mailbox.value.number") || (!this.props.personal && "Tap to choose a mailbox");
+				config.info = !this.props.personal && (Dialplan.getValueByPath("follow.mailbox.value.number") || "Tap to choose a mailbox");
 				break;
 			case "contact":
 				config.info = Dialplan.getValueByPath("follow.contact.value.number") || "Tap to choose a contact";
