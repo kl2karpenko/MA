@@ -46,7 +46,6 @@ export default class Index extends Component {
 		Dialplan
 			.saveForFollowTo("mailbox", {
 				_id: mailboxData._id,
-				name: mailboxData.name + ` (${mailboxData.number})`,
 				number: mailboxData.number
 			})
 			.then(() => {

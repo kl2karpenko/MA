@@ -5,8 +5,6 @@ import imageLoader from 'imageLoader';
 export default class Image extends Component {
 	constructor(props) {
 		super(props);
-
-		console.log(this.props.src);
 	}
 
 	render() {

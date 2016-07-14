@@ -33,10 +33,8 @@ export default class Contacts extends Component {
 		
 		Dialplan
 			.saveForFollowTo("contact", {
-				_id: null,
-				name: contactData.name + ` (${contactData.number})`,
 				number: contactData.number,
-				type: "mobile_contact"
+				type: "contact"
 			})
 			.then(() => {
 				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));

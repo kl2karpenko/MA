@@ -30,8 +30,6 @@ export default class Index extends Component {
 			phoneNumber: Storage.getValue('phone') || ""
 		};
 
-		console.log(Storage.getValue('phone'));
-
 		this.setPin();
 
 		this._save = this._save.bind(this);

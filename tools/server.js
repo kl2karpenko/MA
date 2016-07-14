@@ -9,7 +9,7 @@ var port = 8030;
 // Local data =================================== //
 
 var activeActionsPossibleValues = {
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {
 
@@ -65,7 +65,7 @@ var dialplans = [{
 	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -84,7 +84,7 @@ var dialplans = [{
 		"short_code": "2",
 		"is_on": false
 	}],
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	},
@@ -97,7 +97,7 @@ var dialplans = [{
 	"in_number": "+38 050 414 41 51",
 	"title": "Karpenko Liliia",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -108,7 +108,7 @@ var dialplans = [{
 	"title": "Studenyak Nastia",
 	"personal": false,
 	"actions": [],
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -118,7 +118,7 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Kebal Ivan",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -128,7 +128,7 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Rybachok Oleksandr",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -138,7 +138,7 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Saiko Iryna",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -148,7 +148,7 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Berladin Ewgeny",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -158,7 +158,7 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Yurch Yuriy",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -168,7 +168,7 @@ var dialplans = [{
 	"in_number": "+38 093 403 23 79",
 	"title": "Skorohliad Ivan",
 	"personal": false,
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -180,7 +180,7 @@ var dialplansOnlyPersonal = [{
 	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
-	"active_action": {
+	"active_action_key": {
 		"name": "original",
 		"value": {}
 	}
@@ -492,18 +492,16 @@ app.get('/dialplans/:dialplanId', function (req, res) {
 	});
 });
 
+var ACTIVE_ACTION_KEY = "active_action_key";
+
 /**
  * Save detail info about dialplan
  */
 app.put('/dialplans/:dialplanId', function (req, res) {
 	var activeDialplan = dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)];
 
-	if (req.body.dialplan.follow) {
-		Object.keys(activeDialplan.follow).forEach(function (path) {
-			activeDialplan.follow[path].selected = false;
-		});
-
-		activeDialplan.follow = _.extend({}, dialplanFollowDefault.follow, req.body.dialplan.follow);
+	if (req.body.dialplan[ACTIVE_ACTION_KEY]) {
+		activeDialplan[ACTIVE_ACTION_KEY] = req.body.dialplan[ACTIVE_ACTION_KEY];
 	} else if (req.body.dialplan.actions) {
 		activeDialplan.actions = req.body.dialplan.actions;
 	}

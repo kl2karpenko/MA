@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
-import config from 'envConfig';
+import { hashHistory }      from 'react-router';
 
-import CompanyActions from "../../models/actions/Company";
+import config               from 'envConfig';
 
-import Dialplan from "models/Dialplan";
+import CompanyActions       from "../../models/actions/Company";
+import Dialplan             from "models/Dialplan";
+import Storage              from "models/Storage";
 
-import MainScroll from 'components/layouts/main/Scroll.jsx';
+import MainScroll           from 'components/layouts/main/Scroll.jsx';
 
-import Follow from './actions/Follow.jsx';
-import FlowControl from './actions/FlowControl.jsx';
-import Storage from "models/Storage";
+import Follow               from './actions/Follow.jsx';
+import FlowControl          from './actions/FlowControl.jsx';
 
 export default class Company extends Component {
 	constructor(props) {
@@ -22,11 +22,11 @@ export default class Company extends Component {
 		};
 	}
 
-	_getNumber() {
+	static _getUserNumber() {
 		let phoneValue = Storage.getValue('phone');
 
 		if (!phoneValue) {
-			if (config.process.isIOS() || config.process.isDev() || config.process.isLocal() ) {
+			if (config.process.isIOS() || !config.process.isProd() ) {
 				phoneValue = prompt("Please enter your phone number");
 				phoneValue && Storage.setValue('phone', phoneValue);
 			}
@@ -58,7 +58,7 @@ export default class Company extends Component {
 				}
 				break;
 			case "mobile":
-				let number = this._getNumber();
+				let number = Company._getUserNumber();
 
 				if (number) {
 					Dialplan.saveForFollowTo("mobile", {
@@ -68,7 +68,7 @@ export default class Company extends Component {
 				}
 				break;
 			default:
-				Dialplan.saveForFollowTo(object.name);
+				Dialplan.saveForFollowTo(object.name, {});
 				this._updateDialplan();
 				break;
 		}
@@ -78,7 +78,6 @@ export default class Company extends Component {
 		object.is_on = !object.is_on;
 
 		this._updateDialplan();
-		console.log(Dialplan.getModel(), 'Dialplan.getModel()');
 
 		Dialplan.saveForFlowControl(object);
 	}

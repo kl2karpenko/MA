@@ -8,7 +8,6 @@ export default class FlowControl extends Component {
 		super(props);
 
 		this.state = props.options;
-		console.log(props.options)
 	}
 
 	render() {
