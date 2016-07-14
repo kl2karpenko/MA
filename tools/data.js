@@ -419,7 +419,7 @@ var contacts = {
 			name: "Lily",
 			phoneNumbers: [
 				{
-					normalizedNumber: "+380504144151"
+					normalizedNumber: "380504144151"
 				}
 			]
 		},
@@ -429,7 +429,7 @@ var contacts = {
 			name: "Lily",
 			phoneNumbers: [
 				{
-					normalizedNumber: "+380934032379"
+					normalizedNumber: "380934032379"
 				}
 			]
 		}

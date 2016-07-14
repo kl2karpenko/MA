@@ -46,18 +46,19 @@ class Dialplan extends Model {
 		let
 			model = {},
 			modelName = this._getModelName(),
-			saveData = {
-				name: path,
-				value: dataForSave
-			};
+			saveData = this._getFollowModel(path, dataForSave);
+
+		if (!this._isDirty()) {
+			return $.Deferred().resolve();
+		}
 
 		model[modelName] = {};
 		model[modelName][ACTIVE_ACTION_KEY] = {};
 		model[modelName]._id = this.getValueByPath('_id');
 		model[modelName][ACTIVE_ACTION_KEY] = saveData;
 
-		this._getFollowModel(path, dataForSave);
-		this.updateAttributesFor(ACTIVE_ACTION_KEY, this._setFollowModel(path, dataForSave));
+		this.updateAttributesFor(ACTIVE_ACTION_KEY, saveData);
+		this._setFollowModel(path, dataForSave);
 
 		return this.save({
 			data: model
@@ -108,9 +109,14 @@ class Dialplan extends Model {
 			}
 		}
 
+		Object.keys(forwardModel).forEach((keyForward) => {
+			console.log(forwardModel[keyForward], keyForward)
+			forwardModel[keyForward].selected = false;
+		});
+
 		if (path) {
 			forwardModel[path].selected = true;
-			forwardModel[path].value = followData
+			forwardModel[path].value = followData;
 		}
 
 		this.updateAttributesFor('follow', forwardModel);
@@ -130,10 +136,15 @@ class Dialplan extends Model {
 
 		if (path) {
 			forwardModel[path].selected = true;
-			forwardModel[path].value = followData
+			forwardModel[path].value = followData;
 		}
 
 		this.updateAttributesFor('follow', forwardModel);
+
+		return {
+			name: path,
+			value: followData
+		};
 	}
 	
 	_defaultDialplan() {

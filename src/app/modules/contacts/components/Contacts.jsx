@@ -5,6 +5,7 @@ import MobileContacts from "../models/MobileContacts";
 import ListComponent from "components/list/Index.jsx";
 
 import Dialplan from "models/Dialplan";
+import Storage from "models/Storage";
 
 function _configData(data) {	
 	return data && data.map((item) => {
@@ -24,18 +25,27 @@ export default class Contacts extends Component {
 	}
 
 	_setActiveContact(i, contactData) {
-		let id = Dialplan.getValueByPath("_id");
+		let id = Dialplan.getValueByPath("_id"),
+			followObject = {
+				number: contactData.number,
+				type: "contact"
+			},
+			followPath = "contact";
 
 		if (!id) {
 			hashHistory.push('/dialplans');
 			return;
 		}
+
+		/**
+		 * if person takes from list of contacts his own number
+		 */
+		if (contactData.number === Storage.getValue('phone')) {
+			followPath = "mobile";
+		}
 		
 		Dialplan
-			.saveForFollowTo("contact", {
-				number: contactData.number,
-				type: "contact"
-			})
+			.saveForFollowTo(followPath, followObject)
 			.then(() => {
 				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});
