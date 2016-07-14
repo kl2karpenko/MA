@@ -1,7 +1,8 @@
-import config from 'envConfig';
-
+// import config from 'envConfig';
 module.exports = function (pathToImg) {
-	let imgPath = (config.process.isDev() || config.process.isLocal()) ? 'build/' : '';
+	// let imgPath = process.env.NODE_ENV === "dev" ? 'build/' : '';
+
+	let imgPath = '';
 	
 	if (Array.isArray(pathToImg)) {
 		pathToImg = pathToImg.map((path) => {
@@ -12,4 +13,4 @@ module.exports = function (pathToImg) {
 	}
 
 	return pathToImg;
-};
+}

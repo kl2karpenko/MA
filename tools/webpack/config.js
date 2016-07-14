@@ -1,6 +1,5 @@
 const path              = require('path');
 const webpack           = require('webpack');
-const webpackConfig     = require('./../env/config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const fs                = require("fs");
@@ -19,7 +18,12 @@ postcss()
       path: ["src/css"],
       glob: true
   }))
-  .process(fs.readFileSync("src/css/app.less", "utf8"), { from: "src/css" });
+  .process(
+    fs.readFileSync("src/css/app.less", "utf8"),
+    { from: "src/css" }
+  );
+
+
 /**
  * ==========================================================
  * Post css all less files, add suffix
@@ -39,6 +43,7 @@ postcss()
 
 const ProcessInfo = require('../../src/app/env/process');
 const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnvironment();
+const webpackConfig = require('./../env/config')[ACTIVE_ENVIRONMENT];
 
 /**
  * ==========================================================
@@ -47,7 +52,7 @@ const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnvironment();
  */
 
 console.log(" ================ are on >> "
-  + ACTIVE_ENVIRONMENT.toUpperCase() + 
+  + ACTIVE_ENVIRONMENT.toUpperCase() +
   " << environment =====================");
 
 /**
@@ -88,10 +93,10 @@ module.exports = {
             template: 'src/template.html',
             inject: false,
             assets: {
-                "scripts": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.scripts,
-                "connect": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.connect,
-                "modernizr": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.modernizr,
-                "styles": webpackConfig[ACTIVE_ENVIRONMENT].filesPath.styles
+                "scripts": webpackConfig.filesPath.scripts,
+                "connect": webpackConfig.filesPath.connect,
+                "modernizr": webpackConfig.filesPath.modernizr,
+                "styles": webpackConfig.filesPath.styles
             }
         }),
 
@@ -165,7 +170,7 @@ module.exports = {
                 test: /.*\.(gif|png|jpe?g|svg)$/i,
                 loaders: [
                     'file?hash=sha512&digest=hex&name=img/[name].[ext]',
-                    'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+                    'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false}'
                 ]
             },
 

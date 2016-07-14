@@ -62,10 +62,10 @@ $ webpack --config tools/webpack/config.js
 ```
 
 #### Run a local server:
-Go to build/ dir and run from there node server
+Execute next line from project directory to run node express server with mocked data.
 
 ```
-node ../tools/server.js
+node tools/server.js
 ```
 
 This will start localhost on 8030 port.
