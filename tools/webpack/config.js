@@ -26,15 +26,16 @@ postcss()
 
 // load plugins
 
-const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
+
 const dirname = path.join(__dirname, '../../');
 
-var isProd = ENVIRONMENT === "prod";
+var isProd = webpackConfig.isProd;
 
 // if we have prod we will set all to ww dir if dev all to build dir
-var distDir = isProd ? 'www' : 'build';
+var distDir = webpackConfig.distDir;
 
-console.log(" ========================== Your are on >> " + ENVIRONMENT.toUpperCase() + " << environment ================================");
+
+console.log(" ========================== Your are on >> " + webpackConfig.ENVIRONMENT.toUpperCase() + " << environment ================================");
 
 module.exports = {
     context: dirname,
@@ -59,7 +60,7 @@ module.exports = {
 
         new webpack.DefinePlugin({
             'process.env': {
-              'NODE_ENV': JSON.stringify(ENVIRONMENT),
+              'NODE_ENV': JSON.stringify(webpackConfig.ENVIRONMENT),
               'platformName': JSON.stringify(process.env.platformName)
             }
         }),
@@ -69,10 +70,10 @@ module.exports = {
             template: 'src/template.html', // Load a custom template
             inject: false,
             assets: {
-                "scripts": webpackConfig[ENVIRONMENT].filesPath.scripts,
-                "connect": webpackConfig[ENVIRONMENT].filesPath.connect,
-                "modernizr": webpackConfig[ENVIRONMENT].filesPath.modernizr,
-                "styles": webpackConfig[ENVIRONMENT].filesPath.styles
+                "scripts": webpackConfig.filesPath.scripts,
+                "connect": webpackConfig.filesPath.connect,
+                "modernizr": webpackConfig.filesPath.modernizr,
+                "styles": webpackConfig.filesPath.styles
             }
         }),
 
@@ -95,7 +96,7 @@ module.exports = {
     resolve: {
         root: path.resolve(dirname),
         alias: {
-            "envConfig": "src/app/env/" + ENVIRONMENT +  ".js",
+            "envConfig": "src/app/env/" + webpackConfig.ENVIRONMENT +  ".js",
             "images": 'src/img',
             "lib": 'src/app/lib',
             "modules": 'src/app/modules',

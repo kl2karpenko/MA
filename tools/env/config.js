@@ -1,14 +1,19 @@
-module.exports = {
+const ENVIRONMENT = process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "prod" : 'dev';
+var conf = {
 	"dev": {
-		filesPath: {
-			"scripts": "/build/app.js",
-			"connect": "/build/connect.js",
-			"modernizr": "/build/modernizr.js",
-			"styles": "/build/app.css"
+		"isProd": false,
+		"distDir": 'build',
+		"filesPath": {
+			"scripts": "app.js",
+			"connect": "connect.js",
+			"modernizr": "modernizr.js",
+			"styles": "app.css"
 		}
 	},
 	"prod": {
-		filesPath: {
+		"isProd": true,
+		"distDir": 'www',
+		"filesPath": {
 			"scripts": "app.js",
 			"connect": "connect.js",
 			"modernizr": "modernizr.js",
@@ -16,3 +21,7 @@ module.exports = {
 		}
 	}
 };
+
+conf[ENVIRONMENT].ENVIRONMENT = ENVIRONMENT;
+
+module.exports = conf[ENVIRONMENT];
