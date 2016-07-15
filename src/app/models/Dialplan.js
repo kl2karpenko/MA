@@ -14,14 +14,15 @@ class Dialplan extends Model {
 	}
 
 	_saveFollowToOrigin() {
+		if (this._getActiveActionKey() === "origin") {
+			return $.Deferred().resolve();
+		}
+
 		let
 			changedData = {};
 
 		changedData[ACTIVE_ACTION_KEY] = "origin";
 		this._setActiveActionKey("origin");
-
-		// set origin values
-		this._setOriginalValues(this.getModel());
 
 		return this.save({
 			data: {
@@ -31,6 +32,10 @@ class Dialplan extends Model {
 	}
 
 	_saveFollowToTransfer(data) {
+		if (this._getActiveActionKey() === "transfer" && this._getActiveTransfer().number === data.number) {
+			return $.Deferred().resolve();
+		}
+
 		let
 			changedData = {};
 
@@ -47,9 +52,6 @@ class Dialplan extends Model {
 			this.updateAttributesFor("follow.contact", data.number);
 		}
 
-		// set origin values
-		this._setOriginalValues(this.getModel());
-
 		return this.save({
 			data: {
 				"dialplan": changedData
@@ -62,6 +64,10 @@ class Dialplan extends Model {
 	}
 
 	_saveFollowToMailbox(data) {
+		if (this._getActiveActionKey() === "mailbox" && this._getActiveMailbox()._id === data._id) {
+			return $.Deferred().resolve();
+		}
+
 		let
 			changedData = {};
 
@@ -78,15 +84,11 @@ class Dialplan extends Model {
 			};
 		}
 
-		// set origin values
-		this._setOriginalValues(this.getModel());
-
 		return this.save({
 			data: {
 				"dialplan": changedData
 			}
 		});
-
 	}
 
 	_getActiveMailbox() {
@@ -94,16 +96,16 @@ class Dialplan extends Model {
 	}
 	
 	saveForFlowControl(changedFlowControl) {
-		let
-			model = {},
-			pathName = this._getModelName();
-
-		model[pathName] = {};
-		model[pathName]._id = this.getValueByPath('_id');
-		model[pathName].actions = changedFlowControl;
-
 		return this.save({
-			data: model
+			data: {
+				"dialplan": {
+					"actions": {
+						"origin": {
+							"items": [changedFlowControl]
+						}
+					}
+				}
+			}
 		});
 	}
 

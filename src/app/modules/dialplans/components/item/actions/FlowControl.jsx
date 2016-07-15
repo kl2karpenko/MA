@@ -10,6 +10,10 @@ export default class FlowControl extends Component {
 		this.state = props.options;
 	}
 
+	componentWillReceiveProps(props) {
+		this.setState(props.options);
+	}
+
 	render() {
 		return (
 			<Tappable

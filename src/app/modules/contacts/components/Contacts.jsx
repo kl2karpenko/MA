@@ -5,7 +5,6 @@ import MobileContacts from "../models/MobileContacts";
 import ListComponent from "components/list/Index.jsx";
 
 import Dialplan from "models/Dialplan";
-import PhoneNumber from "models/PhoneNumber";
 
 function _configData(data) {	
 	return data && data.map((item) => {

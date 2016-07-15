@@ -157,7 +157,7 @@ export default class Index extends Component {
 			Keyboard.closeKeyBoard();
 		}, 0);
 
-		this.pin.classFocus = setCurrentFocusedInputTo(4, index);
+		this.pin.classFocus = setCurrentFocusedInputTo(4, index, e.target);
 
 		this.setState({
 			element: e.target,

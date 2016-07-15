@@ -42,6 +42,7 @@ function _getContactsFromMobile() {
 
 	navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
 		let contacts = [];
+		
 		contactsList.forEach((contactItem) => {
 			contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
 		});

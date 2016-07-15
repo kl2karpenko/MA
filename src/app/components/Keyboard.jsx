@@ -143,9 +143,15 @@ export class Keyboard extends Component {
 	}
 }
 
-export function setCurrentFocusedInputTo(amount, index) {
+export function setCurrentFocusedInputTo(amount, index, element) {
 	let arrayOfFocusedClasses = new Array(amount).fill(false);
 	arrayOfFocusedClasses[index] = true;
+
+	if (index && element) {
+		setTimeout(function () {
+			$('.l-adaptive').scrollTop($(element).position().top - 80);
+		}, 50)
+	}
 
 	return arrayOfFocusedClasses;
 }

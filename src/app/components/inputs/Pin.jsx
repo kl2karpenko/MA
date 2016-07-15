@@ -29,15 +29,17 @@ export default class Pin extends Component {
 		let len = value.length;
 
 		this.setState({
-			additionalClass: setCurrentFocusedInputTo(5, len - 1 < 0 ? len : len - 1)
+			additionalClass: setCurrentFocusedInputTo(5, len - 1 < 0 ? len : len - 1, e.target)
 		});
 	}
 
 	onChange(inputValue) {
 		let
-			validPinLength = 5;
+			validPinLength = 5,
+			target;
 
 		if (inputValue.target) {
+			target = inputValue.target;
 
 			if (!inputValue.target.value.match(/^\d+$/)) {
 				inputValue.target.value = inputValue.target.value.slice(0, -1);
@@ -49,7 +51,7 @@ export default class Pin extends Component {
 		this.state.model.value = inputValue;
 
 		this.setState({
-			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1),
+			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1, target),
 			model: this.state.model
 		});
 
@@ -60,7 +62,7 @@ export default class Pin extends Component {
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
 			this.props.onSubmit().done((newPinModel) => {
 				this.setState({
-					additionalClass: setCurrentFocusedInputTo(5, 0),
+					additionalClass: setCurrentFocusedInputTo(5, 0, target),
 					model: newPinModel.pin
 				});
 			});

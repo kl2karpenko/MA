@@ -92,9 +92,18 @@ app.put('/dialplans/:dialplanId', function (req, res) {
 	var activeAction = req.body.dialplan[ACTIVE_ACTION_KEY];
 
 	activeDialplan[ACTIVE_ACTION_KEY] = activeAction;
+
 	if (req.body.dialplan[ACTION_ARRAY_KEY]) {
-		activeDialplan[ACTION_ARRAY_KEY][activeAction] =
-			req.body.dialplan[ACTION_ARRAY_KEY][activeAction];
+		if (!req.body.dialplan[ACTION_ARRAY_KEY].origin) {
+			activeDialplan[ACTION_ARRAY_KEY][activeAction] =
+				req.body.dialplan[ACTION_ARRAY_KEY][activeAction];
+		} else {
+			var originFlowControls = req.body.dialplan[ACTION_ARRAY_KEY].origin;
+			var shortCode = _.pluck(activeDialplan[ACTION_ARRAY_KEY].origin.items, 'short_code');
+			var indexOfChangedFlowControl = shortCode.indexOf(originFlowControls.items[0].short_code);
+
+			activeDialplan[ACTION_ARRAY_KEY].origin.items[indexOfChangedFlowControl] = originFlowControls.items[0];
+		}
 	}
 
 	res.send({

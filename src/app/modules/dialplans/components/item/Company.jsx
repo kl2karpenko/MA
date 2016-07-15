@@ -91,9 +91,9 @@ export default class Company extends Component {
 	onChangeFlowControl(object) {
 		object.is_on = !object.is_on;
 
-		this._updateDialplan();
-
-		Dialplan.saveForFlowControl(object);
+		Dialplan
+			.saveForFlowControl(object)
+			.then(this._updateDialplan.bind(this));
 	}
 
 	_updateDialplan() {
@@ -119,7 +119,9 @@ export default class Company extends Component {
 						</ul>
 					</div>
 					{(() => {
-						if(this.state.Dialplan.actions && this.state.Dialplan.actions.length) {
+						let flowControls = this.state.Dialplan.actions.origin.items;
+
+						if(flowControls && flowControls.length) {
 							return <div>
 								<div className="l-grey">
 									<div className="l-grey-header">
@@ -128,7 +130,7 @@ export default class Company extends Component {
 								</div>
 								<div className="l-dialplan__list l-main-content">
 									<ul>
-										{this.state.Dialplan.actions.map((object, i) => {
+										{flowControls.map((object, i) => {
 											return <FlowControl
 												index={i}
 												key={i}
