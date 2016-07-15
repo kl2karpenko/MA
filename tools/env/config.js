@@ -1,4 +1,4 @@
-const ProcessInfo = require('../../src/app/env/process');
+const ProcessInfo = require('../../env/process');
 var conf = {};
 
 conf[ProcessInfo.LOCAL] = {
