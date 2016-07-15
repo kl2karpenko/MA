@@ -1,6 +1,7 @@
 import List from 'List';
 
 import config from 'envConfig';
+import Contacts from "models/Contacts";
 
 class MobileContacts extends List {
 	constructor(props) {
@@ -19,11 +20,7 @@ class MobileContacts extends List {
 	}
 	
 	load() {
-		return config.schema.mobileContacts().done((data) => {
-			let type = Array.isArray(data.contacts);
-			
-			type && this.assignAttributes(data.contacts);
-		});
+		return Contacts.load();
 	}
 }
 

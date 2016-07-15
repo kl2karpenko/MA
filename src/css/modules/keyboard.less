@@ -70,12 +70,11 @@
 
       cursor: pointer;
 
-      &:active:not(.buttons) {
+      &:active:not(.buttons), &.Tappable-active:not(.buttons) {
         top: 1px;
 
         background-color: #D8D2D2;
       }
-
 
       &:before {
         content: "";

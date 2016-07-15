@@ -6,6 +6,8 @@ export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log(props.model.getModel())
+
 		this.state = {
 			model: props.model,
 			list: props.model.getModel(),
@@ -16,6 +18,7 @@ export default class Index extends Component {
 	}
 
 	componentWillReceiveProps(props) {
+		console.log(props, 'componentWillReceiveProps', props.model._getModelName())
 		this.setState({
 			model: props.model,
 			list: props.model.getModel(),
@@ -31,6 +34,8 @@ export default class Index extends Component {
 					model: this.state.model,
 					list: this.state.config(data[this.state.model._getModelName()])
 				});
+
+				console.log(this.state)
 			});
 	}
 
