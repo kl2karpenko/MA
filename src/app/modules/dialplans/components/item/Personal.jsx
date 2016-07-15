@@ -26,7 +26,7 @@ export default class Personal extends Component {
 		});
 	}
 
-	_getNumber() {
+	static _getUserNumber() {
 		let phoneValue = PhoneNumber.getValueByPath('value');
 
 		if (!phoneValue) {
@@ -45,33 +45,43 @@ export default class Personal extends Component {
 	onChange(object) {
 		switch(object.name) {
 			case "contact":
-				let contact = Dialplan.getValueByPath('follow.contact');
+				let contact = Dialplan._getActiveTransfer();
 
-				if (contact.value.number) {
-					Dialplan.saveForFollowTo("contact", contact.value).then(() => {
-						this._updateDialplan();
-					});
+				if (contact.number) {
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: contact.number
+						})
+						.then(this._updateDialplan.bind(this));
 				} else {
 					hashHistory.push('/contacts');
 				}
 				break;
-			case "mobile":
-				let number = this._getNumber();
 
-				console.log('set for number', number);
+			case "mobile":
+				let number = Personal._getUserNumber();
 
 				if (number) {
-					Dialplan.saveForFollowTo("mobile", {
-						number: number
-					}).then(() => {
-						this._updateDialplan();
-					});
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: number
+						})
+						.then(this._updateDialplan.bind(this));
 				}
 				break;
+
+			case "mailbox":
+				Dialplan
+					._saveFollowToMailbox()
+					.then(this._updateDialplan.bind(this));
+				break;
+
 			default:
-				Dialplan.saveForFollowTo(object.name).then(() => {
-					this._updateDialplan();
-				});
+				Dialplan
+					._saveFollowToOrigin()
+					.then(this._updateDialplan.bind(this));
 				break;
 		}
 	}

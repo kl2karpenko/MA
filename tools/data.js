@@ -1,21 +1,40 @@
-
 // Local data =================================== //
 
 var activeActionsPossibleValues = {
-	"active_action_key": {
-		"name": "original",
-		"value": {
-
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
 		},
-
-		"name": "mailbox",
-		"value": {
-			"_id": "jthrhrthh89h8rt7hr7th"
+		"mailbox": {
+			"items": [
+				 {
+						"id": "",
+						"number": ""
+				 }
+			]
 		},
-
-		"name": "transfer",
-		"value": {
-			"number": "934589038459435"
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
 		}
 	}
 };
@@ -54,117 +73,426 @@ var dialplanFollowDefault = {
 
 var dialplans = [{
 	"_id": "hrththy56y5yh",
-	"actions": [],
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
 	"title": "Your personal",
 	"personal": true,
 	"ex_number": "+32 1 234 56 78",
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"active_action_key": "origin"
 }, {
 	"_id": "thrty56y56ryr5",
 	"title": "Elisa Doe",
-	"actions": [{
-		"label": "Department Closed",
-		"short_code": "4",
-		"is_on": true
-	}, {
-		"label": "Lunch Break",
-		"short_code": "3",
-		"is_on": true
-	}, {
-		"short_code": "2",
-		"is_on": false
-	}],
-	"active_action_key": {
-		"name": "original",
-		"value": {}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
 	},
+	"active_action_key": "origin",
 	"in_number": "2134",
 	"ex_number": 31152026029,
 	"personal": false
 }, {
 	"_id": "5h656h65h5r6h56h",
-	"actions": [],
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin",
 	"in_number": "+38 050 414 41 51",
 	"title": "Karpenko Liliia",
-	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"personal": false
 }, {
 	"_id": "h46yh4hy6hh",
 	"in_number": "1234",
 	"ex_number": 31152026029,
 	"title": "Studenyak Nastia",
 	"personal": false,
-	"actions": [],
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }, {
 	"_id": "h5r6hy46hh4h66h",
-	"actions": [],
 	"in_number": "+38 093 403 23 79",
 	"title": "Kebal Ivan",
 	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }, {
 	"_id": "6",
-	"actions": [],
 	"in_number": "+38 093 403 23 79",
 	"title": "Rybachok Oleksandr",
 	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }, {
 	"_id": "7",
-	"actions": [],
 	"in_number": "+38 093 403 23 79",
 	"title": "Saiko Iryna",
 	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }, {
 	"_id": "8",
-	"actions": [],
 	"in_number": "+38 093 403 23 79",
 	"title": "Berladin Ewgeny",
 	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }, {
 	"_id": "9",
-	"actions": [],
 	"in_number": "+38 093 403 23 79",
 	"title": "Yurch Yuriy",
 	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }, {
 	"_id": "10",
-	"actions": [],
 	"in_number": "+38 093 403 23 79",
 	"title": "Skorohliad Ivan",
 	"personal": false,
-	"active_action_key": {
-		"name": "original",
-		"value": {}
-	}
+	"actions": {
+		"origin": {
+			"items": [
+				{
+					"label": "Department Closed",
+					"short_code": "4",
+					"is_on": true
+				},
+				{
+					"label": "Lunch Break",
+					"short_code": "3",
+					"is_on": true
+				},
+				{
+					"short_code": "2",
+					"is_on": false
+				}
+			]
+		},
+		"mailbox": {
+			"items": [
+				{
+					"id": "",
+					"number": ""
+				}
+			]
+		},
+		"transfer": {
+			"items": [
+				{
+					"number": "",
+					"type": ""
+				}
+			]
+		}
+	},
+	"active_action_key": "origin"
 }];
 
 var dialplansOnlyPersonal = [{
@@ -314,102 +642,102 @@ var isNotAuthorize = {
  * Connect by pin code
  */
 var connectsPin = {
-   "connects": {
-     "pin": {
-       value: true
-     }
-   }
- }
+	"connects": {
+		"pin": {
+			value: true
+		}
+	}
+}
 
 var connectsPinBad = {
-   "connects": {
-     "pin": {
-       value: false
-     }
-   }
- }
+	"connects": {
+		"pin": {
+			value: false
+		}
+	}
+}
 
 /**
  * List of company extensions
  */
 var extensions = {
-		"extensions": [{
-			"_id": "95c50c4e05cf7993ea326f813f007385",
-			"name": "36368 555888",
-			"image_id": null,
-			"in_number": "5223"
-		}, {
-			"_id": "95c50c4e05cf7993ea326f813f09b25a",
-			"name": "6666 444444",
-			"image_id": null,
-			"in_number": "1252",
-		}, {
-			"_id": "37e19b11b273af1bfe7f3e93c93e79ef",
-			"name": "Aastra iDev",
-			"image_id": "0919c8dd0de9331e427de8a74b9ba0b8",
-			"in_number": "12",
-		}, {
-			"_id": "693f0e88eb877f2dbac1744ced01f879",
-			"name": "adfsdf 3asda",
-			"image_id": null,
-			"in_number": "7789",
-		}, {
-			"_id": "0d6701fb8b7c4d3b6b4e0480a5a7c6c2",
-			"name": "Anatolii Mykhalkiv",
-			"image_id": "0919c8dd0de9331e427de8a74b9bba8d",
-			"in_number": "457",
-		}, {
-			"_id": "70b3790208db1516cb7b84b9e7125356",
-			"name": "asd asd1",
-			"image_id": "0919c8dd0de9331e427de8a74b9bd601",
-			"in_number": "123",
-		}, {
-			"_id": "c30f4b8a01dadd03b1587d97495ba7f0",
-			"name": "Cucumber ext",
-			"image_id": null,
-			"in_number": "1234",
-		}, {
-			"_id": "693f0e88eb877f2dbac1744ced01193d",
-			"name": "errr12 wrwerw",
-			"image_id": null,
-			"in_number": "7894",
-		}, {
-			"_id": "ef5d248060b1c35ab854dbebd11a2b47",
-			"name": "ghvhj ghjhj",
-			"image_id": "0919c8dd0de9331e427de8a74b9bed9c",
-			"in_number": "4567",
-		}, {
-			"_id": "0a80d04635e082422bc2c38ae6cff1a0",
-			"name": "Ivan Kebal",
-			"image_id": null,
-			"in_number": "11",
-		}, {
-			"_id": "95c50c4e05cf7993ea326f813f05fe5e",
-			"name": "Karpenko Lily",
-			"image_id": null,
-			"in_number": "23",
-		}, {
-			"_id": "44c9c04590d90005796a273a238e7cf8",
-			"name": "Lily Karpenko",
-			"image_id": "0919c8dd0de9331e427de8a74b9c0930",
-			"in_number": "2006",
-		}, {
-			"_id": "17469cbe0542d8c007d9f2b29e657654",
-			"name": "Normal555 Name",
-			"image_id": null,
-			"in_number": "1231",
-		}, {
-			"_id": "0fa91a00f933c8c0835e79ad0d0c770d",
-			"name": "Oleg Gryb",
-			"image_id": null,
-			"in_number": "8888",
-		}, {
-			"_id": "95c50c4e05cf7993ea326f813f094582",
-			"name": "rert345 222222",
-			"image_id": null,
-			"in_number": "6533"
-		}]
-	}
+	"extensions": [{
+		"_id": "95c50c4e05cf7993ea326f813f007385",
+		"name": "36368 555888",
+		"image_id": null,
+		"in_number": "5223"
+	}, {
+		"_id": "95c50c4e05cf7993ea326f813f09b25a",
+		"name": "6666 444444",
+		"image_id": null,
+		"in_number": "1252",
+	}, {
+		"_id": "37e19b11b273af1bfe7f3e93c93e79ef",
+		"name": "Aastra iDev",
+		"image_id": "0919c8dd0de9331e427de8a74b9ba0b8",
+		"in_number": "12",
+	}, {
+		"_id": "693f0e88eb877f2dbac1744ced01f879",
+		"name": "adfsdf 3asda",
+		"image_id": null,
+		"in_number": "7789",
+	}, {
+		"_id": "0d6701fb8b7c4d3b6b4e0480a5a7c6c2",
+		"name": "Anatolii Mykhalkiv",
+		"image_id": "0919c8dd0de9331e427de8a74b9bba8d",
+		"in_number": "457",
+	}, {
+		"_id": "70b3790208db1516cb7b84b9e7125356",
+		"name": "asd asd1",
+		"image_id": "0919c8dd0de9331e427de8a74b9bd601",
+		"in_number": "123",
+	}, {
+		"_id": "c30f4b8a01dadd03b1587d97495ba7f0",
+		"name": "Cucumber ext",
+		"image_id": null,
+		"in_number": "1234",
+	}, {
+		"_id": "693f0e88eb877f2dbac1744ced01193d",
+		"name": "errr12 wrwerw",
+		"image_id": null,
+		"in_number": "7894",
+	}, {
+		"_id": "ef5d248060b1c35ab854dbebd11a2b47",
+		"name": "ghvhj ghjhj",
+		"image_id": "0919c8dd0de9331e427de8a74b9bed9c",
+		"in_number": "4567",
+	}, {
+		"_id": "0a80d04635e082422bc2c38ae6cff1a0",
+		"name": "Ivan Kebal",
+		"image_id": null,
+		"in_number": "11",
+	}, {
+		"_id": "95c50c4e05cf7993ea326f813f05fe5e",
+		"name": "Karpenko Lily",
+		"image_id": null,
+		"in_number": "23",
+	}, {
+		"_id": "44c9c04590d90005796a273a238e7cf8",
+		"name": "Lily Karpenko",
+		"image_id": "0919c8dd0de9331e427de8a74b9c0930",
+		"in_number": "2006",
+	}, {
+		"_id": "17469cbe0542d8c007d9f2b29e657654",
+		"name": "Normal555 Name",
+		"image_id": null,
+		"in_number": "1231",
+	}, {
+		"_id": "0fa91a00f933c8c0835e79ad0d0c770d",
+		"name": "Oleg Gryb",
+		"image_id": null,
+		"in_number": "8888",
+	}, {
+		"_id": "95c50c4e05cf7993ea326f813f094582",
+		"name": "rert345 222222",
+		"image_id": null,
+		"in_number": "6533"
+	}]
+}
 
 var contacts = {
 	"contacts": [
@@ -437,21 +765,23 @@ var contacts = {
 };
 
 var active_action_key = "active_action_key";
+var action_array_key = "actions";
 
 module.exports = {
 	active_action_key,
+	action_array_key,
 	activeActionsPossibleValues,
-  dialplanFollowDefault,
-  dialplans,
-  dialplansOnlyPersonal,
-  dialplansList,
-  mailboxes,
-  settingsOn,
-  Permissions,
-  isAuthorize,
-  isNotAuthorize,
-  connectsPin,
-  connectsPinBad,
-  extensions,
+	dialplanFollowDefault,
+	dialplans,
+	dialplansOnlyPersonal,
+	dialplansList,
+	mailboxes,
+	settingsOn,
+	Permissions,
+	isAuthorize,
+	isNotAuthorize,
+	connectsPin,
+	connectsPinBad,
+	extensions,
 	contacts
-}
+};

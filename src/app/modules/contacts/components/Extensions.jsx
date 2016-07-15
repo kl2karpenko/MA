@@ -33,7 +33,7 @@ export default class Contacts extends Component {
 		}
 		
 		Dialplan
-			.saveForFollowTo("contact", {
+			._saveFollowToTransfer({
 				number: contactData.number,
 				type: "extension"
 			})

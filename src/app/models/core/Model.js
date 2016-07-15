@@ -158,8 +158,6 @@ export default class Model {
 			originalValues = $.extend(true, {}, this._getOriginalValues()),
 			changedValues = $.extend(true, {}, this.getModel());
 
-		console.log(originalValues, changedValues)
-
 		return !_.isEqual(originalValues, changedValues);
 	}
 

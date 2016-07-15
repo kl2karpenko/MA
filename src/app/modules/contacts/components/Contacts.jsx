@@ -25,27 +25,18 @@ export default class Contacts extends Component {
 	}
 
 	_setActiveContact(i, contactData) {
-		let id = Dialplan.getValueByPath("_id"),
-			followObject = {
-				number: contactData.number,
-				type: "contact"
-			},
-			followPath = "contact";
+		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
 			hashHistory.push('/dialplans');
 			return;
 		}
-
-		/**
-		 * if person takes from list of contacts his own number
-		 */
-		if (contactData.number === PhoneNumber.getValueByPath('value')) {
-			followPath = "mobile";
-		}
 		
 		Dialplan
-			.saveForFollowTo(followPath, followObject)
+			._saveFollowToTransfer({
+				number: contactData.number,
+				type: "contact"
+			})
 			.then(() => {
 				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});

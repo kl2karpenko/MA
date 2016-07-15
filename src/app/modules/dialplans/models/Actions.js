@@ -24,14 +24,16 @@ export default class Actions extends List {
 				info: "",
 				className: "",
 				search: false,
-				name: "original"
+				name: "origin",
+				active_action_key: "origin"
 			},
 			{
 				title: "Forward to my mobile",
 				info: "",
 				className: "",
 				search: false,
-				name: "mobile"
+				name: "mobile",
+				active_action_key: "transfer"
 			},
 			{
 				title: "Forward to " + (this.personal ? "my" : " ") + " mailbox",
@@ -39,7 +41,8 @@ export default class Actions extends List {
 				className: (!this.personal ? "with-search" : " "),
 				search: (!this.personal ? true : false),
 				name: "mailbox",
-				link: "/mailboxes"
+				link: "/mailboxes",
+				active_action_key: "mailbox"
 			},
 			{
 				title: "Forward to",
@@ -47,7 +50,8 @@ export default class Actions extends List {
 				className: "with-search",
 				search: true,
 				name: "contact",
-				link: "/contacts"
+				link: "/contacts",
+				active_action_key: "transfer"
 			}
 		];
 

@@ -41,42 +41,49 @@ export default class Company extends Component {
 	onChangeDialplanForward(object) {
 		switch(object.name) {
 			case "contact":
-				let contact = Dialplan.getValueByPath('follow.contact');
+				let contactNumber = Dialplan.getValueByPath("follow.contact");
 
-				if (contact.value.number) {
-					Dialplan.saveForFollowTo("contact", contact.value).then(() => {
-						this._updateDialplan();
-					});
+				if (contactNumber) {
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: contactNumber
+						})
+						.then(this._updateDialplan.bind(this));
 				} else {
 					hashHistory.push('/contacts');
 				}
 				break;
-			case "mailbox":
-				let mailbox = Dialplan.getValueByPath('follow.mailbox');
 
-				if (mailbox.value._id) {
-					Dialplan.saveForFollowTo("mailbox", mailbox.value).then(() => {
-						this._updateDialplan();
-					});
+			case "mailbox":
+				let mailbox = Dialplan._getActiveMailbox();
+
+				if (mailbox._id) {
+					Dialplan
+						._saveFollowToMailbox(mailbox)
+						.then(this._updateDialplan.bind(this));
 				} else {
 					hashHistory.push('/mailboxes');
 				}
 				break;
+
 			case "mobile":
 				let number = Company._getUserNumber();
 
 				if (number) {
-					Dialplan.saveForFollowTo("mobile", {
-						number: number
-					}).then(() => {
-						this._updateDialplan();
-					});
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: number
+						})
+						.then(this._updateDialplan.bind(this));
 				}
 				break;
+
 			default:
-				Dialplan.saveForFollowTo(object.name, {}).then(() => {
-					this._updateDialplan();
-				});
+				Dialplan
+					._saveFollowToOrigin()
+					.then(this._updateDialplan.bind(this));
 				break;
 		}
 	}

@@ -18,6 +18,7 @@ var connectsPin = data.connectsPin;
 var connectsPinBad = data.connectsPinBad;
 var extensions = data.extensions;
 var ACTIVE_ACTION_KEY = data.active_action_key;
+var ACTION_ARRAY_KEY = data.action_array_key;
 
 
 var app = express();
@@ -26,8 +27,6 @@ var root = path.resolve(__dirname, '../build');
 
 
 app.configure(() => {
-
-
 	// app.use(express.static('build', root));
 	app.use(express.static(root));
 	app.use(express.bodyParser());
@@ -90,20 +89,12 @@ app.get('/dialplans/:dialplanId', function (req, res) {
  */
 app.put('/dialplans/:dialplanId', function (req, res) {
 	var activeDialplan = dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)];
+	var activeAction = req.body.dialplan[ACTIVE_ACTION_KEY];
 
-	if (req.body.dialplan[ACTIVE_ACTION_KEY]) {
-		activeDialplan[ACTIVE_ACTION_KEY] = req.body.dialplan[ACTIVE_ACTION_KEY];
-	} else if (req.body.dialplan.actions) {
-		var actionsArray = activeDialplan.actions;
-
-		actionsArray = actionsArray.map((action) => {
-			if (action.short_code === req.body.dialplan.actions.short_code) {
-				return req.body.dialplan.actions;
-			}
-			return action;
-		});
-
-		activeDialplan.actions = actionsArray;
+	activeDialplan[ACTIVE_ACTION_KEY] = activeAction;
+	if (req.body.dialplan[ACTION_ARRAY_KEY]) {
+		activeDialplan[ACTION_ARRAY_KEY][activeAction] =
+			req.body.dialplan[ACTION_ARRAY_KEY][activeAction];
 	}
 
 	res.send({

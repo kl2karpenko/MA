@@ -9,44 +9,52 @@ export default class Follow extends Component {
 	constructor(props) {
 		super(props);
 
-		let config = this._config(props.options.name);
+		this._goToList = this._goToList.bind(this);
+
+		let config = this._config(props.options);
 
 		props.options.info = config.info;
+		props.options.checked = config.checked;
 
 		this.state = props.options;
-
-		this._goToList = this._goToList.bind(this);
 	}
 
 	componentWillReceiveProps(props) {
-		let config = this._config(props.options.name);
+		let config = this._config(props.options);
 
 		props.options.info = config.info;
+		props.options.checked = config.checked;
 
 		this.setState(props.options);
 	}
 
-	_getClassName(props) {
-		return props.options.name === "mailbox" && (!Dialplan.getValueByPath("follow.mailbox.is_on") ? " hidden" : "");
-	}
-
-	_config(dataName) {
+	_config(data) {
 		let
 			config = {},
+			dataName = data.name,
 			mobileNumber = PhoneNumber.getValueByPath('value');
 
 		switch(dataName) {
 			case "mailbox":
-				config.info = !this.props.personal && (Dialplan.getValueByPath("follow.mailbox.value.number") || "Tap to choose a mailbox");
+				config.info = !this.props.personal && (Dialplan._getActiveMailbox().number || "Tap to choose a mailbox");
+				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
 				break;
+
 			case "contact":
-				config.info = Dialplan.getValueByPath("follow.contact.value.number") || "Tap to choose a contact";
+				config.info = Dialplan.getValueByPath("follow.contact") || "Tap to choose a contact";
+				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
+				&& Dialplan._getActiveTransfer().number !== mobileNumber) ? "checked" : "";
 				break;
+
 			case "mobile":
 				config.info = mobileNumber;
+				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
+				&& Dialplan._getActiveTransfer().number === mobileNumber) ? "checked" : "";
 				break;
-			case "original":
+
+			case "origin":
 				config.info = "";
+				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
 				break;
 		}
 
@@ -59,7 +67,7 @@ export default class Follow extends Component {
 
 	render() {
 		return (
-			<li className={this.state.className + (this._getClassName(this.props) ? this._getClassName(this.props) : "")}>
+			<li className={this.state.className}>
 				<Tappable
 					pressDelay={500}
 					component="label"
@@ -70,7 +78,7 @@ export default class Follow extends Component {
 						type="radio"
 						name="follow"
 						value={this.state.name}
-						checked={Dialplan.getValueByPath("follow." + this.state.name + ".selected") ? "checked" : ""}
+						checked={this.state.checked}
 						onChange={function() { }}
 						id={this.state.name}
 					/>
