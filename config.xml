@@ -2,7 +2,7 @@
 <!-- com.kwebbl.androidapp || kwebblMobileApp -->
 <widget id="com.kwebbl.androidapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Kwebbl</name>
+    <name>Qaller</name>
     <description>
         Kwebbl mobile app for company/users changing dialplans state
     </description>
@@ -47,6 +47,7 @@
     <preference name="AutoHideSplashScreen" value="true"/>
     <preference name="SplashScreenDelay" value="5000"/>
     <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="android-build-tool" value="gradle" />
 
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen"/>
