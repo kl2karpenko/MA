@@ -1,8 +1,9 @@
 import $ from 'jquery';
 import config from 'envConfig';
-import {hashHistory} from 'react-router';
 
 import 'rest-client';
+
+console.log('schema');
 
 module.exports = (new $.RestClient(config.schema.hostname, {
 	stripTrailingSlash: true,
