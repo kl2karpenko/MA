@@ -18,6 +18,8 @@ module.exports = {
 
 	isAvailable() {
 		return this.getContactsStatus().then((status) => {
+			console.log(status);
+
 			return this.STATUSES.GRANTED === status;
 		});
 	},

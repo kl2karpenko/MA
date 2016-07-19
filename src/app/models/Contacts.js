@@ -13,32 +13,46 @@ class Pin extends List {
 	}
 
 	load() {
-		if (Contacts.isAvailable()) {
-			if (!this.cachedContacts.length) {
-				return config.schema
-					.mobileContacts()
-					.done((contactsList) => {
-						this.cachedContacts = contactsList.contacts;
-						this.assignAttributes(contactsList.contacts);
-					});
-			} else {
-				return $.Deferred()
-					.resolve({
-						"contacts": this.cachedContacts
-					})
-					.done((data) => {
-						// TODO add caching of contacts
-						console.log(data.contacts);
+		let deferred = $.Deferred();
 
-						this.assignAttributes(data.contacts);
-						return data;
+		Contacts.isAvailable().then((isAvailable) => {
+			console.log(isAvailable);
+
+
+			if (isAvailable) {
+				if (!this.cachedContacts.length) {
+					return config.schema
+						.mobileContacts()
+						.then((contactsList) => {
+							this.cachedContacts = contactsList.contacts;
+
+							deferred.resolve(contactsList);
+						});
+				} else {
+					return deferred
+						.resolve({
+							"contacts": this.cachedContacts
+						})
+				}
+			} else {
+				dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
+					permissionAccess && Contacts.switchToSettings();
+				}, "Access to contacts denied", ["Go to settings", "Cancel"]);
+
+				deferred
+					.resolve({
+						"contacts": false
 					});
 			}
-		} else {
-			dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
-				permissionAccess && Contacts.switchToSettings();
-			}, "Access to camera denied", ["Go to settings", "Cancel"]);
-		}
+		});
+
+		return deferred
+			.then((data) => {
+				console.log(data);
+
+				this.assignAttributes(data.contacts);
+				return data;
+			});
 	}
 
 	_defaultContactsItem() {

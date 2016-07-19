@@ -19,7 +19,8 @@ class Session extends Model {
 	}
 
 	_isConnected() {
-		return Storage.getValue("authorization");
+		//return Storage.getValue("authorization");
+		return true;
 	}
 
 	_getSessionData() {
