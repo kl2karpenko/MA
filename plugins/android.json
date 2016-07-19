@@ -33,6 +33,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.kwebbl.androidapp"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "Qaller"
         }
     },
     "dependent_plugins": {

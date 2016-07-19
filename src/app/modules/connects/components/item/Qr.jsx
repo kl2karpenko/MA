@@ -27,8 +27,6 @@ export default class Enter extends Component {
 					cordova.plugins.barcodeScanner.scan(
 						function (result) {
 							if (!result.cancelled && result.text) {
-								console.log(result.text);
-
 								ClientOAuth2.getAuthorizeHeader(result.text);
 							}
 						},
