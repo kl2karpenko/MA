@@ -91,9 +91,7 @@ export default class System {
 	init() {
 		if (config.process.isProd()) {
 			/* on device ready init app */
-			document.addEventListener("deviceready", () => {
-				this._initApp();
-			}, false);
+			document.addEventListener("deviceready", this._initApp.bind(this), false);
 			/* on device ready init app */
 		} else {
 			this._initApp();
@@ -105,8 +103,6 @@ export default class System {
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
-		return $.when(System._setStyles)
-						.then(System._loadConfiguration)
-						.then(Session._getSessionData.bind(Session));
+		return $.when(System._setStyles).then(System._loadConfiguration);
 	}
 }

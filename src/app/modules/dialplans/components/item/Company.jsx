@@ -27,7 +27,7 @@ export default class Company extends Component {
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || !config.process.isProd() ) {
-				phoneValue = prompt("Please enter your phone number");
+				phoneValue = Company.getUserNumber("Please enter your phone number", false);
 				if (phoneValue) {
 					PhoneNumber.updateAttributesFor('value', phoneValue);
 					PhoneNumber.save();
@@ -36,6 +36,10 @@ export default class Company extends Component {
 		}
 
 		return phoneValue;
+	}
+
+	static getUserNumber() {
+		return config.process.isProd() ? navigator.notification.prompt : prompt;
 	}
 
 	onChangeDialplanForward(object) {

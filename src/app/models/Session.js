@@ -1,5 +1,7 @@
 import Model from 'Model';
 
+import Storage from 'models/Storage';
+
 class Session extends Model {
 	init() {
 		this.managedResource = 'session';
@@ -10,49 +12,18 @@ class Session extends Model {
 
 	_defaultSession() {
 		return {
-			"user": {
-				"_id": "",
-				"id": "",
-				"username": ""
-			},
-			"permissions": {
-				"role": ""
-			},
-			"dialplan": {
-				"id": ""
-			},
-			"settings": {
-				"pin": {
-					is_on: false,
-					active: null,
-					created: null,
-					created_copy: null
-				}
+			"authorization": {
+				"token": Storage.getValue("authorization")
 			}
 		};
 	}
 
-	_isAdmin() {
-		return this.getModel().permissions.role === "administrator"
-	}
-
 	_isConnected() {
-		return this.getModel().user;
-	}
-
-	_hasPinCode() {
-		return this.getModel().settings.pin.is_on;
+		return Storage.getValue("authorization");
 	}
 
 	_getSessionData() {
-		return this
-			.load()
-			.done(() => {
-				this.failConnection = false;
-			})
-			.fail(() => {
-				this.failConnection = "Server is unavailable, please try again later =(";
-			});
+		return this.load();
 	}
 }
 

@@ -27,6 +27,12 @@
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.kwebbl.androidapp"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.kwebbl.androidapp"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.kwebbl.androidapp"
         }
     },
     "dependent_plugins": {

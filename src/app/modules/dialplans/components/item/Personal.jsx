@@ -19,6 +19,10 @@ export default class Personal extends Component {
 		};
 	}
 
+	static getUserNumber() {
+		return config.process.isProd() ? navigator.notification.prompt : prompt;
+	}
+
 	/* call on change props in parent scope */
 	componentWillReceiveProps() {
 		this.setState({
@@ -31,7 +35,7 @@ export default class Personal extends Component {
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || config.process.isDev() ) {
-				phoneValue = prompt("Please enter your phone number");
+				phoneValue = Personal.getUserNumber("Please enter your phone number", false);
 				if (phoneValue) {
 					PhoneNumber.updateAttributesFor('value', phoneValue);
 					PhoneNumber.save();

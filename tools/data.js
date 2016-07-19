@@ -632,7 +632,11 @@ var isAuthorize = {
 };
 
 var isNotAuthorize = {
-	'session': false
+	"session": {
+		"authorization": {
+			"token": false
+		}
+	}
 };
 
 // Local data =================================== //

@@ -45,7 +45,11 @@ app.get('/contacts', function (req, res) {
  * Session data
  */
 app.get('/session', function (req, res) {
-	res.send(isAuthorize);
+	res.send({
+		"session": true
+	});
+
+	res.status(200);
 });
 
 /**
@@ -129,6 +133,17 @@ app.put('/pin', function (req, res) {
 	res.send({
 		'pin': Number(req.body.pin.value) === Number(settingsOn.settings.pin.active)
 	});
+});
+
+/**
+ * Save pin code for authorization
+ */
+app.get('/', function (req, res) {
+	res.send({
+		"session": true
+	});
+
+	res.status(200);
 });
 
 app.get('*', function (req, res) {

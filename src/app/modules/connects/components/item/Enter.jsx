@@ -2,14 +2,38 @@ import React, { Component } from 'react';
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 import MainConnect from './items/MainConnect.jsx';
-import LinkButton from 'components/buttons/LinkButton.jsx';
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
 import Angle from 'components/modules/angle/Index.jsx';
 
+import Tappable from 'react-tappable';
+
 export default class Enter extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	_scanQRCode() {
+		cordova.plugins.barcodeScanner.scan(
+			function (result) {
+				console.log(result);
+
+				alert("We got a barcode\n" +
+					"Result: " + result.text + "\n" +
+					"Format: " + result.format + "\n" +
+					"Cancelled: " + result.cancelled);
+			},
+			function (error) {
+				alert("Scanning failed: " + error);
+			},
+			{
+				"preferFrontCamera" : false, // iOS and Android
+				"showFlipCameraButton" : false, // iOS and Android
+				"prompt" : "Place a barcode inside the scan area", // supported on Android only
+				"formats" : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+				"orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
+			}
+		);
 	}
 
 	render() {
@@ -18,12 +42,16 @@ export default class Enter extends Component {
 			<Angle
 				class="main main-code"
 				header="Scan QR code">
-				<LinkButton
-					text="Start"
+				<Tappable
+					component="button"
+					classBase={this.props.activeClassName}
+					pressDelay={500}
 					className="m-angle__button btn btn-round btn-md"
-					activeClassName="active"
-					href="/connects/qr"
-				/>
+					onTap={this._scanQRCode}
+				>
+					Start
+				</Tappable>
+
 			</Angle>
 
 			<MainConnect>

@@ -21,6 +21,7 @@ Plugin list:
 5. cordova-plugin-browsersync
 6. cordova-plugin-splashscreen
 7. cordova-plugin-network-information
+8. cordova-plugin-dialogs
 
 ## Production
 
