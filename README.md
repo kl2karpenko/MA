@@ -23,6 +23,7 @@ Plugin list:
 7. cordova-plugin-network-information
 8. cordova-plugin-dialogs
 9. phonegap-plugin-barcodescanner
+9. cordova.plugins.diagnostic
 
 ## Production
 

@@ -23,13 +23,15 @@ export default class Pin extends Component {
 	onFocus(e) {
 		let value = e;
 		if (e.target) {
-			value = e.target.value
+			value = e.target.value;
 		}
 
 		let len = value.length;
 
+		console.log( setCurrentFocusedInputTo(5, (len - 1 < 0 ? len : len - 1), e.target) )
+
 		this.setState({
-			additionalClass: setCurrentFocusedInputTo(5, len - 1 < 0 ? len : len - 1, e.target)
+			additionalClass: setCurrentFocusedInputTo(5, (len - 1 < 0 ? len : len - 1), e.target)
 		});
 	}
 
@@ -47,6 +49,8 @@ export default class Pin extends Component {
 
 			inputValue = inputValue.target.value;
 		}
+
+		console.log(inputValue);
 
 		this.state.model.value = inputValue;
 

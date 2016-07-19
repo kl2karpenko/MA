@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!-- com.kwebbl.androidapp || kwebblMobileApp -->
-<widget id="com.kwebbl.androidapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
+<!-- com.qaller.androidapp || Qaller -->
+<widget id="Qaller" version="0.0.1" xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Qaller</name>
     <description>

@@ -25,8 +25,20 @@ export default class ContactPage extends Component {
 					<AngleTop title="Forward to:"/>
 
 					<div className="m-angle-links">
-						<Link activeClassName="active" to="/contacts/mobile">Mobile</Link>
-						<Link activeClassName="active" to="/contacts/extensions">Extensions</Link>
+
+						<LinkButton
+							text="Mobile"
+							component="a"
+							className=""
+							href="/contacts/mobile"
+							/>
+
+						<LinkButton
+							text="Extensions"
+							component="a"
+							className=""
+							href="/contacts/extensions"
+							/>
 					</div>
 				</div>
 

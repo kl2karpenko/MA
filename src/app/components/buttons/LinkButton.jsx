@@ -17,10 +17,10 @@ export default class LinkButton extends Component {
 	render() {
 		return (
 			<Tappable
-				component="button"
+				component={this.props.component || "button"}
 				classBase={this.props.activeClassName}
 				pressDelay={500}
-				className={this.props.className}
+				className={this.props.className + (location.href.match(this.props.href.replace("/", "\/")) ? " active" : "")}
 				onTap={this._goto}
 			>
 			{this.props.text}

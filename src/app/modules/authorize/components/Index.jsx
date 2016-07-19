@@ -12,7 +12,7 @@ export default class Index extends Component {
 		 * delete pin from storage
 		 */
 		Storage.clear();
-		hashHistory.push('/connects/main');
+		hashHistory.push('/connects/qr');
 	}
 
 	render() {

@@ -126,6 +126,7 @@ module.exports = {
             "models": 'src/app/models',
             "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
+            "dialogs": 'src/app/lib/dialogs',
             "messenger": 'src/app/lib/toastr',
             "rest-client": 'src/app/lib/vendor/jquery.rest',
             "imageLoader": 'lib/custom/imageLoader',

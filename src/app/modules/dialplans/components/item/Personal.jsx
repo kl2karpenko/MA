@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
+
 import config from 'envConfig';
+import dialogs              from 'dialogs';
 
 import PhoneNumber from "models/PhoneNumber";
 
@@ -19,10 +21,6 @@ export default class Personal extends Component {
 		};
 	}
 
-	static getUserNumber() {
-		return config.process.isProd() ? navigator.notification.prompt : prompt;
-	}
-
 	/* call on change props in parent scope */
 	componentWillReceiveProps() {
 		this.setState({
@@ -35,7 +33,7 @@ export default class Personal extends Component {
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || config.process.isDev() ) {
-				phoneValue = Personal.getUserNumber("Please enter your phone number", false);
+				phoneValue = dialogs.prompt("Please enter your phone number", false);
 				if (phoneValue) {
 					PhoneNumber.updateAttributesFor('value', phoneValue);
 					PhoneNumber.save();
