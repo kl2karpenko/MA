@@ -20,7 +20,13 @@ module.exports = {
 	getAuthorizeHeader() {
 		return this.authorize().request({
 			method: 'post',
-			url: 'http://10-60-28-150.ams.kwebbl.dev:4444/token'
+			url: 'http://10-60-28-150.ams.kwebbl.dev:4444/token',
+			body: {
+				clientId: '2909abc18ab27bea41f531705d0dcf55',
+				clientSecret: 'b63mso0el64xpa7',
+				grant_type: "password",
+				qr_code: token
+			}
 		})
 			.then(function (res) {
 				console.log(res);
