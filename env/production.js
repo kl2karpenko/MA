@@ -6,26 +6,22 @@ import Storage from 'models/Storage';
 let isIOS = process.env.platformName === 'ios';
 
 function getMobileNumber() {
-	let deferred = $.Deferred();
-
-	if (!isIOS) {
-		window.plugins.sim.getSimInfo((result) => {
-			if (result.phoneNumber) {
-				Storage.setValue('phone', result.phoneNumber);
-				deferred.resolve(result.phoneNumber);
-			} else {
-				deferred.resolve(null);
-			}
-			console.log(result, 'getSimInfo');
-
-		}, (result) => {
-			console.error(result);
-		});
-	} else {
-		deferred.resolve(null);
-	}
-
-	return deferred;
+	return new Promise((resolve, reject) => {
+		if (!isIOS) {
+			window.plugins.sim.getSimInfo((result) => {
+				if (result.phoneNumber) {
+					Storage.setValue('phone', result.phoneNumber);
+					resolve(result.phoneNumber);
+				} else {
+					resolve(null);
+				}
+			}, (result) => {
+				reject(result);
+			});
+		} else {
+			resolve(null);
+		}
+	});
 }
 
 function configContact (data) {
@@ -39,34 +35,33 @@ function configContact (data) {
 }
 
 function _getContactsFromMobile() {
-	let deferred = $.Deferred();
-	let options = {};
+	return new Promise((resolve, reject) => {
+		let options = {};
 
-	options.multiple = true;
+		options.multiple = true;
 
-	$(document).trigger('system:ajaxStart');
+		$(document).trigger('system:ajaxStart');
 
-	navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
-		let contacts = [];
-		
-		contactsList.forEach((contactItem) => {
-			contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
-		});
+		navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
+			let contacts = [];
 
-		deferred.resolve({
-			contacts: contacts
-		});
+			contactsList.forEach((contactItem) => {
+				contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
+			});
 
-		$(document).trigger('system:ajaxComplete');
-	}, () => {
-		deferred.resolve({
-			contacts: null
-		});
+			resolve({
+				contacts: contacts
+			});
 
-		$(document).trigger('system:ajaxComplete');
-	}, options);
+			$(document).trigger('system:ajaxComplete');
+		}, () => {
+			resolve({
+				contacts: null
+			});
 
-	return deferred;
+			$(document).trigger('system:ajaxComplete');
+		}, options);
+	});
 }
 
 let homeIPMac = 'http://192.168.2.105:8030/';

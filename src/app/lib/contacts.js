@@ -5,17 +5,15 @@ import diagnostic from './diagnostic';
 
 module.exports = {
 	getContactsStatus() {
-		let deferred = $.Deferred();
-
-		if(config.process.isProd()) {
-			cordova.plugins.diagnostic.getContactsAuthorizationStatus((status) => {
-				deferred.resolve(status);
-			});
-		} else {
-			deferred.resolve("authorized");
-		}
-
-		return deferred;
+		return new Promise((resolve, reject) => {
+			if(config.process.isProd()) {
+				cordova.plugins.diagnostic.getContactsAuthorizationStatus((status) => {
+					resolve(status);
+				});
+			} else {
+				resolve("authorized");
+			}
+		});
 	},
 
 	STATUSES: config.process.isProd() ? cordova.plugins.diagnostic.permissionStatus : {},

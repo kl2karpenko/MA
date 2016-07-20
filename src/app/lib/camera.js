@@ -5,13 +5,11 @@ import diagnostic from './diagnostic';
 
 module.exports = {
 	getCameraStatus() {
-		let deferred = $.Deferred();
-
-		config.process.isProd() && cordova.plugins.diagnostic.getCameraAuthorizationStatus((status) => {
-			deferred.resolve(status);
+		return new Promise((resolve, reject) => {
+			config.process.isProd() && cordova.plugins.diagnostic.getCameraAuthorizationStatus((status) => {
+				resolve(status);
+			});
 		});
-
-		return deferred;
 	},
 
 	STATUSES: config.process.isProd() ? cordova.plugins.diagnostic.permissionStatus : {},

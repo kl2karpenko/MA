@@ -2,16 +2,12 @@ import $ from 'jquery';
 import ProcessInfo from './process';
 
 function _getMobileNumber() {
-	let deferred = $.Deferred();
-
-	deferred.resolve("0504144151");
-
-	return deferred;
+	return new Promise((resolve) => {
+		resolve("0504144151");
+	});
 }
 
 function _getContactsFromMobile() {
-	let deferred = $.Deferred();
-
 	function configContact (data) {
 		let object = {};
 
@@ -22,19 +18,17 @@ function _getContactsFromMobile() {
 		return object;
 	}
 
-	$.get("/contacts", (contactsData) => {
-		if (Array.isArray(contactsData.contacts)) {
-			contactsData.contacts = contactsData.contacts.map((contactItem) => {
-				return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? configContact(contactItem) : false
-			});
-		}
+	return new Promise((resolve) => {
+		$.get("/contacts", (contactsData) => {
+			if (Array.isArray(contactsData.contacts)) {
+				contactsData.contacts = contactsData.contacts.map((contactItem) => {
+					return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? configContact(contactItem) : false
+				});
+			}
 
-		deferred.resolve(contactsData);
-
-		console.log('load list of contacts ==============' ,contactsData);
+			resolve(contactsData);
+		})
 	});
-
-	return deferred;
 }
 
 module.exports = {

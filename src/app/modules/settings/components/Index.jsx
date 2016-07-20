@@ -41,8 +41,8 @@ export default class Index extends Component {
 
 	setPin() {
 		this.pin = {
-			is_on: Storage.existValue('pin'),
-			active: Storage.getValue('pin') ? "" : false,
+			is_on: Pin.isExist(),
+			active: Pin.getValueByPath('value') ? "" : false,
 			created: "",
 			created_copy: "",
 			classFocus: setCurrentFocusedInputTo(4, null),
@@ -62,20 +62,26 @@ export default class Index extends Component {
 	_save() {
 		if (this.state.type === "pin") {
 			Pin.updateAttributesFor('value', this.pin.created);
+			this.setPin();
 
 			return Pin
 				.save()
 				.then(() => {
 					this.closeCustomKeyboard();
-					this.setPin();
 				});
 		} else if (this.state.type === "phone") {
 			PhoneNumber.updateAttributesFor('value', this.state.phoneNumber);
 
-			return PhoneNumber
-				.save()
-				.then(() => {
-					this.closeCustomKeyboard();
+			return Dialplan
+				._saveFollowToTransfer({
+					type: "contact",
+					number: this.state.phoneNumber
+				}).then(() => {
+					PhoneNumber
+						.save()
+						.then(() => {
+							this.closeCustomKeyboard();
+						});
 				});
 		}
 	}

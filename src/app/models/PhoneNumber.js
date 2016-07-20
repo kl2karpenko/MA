@@ -18,42 +18,40 @@ class PhoneNumber extends Model {
 	}
 
 	_getUserNumber() {
-		let deferred = $.Deferred();
 		let phoneValue = this.getValueByPath('value');
 
-		if (!phoneValue) {
-			console.log(phoneValue, 'phoneValue');
-			
-			dialogs.prompt("Please enter your phone number", (obj) => {
-				phoneValue = obj.input1;
+		return new Promise((resolve, reject) => {
+			if (!phoneValue) {
+				dialogs.prompt("Please enter your phone number", (obj) => {
+					phoneValue = obj.input1;
 
-				if (!!(phoneValue && this._isValid(phoneValue))) {
-					this.updateAttributesFor('value', phoneValue);
-					this.save().then(() => {
-						deferred.resolve(phoneValue);
-					});
+					if (!!(phoneValue && this._isValid(phoneValue))) {
+						this.updateAttributesFor('value', phoneValue);
+						this.save().then(() => {
+							resolve(phoneValue);
+						});
 
-				} else {
-					this.messenger.error('Not a valid phone number', "Warning");
-				}
-			});
-		} else {
-			deferred.resolve(phoneValue);
-		}
-
-		return deferred;
+					} else {
+						this.messenger.error('Not a valid phone number', "Warning");
+					}
+				});
+			} else {
+				resolve(phoneValue);
+			}
+		});
 	}
 
 	save() {
 		let
-			deferred = $.Deferred(),
 			value = this.getValueByPath('value');
 
-		deferred.resolve({
-			phoneNumber: value
+		let promise = new Promise((resolve, reject) => {
+			resolve({
+				phoneNumber: value
+			});
 		});
 
-		deferred.then(() => {
+		return promise.then(() => {
 			if (value) {
 				Storage.setValue('phone', value);
 			} else {
@@ -64,15 +62,10 @@ class PhoneNumber extends Model {
 				value: value
 			});
 		});
-
-		return deferred;
 	}
 
 	load() {
-		let deferred = $.Deferred();
-
-		deferred.resolve();
-		deferred.then(() => {
+		return (new Promise()).then(() => {
 			let newPhonenUmber = {
 				value: Storage.getValue('phone')
 			};
@@ -80,8 +73,6 @@ class PhoneNumber extends Model {
 			this._setOriginalValues(newPhonenUmber);
 			this.assignAttributes(newPhonenUmber);
 		});
-
-		return deferred;
 	}
 
 	_defaultPhoneNumber() {

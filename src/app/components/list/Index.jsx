@@ -15,16 +15,6 @@ export default class Index extends Component {
 		this._load.bind(this)();
 	}
 
-	componentWillReceiveProps(props) {
-		console.log(props);
-
-		this.setState({
-			model: props.model,
-			list: props.model.getModel(),
-			config: props.configData
-		});
-	}
-
 	_load() {
 		return this.state.model
 			.load()
@@ -33,8 +23,6 @@ export default class Index extends Component {
 
 				// TODO: refactor error for dialplans and touch on list iz gluchit!!!!!!!
 				console.log(this.state.model._getModelName(), data);
-
-				this.state.model.assignAttributes(configData);
 
 				this.setState({
 					model: this.state.model,

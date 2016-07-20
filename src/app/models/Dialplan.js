@@ -15,7 +15,7 @@ class Dialplan extends Model {
 
 	_saveFollowToOrigin() {
 		if (this._getActiveActionKey() === "origin") {
-			return $.Deferred().resolve();
+			return new Promise((resolve, reject) => {});
 		}
 
 		let
@@ -33,7 +33,7 @@ class Dialplan extends Model {
 
 	_saveFollowToTransfer(data) {
 		if (this._getActiveActionKey() === "transfer" && this._getActiveTransfer().number === data.number) {
-			return $.Deferred().resolve();
+			return new Promise((resolve, reject) => {});
 		}
 
 		let
@@ -65,7 +65,7 @@ class Dialplan extends Model {
 
 	_saveFollowToMailbox(data) {
 		if (this._getActiveActionKey() === "mailbox" && this._getActiveMailbox()._id === data._id) {
-			return $.Deferred().resolve();
+			return new Promise((resolve, reject) => {});
 		}
 
 		let

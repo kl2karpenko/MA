@@ -3,14 +3,6 @@ import messenger from "messenger";
 
 import _ from "underscore";
 
-function ready() {
-	return $.Deferred().resolve();
-}
-
-function reject() {
-	return $.Deferred().reject();
-}
-
 export default class Model {
 	/** ========================   Initialization   ============================== */
 	constructor(props) {
@@ -267,7 +259,9 @@ export default class Model {
 		let isValid = this._isValid();
 
 		if (!isValid) {
-			return reject();
+			return (new Promise((res, rej) => {
+				rej(false);
+			}));
 		}
 
 		let

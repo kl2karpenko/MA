@@ -3,6 +3,7 @@ import Tappable from 'react-tappable';
 
 import { Keyboard } from 'components/Keyboard.jsx';
 import Storage from "models/Storage";
+import Pin from "models/Pin";
 
 export default class PinForm extends Component {
 	constructor(props) {
@@ -57,6 +58,8 @@ export default class PinForm extends Component {
 		});
 
 		if (!isPinOn) {
+			Pin.deleteValue();
+
 			this.state.parent.setPin();
 
 			this.state.parent.setState({

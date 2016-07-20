@@ -9,15 +9,23 @@ class Pin extends Model {
 
 		return Model.prototype.init();
 	}
+
+	deleteValue() {
+		Storage.deleteValue('pin');
+	}
+
+	isExist() {
+		Storage.existValue('pin');
+	}
 	
 	save() {
-		let deferred = $.Deferred();
-
-		deferred.resolve({
-			pin: this.pin.value
+		let promise = new Promise((resolve, reject) => {
+			resolve({
+				pin: this.pin.value
+			});
 		});
 
-		deferred.then(() => {
+		return promise.then(() => {
 			if (this.pin.value) {
 				Storage.setValue('pin', this.pin.value);
 			} else {
@@ -28,15 +36,10 @@ class Pin extends Model {
 				value: this.pin.value
 			});
 		});
-
-		return deferred;
 	}
 
 	load() {
-		let deferred = $.Deferred();
-
-		deferred.resolve();
-		deferred.then(() => {
+		return (new Promise()).then(() => {
 			let newPin = {
 				value: Storage.getValue('pin')
 			};
@@ -44,8 +47,6 @@ class Pin extends Model {
 			this._setOriginalValues(newPin);
 			this.assignAttributes(newPin);
 		});
-
-		return deferred;
 	}
 
 	_defaultPin() {
