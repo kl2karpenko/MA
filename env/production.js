@@ -10,8 +10,14 @@ function getMobileNumber() {
 
 	if (!isIOS) {
 		window.plugins.sim.getSimInfo((result) => {
-			Storage.setValue('phone', result.phoneNumber);
-			deferred.resolve(result.phoneNumber);
+			if (result.phoneNumber) {
+				Storage.setValue('phone', result.phoneNumber);
+				deferred.resolve(result.phoneNumber);
+			} else {
+				deferred.resolve(null);
+			}
+			console.log(result, 'getSimInfo');
+
 		}, (result) => {
 			console.error(result);
 		});
@@ -50,8 +56,6 @@ function _getContactsFromMobile() {
 		deferred.resolve({
 			contacts: contacts
 		});
-
-		console.log('navigator.contacts.find')
 
 		$(document).trigger('system:ajaxComplete');
 	}, () => {

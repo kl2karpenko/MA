@@ -193,16 +193,16 @@ module.exports = {
 };
 
 if (ProcessInfo.isProd()) {
-    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-            warnings: false,
-            keep_fnames: true
-        },
-        mangle: {
-            except: ['$super', '$', 'exports', 'require']
-        }
-    }));
+    // module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    //     sourceMap: true,
+    //     compress: {
+    //         warnings: false,
+    //         keep_fnames: true
+    //     },
+    //     mangle: {
+    //         except: ['$super', '$', 'exports', 'require']
+    //     }
+    // }));
 } else {
     module.exports.devtool = 'inline-source-map';
 }

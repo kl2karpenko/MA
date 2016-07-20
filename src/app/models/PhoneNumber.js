@@ -22,21 +22,21 @@ class PhoneNumber extends Model {
 		let phoneValue = this.getValueByPath('value');
 
 		if (!phoneValue) {
-			if (config.process.isIOS() || !config.process.isProd() ) {
-				dialogs.prompt("Please enter your phone number", (obj) => {
-					phoneValue = obj.input1;
+			console.log(phoneValue, 'phoneValue');
+			
+			dialogs.prompt("Please enter your phone number", (obj) => {
+				phoneValue = obj.input1;
 
-					if (!!(phoneValue && this._isValid(phoneValue))) {
-						this.updateAttributesFor('value', phoneValue);
-						this.save().then(() => {
-							deferred.resolve(phoneValue);
-						});
+				if (!!(phoneValue && this._isValid(phoneValue))) {
+					this.updateAttributesFor('value', phoneValue);
+					this.save().then(() => {
+						deferred.resolve(phoneValue);
+					});
 
-					} else {
-						this.messenger.error('Not a valid phone number', "Warning");
-					}
-				});
-			}
+				} else {
+					this.messenger.error('Not a valid phone number', "Warning");
+				}
+			});
 		} else {
 			deferred.resolve(phoneValue);
 		}

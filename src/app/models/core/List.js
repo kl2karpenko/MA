@@ -97,6 +97,7 @@ class List {
 	}
 
 	getValueOfDefAttrByIndex(index) {
+		console.log(this.getModel(), index, this.defaultAttribute)
 		return this.getByIndex(index)[this.defaultAttribute];
 	}
 
@@ -170,8 +171,6 @@ class List {
 			this.isLoaded();
 		}
 
-		console.log(this.getModel(), defaultModel)
-
 		return this;
 	}
 
@@ -213,9 +212,9 @@ class List {
 			console.groupCollapsed("load " + resource);
 			console.info("response", items[name]);
 			console.groupEnd("load " + resource);
+
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
-			// this.messenger['error']('Error for ' + resource + ' status of response: ' + (response && response.status));
 			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 			return this;
 		});

@@ -58,6 +58,8 @@ export default class Actions extends List {
 		return config.schema
 			.mobileSIMNumber()
 			.then((number) => {
+				console.log(number);
+				
 				defaultModel[1].info = number;
 
 				return defaultModel;

@@ -16,6 +16,8 @@ export default class Index extends Component {
 	}
 
 	componentWillReceiveProps(props) {
+		console.log(props);
+
 		this.setState({
 			model: props.model,
 			list: props.model.getModel(),
@@ -28,6 +30,9 @@ export default class Index extends Component {
 			.load()
 			.then((data) => {
 				let configData = this.state.config(data[this.state.model._getModelName()]);
+
+				// TODO: refactor error for dialplans and touch on list iz gluchit!!!!!!!
+				console.log(this.state.model._getModelName(), data);
 
 				this.state.model.assignAttributes(configData);
 
