@@ -28,7 +28,7 @@ export default class Company extends Component {
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || !config.process.isProd() ) {
-				phoneValue = dialogs.prompt("Please enter your phone number", false);
+				phoneValue = dialogs.prompt("Please enter your phone number");
 				if (phoneValue) {
 					PhoneNumber.updateAttributesFor('value', phoneValue);
 					PhoneNumber.save();

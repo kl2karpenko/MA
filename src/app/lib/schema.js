@@ -3,8 +3,6 @@ import config from 'envConfig';
 
 import 'rest-client';
 
-console.log('schema');
-
 module.exports = (new $.RestClient(config.schema.hostname, {
 	stripTrailingSlash: true,
 

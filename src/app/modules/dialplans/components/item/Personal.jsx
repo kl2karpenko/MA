@@ -33,7 +33,7 @@ export default class Personal extends Component {
 
 		if (!phoneValue) {
 			if (config.process.isIOS() || config.process.isDev() ) {
-				phoneValue = dialogs.prompt("Please enter your phone number", false);
+				phoneValue = dialogs.prompt("Please enter your phone number");
 				if (phoneValue) {
 					PhoneNumber.updateAttributesFor('value', phoneValue);
 					PhoneNumber.save();
