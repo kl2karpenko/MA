@@ -7,9 +7,13 @@ module.exports = {
 	getContactsStatus() {
 		let deferred = $.Deferred();
 
-		config.process.isProd() && cordova.plugins.diagnostic.getCameraAuthorizationStatus((status) => {
-			deferred.resolve(status);
-		});
+		if(config.process.isProd()) {
+			cordova.plugins.diagnostic.getContactsAuthorizationStatus((status) => {
+				deferred.resolve(status);
+			});
+		} else {
+			deferred.resolve("authorized");
+		}
 
 		return deferred;
 	},
@@ -18,9 +22,7 @@ module.exports = {
 
 	isAvailable() {
 		return this.getContactsStatus().then((status) => {
-			console.log(status);
-
-			return this.STATUSES.GRANTED === status;
+			return this.STATUSES.GRANTED ? this.STATUSES.GRANTED === status : true;
 		});
 	},
 

@@ -10,6 +10,8 @@ function _getMobileNumber() {
 }
 
 function _getContactsFromMobile() {
+	let deferred = $.Deferred();
+
 	function configContact (data) {
 		let object = {};
 
@@ -20,14 +22,19 @@ function _getContactsFromMobile() {
 		return object;
 	}
 
-	return $.get("/contacts", (contactsData) => {
+	$.get("/contacts", (contactsData) => {
 		if (Array.isArray(contactsData.contacts)) {
 			contactsData.contacts = contactsData.contacts.map((contactItem) => {
 				return contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? configContact(contactItem) : false
 			});
 		}
-		return contactsData;
-	})
+
+		deferred.resolve(contactsData);
+
+		console.log('load list of contacts ==============' ,contactsData);
+	});
+
+	return deferred;
 }
 
 module.exports = {

@@ -27,7 +27,6 @@ var root = path.resolve(__dirname, '../build');
 
 
 app.configure(() => {
-	// app.use(express.static('build', root));
 	app.use(express.static(root));
 	app.use(express.bodyParser());
 	app.use(express.logger('dev'));

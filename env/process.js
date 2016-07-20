@@ -20,6 +20,10 @@ module.exports = {
 		}
 	},
 
+	isIOSProd() {
+		return this.getActiveEnvironment() === this.PRODUCTION && this.isIOS();
+	},
+
 	isProd() {
 		return this.getActiveEnvironment() === this.PRODUCTION;
 	},

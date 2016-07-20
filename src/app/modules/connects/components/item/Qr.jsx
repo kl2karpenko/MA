@@ -45,7 +45,7 @@ export default class Enter extends Component {
 					Camera.requestForAccess();
 
 					dialogs.confirm("Please check your settings to allow access to camera", (permissionAccess) => {
-						permissionAccess && Camera.switchToSettings();
+						(permissionAccess === 1) && Camera.switchToSettings();
 					}, "Access to camera denied", ["Go to settings", "Cancel"]);
 				}
 			});

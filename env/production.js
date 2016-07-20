@@ -51,6 +51,8 @@ function _getContactsFromMobile() {
 			contacts: contacts
 		});
 
+		console.log('navigator.contacts.find')
+
 		$(document).trigger('system:ajaxComplete');
 	}, () => {
 		deferred.resolve({

@@ -86,7 +86,7 @@ export default class Index extends Component {
 				type: "phone",
 				value: newVal,
 				phoneNumber: newVal,
-				isValid: newVal !== "" && (PhoneNumber.getValueByPath('value') !== newVal)
+				isValid: newVal !== "" && (PhoneNumber.getValueByPath('value') !== newVal) && PhoneNumber._isValid(newVal)
 			});
 		} else {
 			if (newVal.length >= 5) {

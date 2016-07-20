@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import config from 'envConfig';
-import dialogs              from 'dialogs';
-
 import PhoneNumber from "models/PhoneNumber";
 
 import PersonalActions from "../../models/actions/Personal";
@@ -28,32 +25,16 @@ export default class Personal extends Component {
 		});
 	}
 
-	static _getUserNumber() {
-		let phoneValue = PhoneNumber.getValueByPath('value');
-
-		if (!phoneValue) {
-			if (config.process.isIOS() || config.process.isDev() ) {
-				phoneValue = dialogs.prompt("Please enter your phone number");
-				if (phoneValue) {
-					PhoneNumber.updateAttributesFor('value', phoneValue);
-					PhoneNumber.save();
-				}
-			}
-		}
-
-		return phoneValue;
-	}
-
 	onChange(object) {
 		switch(object.name) {
 			case "contact":
-				let contact = Dialplan._getActiveTransfer();
+				let contactNumber = Dialplan.getValueByPath("follow.contact");
 
-				if (contact.number) {
+				if (contactNumber) {
 					Dialplan
 						._saveFollowToTransfer({
 							type: "contact",
-							number: contact.number
+							number: contactNumber
 						})
 						.then(this._updateDialplan.bind(this));
 				} else {
@@ -62,16 +43,16 @@ export default class Personal extends Component {
 				break;
 
 			case "mobile":
-				let number = Personal._getUserNumber();
-
-				if (number) {
-					Dialplan
-						._saveFollowToTransfer({
-							type: "contact",
-							number: number
-						})
-						.then(this._updateDialplan.bind(this));
-				}
+				PhoneNumber._getUserNumber().then((phone) => {
+					if (phone) {
+						Dialplan
+							._saveFollowToTransfer({
+								type: "contact",
+								number: phone
+							})
+							.then(this._updateDialplan.bind(this));
+					}
+				});
 				break;
 
 			case "mailbox":

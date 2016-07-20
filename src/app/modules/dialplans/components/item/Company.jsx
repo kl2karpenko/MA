@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { hashHistory }      from 'react-router';
 
-import config               from 'envConfig';
-import dialogs              from 'dialogs';
-
 import CompanyActions       from "../../models/actions/Company";
 import Dialplan             from "models/Dialplan";
 import PhoneNumber          from "models/PhoneNumber";
@@ -21,22 +18,6 @@ export default class Company extends Component {
 			Dialplan: Dialplan.getModel(),
 			actions: CompanyActions.getModel()
 		};
-	}
-
-	static _getUserNumber() {
-		let phoneValue = PhoneNumber.getValueByPath('value');
-
-		if (!phoneValue) {
-			if (config.process.isIOS() || !config.process.isProd() ) {
-				phoneValue = dialogs.prompt("Please enter your phone number");
-				if (phoneValue) {
-					PhoneNumber.updateAttributesFor('value', phoneValue);
-					PhoneNumber.save();
-				}
-			}
-		}
-
-		return phoneValue;
 	}
 
 	onChangeDialplanForward(object) {
@@ -69,16 +50,16 @@ export default class Company extends Component {
 				break;
 
 			case "mobile":
-				let number = Company._getUserNumber();
-
-				if (number) {
-					Dialplan
-						._saveFollowToTransfer({
-							type: "contact",
-							number: number
-						})
-						.then(this._updateDialplan.bind(this));
-				}
+				PhoneNumber._getUserNumber().then((phone) => {
+					if (phone) {
+						Dialplan
+							._saveFollowToTransfer({
+								type: "contact",
+								number: phone
+							})
+							.then(this._updateDialplan.bind(this));
+					}
+				});
 				break;
 
 			default:

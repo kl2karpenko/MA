@@ -2,6 +2,9 @@ import Model from 'Model';
 
 import Storage from 'models/Storage';
 
+import config from 'envConfig';
+import dialogs from 'dialogs';
+
 class PhoneNumber extends Model {
 	init() {
 		this.managedResource = 'phoneNumber';
@@ -10,10 +13,37 @@ class PhoneNumber extends Model {
 		return Model.prototype.init();
 	}
 
-	_isValid() {
-		return this.getValueByPath('value') !== "";
+	_isValid(number) {
+		return number.match(/^\+?[\d]+$/);
 	}
-	
+
+	_getUserNumber() {
+		let deferred = $.Deferred();
+		let phoneValue = this.getValueByPath('value');
+
+		if (!phoneValue) {
+			if (config.process.isIOS() || !config.process.isProd() ) {
+				dialogs.prompt("Please enter your phone number", (obj) => {
+					phoneValue = obj.input1;
+
+					if (!!(phoneValue && this._isValid(phoneValue))) {
+						this.updateAttributesFor('value', phoneValue);
+						this.save().then(() => {
+							deferred.resolve(phoneValue);
+						});
+
+					} else {
+						this.messenger.error('Not a valid phone number', "Warning");
+					}
+				});
+			}
+		} else {
+			deferred.resolve(phoneValue);
+		}
+
+		return deferred;
+	}
+
 	save() {
 		let
 			deferred = $.Deferred(),

@@ -32,6 +32,8 @@ class Dialplan extends Model {
 	}
 
 	_saveFollowToTransfer(data) {
+		console.log(this._getActiveTransfer().number, this._getActiveActionKey(), 'sefsefergerg', data.number);
+
 		if (this._getActiveActionKey() === "transfer" && this._getActiveTransfer().number === data.number) {
 			return $.Deferred().resolve();
 		}

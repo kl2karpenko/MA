@@ -1,4 +1,5 @@
 import List from 'List';
+import { hashHistory } from 'react-router';
 
 import config from 'envConfig';
 import dialogs from 'dialogs';
@@ -16,11 +17,9 @@ class Pin extends List {
 		let deferred = $.Deferred();
 
 		Contacts.isAvailable().then((isAvailable) => {
-			console.log(isAvailable);
-
 
 			if (isAvailable) {
-				if (!this.cachedContacts.length) {
+				if (this.cachedContacts && !this.cachedContacts.length) {
 					return config.schema
 						.mobileContacts()
 						.then((contactsList) => {
@@ -29,6 +28,7 @@ class Pin extends List {
 							deferred.resolve(contactsList);
 						});
 				} else {
+
 					return deferred
 						.resolve({
 							"contacts": this.cachedContacts
@@ -36,8 +36,18 @@ class Pin extends List {
 				}
 			} else {
 				dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
-					permissionAccess && Contacts.switchToSettings();
-				}, "Access to contacts denied", ["Go to settings", "Cancel"]);
+					console.log(permissionAccess, 'permissionAccess');
+
+					switch(permissionAccess) {
+						case 1:
+							Contacts.switchToSettings();
+							break;
+						case 0:
+						case 2:
+							hashHistory.push('/contacts/extensions');
+							break;
+					}
+				}, "Access to your contact list denied", ["Go to settings", "Don't allow"]);
 
 				deferred
 					.resolve({
@@ -48,8 +58,6 @@ class Pin extends List {
 
 		return deferred
 			.then((data) => {
-				console.log(data);
-
 				this.assignAttributes(data.contacts);
 				return data;
 			});
