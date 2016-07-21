@@ -9,6 +9,8 @@ export class Keyboard extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log(props);
+
 		this.state = {
 			value: props.value,
 			isValid: props.isValid,
@@ -77,7 +79,6 @@ export class Keyboard extends Component {
 
 	static addEventHide() {
 		document.addEventListener("showkeyboard", function(){
-			console.log('show');
 			Keyboard.closeKeyBoard();
 		}, false);
 	}

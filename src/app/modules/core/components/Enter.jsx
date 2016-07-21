@@ -3,6 +3,7 @@ import {hashHistory} from 'react-router';
 import config from 'envConfig';
 
 import Session from "models/Session";
+import Pin from "models/Pin";
 import FailBlock from 'components/blocks/Fail.jsx';
 
 import LoadingBlock from 'components/blocks/Loading.jsx';
@@ -33,7 +34,6 @@ export default class Enter extends Component {
 	}
 
 	_listen() {
-
 		$(document).ajaxStart(() => {
 			$(document).trigger('system:ajaxStart');
 		});
@@ -50,6 +50,12 @@ export default class Enter extends Component {
 
 		$(document).on('system:fail', this._changeFailStateTo.bind(this, true));
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
+
+		document.addEventListener("resume", function() {
+			alert('resume');
+
+			Pin.isExist() && hashHistory.push('/pin');
+		});
 	}
 
 	_checkConnection() {

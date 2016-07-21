@@ -15,21 +15,19 @@ class Pin extends Model {
 	}
 
 	isExist() {
-		Storage.existValue('pin');
+		return Storage.existValue('pin');
 	}
 	
 	save() {
-		let promise = new Promise((resolve, reject) => {
+		return (new Promise((resolve) => {
 			resolve({
 				pin: this.pin.value
 			});
-		});
-
-		return promise.then(() => {
+		})).then(() => {
 			if (this.pin.value) {
 				Storage.setValue('pin', this.pin.value);
 			} else {
-				Storage.deleteValue('pin');
+				this.deleteValue();
 			}
 
 			this._setOriginalValues({

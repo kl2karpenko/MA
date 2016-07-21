@@ -61,7 +61,7 @@ export default class Pin extends Component {
 				<button
 					className="m-angle__button btn btn-round btn-md"
 					onTouchStart={this.connect}
-					data-form
+					data-form="connectPin"
 					disabled={!(this.state.pin.value.length === 5)}
 					form="connectPin">Log In</button>
 			</Angle>

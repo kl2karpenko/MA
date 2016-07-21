@@ -34,9 +34,9 @@ export default class Index extends Component {
 	}
 
 	_save() {
-		let currentPin = Storage.getValue('pin');
+		let currentPin = Pin.isExist();
 
-		if (currentPin === Pin.pin.value) {
+		if (currentPin && Pin.getValueByPath('value') === Storage.getValue('pin')) {
 			return Pin
 				.save()
 				.then(() => {
@@ -44,7 +44,7 @@ export default class Index extends Component {
 				})
 		} else {
 			this._reset();
-			Pin.messenger.error('Wrong Pin');
+			Pin.messenger.error('Wrong Pin', "Error");
 		}
 	}
 

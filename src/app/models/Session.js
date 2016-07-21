@@ -20,7 +20,7 @@ class Session extends Model {
 
 	_isConnected() {
 		//return Storage.getValue("authorization");
-		return true;
+		return false;
 	}
 
 	_getSessionData() {

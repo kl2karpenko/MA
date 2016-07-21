@@ -30,6 +30,8 @@ export default class System {
 		Session
 			._getSessionData()
 			.then(() => {
+				console.log(Session._isConnected());
+
 				hashHistory.replace(Session._isConnected() ? '/pin' : '/authorize');
 				$(document).trigger('system:unfail');
 			})

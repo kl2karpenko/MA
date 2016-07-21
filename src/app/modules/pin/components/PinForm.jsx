@@ -10,7 +10,8 @@ export default class PinForm extends Component {
 
 		this.state = {
 			additionalClass: setCurrentFocusedInputTo(3, 0),
-			model: this.props.model
+			model: this.props.model,
+			element: $('input[name=pin]').get(0)
 		};
 
 		if (this.keyBoard) {
@@ -23,6 +24,8 @@ export default class PinForm extends Component {
 	onChange(inputValue) {
 		let pinLength = this.state.model.value.length;
 		this.state.model.value = inputValue;
+
+		console.log(inputValue, pinLength, ' ============');
 
 		this.setState({
 			additionalClass: setCurrentFocusedInputTo(5, pinLength === 5 ? 0 : inputValue.length - 1),
@@ -52,6 +55,7 @@ export default class PinForm extends Component {
 				isValid={this.state.model.value.length === 5}
 				multiple={false}
 				form={this.props.options.form}
+			  element={this.state.element}
 			/>
 		</div>
 		);

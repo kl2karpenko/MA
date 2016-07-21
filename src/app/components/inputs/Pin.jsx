@@ -37,25 +37,22 @@ export default class Pin extends Component {
 
 	onChange(inputValue) {
 		let
-			validPinLength = 5,
-			target;
+			validPinLength = 5;
 
 		if (inputValue.target) {
-			target = inputValue.target;
-
-			if (!inputValue.target.value.match(/^\d+$/)) {
-				inputValue.target.value = inputValue.target.value.slice(0, -1);
-			}
-
 			inputValue = inputValue.target.value;
 		}
 
-		console.log(inputValue);
+		if (!inputValue.match(/^\d+$/)) {
+			return;
+		}
+
+		console.log(inputValue, 'inputValue');
 
 		this.state.model.value = inputValue;
 
 		this.setState({
-			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1, target),
+			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1),
 			model: this.state.model
 		});
 
@@ -66,7 +63,7 @@ export default class Pin extends Component {
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
 			this.props.onSubmit().done((newPinModel) => {
 				this.setState({
-					additionalClass: setCurrentFocusedInputTo(5, 0, target),
+					additionalClass: setCurrentFocusedInputTo(5, 0),
 					model: newPinModel.pin
 				});
 			});
@@ -84,7 +81,6 @@ export default class Pin extends Component {
 									<Tappable
 										component="input"
 										pressDelay={500}
-										type="number"
 										autoFocus="true"
 										type={this.props.inputType}
 										name="pin"
