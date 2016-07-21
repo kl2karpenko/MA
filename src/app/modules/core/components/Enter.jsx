@@ -63,13 +63,13 @@ export default class Enter extends Component {
 	}
 
 	_checkToken() {
-		let clientToken = Token.getValueByPath("value");
+		let clientToken = Token.token;
 
 		console.log(clientToken, "clientToken");
 
 		hashHistory.replace(clientToken ? '/pin' : '/connects/qr');
 
-		setTimeout(this._changeLoadStateTo.bind(this, false), 2000);
+		setTimeout(this._changeLoadStateTo.bind(this, false), 500);
 
 		// TODO think how to ping server when it is fail
 		$(document).trigger('system:unfail');

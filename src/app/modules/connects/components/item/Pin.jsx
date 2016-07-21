@@ -37,9 +37,7 @@ export default class Pin extends Component {
 
 			return PinModel.getModel();
 		}).fail((y) => {
-			console.log(y);
-
-			Token.messenger.error("Wrong connect code", "Error");
+			PinModel.messenger.error("Wrong connect code", "Error");
 		});
 	}
 
@@ -57,7 +55,7 @@ export default class Pin extends Component {
 							text="Enter the code"
 							inputType="number"
 							form="connectPin"
-							onSubmit={this.connect}
+							onSubmit={this.connect.bind(this)}
 						/>
 					</div>
 				</div>

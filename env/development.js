@@ -9,6 +9,7 @@ function getAddressOfHost() {
 
 module.exports = $.extend(config, {
 	schema: {
-		hostname: getAddressOfHost()
+		hostname: getAddressOfHost(),
+		tokenHostname: "http://10-60-28-150.ams.kwebbl.dev:4445/token"
 	}
 });

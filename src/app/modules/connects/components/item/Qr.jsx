@@ -15,6 +15,7 @@ import dialogs from 'dialogs';
 import Camera from 'lib/camera';
 
 import Token from 'models/Token';
+import messenger from "messenger";
 
 export default class Enter extends Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ export default class Enter extends Component {
 								}).done(() => {
 									hashHistory.push('/pin');
 								}).fail(() => {
-									Token.messenger("Wrong connect code", "Error");
+									messenger.messenger.error("Wrong connect code", "Error");
 								});
 							}
 						},

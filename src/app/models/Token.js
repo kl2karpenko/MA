@@ -1,49 +1,42 @@
-import Model from 'Model';
-
 import Storage from 'models/Storage';
+import config from 'envConfig';
 
-class Token extends Model {
-	init() {
-		this.managedResource = 'token';
-		this.isSingle = true;
-
-		this.authorizationUri = "http://10-60-28-150.ams.kwebbl.dev:4445/token";
+class Token {
+	constructor() {
+		this.authorizationUri = config.schema.tokenHostname;
 		this.redirectUri = "http://localhost:8030";
 		this.clientId = "b63mso0el64xpa7";
 		this.clientSecret = "b63mso0el64xpa7";
 
-		return Model.prototype.init();
-	}
-
-	afterInit() {
-		this.assignAttributes({
-			value: Storage.getValue('token')
-		});
+		this.token = Storage.getValue('token');
 	}
 
 	load(options) {
+		options = options || {
+			 type: "",
+				value: ""
+			};
+
+			console.log(this.authorizationUri);
+
+
 		return $.ajax({
 				type: "POST",
 				url: this.authorizationUri,
 				data: this.getTokenOptions(options),
 				dataType: 'json'
 			})
-			.done((token) => {
-				console.log(token);
+			.done((data) => {
+				console.log(data, 'token');
 
-				let t = {
-					value: Storage.getValue('token')
-				};
+				this.token = data.token.token;
 
-				this._setOriginalValues(t);
-				this.assignAttributes(t);
-
-				this.saveToken("567658878687");
+				this.saveToken();
 			});
 	}
 
-	saveToken() {
-		Storage.setValue("token", this.getValueByPath("value"));
+	saveToken(value) {
+		Storage.setValue("token", value || this.token);
 	}
 
 	getTokenOptions(config) {
@@ -61,13 +54,9 @@ class Token extends Model {
 	}
 
 	refreshToken() {
-		return this.token.load();
-	}
+		console.log(this);
 
-	_defaultToken() {
-		return {
-			"value": ""
-		};
+		return this.load();
 	}
 }
 
