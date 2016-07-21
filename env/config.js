@@ -34,7 +34,6 @@ function _getContactsFromMobile() {
 module.exports = {
 	modules: [
 		"core",
-		"authorize",
 		"connects",
 		"pin",
 		"settings",

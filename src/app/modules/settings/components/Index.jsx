@@ -181,6 +181,7 @@ export default class Index extends Component {
 
 	static _disconnect() {
 		hashHistory.push('/authorize');
+		Storage.clear();
 		location.reload();
 	}
 

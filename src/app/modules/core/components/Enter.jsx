@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {hashHistory} from 'react-router';
 import config from 'envConfig';
 
-import Session from "models/Session";
 import Pin from "models/Pin";
 import FailBlock from 'components/blocks/Fail.jsx';
 
 import LoadingBlock from 'components/blocks/Loading.jsx';
+import Loader from 'components/layouts/Loader.jsx';
 
 export default class Enter extends Component {
 	constructor(props) {
@@ -59,15 +59,8 @@ export default class Enter extends Component {
 	}
 
 	_checkConnection() {
-		Session
-			._getSessionData()
-			.then(() => {
-				$(document).trigger('system:unfail');
-				hashHistory.replace(Session._isConnected() ? '/pin' : '/authorize');
-			})
-			.fail(() => {
-				$(document).trigger('system:fail');
-			});
+		// TODO think how to ping server when it is fail
+		$(document).trigger('system:unfail');
 	}
 
 	render() {
@@ -75,6 +68,8 @@ export default class Enter extends Component {
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
 			{this.props.children}
+
+			<Loader/>
 
 			<LoadingBlock
 				show={this.state.loading}

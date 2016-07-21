@@ -1,42 +1,47 @@
 let ClientOAuth2 = require('client-oauth2');
-let kwebblOAuth;
-let userToken;
 
-module.exports = {
-	authorize(token) {
-		if (!kwebblOAuth) {
-			kwebblOAuth = new ClientOAuth2({
-				"clientId": "2909abc18ab27bea41f531705d0dcf55",
-				"clientSecret": "b63mso0el64xpa7",
-				"grant_type": "qr_code",
-				"qr_code": token,
-				"authorizationUri": 'http://10-60-28-150.ams.kwebbl.dev:4445/token',
-				"redirectUri": 'http://localhost:8030'
-			});
-		}
+import Storage from "models/Storage";
 
-		return kwebblOAuth;
-	},
+export default class OAuthClient {
+	initialize(options) {
+		console.log('init OAuthClient');
 
-	getAuthorizeHeader(token) {
-		return this.authorize(token)
-			.request({
-				method: 'post',
-				url: 'http://10-60-28-150.ams.kwebbl.dev:4445/token',
-				body: {
-					"clientId": "2909abc18ab27bea41f531705d0dcf55",
-					"clientSecret": "b63mso0el64xpa7",
-					"grant_type": "qr_code",
-					"qr_code": token
-				}
-			})
-			.then(function (res) {
-				userToken = res;
-			});
-	},
+		options = options || {
+				type: "qr_code",
+				value: ""
+		};
 
-	refresh() {
-		return kwebblOAuth.refresh();
+		this.authorizationUri = "http://10-60-28-150.ams.kwebbl.dev:4445/token";
+		this.redirectUri = "http://localhost:8030";
+		this.clientId = "b63mso0el64xpa7";
+		this.clientSecret = "b63mso0el64xpa7";
+
+		this.token = OAuthClient.createOAuthClient(
+			this.getTokenOptions(options)
+		);
+
+		Storage.setValue('token', this.token);
 	}
-};
 
+	getTokenOptions(config) {
+		let tokenOptions = {
+			"clientId": this.clientId,
+			"clientSecret": this.clientSecret,
+			"authorizationUri": this.authorizationUri,
+			"redirectUri": this.redirectUri,
+			"grant_type": config.type
+		};
+
+		tokenOptions[config.type] = config.value;
+
+		return tokenOptions;
+	}
+
+	static createOAuthClient(options) {
+		return new ClientOAuth2(options);
+	}
+
+	refreshToken() {
+		return this.token.refresh();
+	}
+}

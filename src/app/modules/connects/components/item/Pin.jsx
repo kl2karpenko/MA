@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import PinModel from "../../models/Pin";
+import Token from "models/Token";
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
 import PinForm from 'components/inputs/Pin.jsx';
@@ -26,16 +27,19 @@ export default class Pin extends Component {
 	}
 
 	connect() {
-		return PinModel.save({
-			for: 'pin'
-		}).then((res) => {
+		console.log(PinModel.getValueByPath("value"), 'PinModel.getValueByPath("value")');
+
+		return Token.load({
+			type: "connect_code",
+			value: PinModel.getValueByPath("value")
+		}).done(() => {
 			this._reset();
-			
-			if(res.connects.pin.value) {
-				hashHistory.push('/pin');
-			}
+
+			hashHistory.push('/pin');
 
 			return PinModel.getModel();
+		}).fail(() => {
+			Token.messenger("Wrong connect code", "Error");
 		});
 	}
 

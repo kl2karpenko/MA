@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, hashHistory} from 'react-router';
 
-import Session from "models/Session";
+import Token from "models/Token";
 
 import Main from "./modules/core/components/Enter.jsx";
 
@@ -27,17 +27,11 @@ export default class System {
 	}
 
 	_load() {
-		Session
-			._getSessionData()
-			.then(() => {
-				console.log(Session._isConnected());
+		let clientToken = Token.getValueByPath("value");
 
-				hashHistory.replace(Session._isConnected() ? '/pin' : '/authorize');
-				$(document).trigger('system:unfail');
-			})
-			.fail(() => {
-				$(document).trigger('system:fail');
-			});
+		console.log(clientToken, "clientToken");
+
+		hashHistory.replace(clientToken ? '/pin' : '/connects/qr');
 	}
 
 	_createRoutes() {
@@ -54,7 +48,6 @@ export default class System {
 						onEnter: this._load
 					},
 					childRoutes: [
-						require('./modules/authorize/routes.jsx'),
 						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
 						require('./modules/contacts/routes.jsx'),
