@@ -25,8 +25,6 @@ export default class PinForm extends Component {
 		let pinLength = this.state.model.value.length;
 		this.state.model.value = inputValue;
 
-		console.log(inputValue, pinLength, ' ============');
-
 		this.setState({
 			additionalClass: setCurrentFocusedInputTo(5, pinLength === 5 ? 0 : inputValue.length - 1),
 			model: this.state.model
