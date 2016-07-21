@@ -13,7 +13,8 @@ import config from 'envConfig';
 import dialogs from 'dialogs';
 
 import Camera from 'lib/camera';
-import ClientOAuth2 from 'lib/ClientOAuth2';
+
+import Token from 'models/Token';
 
 export default class Enter extends Component {
 	constructor(props) {
@@ -27,7 +28,14 @@ export default class Enter extends Component {
 					cordova.plugins.barcodeScanner.scan(
 						function (result) {
 							if (!result.cancelled && result.text) {
-								ClientOAuth2.getAuthorizeHeader(result.text);
+								Token.load({
+									type: "qr_code",
+									value: result.text
+								}).done(() => {
+									hashHistory.push('/pin');
+								}).fail(() => {
+									Token.messenger("Wrong connect code", "Error");
+								});
 							}
 						},
 						function (error) {

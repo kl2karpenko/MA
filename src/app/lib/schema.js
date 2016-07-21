@@ -12,7 +12,9 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 
 	request: function(resource, options) {
 		options.timeout = 3000;
-		options.setRequestHeader("Authorization", "Bearer " + Storage.getValue("token"));
+		options.headers({
+			"Authorization": "Bearer " + Storage.getValue("token")
+		});
 
 		return $.ajax(options);
 	}

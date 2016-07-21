@@ -22,12 +22,7 @@ class Token extends Model {
 	}
 
 	load(options) {
-		options = options || {
-			type: "connect_code",
-			value: ""
-		};
-
-		$.ajax({
+		return $.ajax({
 				type: "POST",
 				url: this.authorizationUri,
 				data: this.getTokenOptions(options),

@@ -26,20 +26,20 @@ export default class Pin extends Component {
 		this.setState(PinModel.getModel());
 	}
 
-	connect() {
-		console.log(PinModel.getValueByPath("value"), 'PinModel.getValueByPath("value")');
-
+	connect(value) {
 		return Token.load({
 			type: "connect_code",
-			value: PinModel.getValueByPath("value")
-		}).done(() => {
+			value: value
+		}).then(() => {
 			this._reset();
 
 			hashHistory.push('/pin');
 
 			return PinModel.getModel();
-		}).fail(() => {
-			Token.messenger("Wrong connect code", "Error");
+		}).fail((y) => {
+			console.log(y);
+
+			Token.messenger.error("Wrong connect code", "Error");
 		});
 	}
 

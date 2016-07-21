@@ -3,8 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, hashHistory} from 'react-router';
 
-import Token from "models/Token";
-
 import Main from "./modules/core/components/Enter.jsx";
 
 import config from 'envConfig';
@@ -26,14 +24,6 @@ export default class System {
 		return require("../css/app.less");
 	}
 
-	_load() {
-		let clientToken = Token.getValueByPath("value");
-
-		console.log(clientToken, "clientToken");
-
-		hashHistory.replace(clientToken ? '/pin' : '/connects/qr');
-	}
-
 	_createRoutes() {
 		this.rootRoute = {
 			component: 'div',
@@ -44,9 +34,6 @@ export default class System {
 				{
 					path: '/',
 					component: Main,
-					indexRoute: {
-						onEnter: this._load
-					},
 					childRoutes: [
 						require('./modules/connects/routes.jsx'),
 						require('./modules/pin/routes.jsx'),
