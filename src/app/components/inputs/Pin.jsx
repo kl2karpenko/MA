@@ -43,6 +43,8 @@ export default class Pin extends Component {
 			inputValue = inputValue.target.value;
 		}
 
+		console.log(inputValue, 'inputValue ============');
+		
 		if (!inputValue.match(/^\d+$/)) {
 			return;
 		}
