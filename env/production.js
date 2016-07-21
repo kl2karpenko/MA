@@ -35,7 +35,7 @@ function configContact (data) {
 }
 
 function _getContactsFromMobile() {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		let options = {};
 
 		options.multiple = true;
@@ -64,12 +64,11 @@ function _getContactsFromMobile() {
 	});
 }
 
-let homeIPMac = 'http://192.168.2.105:8030/';
-let workIPMac = 'http://10.10.201.49:8030/';
-let workIPDesktop = 'http://10.10.200.28:8030/';
+let IPMac = 'http://10.10.201.49:8030/';
+let IPDesktop = 'http://10.10.200.28:8030/';
 
 function getAddressOfHost() {
-	let hostName =  isIOS ? workIPMac : workIPDesktop;
+	let hostName =  isIOS ? IPMac : IPDesktop;
 
 	return hostName;
 }
