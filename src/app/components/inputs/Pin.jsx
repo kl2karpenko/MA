@@ -28,14 +28,13 @@ export default class Pin extends Component {
 
 		let len = value.length;
 
-		console.log( setCurrentFocusedInputTo(5, (len - 1 < 0 ? len : len - 1), e.target) )
-
 		this.setState({
 			additionalClass: setCurrentFocusedInputTo(5, (len - 1 < 0 ? len : len - 1), e.target)
 		});
 	}
 
 	onChange(inputValue) {
+		console.log('change =================');
 		let
 			validPinLength = 5;
 
@@ -43,13 +42,14 @@ export default class Pin extends Component {
 			inputValue = inputValue.target.value;
 		}
 
-		console.log(inputValue, 'inputValue ============');
-		
+		console.log(inputValue.match(/^\d+$/), !inputValue.match(/^\d+$/), inputValue);
+		console.log(inputValue);
+
 		if (!inputValue.match(/^\d+$/)) {
 			return;
 		}
 
-		console.log(inputValue, 'inputValue');
+		// console.log(inputValue, 'inputValue');
 
 		this.state.model.value = inputValue;
 
