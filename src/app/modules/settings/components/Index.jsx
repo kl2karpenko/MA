@@ -12,7 +12,7 @@ import PinForm from './PinForm.jsx';
 
 import MainScroll from 'components/layouts/main/Scroll.jsx';
 
-import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import { KeyboardComponent, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 import Pin from "models/Pin";
 import PhoneNumber from "models/PhoneNumber";
@@ -159,10 +159,6 @@ export default class Index extends Component {
 	}
 
 	onTouch(index, e) {
-		setTimeout(function () {
-			Keyboard.closeKeyBoard();
-		}, 0);
-
 		this.pin.classFocus = setCurrentFocusedInputTo(4, index, e.target);
 
 		this.setState({
@@ -171,8 +167,6 @@ export default class Index extends Component {
 			keyboardIsVisible: true,
 			type: e.target.name == "phone" ? "phone" : "pin"
 		});
-
-		return Keyboard.closeKeyBoard(e);
 	}
 
 	static _leave() {
@@ -258,7 +252,7 @@ export default class Index extends Component {
 			</AdaptiveFixed>
 
 			<div className={"l-keyboard l-keyboard-fixed" + (this.state.keyboardIsVisible ? "" : " hiden")}>
-				<Keyboard
+				<KeyboardComponent
 					value={this.state.value}
 					isValid={this.state.isValid}
 					element={this.state.element}

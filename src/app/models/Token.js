@@ -1,11 +1,13 @@
 import Storage from 'models/Storage';
 import config from 'envConfig';
 
+var ClientOAuth2 = require('client-oauth2');
+
 class Token {
 	constructor() {
 		this.authorizationUri = config.schema.tokenHostname;
 		this.redirectUri = "http://localhost:8030";
-		this.clientId = "b63mso0el64xpa7";
+		this.clientId = "2909abc18ab27bea41f531705d0dcf55";
 		this.clientSecret = "b63mso0el64xpa7";
 
 		this.token = Storage.getValue('token');
@@ -13,49 +15,62 @@ class Token {
 
 	load(options) {
 		options = options || {
-			 type: "",
-				value: ""
-			};
+		 type: "",
+			value: ""
+		};
 
-			console.log(this.authorizationUri);
+		let
+			client = this.getTokenOptions(options),
+			requestBody = this.getBodyForRequest(options);
 
-
-		return $.ajax({
-				type: "POST",
+		return this.createClient(client).request({
+				method: 'post',
 				url: this.authorizationUri,
-				data: this.getTokenOptions(options),
-				dataType: 'json'
+				body: requestBody
 			})
-			.done((data) => {
-				console.log(data, 'token');
+			.then((res) => {
+				console.log(res, 'token');
 
-				this.token = data.token.token;
-
+				this.token = res.body.access_token;
 				this.saveToken();
 			});
+	}
+
+	createClient(requestBody) {
+		return new ClientOAuth2(requestBody);
 	}
 
 	saveToken(value) {
 		Storage.setValue("token", value || this.token);
 	}
 
-	getTokenOptions(config) {
+	getTokenOptions(options) {
 		let tokenOptions = {
 			"clientId": this.clientId,
 			"clientSecret": this.clientSecret,
 			"authorizationUri": this.authorizationUri,
 			"redirectUri": this.redirectUri,
-			"grant_type": config.type
+			"grant_type": options.type
 		};
 
-		tokenOptions[config.type] = config.value;
+		tokenOptions[options.type] = options.value;
+
+		return tokenOptions;
+	}
+
+	getBodyForRequest(options) {
+		let tokenOptions = {
+			"client_id": this.clientId,
+			"client_secret": this.clientSecret,
+			"grant_type": options.type
+		};
+
+		tokenOptions[options.type] = options.value;
 
 		return tokenOptions;
 	}
 
 	refreshToken() {
-		console.log(this);
-
 		return this.load();
 	}
 }

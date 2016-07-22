@@ -36,8 +36,6 @@ export default class Pin extends Component {
 			hashHistory.push('/pin');
 
 			return PinModel.getModel();
-		}).fail((y) => {
-			PinModel.messenger.error("Wrong connect code", "Error");
 		});
 	}
 

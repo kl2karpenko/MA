@@ -73,7 +73,7 @@ function getAddressOfHost() {
 	return hostName;
 }
 
-module.exports = $.extend(config, {
+module.exports = $.extend(true, config, {
 	schema: {
 		hostname: getAddressOfHost(),
 		mobileContacts: _getContactsFromMobile,

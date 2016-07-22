@@ -75,20 +75,20 @@ app.get('/mailboxes/:mailboxId', function (req, res) {
  * List of company dialplans
  */
 app.get('/dialplans', function (req, res) {
-	// res.send({
-	// 	"dialplans": dialplansList
-	// });
-	res.send(401);
+	res.send({
+		"dialplans": dialplansList
+	});
+	// res.send(401);
 });
 
 /**
  * Detail info about dialplan
  */
 app.get('/dialplans/:dialplanId', function (req, res) {
-	// res.send({
-	// 	"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
-	// });
-	res.send(401);
+	res.send({
+		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
+	});
+	// res.send(401);
 });
 
 /**

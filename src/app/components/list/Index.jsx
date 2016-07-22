@@ -21,9 +21,6 @@ export default class Index extends Component {
 			.then((data) => {
 				let configData = this.state.config(data[this.state.model._getModelName()]);
 
-				// TODO: refactor error for dialplans and touch on list iz gluchit!!!!!!!
-				console.log(this.state.model._getModelName(), data);
-
 				this.setState({
 					model: this.state.model,
 					list: configData

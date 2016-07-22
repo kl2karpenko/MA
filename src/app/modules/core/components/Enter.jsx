@@ -56,10 +56,12 @@ export default class Enter extends Component {
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
 
 		document.addEventListener("resume", function() {
-			alert('resume');
-
 			Pin.isExist() && hashHistory.push('/pin');
 		});
+
+		document.addEventListener("showkeyboard", function() {
+			alert("showkey");
+		}, false);
 	}
 
 	_checkToken() {

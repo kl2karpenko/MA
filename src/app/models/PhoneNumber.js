@@ -31,7 +31,7 @@ class PhoneNumber extends Model {
 							resolve(phoneValue);
 						});
 
-					} else {
+					} else if (phoneValue !== "") {
 						this.messenger.error('Not a valid phone number', "Warning");
 					}
 				});

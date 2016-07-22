@@ -5,7 +5,7 @@ import Tappable from 'react-tappable';
 
 import imageLoader from 'imageLoader';
 
-export class Keyboard extends Component {
+export class KeyboardComponent extends Component {
 	constructor(props) {
 		super(props);
 
@@ -18,7 +18,6 @@ export class Keyboard extends Component {
 		};
 	}
 
-	/* call on change props in parent scope */
 	componentWillReceiveProps(props) {
 		this.setState({
 			value: props.value,
@@ -58,38 +57,19 @@ export class Keyboard extends Component {
 			onChange(newVal);
 		}
 	}
-	
-	static closeKeyBoard(e) {
-		if (config.process.isProd() && cordova && cordova.plugins) {
-			cordova.plugins.Keyboard.close();
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
-			cordova.plugins.Keyboard.isVisible = false;
+	static keyBoardHide() {
+		if (config.process.isProd() && Keyboard) {
+			Keyboard.hide();
+			setTimeout(() => {
+				Keyboard.hide();
+			}, 25)
 		}
-
-		if (e) {
-			$(e.target).blur();
-			document.activeElement.blur();
-
-			e.preventDefault();
-		}
-
-		return false;
-	}
-
-	static addEventHide() {
-		document.addEventListener("showkeyboard", function(){
-			Keyboard.closeKeyBoard();
-		}, false);
-	}
-
-	static removeEventHide() {
-		document.removeEventListener("showkeyboard", function(){
-			Keyboard.closeKeyBoard();
-		}, false);
 	}
 
 	render() {
+		KeyboardComponent.keyBoardHide();
+
 		return (
 			<div className="m-keyboard">
 				<div className="m-keyboard-digits">

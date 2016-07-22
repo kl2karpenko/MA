@@ -45,7 +45,7 @@ export default class Pin extends Component {
 		console.log(inputValue.match(/^\d+$/), !inputValue.match(/^\d+$/), inputValue);
 		console.log(inputValue);
 
-		if (!inputValue.match(/^\d+$/)) {
+		if (inputValue && !inputValue.match(/^\d+$/)) {
 			return;
 		}
 
@@ -61,7 +61,7 @@ export default class Pin extends Component {
 		}
 
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
-			this.props.onSubmit(inputValue).done((newPinModel) => {
+			this.props.onSubmit(inputValue).then((newPinModel) => {
 				this.setState({
 					additionalClass: setCurrentFocusedInputTo(5, 0),
 					model: newPinModel.pin

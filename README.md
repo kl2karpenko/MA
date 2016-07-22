@@ -16,7 +16,7 @@ $ npm i
 Plugin list:
 1. cordova-plugin-contacts
 2. cordova-plugin-sim only for Android
-3. ionic-plugin-keyboard
+3. cordova-plugin-keyboard
 4. cordova-plugin-compat
 5. cordova-plugin-browsersync
 6. cordova-plugin-splashscreen

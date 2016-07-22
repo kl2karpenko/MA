@@ -9,11 +9,13 @@ import Storage from "models/Storage";
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
-import { Keyboard } from 'components/Keyboard.jsx';
+import { KeyboardComponent } from 'components/Keyboard.jsx';
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
+
+		Pin.pin.value = "";
 
 		this.state = {
 			model: Pin.pin,
@@ -40,6 +42,7 @@ export default class Index extends Component {
 			return Pin
 				.save()
 				.then(() => {
+					this._reset();
 					hashHistory.push('/dialplans');
 				})
 		} else {
@@ -49,11 +52,6 @@ export default class Index extends Component {
 	}
 
 	render() {
-		setTimeout(function () {
-			Keyboard.addEventHide();
-			Keyboard.closeKeyBoard();
-		}, 0);
-
 		return (<AdaptiveWrapper>
 			<Adaptive>
 				<PinForm

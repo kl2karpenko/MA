@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Tappable from 'react-tappable';
 
-import { Keyboard } from 'components/Keyboard.jsx';
+import { KeyboardComponent } from 'components/Keyboard.jsx';
 import Storage from "models/Storage";
 import Pin from "models/Pin";
 
@@ -15,6 +15,8 @@ export default class PinForm extends Component {
 		});
 
 		this._toggleUsingPin = this._toggleUsingPin.bind(this);
+
+		KeyboardComponent.keyBoardHide();
 	}
 
 	_setState(props) {
@@ -41,7 +43,7 @@ export default class PinForm extends Component {
 	}
 
 	onTouch(index, e) {
-		Keyboard.closeKeyBoard(e);
+		KeyboardComponent.keyBoardHide();
 
 		this.setState({
 			keyboardIsVisible: true
@@ -72,6 +74,8 @@ export default class PinForm extends Component {
 	}
 
 	render() {
+		KeyboardComponent.keyBoardHide();
+
 		return (<div>
 			<div className="l-grey l-grey-md">
 				<label htmlFor="pin.is_on" className="checkbox-block m-label clearfix">

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Keyboard, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import { KeyboardComponent, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
 import Pin from 'components/inputs/Pin.jsx';
 
@@ -9,7 +9,7 @@ export default class PinForm extends Component {
 		this.keyBoard = this.props.keyBoard;
 
 		this.state = {
-			additionalClass: setCurrentFocusedInputTo(3, 0),
+			additionalClass: setCurrentFocusedInputTo(5, 0),
 			model: this.props.model,
 			element: $('input[name=pin]').get(0)
 		};
@@ -19,9 +19,13 @@ export default class PinForm extends Component {
 		}
 
 		this.onChange = this.onChange.bind(this);
+
+		KeyboardComponent.keyBoardHide();
 	}
 
 	onChange(inputValue) {
+		KeyboardComponent.keyBoardHide();
+
 		let pinLength = this.state.model.value.length;
 		this.state.model.value = inputValue;
 
@@ -33,9 +37,13 @@ export default class PinForm extends Component {
 		if (this.state.model.value.length === 5) {
 			this.props.options.onSubmit();
 		}
+
+		KeyboardComponent.keyBoardHide();
 	}
 
 	render() {
+		KeyboardComponent.keyBoardHide();
+		
 		return ( <div className="l-pin">
 			<Pin
 				model={this.state.model}
@@ -46,7 +54,7 @@ export default class PinForm extends Component {
 				onChange={this.onChange}
 			/>
 
-			<Keyboard
+			<KeyboardComponent
 				value={this.state.model.value}
 				onSubmit={this.props.options.onSubmit}
 				onChange={this.onChange}
