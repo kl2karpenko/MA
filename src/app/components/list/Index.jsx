@@ -19,7 +19,10 @@ export default class Index extends Component {
 		return this.state.model
 			.load()
 			.then((data) => {
-				let configData = this.state.config(data[this.state.model._getModelName()]);
+				let configData = this.state.config ?
+					this.state.config(data[this.state.model._getModelName()]) : data[this.state.model._getModelName()];
+
+				console.log(data, configData, this.state.model._getModelName())
 
 				this.setState({
 					model: this.state.model,

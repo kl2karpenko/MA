@@ -18,6 +18,19 @@ class MobileContacts extends List {
 			"number": ""
 		};
 	}
+
+	configData(data) {
+		return data && data.map((item) => {
+			var obj = {};
+
+			obj.number = item.number;
+			obj.image = item.image;
+			obj.name = item.name;
+			obj.type = "extension";
+
+			return obj;
+		});
+	}
 	
 	load() {
 		return Contacts.load();

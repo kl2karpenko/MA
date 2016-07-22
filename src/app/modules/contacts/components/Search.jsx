@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import Extensions from "../models/Extensions";
+import AllContacts from "../models/AllContacts";
 import ListComponent from "components/list/Index.jsx";
 
 import Dialplan from "models/Dialplan";
@@ -22,7 +22,7 @@ export default class Contacts extends Component {
 		Dialplan
 			._saveFollowToTransfer({
 				number: contactData.number,
-				type: "extension"
+				type: contactData.type
 			})
 			.then(() => {
 				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
@@ -32,11 +32,11 @@ export default class Contacts extends Component {
 	render() {
 		return (
 			<ListComponent
-				model={Extensions}
+				model={AllContacts}
 				listClass="m-list-contacts"
 				onClick={this._setActiveContact}
-				configData={Extensions.configData}
 				withImg={true}
+				onError={"No permission to your contact list"}
 			/>
 		);
 	}

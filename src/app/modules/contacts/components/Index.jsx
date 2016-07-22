@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import Tappable from 'react-tappable';
 
 import imageLoader from 'imageLoader';
 
@@ -42,9 +42,12 @@ export default class ContactPage extends Component {
 					</div>
 				</div>
 
-				<button className="m-angle__button btn btn-round btn-sm btn-right">
-					<img src={imageLoader(require("images/icons/search.png"))} alt="Right"/>
-				</button>
+				<LinkButton
+					text={<img src={imageLoader(require("images/icons/search.png"))} alt="Right"/>}
+					component="a"
+					className="m-angle__button btn btn-round btn-sm btn-right"
+					href="/contacts/search"
+				/>
 			</Angle>
 			<AdaptiveFixed>
 				<MainScroll>
