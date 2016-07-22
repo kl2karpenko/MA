@@ -22,7 +22,7 @@ var ACTION_ARRAY_KEY = data.action_array_key;
 
 
 var app = express();
-var port = 8030;
+var port = process.env.NODE_ENV === 'development' ? 8040 : 8030;
 var root = path.resolve(__dirname, '../build');
 
 

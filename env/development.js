@@ -9,6 +9,7 @@ function getAddressOfHost() {
 
 module.exports = $.extend(config, {
 	schema: {
-		hostname: getAddressOfHost()
+		hostname: getAddressOfHost(),
+		port: 8040
 	}
 });
