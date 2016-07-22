@@ -15,13 +15,16 @@ export default class Pin extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log(PinModel.getModel());
+
+
 		this.state = PinModel.getModel();
 
 		this.connect = this.connect.bind(this);
 	}
 
 	_reset() {
-		PinModel.updateAttributesFor('pin.value', '');
+		PinModel.updateAttributesFor('value', '');
 
 		this.setState(PinModel.getModel());
 	}
@@ -49,11 +52,14 @@ export default class Pin extends Component {
 				<div className="l-pin-connect">
 					<div className="l-pin">
 						<PinForm
-							model={this.state.pin}
+							model={this.state}
 							text="Enter the code"
 							inputType="number"
 							form="connectPin"
 							onSubmit={this.connect.bind(this)}
+						  onChange={() => {
+						  	console.log(999);
+						  }}
 						/>
 					</div>
 				</div>
@@ -62,7 +68,7 @@ export default class Pin extends Component {
 					className="m-angle__button btn btn-round btn-md"
 					onTouchStart={this.connect}
 					data-form="connectPin"
-					disabled={!(this.state.pin.value.length === 5)}
+					disabled={!(this.state.value.length === 5)}
 					form="connectPin">Log In</button>
 			</Angle>
 

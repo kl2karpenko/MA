@@ -43,6 +43,8 @@ export default class PinForm extends Component {
 
 	render() {
 		KeyboardComponent.keyBoardHide();
+
+		console.log("keyboard");
 		
 		return ( <div className="l-pin">
 			<Pin
