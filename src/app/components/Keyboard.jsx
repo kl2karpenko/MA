@@ -9,8 +9,6 @@ export class KeyboardComponent extends Component {
 	constructor(props) {
 		super(props);
 
-		console.log(props);
-
 		this.state = {
 			value: props.value,
 			isValid: props.isValid,

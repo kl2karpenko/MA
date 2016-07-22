@@ -16,9 +16,6 @@
         "cordova-plugin-contacts": {
             "PACKAGE_NAME": "com.example.hello"
         },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.kwebbl.androidapp"
-        },
         "cordova-plugin-sim": {
             "PACKAGE_NAME": "com.kwebbl.androidapp"
         },
@@ -36,6 +33,9 @@
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "com.qaller.androidapp"
         }
     },
     "dependent_plugins": {

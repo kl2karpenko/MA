@@ -43,7 +43,7 @@ module.exports = {
 	],
 	schema: {
 		hostname: "/",
-		tokenHostname: "http://10-60-28-150.ams.kwebbl.dev:4445/token",
+		tokenHostname: "http://10.60.28.150:4445/token",
 		mobileContacts: _getContactsFromMobile,
 		mobileSIMNumber: _getMobileNumber
 	},

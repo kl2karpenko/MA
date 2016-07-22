@@ -58,10 +58,6 @@ export default class Enter extends Component {
 		document.addEventListener("resume", function() {
 			Pin.isExist() && hashHistory.push('/pin');
 		});
-
-		document.addEventListener("showkeyboard", function() {
-			alert("showkey");
-		}, false);
 	}
 
 	_checkToken() {
