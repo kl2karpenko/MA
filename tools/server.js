@@ -43,9 +43,11 @@ app.get('/contacts', function (req, res) {
 /**
  * Session data
  */
-app.get('/session', function (req, res) {
+app.post('/token', function (req, res) {
 	res.send({
-		"session": true
+		"token": {
+			"token": 9999999
+		}
 	});
 
 	res.status(200);
@@ -73,18 +75,20 @@ app.get('/mailboxes/:mailboxId', function (req, res) {
  * List of company dialplans
  */
 app.get('/dialplans', function (req, res) {
-	res.send({
-		"dialplans": dialplansList
-	});
+	// res.send({
+	// 	"dialplans": dialplansList
+	// });
+	res.send(401);
 });
 
 /**
  * Detail info about dialplan
  */
 app.get('/dialplans/:dialplanId', function (req, res) {
-	res.send({
-		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
-	});
+	// res.send({
+	// 	"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
+	// });
+	res.send(401);
 });
 
 /**

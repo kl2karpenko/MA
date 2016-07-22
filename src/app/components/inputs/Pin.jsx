@@ -49,8 +49,6 @@ export default class Pin extends Component {
 			return;
 		}
 
-		// console.log(inputValue, 'inputValue');
-
 		this.state.model.value = inputValue;
 
 		this.setState({
@@ -63,7 +61,7 @@ export default class Pin extends Component {
 		}
 
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
-			this.props.onSubmit().done((newPinModel) => {
+			this.props.onSubmit(inputValue).done((newPinModel) => {
 				this.setState({
 					additionalClass: setCurrentFocusedInputTo(5, 0),
 					model: newPinModel.pin

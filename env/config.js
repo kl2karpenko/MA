@@ -43,7 +43,7 @@ module.exports = {
 	],
 	schema: {
 		hostname: "/",
-		port: 8030,
+		tokenHostname: "/token",
 		mobileContacts: _getContactsFromMobile,
 		mobileSIMNumber: _getMobileNumber
 	},
