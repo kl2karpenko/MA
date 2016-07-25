@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import config from 'envConfig';
 import messenger from "messenger";
+import { hashHistory } from 'react-router';
 
 import 'rest-client';
 import Token from "models/Token";
@@ -11,28 +12,33 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 	autoClearCache: true,
 
 	request: function (resource, options) {
-		options.timeout = 3000;
-		
-		options.crossDomain = true;
+		options.timeout = 10000;
 
 		options.beforeSend = function( xhr ) {
 			xhr.setRequestHeader( "Authorization", "Bearer " + Token.token );
 		};
 
-		options.error = function() {
-			messenger.error("Bad request", "Error");
-		};
-
 		/** add errors handling */
 		options.statusCode = {
 			401: function() {
-				messenger.error("Unauthorized", "Error");
+				console.error("Unauthorized", "Error");
+
+				if (!Token.token) {
+					hashHistory.replace('/connects/qr');
+				} else {
+					Token.refreshToken().then(() => {
+						hashHistory.replace('/pin');
+					});
+				}
+
 			},
 			404: function() {
 				messenger.error("Page not found", "Error");
+				$(document).trigger('system:fail');
 			},
 			500: function() {
 				messenger.error("Server is not available", "Error");
+				$(document).trigger('system:fail');Fo
 			}
 		};
 

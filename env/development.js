@@ -7,9 +7,16 @@ function getAddressOfHost() {
 	return devServerHostName;
 }
 
+function getTokenHostName() {
+	let tokenHostName = "http://10.60.28.150:4445/token";
+	let localTokenHostName = "/token";
+
+	return tokenHostName;
+}
+
 module.exports = $.extend(true, config, {
 	schema: {
 		hostname: getAddressOfHost(),
-		tokenHostname: "http://10.60.28.150:4445/token"
+		tokenHostname: getTokenHostName()
 	}
 });

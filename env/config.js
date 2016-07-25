@@ -31,6 +31,14 @@ function _getContactsFromMobile() {
 	});
 }
 
+
+function getTokenHostName() {
+	let tokenHostName = "http://10.60.28.150:4445/token";
+	let localTokenHostName = "/token";
+
+	return tokenHostName;
+}
+
 module.exports = {
 	modules: [
 		"core",
@@ -42,8 +50,8 @@ module.exports = {
 		"mailboxes"
 	],
 	schema: {
-		hostname: "/",
-		tokenHostname: "http://10.60.28.150:4445/token",
+		hostname: "",
+		tokenHostname: getTokenHostName(),
 		mobileContacts: _getContactsFromMobile,
 		mobileSIMNumber: _getMobileNumber
 	},

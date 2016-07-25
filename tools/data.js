@@ -595,7 +595,6 @@ var mailboxes = [{
 	"type": "mailbox"
 }];
 
-
 var settingsOn = {
 	"settings": {
 		"pin": {

@@ -67,7 +67,7 @@ export default class Pin extends Component {
 		let InputRender = <InputOnKeyDown
 			type={this.props.inputType}
 			name="pin"
-			value={this.state.model.value}
+			value={this.state && this.state.model.value}
 			onFocus={this.onFocus}
 			onChange={this.onChange}
 			className="l-pin__input"
@@ -78,7 +78,7 @@ export default class Pin extends Component {
 				autoFocus="true"
 				type={this.props.inputType}
 				name="pin"
-				value={this.state.model.value}
+				value={this.state && this.state.model.value}
 				onFocus={this.onFocus}
 				onChange={this.onChange}
 				className="l-pin__input"

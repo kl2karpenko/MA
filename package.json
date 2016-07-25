@@ -12,6 +12,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Karpenko Lilya",
+  "browser": {
+    "fs": false,
+    "child_process": false
+  },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "autoprefixer-loader": "^3.2.0",
@@ -40,6 +44,7 @@
     "jquery": "^2.2.3",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
+    "ping": "^0.1.10",
     "plist": "^1.2.0",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",

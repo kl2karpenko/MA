@@ -1,8 +1,7 @@
 import Storage from 'models/Storage';
 import config from 'envConfig';
 import messenger from 'messenger';
-
-var ClientOAuth2 = require('client-oauth2');
+import { hashHistory } from 'react-router';
 
 class Token {
 	constructor() {
@@ -12,6 +11,8 @@ class Token {
 		this.clientSecret = "b63mso0el64xpa7";
 
 		this.token = Storage.getValue('token');
+		this.tokenData = {};
+		this.client = false;
 	}
 
 	load(options) {
@@ -21,47 +22,31 @@ class Token {
 		};
 
 		let
-			client = this.getTokenOptions(options),
 			requestBody = this.getBodyForRequest(options);
 
-		return this.createClient(client).request({
-				method: 'post',
-				url: this.authorizationUri,
-				body: requestBody,
-				crossDomain: true,
-				timeout: 6000,
-				error: (XMLHttpRequest, textStatus, errorThrown) => {
-					console.log(XMLHttpRequest, textStatus, errorThrown);
-					// messenger.error()
-				}
-			})
-			.then((res) => {
-				console.log(res);
-				this.token = res.body.access_token;
-				this.saveToken();
-			});
-	}
+		setTimeout(() => {
+			this.refreshToken();
+		}, 4000);
 
-	createClient(requestBody) {
-		return new ClientOAuth2(requestBody);
+		return this.getTokenRequest(requestBody).then((data) => {
+			this.tokenData = data;
+			this.saveToken(data.access_token);
+		});
 	}
 
 	saveToken(value) {
+		this.token = value;
 		Storage.setValue("token", value || this.token);
 	}
 
-	getTokenOptions(options) {
-		let tokenOptions = {
-			"clientId": this.clientId,
-			"clientSecret": this.clientSecret,
-			"authorizationUri": this.authorizationUri,
-			"redirectUri": this.redirectUri,
-			"grant_type": options.type
-		};
-
-		tokenOptions[options.type] = options.value;
-
-		return tokenOptions;
+	getTokenRequest(requestBody) {
+	  return $.ajax({
+		  type: "POST",
+		  url: this.authorizationUri,
+		  data: requestBody,
+		  timeout: 10000,
+		  dataType: "json"
+	  });
 	}
 
 	getBodyForRequest(options) {
@@ -77,7 +62,19 @@ class Token {
 	}
 
 	refreshToken() {
-		return this.load();
+		if (!this.token) {
+			hashHistory.push('/connects/qr');
+		}
+
+		return this.getTokenRequest({
+			"client_id": this.clientId,
+			"client_secret": this.clientSecret,
+			"grant_type": "refresh_token",
+			"refresh_token": this.tokenData.refresh_token
+		}).then((data) => {
+			this.tokenData = data;
+			this.saveToken(data.access_token);
+		});
 	}
 }
 

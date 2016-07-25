@@ -22,7 +22,6 @@ export default class Pin extends Component {
 
 	_reset() {
 		PinModel.updateAttributesFor('value', '');
-
 		this.setState(PinModel.getModel());
 	}
 
@@ -33,7 +32,9 @@ export default class Pin extends Component {
 		}).then(() => {
 			this._reset();
 
-			hashHistory.push('/pin');
+			if (Token.token) {
+				hashHistory.push('/pin');
+			}
 
 			return PinModel.getModel();
 		});
@@ -42,10 +43,7 @@ export default class Pin extends Component {
 	render() {
 		return (
 		<Adaptive>
-			<Angle
-				class="main"
-				header={false}>
-
+			<Angle class="main" header={false}>
 				<div className="l-pin-connect">
 					<div className="l-pin">
 						<PinForm
@@ -59,11 +57,13 @@ export default class Pin extends Component {
 				</div>
 
 				<button
-					className="m-angle__button btn btn-round btn-md"
-					onTouchStart={this.connect}
-					data-form="connectPin"
-					disabled={!(this.state.value.length === 5)}
-					form="connectPin">Log In</button>
+						className="m-angle__button btn btn-round btn-md"
+						onTouchStart={this.connect.bind(this)}
+						data-form="connectPin"
+						disabled={!(this.state.value.length === 5)}
+						form="connectPin">
+					Log In
+				</button>
 			</Angle>
 
 			<MainConnect>
