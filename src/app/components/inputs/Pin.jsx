@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import config from 'envConfig';
 
 import { setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 import InputOnKeyDown from './InputOnKeyDown.jsx';
@@ -21,8 +22,6 @@ export default class Pin extends Component {
 	}
 
 	onFocus(e) {
-		console.log('onFocus', e);
-
 		let value = e;
 		if (e.target) {
 			value = e.target.value;
@@ -36,9 +35,12 @@ export default class Pin extends Component {
 	}
 
 	onChange(inputValue) {
-		console.log('onChange to: ', inputValue);
 		let
 			validPinLength = 5;
+
+		if (inputValue.target) {
+			inputValue = inputValue.target.value;
+		}
 
 		this.state.model.value = inputValue;
 
@@ -52,7 +54,7 @@ export default class Pin extends Component {
 		}
 
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
-			this.props.onSubmit().then((newPinModel) => {
+			this.props.onSubmit(inputValue).then((newPinModel) => {
 				this.setState({
 					additionalClass: setCurrentFocusedInputTo(5, 0),
 					model: newPinModel.pin
@@ -62,6 +64,28 @@ export default class Pin extends Component {
 	}
 
 	render() {
+		let InputRender = <InputOnKeyDown
+			type={this.props.inputType}
+			name="pin"
+			value={this.state.model.value}
+			onFocus={this.onFocus}
+			onChange={this.onChange}
+			className="l-pin__input"
+		/>;
+
+		if (!config.process.isIOS()) {
+			InputRender = <input
+				autoFocus="true"
+				type={this.props.inputType}
+				name="pin"
+				value={this.state.model.value}
+				onFocus={this.onFocus}
+				onChange={this.onChange}
+				className="l-pin__input"
+				maxLength="5"
+			/>;
+		}
+
 		return ( <div className="l-pin-wrapper">
 				<div className="l-pin-center">
 					<div className="l-pin__name">{this.props.text}</div>
@@ -69,14 +93,7 @@ export default class Pin extends Component {
 						<div className="row" name="pin" method="POST">
 							<div className="col-xs-15 l-pin__space">
 								<div className="l-pin__form">
-									<InputOnKeyDown
-										type={this.props.inputType}
-										name="pin"
-										value={this.state.model.value}
-										onFocus={this.onFocus}
-										onChange={this.onChange}
-										className="l-pin__input"
-									/>
+									{InputRender}
 
 									<div className="l-pin__form-read">
 										<div className="row">

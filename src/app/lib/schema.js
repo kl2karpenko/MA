@@ -12,11 +12,28 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 
 	request: function (resource, options) {
 		options.timeout = 3000;
+		
+		options.crossDomain = true;
+
 		options.beforeSend = function( xhr ) {
 			xhr.setRequestHeader( "Authorization", "Bearer " + Token.token );
 		};
+
 		options.error = function() {
 			messenger.error("Bad request", "Error");
+		};
+
+		/** add errors handling */
+		options.statusCode = {
+			401: function() {
+				messenger.error("Unauthorized", "Error");
+			},
+			404: function() {
+				messenger.error("Page not found", "Error");
+			},
+			500: function() {
+				messenger.error("Server is not available", "Error");
+			}
 		};
 
 		return $.ajax(options);

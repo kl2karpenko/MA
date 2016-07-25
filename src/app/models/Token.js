@@ -1,5 +1,6 @@
 import Storage from 'models/Storage';
 import config from 'envConfig';
+import messenger from 'messenger';
 
 var ClientOAuth2 = require('client-oauth2');
 
@@ -26,11 +27,16 @@ class Token {
 		return this.createClient(client).request({
 				method: 'post',
 				url: this.authorizationUri,
-				body: requestBody
+				body: requestBody,
+				crossDomain: true,
+				timeout: 6000,
+				error: (XMLHttpRequest, textStatus, errorThrown) => {
+					console.log(XMLHttpRequest, textStatus, errorThrown);
+					// messenger.error()
+				}
 			})
 			.then((res) => {
-				console.log(res, 'token');
-
+				console.log(res);
 				this.token = res.body.access_token;
 				this.saveToken();
 			});
