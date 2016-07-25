@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import config from 'envConfig';
 
 import InputOnKeyDown from 'components/inputs/InputOnKeyDown.jsx';
+import AllContacts from "../../models/AllContacts";
 
 export default class SearchTop extends Component {
 	constructor(props) {
@@ -16,9 +16,13 @@ export default class SearchTop extends Component {
 		return (
 			<InputOnKeyDown
 				type="text"
-				onChange={(value) =>{
+				onChange={(value) => {
 					this.setState({
 						value: value
+					});
+					
+					AllContacts.search(value, {
+						by: ['number', 'name']
 					});
 				}}
 				value={this.state.value}

@@ -49,9 +49,11 @@ export default class Follow extends Component {
 				break;
 
 			case "mobile":
+				let activeTransfer = Dialplan._getActiveTransfer();
+
 				config.info = mobileNumber;
 				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
-				&& Dialplan._getActiveTransfer().number === mobileNumber) ? "checked" : "";
+				&& (activeTransfer && activeTransfer.number === mobileNumber)) ? "checked" : "";
 				break;
 
 			case "origin":

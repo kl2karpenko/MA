@@ -111,6 +111,13 @@ class List {
 		});
 	}
 
+	setState(name, value) {
+		let stateToUpdate = {};
+		stateToUpdate[name] = value;
+
+		this.state[name] = value;
+	}
+
 	getState() {
 		return this.state;
 	}
@@ -141,6 +148,47 @@ class List {
 
 	updateState(props) {
 		this.state._update(props);
+	}
+
+	getSearchQuery(value) {
+		this.setState('searchQuery', value);
+	}
+
+	setSearchQuery(value) {
+		this.setState('searchQuery', value);
+	}
+
+	search (term, options) {
+		options = options || {};
+		term = String(term || '').trim().toLowerCase();
+		let array = this.getModel();
+
+		if (!term) {
+			return array;
+		}
+
+		var searcher = createTextSearcher();
+
+		if (options.by && _.isObject(array[0])) {
+			_.each(array, function (item) {
+				_.some(options.by, function (fieldName) {
+					return searcher.match(term, item[fieldName], item);
+				});
+			});
+		} else {
+			_.each(array, function (text) {
+				searcher.match(term, text);
+			});
+		}
+
+		// searcher.results.sort(_.byFieldsOrder('position', 'text'));
+		var items = _.pluck(searcher.results, 'original');
+
+		searcher.results.length = 0;
+
+		console.log(items);
+
+		return items;
 	}
 
 	findByField(fieldName, valueOfField, returnVal) {
@@ -257,6 +305,29 @@ class State {
 
 		return previousPage <= 0 ? false : previousPage;
 	}
+}
+
+
+
+function createTextSearcher() {
+	return {
+		results: [],
+
+		match: function (term, text, item) {
+			text = String(text || '').toLowerCase();
+			var position = text.indexOf(term);
+
+			if (position !== -1) {
+				this.results.push({
+					original: item || text,
+					text: text,
+					position: position
+				});
+			}
+
+			return position !== -1;
+		}
+	};
 }
 
 module.exports = List;
