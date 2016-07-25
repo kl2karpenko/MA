@@ -15,9 +15,6 @@ export default class Pin extends Component {
 	constructor(props) {
 		super(props);
 
-		console.log(PinModel.getModel());
-
-
 		this.state = PinModel.getModel();
 
 		this.connect = this.connect.bind(this);
@@ -57,9 +54,6 @@ export default class Pin extends Component {
 							inputType="number"
 							form="connectPin"
 							onSubmit={this.connect.bind(this)}
-						  onChange={() => {
-						  	console.log(999);
-						  }}
 						/>
 					</div>
 				</div>

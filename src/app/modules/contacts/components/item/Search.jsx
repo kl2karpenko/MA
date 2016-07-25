@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import config from 'envConfig';
-import Tappable from 'react-tappable';
+
+import InputOnKeyDown from 'components/inputs/InputOnKeyDown.jsx';
 
 export default class SearchTop extends Component {
 	constructor(props) {
@@ -13,17 +14,15 @@ export default class SearchTop extends Component {
 
 	render() {
 		return (
-			<Tappable
-				component="input"
-				id="searchContacts"
+			<InputOnKeyDown
 				type="text"
-				onChange={() =>{
-					console.log('change')
+				onChange={(value) =>{
+					this.setState({
+						value: value
+					});
 				}}
-				onInput={() =>{
-					console.log('onInput')
-				}}
-				defaultValue={this.state.value}
+				value={this.state.value}
+				name="contacts"
 				className="input-custom input-search"
 				placeholder="Enter name or phone number"
 			/>
