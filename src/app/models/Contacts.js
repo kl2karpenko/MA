@@ -5,7 +5,7 @@ import config from 'envConfig';
 import dialogs from 'dialogs';
 import Contacts from 'lib/contacts';
 
-class Pin extends List {
+class ContactList extends List {
 	init() {
 		this.managedResource = 'contacts';
 		this.cachedContacts = [];
@@ -13,11 +13,26 @@ class Pin extends List {
 		return List.prototype.init();
 	}
 
+	_getModelName() {
+		return this.managedResource;
+	}
+
+	configData(data) {
+		return data && data.map((item) => {
+				var obj = {};
+
+				obj.number = item.number;
+				obj.image = item.image;
+				obj.name = item.name;
+				obj.type = "extension";
+
+				return obj;
+			});
+	}
+
 	load() {
-		let promise = new Promise((resolve, reject) => {
-
+		let promise = new Promise((resolve) => {
 			Contacts.isAvailable().then((isAvailable) => {
-
 				if (isAvailable) {
 					if (this.cachedContacts && !this.cachedContacts.length) {
 						return config.schema
@@ -28,13 +43,10 @@ class Pin extends List {
 								resolve(contactsList);
 							});
 					} else {
-
 						resolve({ "contacts": this.cachedContacts })
 					}
 				} else {
 					dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
-						console.log(permissionAccess, 'permissionAccess');
-
 						switch(permissionAccess) {
 							case 1:
 								Contacts.switchToSettings();
@@ -67,7 +79,7 @@ class Pin extends List {
 	}
 }
 
-let instance = new Pin();
+let instance = new ContactList();
 
 module.exports = (() => {
 	return instance;

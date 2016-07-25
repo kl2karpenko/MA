@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Tappable from 'react-tappable';
 
 import imageLoader from 'imageLoader';
 
@@ -12,34 +11,27 @@ import AngleTop from 'components/modules/angle/Top.jsx';
 import MainScroll from 'components/layouts/main/Scroll.jsx';
 import LinkButton from 'components/buttons/LinkButton.jsx';
 
-export default class ContactPage extends Component {
+import Links from './item/Links.jsx';
+import Search from './item/Search.jsx';
+
+export default class Index extends Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
+		let searchPage = this.props.location.pathname.match("search");
+		let RenderOnTop = searchPage ? Search : Links;
+
+		// console.log();
+		
 		return (
 		<AdaptiveWrapper class="l-adaptive-md">
 			<Angle header={false}>
 				<div className="m-angle-content">
 					<AngleTop title="Forward to:"/>
-
-					<div className="m-angle-links">
-
-						<LinkButton
-							text="Mobile"
-							component="a"
-							className=""
-							href="/contacts/mobile"
-							/>
-
-						<LinkButton
-							text="Extensions"
-							component="a"
-							className=""
-							href="/contacts/extensions"
-							/>
-					</div>
+					
+					<RenderOnTop/>
 				</div>
 
 				<LinkButton

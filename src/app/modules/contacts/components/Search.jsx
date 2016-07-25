@@ -6,7 +6,7 @@ import ListComponent from "components/list/Index.jsx";
 
 import Dialplan from "models/Dialplan";
 
-export default class Contacts extends Component {
+export default class Search extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -36,7 +36,7 @@ export default class Contacts extends Component {
 				listClass="m-list-contacts"
 				onClick={this._setActiveContact}
 				withImg={true}
-				onError={"No permission to your contact list"}
+				onError={"Empty list"}
 			/>
 		);
 	}

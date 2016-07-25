@@ -6,7 +6,7 @@ import ListComponent from "components/list/Index.jsx";
 
 import Dialplan from "models/Dialplan";
 
-export default class Contacts extends Component {
+export default class ExtensionsCom extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -37,6 +37,7 @@ export default class Contacts extends Component {
 				onClick={this._setActiveContact}
 				configData={Extensions.configData}
 				withImg={true}
+				onError={"Empty list"}
 			/>
 		);
 	}

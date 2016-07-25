@@ -1,6 +1,5 @@
 import List from 'List';
 
-import config from 'envConfig';
 import Contacts from "models/Contacts";
 
 class MobileContacts extends List {
@@ -20,16 +19,7 @@ class MobileContacts extends List {
 	}
 
 	configData(data) {
-		return data && data.map((item) => {
-			var obj = {};
-
-			obj.number = item.number;
-			obj.image = item.image;
-			obj.name = item.name;
-			obj.type = "extension";
-
-			return obj;
-		});
+		return Contacts.configData(data);
 	}
 	
 	load() {

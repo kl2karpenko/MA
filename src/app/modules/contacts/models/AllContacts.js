@@ -1,6 +1,6 @@
 import List from 'List';
 
-import MobileContacts from "./MobileContacts";
+import Contacts from "models/Contacts";
 import Extensions from "./Extensions";
 
 class AllContacts extends List {
@@ -17,24 +17,29 @@ class AllContacts extends List {
 	}
 
 	load() {
-		return MobileContacts
-			.load()
-			.then((mobileContactsArray) => {
-				return MobileContacts.configData(mobileContactsArray[MobileContacts._getModelName()]);
-			})
-			.then((mobileContactsConfigArray) => {
+		return (new Promise((res) => {
+			let mobileContactsArray = Contacts.configData(Contacts.getModel());
+			let extensionsArray = Extensions.configData(Extensions.getModel());
+			let allContactsArray = mobileContactsArray.concat(extensionsArray);
+
+			if (!extensionsArray.length) {
 				Extensions
 					.load()
-					.then((extensionsArray) => {
-						return Extensions.configData(extensionsArray[Extensions._getModelName()]);
-					})
-					.then((extensionsConfigArray) => {
-						let allContactsConfigArray = mobileContactsConfigArray.concat(extensionsConfigArray);
+					.then((data) => {
+						allContactsArray = mobileContactsArray.concat(Extensions.configData(data[Extensions._getModelName()]));
+						this.assignAttributes(allContactsArray);
 
-						this.assignAttributes(allContactsConfigArray);
-						return allContactsConfigArray;
+						res({
+							"allContacts": allContactsArray
+						});
 					});
-			});
+			} else {
+				this.assignAttributes(allContactsArray);
+				res({
+					"allContacts": allContactsArray
+				});
+			}
+		}));
 	}
 
 	_defaultAllContactsItem() {
