@@ -15,10 +15,14 @@ export default class SearchTop extends Component {
 		return (
 			<InputOnKeyDown
 				type="text"
-				onChange={(value) =>{
+				onChange={(value) => {
 					this.setState({
 						value: value
 					});
+
+					if (typeof this.props.onChange === "function") {
+						this.props.onChange(value);
+					}
 				}}
 				value={this.state.value}
 				name="contacts"

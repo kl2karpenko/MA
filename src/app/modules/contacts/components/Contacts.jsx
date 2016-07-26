@@ -25,7 +25,7 @@ export default class Contacts extends Component {
 				type: "contact"
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+				hashHistory.push('/dialplans/' + id);
 			});
 	}
 

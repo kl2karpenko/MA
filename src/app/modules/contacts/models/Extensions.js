@@ -1,6 +1,6 @@
 import List from 'List';
 
-class MobileContacts extends List {
+class Extensions extends List {
 	constructor(props) {
 		super(props);
 	}
@@ -10,7 +10,7 @@ class MobileContacts extends List {
 	}
 
 	configData(data) {
-		return data.map((item) => {
+		return data && data.map((item) => {
 			var obj = {};
 
 			obj._id = item._id;
@@ -30,7 +30,7 @@ class MobileContacts extends List {
 	}
 }
 
-let instance = new MobileContacts();
+let instance = new Extensions();
 
 module.exports = (() => {
 	return instance;

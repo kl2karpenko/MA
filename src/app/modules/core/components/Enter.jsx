@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {hashHistory} from 'react-router';
+import { hashHistory } from 'react-router';
 import config from 'envConfig';
+import schema from 'schema';
 
 import Pin from "models/Pin";
 import Token from "models/Token";
@@ -21,8 +22,10 @@ export default class Enter extends Component {
 			loader: true
 		};
 
+		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
+
 		this._listen();
-		this._checkToken();
+		this._checkIfUserIsConnected();
 	}
 
 	_changeLoadStateTo(state) {
@@ -60,24 +63,28 @@ export default class Enter extends Component {
 		});
 	}
 
-	_checkToken() {
-		let clientToken = Token.token;
+	_checkIfUserIsConnected() {
+		this
+			._checkConnection()
+			.then(() => {
+				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
 
-		console.log(clientToken, "clientToken");
+				setTimeout(this._changeLoadStateTo.bind(this, false), 500);
+			});
+	}
 
-		hashHistory.replace(clientToken ? '/pin' : '/connects/qr');
-
-		setTimeout(this._changeLoadStateTo.bind(this, false), 500);
-
-		// TODO think how to ping server when it is fail
-		$(document).trigger('system:unfail');
+	_checkConnection() {
+		return schema.ping().done(() => {
+			$(document).trigger('system:unfail');
+			Pin.isExist() && hashHistory.push('/pin');
+		});
 	}
 
 	render() {
 		let platformName = config.process.getActivePlatform();
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
-			{this.props.children}
+			{ this.props.children && React.cloneElement(this.props.children, { system: this }) }
 
 			<Loader
 				show={this.state.loader}
@@ -88,7 +95,7 @@ export default class Enter extends Component {
 			/>
 
 			<FailBlock
-				onFail={this._checkConnection}
+				onFail={this._checkIfUserIsConnected}
 				fail={this.state.fail}
 				offline={this.state.offline}
 			/>

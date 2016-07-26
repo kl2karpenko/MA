@@ -36,7 +36,9 @@ export default class Follow extends Component {
 
 		switch(dataName) {
 			case "mailbox":
-				config.info = !this.props.personal && (Dialplan._getActiveMailbox().number || "Tap to choose a mailbox");
+				let activeMailbox = Dialplan._getActiveMailbox();
+
+				config.info = !this.props.personal && (activeMailbox && activeMailbox.number || "Tap to choose a mailbox");
 				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
 				break;
 
@@ -47,9 +49,11 @@ export default class Follow extends Component {
 				break;
 
 			case "mobile":
+				let activeTransfer = Dialplan._getActiveTransfer();
+
 				config.info = mobileNumber;
 				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
-				&& Dialplan._getActiveTransfer().number === mobileNumber) ? "checked" : "";
+				&& (activeTransfer && activeTransfer.number === mobileNumber)) ? "checked" : "";
 				break;
 
 			case "origin":

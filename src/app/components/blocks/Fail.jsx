@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Keyboard extends Component {
+export default class FailBlock extends Component {
 	constructor(props) {
 		super(props);
 
@@ -19,11 +19,10 @@ export default class Keyboard extends Component {
 	
 	_getText() {
 		return this.state.isOffline ? "You have gone offline, please check your internet connection" :
-			"Server is unavailable, please try again later =("
+			"Server is unavailable!"
 	}
 
 	render() {
-		
 		return (<div className={"fail" + (this.state.fail ? " visible" : "") + (this.state.isOffline ? " offline visible" : "")}>
 				<div className="fail-block">
 					<div>{this._getText()}</div>

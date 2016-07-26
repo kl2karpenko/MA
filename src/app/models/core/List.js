@@ -111,6 +111,14 @@ class List {
 		});
 	}
 
+	setStateBy(name, value) {
+		this.state[name] = value;
+	}
+
+	getStateBy(name) {
+		return this.state[name];
+	}
+
 	getState() {
 		return this.state;
 	}
@@ -143,6 +151,44 @@ class List {
 		this.state._update(props);
 	}
 
+	getSearchQuery() {
+		this.getStateBy('searchQuery');
+	}
+
+	setSearchQuery(value) {
+		this.setStateBy('searchQuery', value);
+	}
+
+	search(term, options) {
+		options = options || {};
+		term = term || this.getSearchQuery();
+		let array = this.getModel();
+
+		if (!term) {
+			return array;
+		}
+
+		let searcher = createTextSearcher();
+
+		if (options.by && _.isObject(array[0])) {
+			_.each(array, function (item) {
+				_.some(options.by, function (fieldName) {
+					return searcher.match(term, item[fieldName], item);
+				});
+			});
+		} else {
+			_.each(array, function (text) {
+				searcher.match(term, text);
+			});
+		}
+
+		let items = _.pluck(searcher.results, 'original');
+
+		searcher.results.length = 0;
+
+		return items;
+	}
+
 	findByField(fieldName, valueOfField, returnVal) {
 		let findValues = this.getModel().filter((item) => {
 			return item[fieldName] === valueOfField ? item[returnVal || this.defaultAttribute] : false;
@@ -153,7 +199,7 @@ class List {
 		}
 	}
 
-	getIndexOfItemByDefAttrValue(valueOfAttr) {
+	getIndexOfItemById(valueOfAttr) {
 		return _.indexOf(_.pluck(this.getModel(), this.defaultAttribute), valueOfAttr);
 	}
 	
@@ -257,6 +303,29 @@ class State {
 
 		return previousPage <= 0 ? false : previousPage;
 	}
+}
+
+
+
+function createTextSearcher() {
+	return {
+		results: [],
+
+		match: function (term, text, item) {
+			text = String(text || '').toLowerCase();
+			var position = text.indexOf(term);
+
+			if (position !== -1) {
+				this.results.push({
+					original: item || text,
+					text: text,
+					position: position
+				});
+			}
+
+			return position !== -1;
+		}
+	};
 }
 
 module.exports = List;

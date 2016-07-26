@@ -3,6 +3,7 @@ import { Link, hashHistory } from 'react-router';
 import imageLoader from 'imageLoader';
 
 import ListComponent from "components/list/Index.jsx";
+import LinkButton from 'components/buttons/LinkButton.jsx';
 
 import DialplanList from "../models/DialplanList";
 import Dialplan from "models/Dialplan";
@@ -45,13 +46,17 @@ export default class List extends Component {
 		return (
 		<AdaptiveWrapper>
 			<div className="dialplan-button">
-				<Link className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey" to={DialplanList.getUrl()}>
-					<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
-				</Link>
+				<LinkButton
+					text={<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>}
+					component="a"
+					className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
+					href={DialplanList.getUrl()}
+				/>
 			</div>
 			<Adaptive class="dialplans">
 				<div className="m-list m-list-dialplan m-list-withImg">
 					<ListComponent
+						system={this.props.system}
 						model={DialplanList}
 						listClass="m-list-dialplans"
 						onClick={this.renderDialplanBy}

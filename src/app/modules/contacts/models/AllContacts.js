@@ -12,10 +12,6 @@ class AllContacts extends List {
 		this.managedResource = 'allContacts';
 	}
 
-	_getModelName() {
-		return "allContacts";
-	}
-
 	load() {
 		return (new Promise((res) => {
 			let mobileContactsArray = Contacts.configData(Contacts.getModel());

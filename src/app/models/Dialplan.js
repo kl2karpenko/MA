@@ -92,7 +92,9 @@ class Dialplan extends Model {
 	}
 
 	_getActiveMailbox() {
-		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0");
+		let mailbox = this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0");
+
+		return mailbox && mailbox.length || mailbox;
 	}
 	
 	saveForFlowControl(changedFlowControl) {
