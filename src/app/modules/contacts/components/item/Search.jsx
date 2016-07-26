@@ -16,6 +16,7 @@ export default class SearchTop extends Component {
 			<InputOnKeyDown
 				type="text"
 				onChange={(value) => {
+				console.log('value onchange: ', value)
 					this.setState({
 						value: value
 					});
