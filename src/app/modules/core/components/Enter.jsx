@@ -15,14 +15,14 @@ export default class Enter extends Component {
 	constructor(props) {
 		super(props);
 
-		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
-
 		this.state = {
 			loading: true,
 			fail: false,
 			offline: false,
 			loader: true
 		};
+
+		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
 
 		this._listen();
 		this._checkIfUserIsConnected();
@@ -84,7 +84,7 @@ export default class Enter extends Component {
 		let platformName = config.process.getActivePlatform();
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
-			{this.props.children}
+			{ this.props.children && React.cloneElement(this.props.children, { system: this }) }
 
 			<Loader
 				show={this.state.loader}

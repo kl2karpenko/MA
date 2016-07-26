@@ -10,7 +10,12 @@ export default class Index extends Component {
 	render() {		
 		return (
 			<AdaptiveWrapper>
-				{this.props.children}
+				{ this.props.children && React.cloneElement(
+					this.props.children,
+					{
+						system: this.props.system
+					})
+				}
 			</AdaptiveWrapper>
 		);
 	}

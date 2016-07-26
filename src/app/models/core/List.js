@@ -164,8 +164,6 @@ class List {
 		term = term || this.getSearchQuery();
 		let array = this.getModel();
 
-		console.log('start search');
-
 		if (!term) {
 			return array;
 		}
@@ -185,8 +183,6 @@ class List {
 		}
 
 		let items = _.pluck(searcher.results, 'original');
-
-		console.log(items)
 
 		searcher.results.length = 0;
 

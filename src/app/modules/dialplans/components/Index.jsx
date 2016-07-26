@@ -9,10 +9,10 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
-			loading: true,
 			id: props.params.id
 		};
 
+		props.system._changeLoadStateTo(true);
 		this._init();
 
 		this._config = this._config.bind(this);
@@ -37,10 +37,7 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		this.setState({
-			loading: false
-		});
-
+		this.props.system._changeLoadStateTo(false);
 		hashHistory.replace(DialplanList.getUrl())
 	}
 
@@ -68,6 +65,9 @@ export default class Index extends Component {
 	}
 
 	render() {
-		return !this.state.loading && this.props.children;
+		return this.props.children && React.cloneElement(
+			this.props.children, {
+			system: this.props.system
+		});
 	}
 }

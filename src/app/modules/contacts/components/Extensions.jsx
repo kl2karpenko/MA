@@ -25,7 +25,7 @@ export default class ExtensionsCom extends Component {
 				type: "extension"
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+				hashHistory.push('/dialplans/' + id);
 			});
 	}
 

@@ -14,21 +14,29 @@ export default class Index extends Component {
 		};
 
 		this._load.bind(this)();
+
+		console.log('props.searchQuery', props.searchQuery, this.state.list, props.withImg);
 	}
 
 	componentWillReceiveProps(newProps) {
-		let searchString = newProps.search;
+		let
+			searchString = newProps.search,
+			updateState;
 
 		if (searchString) {
-			this.setState({
+			updateState = {
+				config: newProps.configData,
 				searchQuery: searchString,
 				list: newProps.model.search(searchString, { by: ['name', 'number'] })
-			});
+			};
 		} else {
-			this.setState({
+			updateState = {
+				config: newProps.configData,
 				list: newProps.model.getModel()
-			});
+			}
 		}
+
+		this.setState(updateState);
 	}
 
 	_load() {
@@ -60,9 +68,7 @@ export default class Index extends Component {
 									/>
 							}));
 					} else {
-						return <div className="permission-denied">
-							{this.props.onError || "No permission to your contact list"}
-						</div>
+						return <div className="permission-denied">No permission to your contact list</div>
 					}
 				})()}
 			</div>

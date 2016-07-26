@@ -38,7 +38,7 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 			},
 			500: function() {
 				messenger.error("Server is not available", "Error");
-				$(document).trigger('system:fail');Fo
+				$(document).trigger('system:fail');
 			}
 		};
 

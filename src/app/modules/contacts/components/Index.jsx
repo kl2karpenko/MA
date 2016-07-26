@@ -1,4 +1,7 @@
+/** =============== Import resources ==================== */
+
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 
 import imageLoader from 'imageLoader';
 
@@ -17,53 +20,93 @@ import Search from './item/Search.jsx';
 import AllContacts from "../models/AllContacts";
 import Dialplan from "models/Dialplan";
 
+/** =============== Import resources ==================== */
+
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-			searchContacts: AllContacts.getStateBy('searchQuery')			
+			searchContacts: AllContacts.getStateBy('searchQuery'),
+			loc: props.location.pathname
+		};
+
+		this._changeSearchState = this._changeSearchState.bind(this);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			loc: nextProps.location.pathname
+		});
+	}
+
+	_changeSearchState(value) {
+		AllContacts.setStateBy('searchQuery', value);
+
+		this.setState({
+			searchContacts: value
+		});
+	}
+
+	_setActiveContact(i, contactData) {
+		let id = Dialplan.getValueByPath("_id");
+
+		if (!id) {
+			hashHistory.push('/dialplans');
+			return;
 		}
+
+		Dialplan
+			._saveFollowToTransfer({
+				number: contactData.number,
+				type: "contact"
+			})
+			.then(() => {
+				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+			});
 	}
 
 	render() {
 		let
-			searchPage = this.props.location.pathname.match("search"),
-			RenderOnTop = searchPage ? Search : Links,
-			ButtonRender = searchPage ? <LinkButton
-				text={<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>}
-				component="a"
-				className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
-				href={'/dialplans/' + Dialplan.getValueByPath("_id")}
-			/> : <LinkButton
-				text={<img src={imageLoader(require("images/icons/search.png"))} alt="Right"/>}
-				component="a"
-				className="m-angle__button btn btn-round btn-sm btn-right"
-				href="/contacts/search"
-			/>;
-		
+			pathname = this.state.loc,
+			searchPage = pathname.match("search"),
+			RenderOnTop = Links,
+			classes = "m-angle__button btn btn-round btn-sm btn-right",
+			imgName = "search",
+			href = "/contacts/search";
+
+		if (searchPage) {
+			RenderOnTop = Search;
+			classes = "m-angle__button btn btn-round btn-sm btn-right btn-round-grey";
+			href = '/dialplans/' + Dialplan.getValueByPath("_id");
+			imgName = "cross-white-big";
+		}
+
 		return (
 		<AdaptiveWrapper class="l-adaptive-md">
 			<Angle header={false}>
 				<div className="m-angle-content">
 					<AngleTop title="Forward to:"/>
 					
-					<RenderOnTop
-						onChange={(value) => {
-							AllContacts.setStateBy('searchQuery', value);
-							
-							this.setState({
-								searchContacts: value
-							});
-						}}
-					/>
+					<RenderOnTop onChange={this._changeSearchState} />
 				</div>
 
-				{ButtonRender}
+				<LinkButton
+					text={<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>}
+					component="a"
+					className={classes}
+					href={href}
+				/>
 			</Angle>
 			<AdaptiveFixed>
 				<MainScroll>
-					{React.cloneElement(this.props.children, {parentState: this.state.searchContacts})}
+					{ React.cloneElement(
+						this.props.children,
+						{
+							parentState: this.state.searchContacts,
+							system: this.props.system
+						})
+					}
 				</MainScroll>
 			</AdaptiveFixed>
 		</AdaptiveWrapper>

@@ -50,7 +50,7 @@ module.exports = {
 		"mailboxes"
 	],
 	schema: {
-		hostname: "",
+		hostname: "/",
 		tokenHostname: getTokenHostName(),
 		mobileContacts: _getContactsFromMobile,
 		mobileSIMNumber: _getMobileNumber
