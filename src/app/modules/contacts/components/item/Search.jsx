@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import config from 'envConfig';
 
 import InputOnKeyDown from 'components/inputs/InputOnKeyDown.jsx';
 
