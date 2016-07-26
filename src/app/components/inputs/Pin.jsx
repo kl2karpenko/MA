@@ -35,6 +35,10 @@ export default class Pin extends Component {
 	}
 
 	onChange(inputValue) {
+		if (typeof this.props.onChange === "function") {
+			typeof this.props.onChange(inputValue);
+		}
+
 		let
 			validPinLength = 5;
 
@@ -48,10 +52,6 @@ export default class Pin extends Component {
 			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1),
 			model: this.state.model
 		});
-
-		if (typeof this.props.onChange === "function") {
-			typeof this.props.onChange(inputValue);
-		}
 
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
 			this.props.onSubmit(inputValue).then((newPinModel) => {
