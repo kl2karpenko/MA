@@ -77,6 +77,8 @@ export default class Enter extends Component {
 		return schema.ping().done(() => {
 			$(document).trigger('system:unfail');
 			Pin.isExist() && hashHistory.push('/pin');
+		}).fail(() => {
+			$(document).trigger('system:fail');
 		});
 	}
 

@@ -109,6 +109,9 @@ export default class Pin extends Component {
 	}
 
 	onChange(e) {
+		// TODO: work with onChage event!!!
+		console.log(e, 'onChange');
+
 		if (this.props.type === "number") {
 			this.onNumbersAllow(e);
 		}
@@ -141,9 +144,20 @@ export default class Pin extends Component {
 				placeholder={this.props.placeholder}
 				name={this.props.name}
 				value={this.state.value}
-				onKeyPress={this.onChange}
 				onKeyUp={(e) => {
 					console.log(e, e.keyCode, 'onKeyUp');
+				}}
+				onKeyDown={(e) => {
+					console.log(e, e.keyCode, 'onKeyDown');
+				}}
+				onChange={(e) => {
+					console.log(e, e.target.value, 'onChange ==========');
+				}}
+				onFocus={(e) => {
+					console.log(e, e.keyCode, 'onFocus');
+				}}
+				onBlur={(e) => {
+					console.log(e, e.keyCode, 'onBlur');
 				}}
 				className={this.props.className}
 			/>
