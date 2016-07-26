@@ -22,7 +22,7 @@ export default class Index extends Component {
 	_config() {
 		let
 			currentIdOfDialplan = this.state.id || Dialplan.getValueByPath("_id"),
-			currentIndex = DialplanList.getIndexOfItemByDefAttrValue(currentIdOfDialplan);
+			currentIndex = DialplanList.getIndexOfItemById(currentIdOfDialplan);
 
 		currentIndex = currentIndex !== -1 ? currentIndex : 0;
 

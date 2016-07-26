@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import InputOnKeyDown from 'components/inputs/InputOnKeyDown.jsx';
-import AllContacts from "../../models/AllContacts";
 
 export default class SearchTop extends Component {
 	constructor(props) {
@@ -20,10 +19,10 @@ export default class SearchTop extends Component {
 					this.setState({
 						value: value
 					});
-					
-					AllContacts.search(value, {
-						by: ['number', 'name']
-					});
+
+					if (typeof this.props.onChange === "function") {
+						this.props.onChange(value);
+					}
 				}}
 				value={this.state.value}
 				name="contacts"

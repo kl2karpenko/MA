@@ -12,6 +12,7 @@ export default class LinkButton extends Component {
 
 	_goto() {
 		hashHistory.push(this.props.href);
+
 	}
 
 	render() {

@@ -93,8 +93,6 @@ export default class Pin extends Component {
 	}
 
 	onChange(e) {
-		console.log(e.keyCode, this.getKeyCodeValue(e.keyCode));
-		
 		if (this.props.type === "number") {
 			this.onNumbersAllow(e);
 		}

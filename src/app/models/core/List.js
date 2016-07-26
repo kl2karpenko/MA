@@ -111,11 +111,12 @@ class List {
 		});
 	}
 
-	setState(name, value) {
-		let stateToUpdate = {};
-		stateToUpdate[name] = value;
-
+	setStateBy(name, value) {
 		this.state[name] = value;
+	}
+
+	getStateBy(name) {
+		return this.state[name];
 	}
 
 	getState() {
@@ -150,24 +151,26 @@ class List {
 		this.state._update(props);
 	}
 
-	getSearchQuery(value) {
-		this.setState('searchQuery', value);
+	getSearchQuery() {
+		this.getStateBy('searchQuery');
 	}
 
 	setSearchQuery(value) {
-		this.setState('searchQuery', value);
+		this.setStateBy('searchQuery', value);
 	}
 
-	search (term, options) {
+	search(term, options) {
 		options = options || {};
-		term = String(term || '').trim().toLowerCase();
+		term = term || this.getSearchQuery();
 		let array = this.getModel();
+
+		console.log('start search');
 
 		if (!term) {
 			return array;
 		}
 
-		var searcher = createTextSearcher();
+		let searcher = createTextSearcher();
 
 		if (options.by && _.isObject(array[0])) {
 			_.each(array, function (item) {
@@ -181,12 +184,11 @@ class List {
 			});
 		}
 
-		// searcher.results.sort(_.byFieldsOrder('position', 'text'));
-		var items = _.pluck(searcher.results, 'original');
+		let items = _.pluck(searcher.results, 'original');
+
+		console.log(items)
 
 		searcher.results.length = 0;
-
-		console.log(items);
 
 		return items;
 	}
@@ -201,7 +203,7 @@ class List {
 		}
 	}
 
-	getIndexOfItemByDefAttrValue(valueOfAttr) {
+	getIndexOfItemById(valueOfAttr) {
 		return _.indexOf(_.pluck(this.getModel(), this.defaultAttribute), valueOfAttr);
 	}
 	

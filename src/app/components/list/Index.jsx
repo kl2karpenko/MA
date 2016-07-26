@@ -9,10 +9,26 @@ export default class Index extends Component {
 		this.state = {
 			model: props.model,
 			list: props.model.getModel(),
-			config: props.configData
+			config: props.configData,
+			searchQuery: props.search || ""
 		};
 
 		this._load.bind(this)();
+	}
+
+	componentWillReceiveProps(newProps) {
+		let searchString = newProps.search;
+
+		if (searchString) {
+			this.setState({
+				searchQuery: searchString,
+				list: newProps.model.search(searchString, { by: ['name', 'number'] })
+			});
+		} else {
+			this.setState({
+				list: newProps.model.getModel()
+			});
+		}
 	}
 
 	_load() {
@@ -44,7 +60,9 @@ export default class Index extends Component {
 									/>
 							}));
 					} else {
-						return <div className="permission-denied">No permission to your contact list</div>
+						return <div className="permission-denied">
+							{this.props.onError || "No permission to your contact list"}
+						</div>
 					}
 				})()}
 			</div>

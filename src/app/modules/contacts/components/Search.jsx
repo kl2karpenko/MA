@@ -9,6 +9,16 @@ import Dialplan from "models/Dialplan";
 export default class Search extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			searchContacts: AllContacts.getStateBy('searchQuery')
+		};
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			searchContacts: newProps.parentState
+		});
 	}
 
 	_setActiveContact(i, contactData) {
@@ -34,10 +44,11 @@ export default class Search extends Component {
 		return (
 			<ListComponent
 				model={AllContacts}
+				search={this.state.searchContacts}
 				listClass="m-list-contacts"
 				onClick={this._setActiveContact}
 				withImg={true}
-				onError={"Empty list"}
+				onError={"No contacts"}
 			/>
 		);
 	}
