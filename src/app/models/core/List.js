@@ -169,14 +169,10 @@ class List {
 
 		let searcher = createTextSearcher();
 
-		console.log(searcher);
-
 		if (options.by && _.isObject(array[0])) {
 			_.each(array, function (item) {
 				_.some(options.by, function (fieldName) {
-					console.log(item[fieldName].toLowerCase());
-
-					return searcher.match(term, item[fieldName].toLowerCase(), item);
+					return searcher.match(term, item[fieldName], item);
 				});
 			});
 		} else {
@@ -186,6 +182,7 @@ class List {
 		}
 
 		let items = _.pluck(searcher.results, 'original');
+		console.log(items);
 
 		searcher.results.length = 0;
 
@@ -313,7 +310,7 @@ function createTextSearcher() {
 		results: [],
 
 		match: function (term, text, item) {
-			term = term.toLowerCase().trim();
+			term = term && term.toLowerCase().trim();
 			text = String(text || '').toLowerCase();
 			var position = text.indexOf(term);
 

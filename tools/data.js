@@ -746,7 +746,7 @@ var contacts = {
 	"contacts": [
 		{
 			image: true,
-			displayName: "Лилия",
+			displayName: "Лилия Карпенко",
 			name: "Лилия",
 			phoneNumbers: [
 				{
