@@ -23,13 +23,9 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 			401: function() {
 				console.error("Unauthorized", "Error");
 
-				if (!Token.token) {
-					hashHistory.replace('/connects/qr');
-				} else {
-					Token.refreshToken().then(() => {
-						hashHistory.replace('/pin');
-					});
-				}
+				Token.refreshToken().then(() => {
+					hashHistory.replace('/pin');
+				});
 
 			},
 			404: function() {
