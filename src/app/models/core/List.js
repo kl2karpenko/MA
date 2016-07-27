@@ -101,7 +101,8 @@ class List {
 	}
 
 	getUrl() {
-		return '/' + this._getModelName() + '/' + this.getModel()[this.getActivePage() - 1][this.defaultAttribute];
+		let activeItem = this.getModel()[this.getActivePage() - 1];
+		return '/' + this._getModelName() + '/' + (activeItem ? activeItem[this.defaultAttribute] : "");
 	}
 
 	activatePage(page){

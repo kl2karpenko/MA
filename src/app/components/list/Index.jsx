@@ -21,17 +21,14 @@ export default class Index extends Component {
 			searchString = newProps.search,
 			updateState;
 
+		console.log(newProps, 'componentWillReceiveProps');
+
 		if (searchString) {
 			updateState = {
 				config: newProps.configData,
 				searchQuery: searchString,
 				list: newProps.model.search(searchString, { by: ['name', 'number'] })
 			};
-		} else {
-			updateState = {
-				config: newProps.configData,
-				list: newProps.model.getModel()
-			}
 		}
 
 		this.setState(updateState);

@@ -35,8 +35,6 @@ export default class Follow extends Component {
 
 		numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "").replace(' ', '');
 
-		console.log(numberToTransfer, mobileNumber);
-
 		return numberToTransfer === mobileNumber;
 	}
 
