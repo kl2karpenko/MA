@@ -33,7 +33,9 @@ class Dialplan extends Model {
 
 	_saveFollowToTransfer(data) {
 		if (this._getActiveActionKey() === "transfer" && this._getActiveTransfer().number === data.number) {
-			return new Promise((resolve, reject) => {});
+			return new Promise((resolve, reject) => {
+				resolve();
+			});
 		}
 
 		let

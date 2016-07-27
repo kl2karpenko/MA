@@ -750,7 +750,7 @@ var contacts = {
 			name: "Лилия",
 			phoneNumbers: [
 				{
-					normalizedNumber: "380504144151"
+					normalizedNumber: "0 (50) 414 41 51"
 				}
 			]
 		},

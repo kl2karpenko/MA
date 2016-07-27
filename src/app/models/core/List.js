@@ -182,7 +182,6 @@ class List {
 		}
 
 		let items = _.pluck(searcher.results, 'original');
-		console.log(items);
 
 		searcher.results.length = 0;
 

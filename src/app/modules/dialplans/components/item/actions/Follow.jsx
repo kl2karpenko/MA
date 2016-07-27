@@ -28,10 +28,24 @@ export default class Follow extends Component {
 		this.setState(props.options);
 	}
 
+	_checkIfEqualNumber() {
+		let
+			mobileNumber = PhoneNumber.getValueByPath('value'),
+			numberToTransfer = Dialplan._getActiveTransfer().number;
+
+		numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "").replace(' ', '');
+
+		console.log(numberToTransfer, mobileNumber);
+
+		return numberToTransfer === mobileNumber;
+	}
+
 	_config(data) {
 		let
 			config = {},
 			dataName = data.name,
+			activeKey = data.active_action_key,
+			activeActionInDialplan = Dialplan._getActiveActionKey(),
 			mobileNumber = PhoneNumber.getValueByPath('value');
 
 		switch(dataName) {
@@ -39,26 +53,29 @@ export default class Follow extends Component {
 				let activeMailbox = Dialplan._getActiveMailbox();
 
 				config.info = !this.props.personal && (activeMailbox && activeMailbox.number || "Tap to choose a mailbox");
-				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
+				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
 				break;
 
 			case "contact":
 				config.info = Dialplan.getValueByPath("follow.contact") || "Tap to choose a contact";
-				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
-				&& Dialplan._getActiveTransfer().number !== mobileNumber) ? "checked" : "";
+				config.checked = (activeActionInDialplan === activeKey
+				&& !this._checkIfEqualNumber()) ? "checked" : "";
 				break;
 
 			case "mobile":
-				let activeTransfer = Dialplan._getActiveTransfer();
-
 				config.info = mobileNumber;
-				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
-				&& (activeTransfer && activeTransfer.number === mobileNumber)) ? "checked" : "";
+				let isActiveMobileFromTransfer = (activeActionInDialplan === activeKey
+				&& (Dialplan._getActiveTransfer() && this._checkIfEqualNumber()));
+
+				config.checked = isActiveMobileFromTransfer ? "checked" : "";
+				if (isActiveMobileFromTransfer) {
+					Dialplan.updateAttributesFor("follow.contact", "");
+				}
 				break;
 
 			case "origin":
 				config.info = "";
-				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
+				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
 				break;
 		}
 
