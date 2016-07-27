@@ -14,8 +14,6 @@ export default class Index extends Component {
 		};
 
 		this._load.bind(this)();
-
-		console.log('props.searchQuery', props.searchQuery, this.state.list, props.withImg);
 	}
 
 	componentWillReceiveProps(newProps) {

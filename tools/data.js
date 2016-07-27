@@ -746,8 +746,8 @@ var contacts = {
 	"contacts": [
 		{
 			image: true,
-			displayName: "Lily",
-			name: "Lily",
+			displayName: "Лилия",
+			name: "Лилия",
 			phoneNumbers: [
 				{
 					normalizedNumber: "380504144151"
@@ -756,8 +756,8 @@ var contacts = {
 		},
 		{
 			image: true,
-			displayName: "Lily",
-			name: "Lily",
+			displayName: "Лилия",
+			name: "Лилия",
 			phoneNumbers: [
 				{
 					normalizedNumber: "380934032379"

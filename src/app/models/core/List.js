@@ -97,7 +97,6 @@ class List {
 	}
 
 	getValueOfDefAttrByIndex(index) {
-		console.log(this.getModel(), index, this.defaultAttribute)
 		return this.getByIndex(index)[this.defaultAttribute];
 	}
 
@@ -170,10 +169,14 @@ class List {
 
 		let searcher = createTextSearcher();
 
+		console.log(searcher);
+
 		if (options.by && _.isObject(array[0])) {
 			_.each(array, function (item) {
 				_.some(options.by, function (fieldName) {
-					return searcher.match(term, item[fieldName], item);
+					console.log(item[fieldName].toLowerCase());
+
+					return searcher.match(term, item[fieldName].toLowerCase(), item);
 				});
 			});
 		} else {
@@ -185,9 +188,6 @@ class List {
 		let items = _.pluck(searcher.results, 'original');
 
 		searcher.results.length = 0;
-
-		console.log(items, array);
-
 
 		return items;
 	}
@@ -313,6 +313,7 @@ function createTextSearcher() {
 		results: [],
 
 		match: function (term, text, item) {
+			term = term.toLowerCase().trim();
 			text = String(text || '').toLowerCase();
 			var position = text.indexOf(term);
 
