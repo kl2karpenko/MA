@@ -18,7 +18,6 @@ export default class SearchTop extends Component {
 		if (inputValue.target) {
 			inputValue = inputValue.target.value;
 		}
-		console.log('onChange search ' ,inputValue);
 
 		this.setState({
 			value: inputValue
@@ -39,17 +38,17 @@ export default class SearchTop extends Component {
 			placeholder="Enter name or phone number"
 		/>;
 
-		if (!config.process.isIOS()) {
-			InputRender = <input
-				autoFocus="true"
-				type="text"
-				onChange={this.onChange}
-				value={this.state.value}
-				name="contacts"
-				className="input-custom input-search"
-				placeholder="Enter name or phone number"
-			/>;
-		}
+		// if (!config.process.isIOS()) {
+		// 	InputRender = <input
+		// 		autoFocus="true"
+		// 		type="text"
+		// 		onChange={this.onChange}
+		// 		value={this.state.value}
+		// 		name="contacts"
+		// 		className="input-custom input-search"
+		// 		placeholder="Enter name or phone number"
+		// 	/>;
+		// }
 
 		return InputRender;
 	}

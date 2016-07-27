@@ -186,6 +186,9 @@ class List {
 
 		searcher.results.length = 0;
 
+		console.log(items, array);
+
+
 		return items;
 	}
 
@@ -304,8 +307,6 @@ class State {
 		return previousPage <= 0 ? false : previousPage;
 	}
 }
-
-
 
 function createTextSearcher() {
 	return {
