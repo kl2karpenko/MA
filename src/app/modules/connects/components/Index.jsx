@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+let Swiper = require('react-swiper');
 
-var Swipeable = require('react-swipeable')
+React.initializeTouchEvents(true);
 
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	render() {		
+	render() {
+		// TODO: swipe events didnt work
 		return (
-		<Swipeable
+		<Swiper
 			onSwipingLeft={() => {
 				console.log('onSwipingLeft')
 			}}
@@ -27,7 +29,7 @@ export default class Index extends Component {
 					})
 				}
 			</AdaptiveWrapper>
-		</Swipeable>
+		</Swiper>
 		);
 	}
 }
