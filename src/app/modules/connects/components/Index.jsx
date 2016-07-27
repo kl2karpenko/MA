@@ -11,14 +11,6 @@ export default class Index extends Component {
 
 	render() {		
 		return (
-		<Swipeable
-			onSwipingLeft={() => {
-				console.log('onSwipingLeft')
-			}}
-			onSwipedRight={() => {
-				console.log('onSwipedRight')
-			}}
-		>
 			<AdaptiveWrapper>
 				{ this.props.children && React.cloneElement(
 					this.props.children,
@@ -27,7 +19,6 @@ export default class Index extends Component {
 					})
 				}
 			</AdaptiveWrapper>
-		</Swipeable>
 		);
 	}
 }
