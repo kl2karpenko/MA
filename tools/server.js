@@ -59,9 +59,11 @@ app.get('/contacts', function (req, res) {
  * List of company mailboxes
  */
 app.get('/mailboxes', function (req, res) {
-	res.send({
-		"mailboxes": mailboxes
-	});
+	setTimeout(function () {
+		res.send({
+			"mailboxes": mailboxes
+		});
+	}, 4000);
 });
 
 /**
@@ -77,10 +79,12 @@ app.get('/mailboxes/:mailboxId', function (req, res) {
  * List of company dialplans
  */
 app.get('/dialplans', function (req, res) {
-	res.send({
-		"dialplans": dialplansList
-	});
-	// res.send(401);
+
+	setTimeout(function () {
+		res.send({
+			"dialplans": dialplansList
+		});
+	}, 4000);
 });
 
 /**
@@ -90,7 +94,6 @@ app.get('/dialplans/:dialplanId', function (req, res) {
 	res.send({
 		"dialplan": dialplansList[_.indexOf(_.pluck(dialplansList, '_id'), req.params.dialplanId)]
 	});
-	// res.send(401);
 });
 
 /**

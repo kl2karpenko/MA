@@ -12,7 +12,9 @@ export default class Index extends Component {
 			config: props.configData,
 			searchQuery: props.search || ""
 		};
+	}
 
+	componentDidMount() {
 		this._load.bind(this)();
 	}
 
@@ -21,20 +23,21 @@ export default class Index extends Component {
 			searchString = newProps.search,
 			updateState;
 
-		console.log(newProps, 'componentWillReceiveProps');
-
 		if (searchString) {
 			updateState = {
 				config: newProps.configData,
 				searchQuery: searchString,
 				list: newProps.model.search(searchString, { by: ['name', 'number'] })
 			};
+			this.setState(updateState);
 		}
-
-		this.setState(updateState);
 	}
 
 	_load() {
+		if (this.props.system) {
+			this.props.system._changeLoadStateTo(true);
+		}
+
 		return this.state.model
 			.load()
 			.then((data) => {

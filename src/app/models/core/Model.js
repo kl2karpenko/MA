@@ -1,8 +1,6 @@
 import schema from 'schema';
 import messenger from "messenger";
 
-console.log(schema, 'schema');
-
 import _ from "underscore";
 
 export default class Model {
@@ -28,8 +26,6 @@ export default class Model {
 	}
 
 	init() {
-		this.errorMessage = false;
-		
 		return this;
 	}
 
@@ -63,8 +59,6 @@ export default class Model {
 		this.messenger = messenger;
 		this.managedResource = this.managedResource || this.constructor.name.toLowerCase();
 
-		console.log(schema, '_setMainResources');
-
 		return this;
 	}
 
@@ -94,8 +88,6 @@ export default class Model {
 
 	getRecourse() {
 		let resourceName = this._getRecourseName() || this._getModelName();
-
-		console.log(resourceName, 'resourceName', this.schema);
 
 		return this.schema[resourceName];
 	}

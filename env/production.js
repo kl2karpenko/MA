@@ -53,13 +53,13 @@ function _getContactsFromMobile() {
 				contacts: contacts
 			});
 
-			$(document).trigger('system:ajaxComplete');
+			$(document).trigger('system:ajaxStop');
 		}, () => {
 			resolve({
 				contacts: null
 			});
 
-			$(document).trigger('system:ajaxComplete');
+			$(document).trigger('system:ajaxStop');
 		}, options);
 	});
 }

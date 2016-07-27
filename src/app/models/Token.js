@@ -1,5 +1,4 @@
 import Storage from 'models/Storage';
-import ConnectCode from "models/ConnectCode";
 import config from 'envConfig';
 import messenger from 'messenger';
 import { hashHistory } from 'react-router';

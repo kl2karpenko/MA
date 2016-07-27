@@ -3,12 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, hashHistory} from 'react-router';
 
-let schema = require('./modules/core/config');
-
-console.log(schema);
-
 import Main from "./modules/core/components/Enter.jsx";
-
 import config from 'envConfig';
 
 export default class System {

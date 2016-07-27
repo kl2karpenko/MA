@@ -12,11 +12,13 @@ export default class Index extends Component {
 			id: props.params.id
 		};
 
-		props.system._changeLoadStateTo(true);
-		this._init();
-
 		this._config = this._config.bind(this);
 		this._goToActiveDialplan = this._goToActiveDialplan.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.system._changeLoadStateTo(true);
+		this._init();
 	}
 
 	_config() {
@@ -37,8 +39,7 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		this.props.system._changeLoadStateTo(false);
-		hashHistory.replace(DialplanList.getUrl())
+		hashHistory.replace(DialplanList.getUrl());
 	}
 
 	_init() {
@@ -55,13 +56,13 @@ export default class Index extends Component {
 				if (id === Dialplan.getValueByPath('_id')) {
 					this._goToActiveDialplan();
 				} else {
-					Dialplan
+					return Dialplan
 						.load({
 							id: id
 						})
 						.done(this._goToActiveDialplan);
 				}
-			})
+			});
 	}
 
 	render() {

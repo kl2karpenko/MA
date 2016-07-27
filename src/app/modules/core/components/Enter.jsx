@@ -23,7 +23,9 @@ export default class Enter extends Component {
 		};
 
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
+	}
 
+	componentDidMount() {
 		this._listen();
 		this._checkIfUserIsConnected();
 	}
@@ -45,12 +47,12 @@ export default class Enter extends Component {
 			$(document).trigger('system:ajaxStart');
 		});
 
-		$(document).ajaxComplete(() => {
-			$(document).trigger('system:ajaxComplete');
+		$(document).ajaxStop(() => {
+			$(document).trigger('system:ajaxStop');
 		});
 
 		$(document).on('system:ajaxStart',this._changeLoadStateTo.bind(this, true));
-		$(document).on('system:ajaxComplete',this._changeLoadStateTo.bind(this, false));
+		$(document).on('system:ajaxStop',this._changeLoadStateTo.bind(this, false));
 
 		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true), false);
 		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false), false);
