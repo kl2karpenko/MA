@@ -3,7 +3,7 @@ import { hashHistory } from 'react-router';
 
 import PinForm from './PinForm.jsx';
 
-import Pin from 'models/Pin';
+import LockCode from 'models/LockCode';
 import Storage from "models/Storage";
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
@@ -15,10 +15,10 @@ export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
-		Pin.pin.value = "";
+		LockCode.lockCode.value = "";
 
 		this.state = {
-			model: Pin.pin,
+			model: LockCode.lockCode,
 			isValid: false,
 			element: ""
 		};
@@ -27,19 +27,19 @@ export default class Index extends Component {
 	}
 
 	_reset() {
-		Pin.pin.value = "";
+		LockCode.lockCode.value = "";
 
 		this.setState({
-			model: Pin.pin,
+			model: LockCode.lockCode,
 			isValid: false
 		});
 	}
 
 	_save() {
-		let currentPin = Pin.isExist();
+		let currentPin = LockCode.isExist();
 
-		if (currentPin && Pin.getValueByPath('value') === Storage.getValue('pin')) {
-			return Pin
+		if (currentPin && LockCode.getValueByPath('value') === Storage.getValue('lockCode')) {
+			return LockCode
 				.save()
 				.then(() => {
 					this._reset();
@@ -47,7 +47,7 @@ export default class Index extends Component {
 				})
 		} else {
 			this._reset();
-			Pin.messenger.error('Wrong Pin', "Error");
+			LockCode.messenger.error('Wrong Pin', "Error");
 		}
 	}
 

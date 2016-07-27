@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
-import PinModel from "../../models/Pin";
+import ConnectCode from "models/ConnectCode";
 import Token from "models/Token";
 
 import UnableToScanQr from './items/UnableToScanQr.jsx';
@@ -15,14 +15,14 @@ export default class Pin extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = PinModel.getModel();
+		this.state = ConnectCode.getModel();
 
 		this.connect = this.connect.bind(this);
 	}
 
 	_reset() {
-		PinModel.updateAttributesFor('value', '');
-		this.setState(PinModel.getModel());
+		ConnectCode.updateAttributesFor('value', '');
+		this.setState(ConnectCode.getModel());
 	}
 
 	connect(value) {
@@ -36,7 +36,9 @@ export default class Pin extends Component {
 				hashHistory.push('/pin');
 			}
 
-			return PinModel.getModel();
+			return ConnectCode.getModel();
+		}).fail(() => {
+			this._reset();
 		});
 	}
 

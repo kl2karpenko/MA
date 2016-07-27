@@ -2,36 +2,36 @@ import Model from 'Model';
 
 import Storage from 'models/Storage';
 
-class Pin extends Model {
+class LockCode extends Model {
 	init() {
-		this.managedResource = 'pin';
+		this.managedResource = 'lockCode';
 		this.isSingle = true;
 
 		return Model.prototype.init();
 	}
 
 	deleteValue() {
-		Storage.deleteValue('pin');
+		Storage.deleteValue('lockCode');
 	}
 
 	isExist() {
-		return Storage.existValue('pin');
+		return Storage.existValue('lockCode');
 	}
 	
 	save() {
 		return (new Promise((resolve) => {
 			resolve({
-				pin: this.pin.value
+				lockCode: this.lockCode.value
 			});
 		})).then(() => {
-			if (this.pin.value) {
-				Storage.setValue('pin', this.pin.value);
+			if (this.lockCode.value) {
+				Storage.setValue(this.managedResource, this.lockCode.value);
 			} else {
 				this.deleteValue();
 			}
 
 			this._setOriginalValues({
-				value: this.pin.value
+				value: this.lockCode.value
 			});
 		});
 	}
@@ -39,7 +39,7 @@ class Pin extends Model {
 	load() {
 		return (new Promise()).then(() => {
 			let newPin = {
-				value: Storage.getValue('pin')
+				value: Storage.getValue('lockCode')
 			};
 
 			this._setOriginalValues(newPin);
@@ -47,14 +47,14 @@ class Pin extends Model {
 		});
 	}
 
-	_defaultPin() {
+	_defaultLockCode() {
 		return {
 			"value": ""
 		};
 	}
 }
 
-let instance = new Pin();
+let instance = new LockCode();
 
 module.exports = (() => {
 	return instance;

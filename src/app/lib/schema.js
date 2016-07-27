@@ -15,18 +15,15 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 		options.timeout = 10000;
 
 		options.beforeSend = function( xhr ) {
-			xhr.setRequestHeader( "Authorization", "Bearer " + Token.token );
+			xhr.setRequestHeader("Authorization", "Bearer " + Token.token);
 		};
 
 		/** add errors handling */
 		options.statusCode = {
 			401: function() {
-				console.error("Unauthorized", "Error");
-
 				Token.refreshToken().then(() => {
 					hashHistory.replace('/pin');
 				});
-
 			},
 			404: function() {
 				messenger.error("Page not found", "Error");

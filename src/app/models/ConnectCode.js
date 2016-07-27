@@ -1,21 +1,21 @@
 import Model from 'Model';
 
-class Pin extends Model {
+class ConnectCode extends Model {
 	init() {
-		this.managedResource = 'pin';
+		this.managedResource = 'connectCode';
 		this.isSingle = true;
 
 		return Model.prototype.init();
 	}
 
-	_defaultPin() {
+	_defaultConnectCode() {
 		return {
 			"value": ""
 		};
 	}
 }
 
-let instance = new Pin();
+let instance = new ConnectCode();
 
 module.exports = (() => {
 	return instance;

@@ -1,4 +1,5 @@
 import Storage from 'models/Storage';
+import ConnectCode from "models/ConnectCode";
 import config from 'envConfig';
 import messenger from 'messenger';
 import { hashHistory } from 'react-router';
@@ -24,10 +25,6 @@ class Token {
 		let
 			requestBody = this.getBodyForRequest(options);
 
-		setTimeout(() => {
-			this.refreshToken();
-		}, 4000);
-
 		return this.getTokenRequest(requestBody).then((data) => {
 			this.tokenData = data;
 			this.saveToken(data.access_token);
@@ -45,7 +42,20 @@ class Token {
 		  url: this.authorizationUri,
 		  data: requestBody,
 		  timeout: 10000,
-		  dataType: "json"
+		  dataType: "json",
+		  statusCode: {
+			  401: function(res) {
+				  messenger.error(
+				  	res.responseJSON && res.responseJSON.error_description,
+					  "Error"
+				  );
+			  },
+			  500: function() {
+				  messenger.error("Server is not available", "Error");
+
+				  $(document).trigger('system:fail');
+			  }
+		  }
 	  });
 	}
 
@@ -63,7 +73,10 @@ class Token {
 
 	refreshToken() {
 		if (!this.token || !this.tokenData.refresh_token) {
-			hashHistory.push('/connects/qr');
+			if (!location.hash.match("connects")) {
+				hashHistory.push('/connects/qr');
+			}
+			return;
 		}
 
 		return this.getTokenRequest({

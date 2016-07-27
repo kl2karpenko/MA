@@ -14,7 +14,7 @@ import MainScroll from 'components/layouts/main/Scroll.jsx';
 
 import { KeyboardComponent, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 
-import Pin from "models/Pin";
+import LockCode from "models/LockCode";
 import PhoneNumber from "models/PhoneNumber";
 import Dialplan from "models/Dialplan";
 import Storage from "models/Storage";
@@ -41,8 +41,8 @@ export default class Index extends Component {
 
 	setPin() {
 		this.pin = {
-			is_on: Pin.isExist(),
-			active: Pin.getValueByPath('value') ? "" : false,
+			is_on: LockCode.isExist(),
+			active: LockCode.getValueByPath('value') ? "" : false,
 			created: "",
 			created_copy: "",
 			classFocus: setCurrentFocusedInputTo(4, null),
@@ -61,10 +61,10 @@ export default class Index extends Component {
 
 	_save() {
 		if (this.state.type === "pin") {
-			Pin.updateAttributesFor('value', this.pin.created);
+			LockCode.updateAttributesFor('value', this.pin.created);
 			this.setPin();
 
-			return Pin
+			return LockCode
 				.save()
 				.then(() => {
 					this.closeCustomKeyboard();
@@ -112,10 +112,10 @@ export default class Index extends Component {
 
 	_addValidation() {
 		let model = this.pin;
-		let hadPrevValue = Storage.existValue('pin');
+		let hadPrevValue = Storage.existValue('lockCode');
 
 		if (hadPrevValue && model.active.length === 5) {
-			this.pin.messages.active = Storage.getValue('pin') !== model.active;
+			this.pin.messages.active = Storage.getValue('lockCode') !== model.active;
 		}
 
 		if (model.created.length === 5 && model.created_copy.length === 5) {
@@ -134,11 +134,11 @@ export default class Index extends Component {
 		let
 			model = this.pin,
 			modelCopy = [],
-			hadPrevValue = Storage.existValue('pin');
+			hadPrevValue = Storage.existValue('lockCode');
 
 		if (model.created === model.created_copy) {
 			if (hadPrevValue) {
-				if (Storage.getValue('pin') === model.active) {
+				if (Storage.getValue('lockCode') === model.active) {
 					modelCopy.push(model.active);
 				} else {
 					return false;

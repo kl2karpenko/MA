@@ -33,10 +33,10 @@ function _getContactsFromMobile() {
 
 
 function getTokenHostName() {
-	let tokenHostName = "http://10.60.28.150:4445/token";
-	let localTokenHostName = "/token";
+	let tokenHostName = "http://185.19.237.126:4445";
+	let tokenUrl = "/token";
 
-	return tokenHostName;
+	return tokenHostName + tokenUrl;
 }
 
 module.exports = {

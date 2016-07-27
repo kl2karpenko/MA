@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
-import config from 'envConfig';
 import schema from 'schema';
+import config from 'envConfig';
 
-import Pin from "models/Pin";
+import LockCode from "models/LockCode";
 import Token from "models/Token";
 
 import FailBlock from 'components/blocks/Fail.jsx';
@@ -59,7 +59,7 @@ export default class Enter extends Component {
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
 
 		document.addEventListener("resume", function() {
-			Pin.isExist() && hashHistory.push('/pin');
+			LockCode.isExist() && hashHistory.push('/pin');
 		});
 	}
 
@@ -76,7 +76,7 @@ export default class Enter extends Component {
 	_checkConnection() {
 		return schema.ping().done(() => {
 			$(document).trigger('system:unfail');
-			Pin.isExist() && hashHistory.push('/pin');
+			LockCode.isExist() && hashHistory.push('/pin');
 		}).fail(() => {
 			$(document).trigger('system:fail');
 		});

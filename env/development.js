@@ -1,17 +1,17 @@
 import config from "./config";
 
 function getAddressOfHost() {
-	let devServerHostName = "http://10.60.28.150:7887/";
-	let hostName =  "/";
+	let devServerHostName = "http://10.60.28.150:7887";
+	let devServerUrl =  "/";
 
-	return devServerHostName;
+	return devServerHostName + devServerUrl;
 }
 
 function getTokenHostName() {
-	let tokenHostName = "http://10.60.28.150:4445/token";
-	let localTokenHostName = "/token";
+	let tokenHostName = "http://10.60.28.150:4445";
+	let tokenUrl = "/token";
 
-	return tokenHostName;
+	return tokenHostName + tokenUrl;
 }
 
 module.exports = $.extend(true, config, {

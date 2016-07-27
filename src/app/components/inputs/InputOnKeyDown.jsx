@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import Tappable from 'react-tappable';
 
-import _ from 'underscore';
-
-export default class Pin extends Component {
+export default class InputOnKeyDown extends Component {
 	constructor(props) {
 		super(props);
 
@@ -11,39 +8,52 @@ export default class Pin extends Component {
 			value: ""
 		};
 
-		this.inputValue = "";
-
 		this.onChange = this.onChange.bind(this);
 	}
 
 	static onNumbersAllow(val) {
-		let arrayOfNumbers = _.map(_.range(1, 10), String);
+		let event = val;
 
-		return arrayOfNumbers.indexOf(val) !== -1;
+		if (val.target) {
+			val = val.target.value;
+		}
+
+		let
+			isNumber = !isNaN(Number(val));
+
+		if (isNumber) {
+			event.preventDefault();
+		}
+
+		return isNumber;
+	}
+
+	triggerParentChange(value) {
+		if (typeof this.props.onChange === "function") {
+			this.props.onChange(value);
+		}
 	}
 
 	onChange(value) {
-		if (value.target) {
-			value = value.target.value;
-		}
-
-		if (this.props.type === "number") {
-			this.onNumbersAllow(value);
-		}
+		value = value.target ? value.target.value : value;
 
 		this.setState({
 			value: value
 		});
 
-		console.log('onChange this.inputValue: ', value);
-
-		if (typeof this.props.onChange === "function") {
-			typeof this.props.onChange(value);
-		}
+		this.triggerParentChange(value);
 	}
 
 	componentDidMount(){
 		this.refs.nameInput.focus();
+	}
+
+	getInputPattern() {
+		if (this.props.type === "number") {
+			return "[0-9]*";
+		} else {
+			return "\w*";
+		}
 	}
 
 	render() {
@@ -53,6 +63,7 @@ export default class Pin extends Component {
 				ref="nameInput"
 				autoFocus="true"
 				autoComplete="off"
+				pattern={this.getInputPattern()}
 				type={this.props.type}
 				value={this.state.value}
 				placeholder={this.props.placeholder}
