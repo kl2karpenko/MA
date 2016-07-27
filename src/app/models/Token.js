@@ -62,7 +62,7 @@ class Token {
 	}
 
 	refreshToken() {
-		if (!this.token) {
+		if (!this.token || !this.tokenData.refresh_token) {
 			hashHistory.push('/connects/qr');
 		}
 
