@@ -1,33 +1,19 @@
+import { diagnostic } from './diagnostic';
+
 module.exports = {
+	STATUSES: diagnostic.permissionStatus,
+
 	getCameraStatus() {
 		return new Promise((resolve, reject) => {
-			resolve("authorized");
-		});
-	},
-
-	STATUSES: {},
-
-	loadIfIsAvailable() {
-		return this.getCameraStatus().then((status) => {
-			return true;
-		});
-	},
-
-	_loadIfCameraIsNotHaveBeenRequested() {
-		return this.getCameraStatus().then((status) => {
-			return false;
-		});
-	},
-
-	_loadIfCameraIsDenied() {
-		return this.getCameraStatus().then((status) => {
-			return false;
+			resolve(1);
 		});
 	},
 
 	requestForAccess() {
 		return new Promise((resolve) => {
-			resolve("access granted");
+			diagnostic.requestCameraAuthorization((status) => {
+				resolve(this.STATUSES.GRANTED === status);
+			});
 		});
 	},
 

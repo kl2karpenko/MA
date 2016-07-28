@@ -9,11 +9,11 @@ var statusesObject = {
 	},
 
 	ios: {
-		NOT_REQUESTED: "",
-		DENIED: "",
-		RESTRICTED: "",
-		GRANTED: "",
-		GRANTED_WHEN_IN_USE: ""
+		NOT_REQUESTED: "NOT_REQUESTED",
+		DENIED: "DENIED",
+		RESTRICTED: "RESTRICTED",
+		GRANTED: "GRANTED",
+		GRANTED_WHEN_IN_USE: "GRANTED_WHEN_IN_USE"
 	}
 };
 

@@ -2,8 +2,6 @@ if (!cordova || !cordova.plugins || !cordova.plugins.diagnostic) {
 	throw new Error("you don't have installed >> diagnostic << cordova plugin");
 }
 
-console.log(cordova.plugins.diagnostic.permissionStatus);
-
 module.exports = {
 	switchToSettings() {
 		return cordova.plugins.diagnostic.switchToSettings(() => {
