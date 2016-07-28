@@ -9,8 +9,7 @@ import Angle from 'components/modules/angle/Index.jsx';
 
 import Tappable from 'react-tappable';
 
-import config from 'envConfig';
-import { camera, dialogs } from 'appConfig';
+import { camera, dialogs, barcodeScanner } from 'appConfig';
 
 import Token from 'models/Token';
 import messenger from "messenger";
@@ -21,45 +20,47 @@ export default class Enter extends Component {
 	}
 
 	_scanQRCode() {
-		if (config.process.isProd()) {
-			camera.loadIfIsAvailable().then((isAvailable) => {
-				if (isAvailable) {
-					cordova.plugins.barcodeScanner.scan(
-						function (result) {
-							if (!result.cancelled && result.text) {
-								Token.load({
-									type: "qr_code",
-									value: result.text
-								}).done(() => {
-									hashHistory.push('/pin');
-								}).fail(() => {
-									messenger.messenger.error("Wrong connect code", "Error");
-								});
-							}
-						},
-						function (error) {
-							dialogs.alert("Scanning failed: " + error);
-						},
-						{
-							"preferFrontCamera" : false, // iOS and Android
-							"showFlipCameraButton" : false, // iOS and Android
-							"prompt" : "Place a barcode inside the scan area", // supported on Android only
-							"formats" : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
-							"orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
+		camera.loadIfIsAvailable().then((isAvailable) => {
+			// camera is have been requested and access is granted
+			if (isAvailable) {
+				barcodeScanner.scan(
+					function (result) {
+						if (!result.cancelled && result.text) {
+							Token.load({
+								type: "qr_code",
+								value: result.text
+							}).done(() => {
+								hashHistory.push('/pin');
+							}).fail(() => {
+								messenger.error("Wrong connect code", "Error");
+							});
 						}
-					);
-				} else {
-					camera.requestForAccess();
-
-					dialogs.confirm("Please check your settings to allow access to camera", (permissionAccess) => {
-						(permissionAccess === 1) && camera.switchToSettings();
-					}, "Access to camera denied", ["Go to settings", "Cancel"]);
-				}
-			});
-		} else {
-			console.log('development');
-			hashHistory.push('/pin');
-		}
+					},
+					function (error) {
+						dialogs.alert("Scanning failed: " + error);
+					},
+					{
+						"preferFrontCamera" : false, // iOS and Android
+						"showFlipCameraButton" : false, // iOS and Android
+						"prompt" : "Place a barcode inside the scan area", // supported on Android only
+						"formats" : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+						"orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
+					}
+				);
+			} else {
+				camera._loadIfCameraIsNotHaveBeenRequested().then((IsNotHaveBeenRequested) => {
+					if (IsNotHaveBeenRequested) {
+						// if we don't request for access request for it
+						camera.requestForAccess();
+					} else {
+						// if we request for access was denied say about it to user, nd send him to settings
+						dialogs.confirm("Please check your settings to allow access to camera", (permissionAccess) => {
+							(permissionAccess === 1) && camera.switchToSettings();
+						}, "Access to camera denied", ["Go to settings", "Cancel"]);
+					}
+				});
+			}
+		});
 	}
 
 	render() {

@@ -1,5 +1,5 @@
 import $                  from 'jquery';
-import { isIOS }          from "../config";
+import config         from "../config";
 import Storage            from 'models/Storage';
 import diagnostic         from 'diagnostic';
 import dialogs            from 'dialogs';
@@ -50,7 +50,7 @@ module.exports = {
 
 	getMobileSIMNumber: function () {
 		return new Promise((resolve, reject) => {
-			if (!isIOS()) {
+			if (!config.isIOS()) {
 				window.plugins.sim.getSimInfo((result) => {
 					if (result.phoneNumber) {
 						Storage.setValue('phone', result.phoneNumber);

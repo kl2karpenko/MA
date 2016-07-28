@@ -5,7 +5,7 @@ let IPMac = 'http://10.10.201.49:8030/';
 let IPDesktop = 'http://10.10.200.28:8030/';
 
 function getAddressOfHost() {
-	let hostName =  isIOS ? IPMac : IPDesktop;
+	let hostName =  config.process.isIOS() ? IPMac : IPDesktop;
 
 	return hostName;
 }

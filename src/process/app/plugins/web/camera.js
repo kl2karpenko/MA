@@ -13,15 +13,21 @@ module.exports = {
 		});
 	},
 
-	_loadIfStatusNotDetermined() {
-		return this.getCameraStatus().then(() => {
-			return true;
+	_loadIfCameraIsNotHaveBeenRequested() {
+		return this.getCameraStatus().then((status) => {
+			return false;
+		});
+	},
+
+	_loadIfCameraIsDenied() {
+		return this.getCameraStatus().then((status) => {
+			return false;
 		});
 	},
 
 	requestForAccess() {
-		return this._loadIfStatusNotDetermined().then(() => {
-			return "authorized";
+		return new Promise((resolve) => {
+			resolve("access granted");
 		});
 	},
 

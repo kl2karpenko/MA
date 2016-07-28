@@ -17,17 +17,21 @@ module.exports = {
 		});
 	},
 
-	_loadIfStatusNotDetermined() {
+	_loadIfCameraIsNotHaveBeenRequested() {
 		return this.getCameraStatus().then((status) => {
-			return this.STATUSES.NOT_DETERMINED === status;
+			return this.STATUSES.NOT_REQUESTED === status;
+		});
+	},
+
+	_loadIfCameraIsDenied() {
+		return this.getCameraStatus().then((status) => {
+			return this.STATUSES.DENIED === status || this.STATUSES.DENIED_ALWAYS === status;
 		});
 	},
 
 	requestForAccess() {
-		return this._loadIfStatusNotDetermined().then(() => {
-			return diagnostic.requestCameraAuthorization(function(d) {
-				console.log(d);
-			});
+		return diagnostic.requestCameraAuthorization(function(d) {
+			console.log(d, 'requestCameraAuthorization');
 		});
 	},
 
