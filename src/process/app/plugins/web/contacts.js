@@ -1,15 +1,17 @@
+import { diagnostic } from './diagnostic';
+
 module.exports = {
 	getContactsStatus() {
 		return new Promise((resolve) => {
-			resolve("authorized");
+			resolve(1);
 		});
 	},
 
-	STATUSES: {},
+	STATUSES: diagnostic.permissionStatus,
 
-	isAvailable() {
-		return this.getContactsStatus().then(() => {
-			return true;
+	requestForAccess() {
+		return new Promise((resolve) => {
+			resolve(true);
 		});
 	},
 

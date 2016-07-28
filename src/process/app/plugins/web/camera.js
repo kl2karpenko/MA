@@ -4,16 +4,14 @@ module.exports = {
 	STATUSES: diagnostic.permissionStatus,
 
 	getCameraStatus() {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			resolve(1);
 		});
 	},
 
 	requestForAccess() {
 		return new Promise((resolve) => {
-			diagnostic.requestCameraAuthorization((status) => {
-				resolve(this.STATUSES.GRANTED === status);
-			});
+			resolve(true);
 		});
 	},
 

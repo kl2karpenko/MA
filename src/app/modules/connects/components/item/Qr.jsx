@@ -28,7 +28,13 @@ export default class Enter extends Component {
 					break;
 				// camera is have been requested but access was denied
 				case 2:
-					camera.requestForAccess().then(Enter._scanQRCode);
+					camera.requestForAccess().then((giveAccess) => {
+						console.log('giveAccess for camera: ', giveAccess);
+
+						if (giveAccess) {
+							Enter._scanQRCode();
+						}
+					});
 					break;
 				case 3:
 					dialogs.confirm("Please check your settings to allow access to camera", (permissionAccess) => {
