@@ -37,6 +37,7 @@ export default class Index extends Component {
 		this._save = this._save.bind(this);
 		this.closeCustomKeyboard = this.closeCustomKeyboard.bind(this);
 		this.onChange = this.onChange.bind(this);
+		this._disconnect = this._disconnect.bind(this);
 	}
 
 	setPin() {
@@ -173,10 +174,14 @@ export default class Index extends Component {
 		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
 
-	static _disconnect() {
-		hashHistory.push('/authorize');
+	_disconnect() {
+		hashHistory.push('/connects/qr');
 		Storage.clear();
 		location.reload();
+
+		$(document).trigger('system:loading', {
+			loading: true, showLoaderBlock: true
+		});
 	}
 
 	render() {
@@ -243,7 +248,7 @@ export default class Index extends Component {
 							pressDelay={500}
 							component="button"
 		          className="btn btn-block btn-block-lg btn-disconnect"
-		          onTap={Index._disconnect}
+		          onTap={this._disconnect}
 						>
 							Disconnect app
 						</Tappable>

@@ -19,7 +19,7 @@ export default class Enter extends Component {
 			loading: true,
 			fail: false,
 			offline: false,
-			loader: true
+			showLoaderBlock: true
 		};
 
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
@@ -30,8 +30,8 @@ export default class Enter extends Component {
 		this._checkIfUserIsConnected();
 	}
 
-	_changeLoadStateTo(state) {
-		this.setState({ loading: state, loader: false });
+	_changeLoadStateTo(data) {
+		this.setState({ loading: data.loading, showLoaderBlock: data.showLoaderBlock || false });
 	}
 
 	_changeOfflineStateTo(state) {
@@ -43,19 +43,19 @@ export default class Enter extends Component {
 	}
 
 	_listen() {
-		$(document).ajaxStart(() => {
-			$(document).trigger('system:ajaxStart');
+		$(document).on('system:loading', (event, data) => {
+			this._changeLoadStateTo(data || {
+				loading: true, showLoaderBlock: true
+			});
+		});
+		$(document).on('system:loaded', (event, data) => {
+			this._changeLoadStateTo(data || {
+				loading: false, showLoaderBlock: false
+			});
 		});
 
-		$(document).ajaxStop(() => {
-			$(document).trigger('system:ajaxStop');
-		});
-
-		$(document).on('system:ajaxStart',this._changeLoadStateTo.bind(this, true));
-		$(document).on('system:ajaxStop',this._changeLoadStateTo.bind(this, false));
-
-		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true), false);
-		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false), false);
+		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true));
+		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false));
 
 		$(document).on('system:fail', this._changeFailStateTo.bind(this, true));
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
@@ -66,12 +66,12 @@ export default class Enter extends Component {
 	}
 
 	_checkIfUserIsConnected() {
+		$(document).trigger('system:loading');
+
 		this
 			._checkConnection()
 			.then(() => {
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
-
-				setTimeout(this._changeLoadStateTo.bind(this, false), 500);
 			});
 	}
 
@@ -88,10 +88,10 @@ export default class Enter extends Component {
 		let platformName = config.process.getActivePlatform();
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
-			{ this.props.children && React.cloneElement(this.props.children, { system: this }) }
+			{ this.props.children }
 
 			<Loader
-				show={this.state.loader}
+				show={this.state.showLoaderBlock}
 			/>
 
 			<LoadingBlock

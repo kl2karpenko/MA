@@ -239,6 +239,7 @@ class List {
 	}
 
 	load(options) {
+		$(document).trigger('system:loading');
 		options = options || {};
 
 		let
@@ -259,9 +260,11 @@ class List {
 			console.info("response", items[name]);
 			console.groupEnd("load " + resource);
 
+			$(document).trigger('system:loaded');
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+			$(document).trigger('system:loaded');
 			return this;
 		});
 	}

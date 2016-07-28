@@ -34,9 +34,7 @@ export default class Index extends Component {
 	}
 
 	_load() {
-		if (this.props.system) {
-			this.props.system._changeLoadStateTo(true);
-		}
+		$(document).trigger('system:loading');
 
 		return this.state.model
 			.load()
@@ -48,6 +46,8 @@ export default class Index extends Component {
 					model: this.state.model,
 					list: configData
 				});
+				
+				$(document).trigger('system:loaded');
 			});
 	}
 

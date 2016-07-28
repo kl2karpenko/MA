@@ -8,14 +8,11 @@ export default class Index extends Component {
 	}
 
 	render() {
+		$(document).trigger('system:loaded');
+		
 		return (
 			<AdaptiveWrapper>
-				{ this.props.children && React.cloneElement(
-					this.props.children,
-					{
-						system: this.props.system
-					})
-				}
+				{ this.props.children }
 			</AdaptiveWrapper>
 		);
 	}

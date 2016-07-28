@@ -20,7 +20,9 @@ export default class Storage {
 	}
 
 	clear() {
-		this.storage.clear();
+		this.deleteValue("lockCode");
+		this.deleteValue("phone");
+		this.deleteValue("token");
 	}
 }
 

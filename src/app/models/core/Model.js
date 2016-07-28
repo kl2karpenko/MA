@@ -195,6 +195,9 @@ export default class Model {
 	}
 
 	load(options) {
+		$(document).trigger('system:loading', {
+			loading: true, showLoaderBlock: false
+		});
 		options = options || {};
 
 		let
@@ -218,10 +221,12 @@ export default class Model {
 				console.groupEnd("load");
 				this.assignAttributes(items[name]);
 
+				$(document).trigger('system:loaded');
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
 				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+				$(document).trigger('system:loaded');
 				return this;
 			});
 	}
@@ -253,6 +258,9 @@ export default class Model {
 	}
 
 	save(options) {
+		$(document).trigger('system:loading', {
+			loading: true, showLoaderBlock: false
+		});
 		options = options || {};
 		let isValid = this._isValid();
 
@@ -288,8 +296,10 @@ export default class Model {
 
 				this._setOriginalValues(this.getModel());
 				options.message && this.messenger.success("Save " + resource);
+				$(document).trigger('system:loaded');
 			})
 			.error((response) => {
+				$(document).trigger('system:loaded');
 				return response;
 			});
 	}

@@ -17,7 +17,7 @@ export default class Index extends Component {
 	}
 
 	componentDidMount() {
-		this.props.system._changeLoadStateTo(true);
+		$(document).trigger('system:loading');
 		this._init();
 	}
 
@@ -43,6 +43,8 @@ export default class Index extends Component {
 	}
 
 	_init() {
+		$(document).trigger('system:loading');
+
 		DialplanList
 			.load()
 			.then(this._config.bind(this))
@@ -60,15 +62,15 @@ export default class Index extends Component {
 						.load({
 							id: id
 						})
-						.done(this._goToActiveDialplan);
+						.done(this._goToActiveDialplan)
+						.then(() => {
+							$(document).trigger('system:loaded');
+						});
 				}
 			});
 	}
 
 	render() {
-		return this.props.children && React.cloneElement(
-			this.props.children, {
-			system: this.props.system
-		});
+		return this.props.children;
 	}
 }

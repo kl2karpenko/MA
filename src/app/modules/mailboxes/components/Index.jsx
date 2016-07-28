@@ -64,7 +64,6 @@ export default class Index extends Component {
 				<AdaptiveFixed class="l-mailbox">
 					<MainScroll>
 						<ListComponent
-							system={this.props.system}
 							model={MailboxesList}
 							listClass="m-list-mailbox"
 							onClick={this._setActiveMailbox}

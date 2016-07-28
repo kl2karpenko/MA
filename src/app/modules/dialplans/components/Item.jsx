@@ -38,6 +38,8 @@ export default class Item extends Component {
 	}
 
 	_loadDialplan() {
+		$(document).trigger('system:loading');
+
 		return Dialplan
 			.load({
 				id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
@@ -46,6 +48,7 @@ export default class Item extends Component {
 				this._changeState();
 
 				hashHistory.push(DialplanList.getUrl());
+				$(document).trigger('system:loaded');
 			});
 	}
 

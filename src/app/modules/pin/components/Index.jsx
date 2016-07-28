@@ -9,8 +9,6 @@ import Storage from "models/Storage";
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
-import { KeyboardComponent } from 'components/Keyboard.jsx';
-
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
@@ -52,6 +50,8 @@ export default class Index extends Component {
 	}
 
 	render() {
+		$(document).trigger('system:loaded');
+		
 		return (<AdaptiveWrapper>
 			<Adaptive>
 				<PinForm

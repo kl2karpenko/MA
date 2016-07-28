@@ -82,7 +82,7 @@ export default class Index extends Component {
 			href = '/dialplans/' + Dialplan.getValueByPath("_id");
 			imgName = "cross-white-big";
 			childrenProps = React.cloneElement( this.props.children,
-			{ parentState: this.state.searchContacts, system: this.props.system });
+			{ parentState: this.state.searchContacts });
 		}
 
 		return (

@@ -56,7 +56,6 @@ export default class List extends Component {
 			<Adaptive class="dialplans">
 				<div className="m-list m-list-dialplan m-list-withImg">
 					<ListComponent
-						system={this.props.system}
 						model={DialplanList}
 						listClass="m-list-dialplans"
 						onClick={this.renderDialplanBy}
