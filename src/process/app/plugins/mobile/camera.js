@@ -1,11 +1,24 @@
 import { switchToSettings, diagnostic } from './diagnostic';
+import config from "../../../config";
+
+function requestPermissionsForCamera (callback) {
+	if (config.isIOS()) {
+		return cordova.plugins.diagnostic.getCameraAuthorizationStatus(callback);
+	} else {
+		return diagnostic.requestRuntimePermission(callback, function(error){
+			console.error("The following error occurred: " + error);
+		}, diagnostic.runtimePermission.CAMERA);
+	}
+}
 
 module.exports = {
 	STATUSES: diagnostic.permissionStatus,
 
 	getCameraStatus() {
-		return new Promise((resolve, reject) => {
-			diagnostic.requestRuntimePermission((status) => {
+		return new Promise((resolve) => {
+			requestPermissionsForCamera((status) => {
+				console.log('requestPermissionsForCamera: ', status);
+				
 				switch(status){
 					case this.STATUSES.GRANTED:
 						console.log("Permission granted to use the camera");
@@ -24,9 +37,7 @@ module.exports = {
 						resolve(3);
 						break;
 				}
-			}, function(error){
-				console.error("The following error occurred: " + error);
-			}, diagnostic.runtimePermission.CAMERA);
+			});
 		});
 	},
 
