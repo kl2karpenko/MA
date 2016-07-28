@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
-let Swiper = require('react-swiper');
-
-React.initializeTouchEvents(true);
 
 export default class Index extends Component {
 	constructor(props) {
@@ -11,16 +8,7 @@ export default class Index extends Component {
 	}
 
 	render() {
-		// TODO: swipe events didnt work
 		return (
-		<Swiper
-			onSwipingLeft={() => {
-				console.log('onSwipingLeft')
-			}}
-			onSwipedRight={() => {
-				console.log('onSwipedRight')
-			}}
-		>
 			<AdaptiveWrapper>
 				{ this.props.children && React.cloneElement(
 					this.props.children,
@@ -29,7 +17,6 @@ export default class Index extends Component {
 					})
 				}
 			</AdaptiveWrapper>
-		</Swiper>
 		);
 	}
 }
