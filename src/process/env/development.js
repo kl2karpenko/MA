@@ -1,4 +1,4 @@
-import config from "./config";
+import config from "./shared";
 
 function getAddressOfHost() {
 	let devServerHostName = "http://10.60.28.150:7887";

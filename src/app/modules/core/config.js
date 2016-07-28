@@ -9,5 +9,3 @@ schema.add('dialplans');
 schema.addVerb('ping', 'GET', {
 	url: "ping"
 });
-
-console.log('add schema', schema);

@@ -41,9 +41,9 @@ postcss()
  * ==========================================================
  */
 
-const ProcessInfo = require('../../env/process');
-const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnvironment();
-const webpackConfig = require('./../env/config')[ACTIVE_ENVIRONMENT];
+const ProcessInfo = require('../../src/process/config');
+const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnv();
+const BUILD_PLATFORM_FOR = ProcessInfo.getAppConfig();
 
 /**
  * ==========================================================
@@ -54,6 +54,14 @@ const webpackConfig = require('./../env/config')[ACTIVE_ENVIRONMENT];
 console.log(" ================ are on >> "
   + ACTIVE_ENVIRONMENT.toUpperCase() +
   " << environment =====================");
+
+if (ProcessInfo.getIfBuildApp()) {
+    console.log(" ================ build for mobile, platform >> "
+      + ProcessInfo.getActivePlatform().toUpperCase() +
+      " << =====================");
+} else {
+    console.log(" ================ build for web =====================");
+}
 
 /**
  * Set begin path for run
@@ -73,7 +81,6 @@ module.exports = {
         library: "[name]"
     },
 
-    // Step 2: Node environment
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
@@ -84,7 +91,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
               'NODE_ENV': JSON.stringify(ACTIVE_ENVIRONMENT),
-              'platformName': JSON.stringify(ProcessInfo.getActivePlatform())
+              'platformName': JSON.stringify(ProcessInfo.getActivePlatform()),
+              'BUILD_APP': JSON.stringify(ProcessInfo.getIfBuildApp())
             }
         }),
 
@@ -93,10 +101,10 @@ module.exports = {
             template: 'src/template.html',
             inject: false,
             assets: {
-                "scripts": webpackConfig.filesPath.scripts,
-                "connect": webpackConfig.filesPath.connect,
-                "modernizr": webpackConfig.filesPath.modernizr,
-                "styles": webpackConfig.filesPath.styles
+                "scripts": "app.js",
+                "connect": "connect.js",
+                "modernizr": "modernizr.js",
+                "styles": "app.css"
             }
         }),
 
@@ -119,14 +127,23 @@ module.exports = {
     resolve: {
         root: path.resolve(dirname),
         alias: {
-            "envConfig": "env/" + ACTIVE_ENVIRONMENT +  ".js",
+            "envConfig": "src/process/env/" + ACTIVE_ENVIRONMENT +  ".js",
+            "appConfig": "src/process/app/" + BUILD_PLATFORM_FOR +  ".js",
+
+	          // cordova plugins for env ( web or mobile) config
+            "diagnostic": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/diagnostic.js',
+            "camera": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/camera.js',
+            "contacts": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/contacts.js',
+            "barcodeScanner": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/barcodeScanner.js',
+            "dialogs": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/dialogs.js',
+            // cordova plugins for env ( web or mobile) config
+
             "images": 'src/img',
             "lib": 'src/app/lib',
             "modules": 'src/app/modules',
             "models": 'src/app/models',
             "core": 'src/app/modules/core',
             "schema": 'src/app/lib/schema',
-            "dialogs": 'src/app/lib/dialogs',
             "messenger": 'src/app/lib/toastr',
             "rest-client": 'src/app/lib/vendor/jquery.rest',
             "imageLoader": 'lib/custom/imageLoader',

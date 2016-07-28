@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var _ = require('underscore');
 
-var data = require('./data.js');
+var data = require('./data');
 
 var activeActionsPossibleValues = data.activeActionsPossibleValues;
 var dialplanFollowDefault = data.dialplanFollowDefault;
@@ -19,7 +19,6 @@ var connectsPinBad = data.connectsPinBad;
 var extensions = data.extensions;
 var ACTIVE_ACTION_KEY = data.active_action_key;
 var ACTION_ARRAY_KEY = data.action_array_key;
-
 
 var app = express();
 var port = process.env.NODE_ENV === 'development' ? 8040 : 8030;

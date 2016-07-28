@@ -1,18 +1,15 @@
-import $ from 'jquery';
-import config from 'envConfig';
-
-import diagnostic from './diagnostic';
+import { switchToSettings, diagnostic } from './diagnostic';
 
 module.exports = {
 	getCameraStatus() {
 		return new Promise((resolve, reject) => {
-			config.process.isProd() && cordova.plugins.diagnostic.getCameraAuthorizationStatus((status) => {
+			diagnostic.getCameraAuthorizationStatus((status) => {
 				resolve(status);
 			});
 		});
 	},
 
-	STATUSES: config.process.isProd() ? cordova.plugins.diagnostic.permissionStatus : {},
+	STATUSES: diagnostic.permissionStatus,
 
 	loadIfIsAvailable() {
 		return this.getCameraStatus().then((status) => {
@@ -28,11 +25,13 @@ module.exports = {
 
 	requestForAccess() {
 		return this._loadIfStatusNotDetermined().then(() => {
-			return config.process.isProd() && cordova.plugins.diagnostic.requestCameraAuthorization(function(d) { console.log(d) })
+			return diagnostic.requestCameraAuthorization(function(d) {
+				console.log(d);
+			});
 		});
 	},
 
 	switchToSettings() {
-		return diagnostic.switchToSettings();
+		return switchToSettings();
 	}
 };

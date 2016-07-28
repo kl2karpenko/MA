@@ -1,9 +1,7 @@
 import List from 'List';
 import { hashHistory } from 'react-router';
 
-import config from 'envConfig';
-import dialogs from 'dialogs';
-import Contacts from 'lib/contacts';
+import { contacts, switchToSettings, dialogs, getMobileContacts } from "appConfig";
 
 class ContactList extends List {
 	init() {
@@ -32,11 +30,10 @@ class ContactList extends List {
 
 	load() {
 		let promise = new Promise((resolve) => {
-			Contacts.isAvailable().then((isAvailable) => {
+			contacts.isAvailable().then((isAvailable) => {
 				if (isAvailable) {
 					if (this.cachedContacts && !this.cachedContacts.length) {
-						return config.schema
-							.mobileContacts()
+						return getMobileContacts()
 							.then((contactsList) => {
 								this.cachedContacts = contactsList.contacts;
 
@@ -49,7 +46,7 @@ class ContactList extends List {
 					dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
-								Contacts.switchToSettings();
+								switchToSettings();
 								break;
 							case 0:
 							case 2:

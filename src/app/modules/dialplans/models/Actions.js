@@ -1,6 +1,6 @@
 import List from 'List';
 
-import config from 'envConfig';
+import { getMobileSIMNumber } from "appConfig";
 
 export default class Actions extends List {
 	init(props) {
@@ -55,11 +55,8 @@ export default class Actions extends List {
 			}
 		];
 
-		return config.schema
-			.mobileSIMNumber()
+		return getMobileSIMNumber()
 			.then((number) => {
-				console.log(number);
-				
 				defaultModel[1].info = number;
 
 				return defaultModel;

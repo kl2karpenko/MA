@@ -10,9 +10,7 @@ import Angle from 'components/modules/angle/Index.jsx';
 import Tappable from 'react-tappable';
 
 import config from 'envConfig';
-import dialogs from 'dialogs';
-
-import Camera from 'lib/camera';
+import { camera, dialogs } from 'appConfig';
 
 import Token from 'models/Token';
 import messenger from "messenger";
@@ -24,7 +22,7 @@ export default class Enter extends Component {
 
 	_scanQRCode() {
 		if (config.process.isProd()) {
-			Camera.loadIfIsAvailable().then((isAvailable) => {
+			camera.loadIfIsAvailable().then((isAvailable) => {
 				if (isAvailable) {
 					cordova.plugins.barcodeScanner.scan(
 						function (result) {
@@ -51,10 +49,10 @@ export default class Enter extends Component {
 						}
 					);
 				} else {
-					Camera.requestForAccess();
+					camera.requestForAccess();
 
 					dialogs.confirm("Please check your settings to allow access to camera", (permissionAccess) => {
-						(permissionAccess === 1) && Camera.switchToSettings();
+						(permissionAccess === 1) && camera.switchToSettings();
 					}, "Access to camera denied", ["Go to settings", "Cancel"]);
 				}
 			});
