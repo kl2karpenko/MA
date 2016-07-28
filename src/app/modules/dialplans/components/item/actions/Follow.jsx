@@ -31,9 +31,12 @@ export default class Follow extends Component {
 	_checkIfEqualNumber() {
 		let
 			mobileNumber = PhoneNumber.getValueByPath('value'),
-			numberToTransfer = Dialplan._getActiveTransfer().number;
+			transfer = Dialplan._getActiveTransfer(),
+			numberToTransfer = transfer && transfer.number;
 
-		numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "").replace(' ', '');
+		if (numberToTransfer) {
+			numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "").replace(' ', '');
+		}
 
 		return numberToTransfer === mobileNumber;
 	}

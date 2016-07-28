@@ -74,7 +74,8 @@ class Token {
 			if (!location.hash.match("connects")) {
 				hashHistory.push('/connects/qr');
 			}
-			return;
+
+			return (new Promise((res) => { }));
 		}
 
 		return this.getTokenRequest({
