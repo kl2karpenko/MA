@@ -80,11 +80,11 @@ app.get('/mailboxes/:mailboxId', function (req, res) {
  */
 app.get('/dialplans', function (req, res) {
 
-	setTimeout(function () {
-		res.send({
-			"dialplans": dialplansList
-		});
-	}, 4000);
+	res.send({
+		"dialplans": dialplansList
+	});
+	// setTimeout(function () {
+	// }, 4000);
 });
 
 /**

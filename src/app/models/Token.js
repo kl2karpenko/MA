@@ -6,7 +6,6 @@ import { hashHistory } from 'react-router';
 class Token {
 	constructor() {
 		this.authorizationUri = config.schema.tokenHostname;
-		this.redirectUri = "http://localhost:8030";
 		this.clientId = "2909abc18ab27bea41f531705d0dcf55";
 		this.clientSecret = "b63mso0el64xpa7";
 
