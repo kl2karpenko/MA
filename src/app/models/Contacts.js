@@ -49,7 +49,7 @@ class ContactList extends List {
 					dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
-								switchToSettings();
+								contacts.switchToSettings();
 								break;
 							case 0:
 							case 2:
