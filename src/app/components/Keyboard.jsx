@@ -123,8 +123,10 @@ export class KeyboardComponent extends Component {
 }
 
 export function setCurrentFocusedInputTo(amount, index, element) {
-	let arrayOfFocusedClasses = new Array(amount).fill(false);
-	arrayOfFocusedClasses[index] = true;
+	let arrayOfFocusedClasses = [];
+	for (let i = 0; i < amount; i++) {
+		arrayOfFocusedClasses[i] = (index === i);
+	}
 
 	if (index && element) {
 		setTimeout(function () {

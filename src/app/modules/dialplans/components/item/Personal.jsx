@@ -44,6 +44,8 @@ export default class Personal extends Component {
 
 			case "mobile":
 				PhoneNumber._getUserNumber().then((phone) => {
+					console.log(phone, 'phone');
+					
 					if (phone) {
 						Dialplan
 							._saveFollowToTransfer({
