@@ -179,8 +179,9 @@ export default class Index extends Component {
 		Storage.clear();
 		location.reload();
 
-		$(document).trigger('system:loading');
-		$(document).trigger('system:block');
+		$(document).trigger('system:loading', {
+			loading: true, showLoaderBlock: true
+		});
 	}
 
 	render() {

@@ -5,7 +5,7 @@ import imageLoader from 'imageLoader';
 import ListComponent from "components/list/Index.jsx";
 import LinkButton from 'components/buttons/LinkButton.jsx';
 
-import DialplanList from "../models/DialplanList";
+import DialplanList from "models/DialplanList";
 import Dialplan from "models/Dialplan";
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';

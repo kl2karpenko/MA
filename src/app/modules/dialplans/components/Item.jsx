@@ -7,7 +7,7 @@ import Tappable from 'react-tappable';
 import Swipeable from "react-swipeable";
 
 import Dialplan from "models/Dialplan";
-import DialplanList from "../models/DialplanList";
+import DialplanList from "models/DialplanList";
 
 import Personal from './item/Personal.jsx';
 import Company from './item/Company.jsx';
@@ -109,7 +109,6 @@ export default class Item extends Component {
 					}, 50);
 				}}
 				flickThreshold={0.1}
-				delta={100}
 			>
 			<AdaptiveWrapper>
 				<Angle header={false}>

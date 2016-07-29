@@ -78,9 +78,12 @@ class ContactList extends List {
 	}
 
 	load() {
+		$(document).trigger('system:loading');
+
 		return this._getContactsAccess()
 			.then((data) => {
 				this.assignAttributes(data.contacts);
+				$(document).trigger('system:loaded');
 				return data;
 			});
 	}

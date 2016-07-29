@@ -1,10 +1,10 @@
 import './lib/vendor/modernizr/custom';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Router, hashHistory} from 'react-router';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import {Router, hashHistory}  from 'react-router';
 
-import Main from "./modules/core/components/Enter.jsx";
-import config from 'envConfig';
+import Main                   from "./modules/core/components/Enter.jsx";
+import config                 from 'envConfig';
 
 export default class System {
 	static _setStyles() {
