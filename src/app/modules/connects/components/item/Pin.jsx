@@ -51,7 +51,6 @@ export default class Pin extends Component {
 				onSwipingRight={() => {
 					hashHistory.push("/connects/qr");
 				}}
-				delta={100}
 			>
 			<Adaptive key="connect_code">
 				<Angle class="main" header={false}>

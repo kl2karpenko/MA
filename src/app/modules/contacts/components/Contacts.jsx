@@ -46,7 +46,6 @@ export default class Contacts extends Component {
 					}, 50);
 				}}
 				flickThreshold={0.1}
-				delta={100}
 			>
 				<ListComponent
 					model={MobileContacts}

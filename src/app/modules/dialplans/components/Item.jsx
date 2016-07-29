@@ -109,7 +109,6 @@ export default class Item extends Component {
 					}, 50);
 				}}
 				flickThreshold={0.1}
-				delta={100}
 			>
 			<AdaptiveWrapper>
 				<Angle header={false}>

@@ -80,7 +80,6 @@ export default class Enter extends Component {
 				onSwipingLeft={() => {
 					hashHistory.push("/connects/pin");
 				}}
-				delta={100}
 			>
 			<Adaptive key="qr_code">
 				<Angle
