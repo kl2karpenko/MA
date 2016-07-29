@@ -40,7 +40,7 @@ export default class Company extends Component {
 			case "mailbox":
 				let mailbox = Dialplan._getActiveMailbox();
 
-				if (mailbox._id) {
+				if (mailbox && mailbox._id) {
 					Dialplan
 						._saveFollowToMailbox(mailbox)
 						.then(this._updateDialplan.bind(this));
@@ -51,8 +51,6 @@ export default class Company extends Component {
 
 			case "mobile":
 				PhoneNumber._getUserNumber().then((phone) => {
-					console.log(phone, 'phone');
-					
 					if (phone) {
 						Dialplan
 							._saveFollowToTransfer({

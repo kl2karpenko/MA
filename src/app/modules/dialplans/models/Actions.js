@@ -39,7 +39,7 @@ export default class Actions extends List {
 				title: "Forward to " + (this.personal ? "my" : " ") + " mailbox",
 				info: "",
 				className: (!this.personal ? "with-search" : " "),
-				search: (!this.personal ? true : false),
+				search: !this.personal,
 				name: "mailbox",
 				link: "/mailboxes",
 				active_action_key: "mailbox"

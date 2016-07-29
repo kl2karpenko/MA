@@ -19,7 +19,10 @@ export default class Follow extends Component {
 		this.state = props.options;
 	}
 
+	// TODO: THINK ABOUT DELETING THIS AND CHANGE INPUT=CHECKBOX STATE WITH ONCHANGE EVENT
 	componentWillReceiveProps(props) {
+		console.log('componentWillReceiveProps');
+
 		let config = this._config(props.options);
 
 		props.options.info = config.info;
@@ -28,49 +31,46 @@ export default class Follow extends Component {
 		this.setState(props.options);
 	}
 
-	_checkIfEqualNumber() {
-		let
-			mobileNumber = PhoneNumber.getValueByPath('value'),
-			transfer = Dialplan._getActiveTransfer(),
-			numberToTransfer = transfer && transfer.number;
-
-		if (numberToTransfer) {
-			numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "").replace(' ', '');
-		}
-
-		return numberToTransfer === mobileNumber;
-	}
-
 	_config(data) {
 		let
 			config = {},
 			dataName = data.name,
 			activeKey = data.active_action_key,
 			activeActionInDialplan = Dialplan._getActiveActionKey(),
-			mobileNumber = PhoneNumber.getValueByPath('value');
+			activeTransfer = Dialplan._getActiveTransfer(),
+			savedTransfer = Dialplan.getValueByPath("follow.contact"),
+			activeMailbox = Dialplan._getActiveMailbox(),
+			mobileNumber = PhoneNumber.getValueByPath('value'),
+			ifEqualToMobileNumber = Dialplan._checkIfEqualToMobileNumber();
 
 		switch(dataName) {
 			case "mailbox":
-				let activeMailbox = Dialplan._getActiveMailbox();
 
-				config.info = !this.props.personal && (activeMailbox && activeMailbox.number || "Tap to choose a mailbox");
+				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : "Tap to choose a mailbox");
 				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
 				break;
 
 			case "contact":
-				config.info = Dialplan.getValueByPath("follow.contact") || "Tap to choose a contact";
-				config.checked = (activeActionInDialplan === activeKey
-				&& !this._checkIfEqualNumber()) ? "checked" : "";
+				let transferIsChosen = (activeActionInDialplan === activeKey &&
+				(activeTransfer && activeTransfer.number) && !ifEqualToMobileNumber.activeTransfer);
+				config.checked = transferIsChosen ? "checked" : "";
+
+				config.info =	transferIsChosen ? (activeTransfer && activeTransfer.number) :
+						(savedTransfer || "Tap to choose a contact");
 				break;
 
 			case "mobile":
-				config.info = mobileNumber;
-				let isActiveMobileFromTransfer = (activeActionInDialplan === activeKey
-				&& (Dialplan._getActiveTransfer() && this._checkIfEqualNumber()));
+				let mobileIsChosen = ((activeActionInDialplan === activeKey) &&
+				(activeTransfer && activeTransfer.number) && ifEqualToMobileNumber.activeTransfer);
 
-				config.checked = isActiveMobileFromTransfer ? "checked" : "";
-				if (isActiveMobileFromTransfer) {
+				console.log(ifEqualToMobileNumber.activeTransfer);
+
+				config.info = mobileNumber;
+				config.checked = mobileIsChosen ? "checked" : "";
+
+				if (mobileIsChosen && ifEqualToMobileNumber.savedTransferNumber) {
 					Dialplan.updateAttributesFor("follow.contact", "");
+					Dialplan.updateAttributesFor("actions.transfer.items.0.number", "");
 				}
 				break;
 

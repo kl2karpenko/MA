@@ -31,11 +31,32 @@ class Dialplan extends Model {
 		});
 	}
 
+	_checkIfEqualToMobileNumber() {
+		let
+			mobileNumber = PhoneNumber.getValueByPath('value'),
+			transfer = this._getActiveTransfer(),
+			numberToTransfer = transfer && transfer.number,
+			savedTransferNumber = this.getValueByPath("follow.contact");
+
+		if (numberToTransfer) {
+			numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "");
+		}
+
+		if (savedTransferNumber) {
+			savedTransferNumber = savedTransferNumber.replace(/[\s)(\+]+/gi, "");
+		}
+
+		return {
+			activeTransfer: numberToTransfer === mobileNumber,
+			savedTransferNumber: savedTransferNumber === mobileNumber
+		};
+	}
+
 	_saveFollowToTransfer(data) {
 		let activeTransfer = this._getActiveTransfer();
 
 		if (this._getActiveActionKey() === "transfer" && (activeTransfer && activeTransfer.number === data.number)) {
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 				resolve();
 			});
 		}
@@ -43,7 +64,6 @@ class Dialplan extends Model {
 		let
 			changedData = {};
 
-		// update model
 		this._setActiveActionKey("transfer");
 		changedData[ACTIVE_ACTION_KEY] = "transfer";
 
@@ -52,7 +72,7 @@ class Dialplan extends Model {
 		};
 		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer.items.0', data);
 
-		if (data.number !== PhoneNumber.getValueByPath('value')) {
+		if (!this._checkIfEqualToMobileNumber().activeTransfer) {
 			this.updateAttributesFor("follow.contact", data.number);
 		}
 
@@ -62,13 +82,11 @@ class Dialplan extends Model {
 			}
 		});
 	}
-	
-	_getActiveTransfer() {
-		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".transfer.items.0");
-	}
 
 	_saveFollowToMailbox(data) {
-		if (this._getActiveActionKey() === "mailbox" && this._getActiveMailbox()._id === data._id) {
+		let activeMailbox = this._getActiveMailbox();
+
+		if (this._getActiveActionKey() === "mailbox" && activeMailbox && activeMailbox._id === data._id) {
 			return new Promise((resolve, reject) => {});
 		}
 
@@ -94,12 +112,6 @@ class Dialplan extends Model {
 			}
 		});
 	}
-
-	_getActiveMailbox() {
-		let mailbox = this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0");
-
-		return mailbox && mailbox.length || mailbox;
-	}
 	
 	saveForFlowControl(changedFlowControl) {
 		return this.save({
@@ -113,6 +125,16 @@ class Dialplan extends Model {
 				}
 			}
 		});
+	}
+
+	_getActiveTransfer() {
+		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".transfer.items.0");
+	}
+
+	_getActiveMailbox() {
+		let mailbox = this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0");
+
+		return mailbox && mailbox.length || mailbox;
 	}
 
 	_getActiveActionKey() {
