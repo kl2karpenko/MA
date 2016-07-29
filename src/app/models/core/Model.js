@@ -195,9 +195,7 @@ export default class Model {
 	}
 
 	load(options) {
-		$(document).trigger('system:loading', {
-			loading: true, showLoaderBlock: false
-		});
+		$(document).trigger('system:loading');
 		options = options || {};
 
 		let
@@ -258,9 +256,7 @@ export default class Model {
 	}
 
 	save(options) {
-		$(document).trigger('system:loading', {
-			loading: true, showLoaderBlock: false
-		});
+		$(document).trigger('system:loading');
 		options = options || {};
 		let isValid = this._isValid();
 

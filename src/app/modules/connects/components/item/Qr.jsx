@@ -8,6 +8,7 @@ import Adaptive from 'components/layouts/adaptive/Index.jsx';
 import Angle from 'components/modules/angle/Index.jsx';
 
 import Tappable from 'react-tappable';
+import Swipeable from "react-swipeable";
 
 import { camera, dialogs, barcodeScanner } from 'appConfig';
 
@@ -74,30 +75,38 @@ export default class Enter extends Component {
 
 	render() {
 		return (
-		<Adaptive>
-			<Angle
-				class="main main-code"
-				header="Scan QR code">
-				<Tappable
-					component="button"
-					classBase={this.props.activeClassName}
-					pressDelay={500}
-					className="m-angle__button btn btn-round btn-md"
-					onTap={this._getCameraAccess}
-				>
-					Start
-				</Tappable>
+			<Swipeable
+				className="swipeable"
+				onSwipingLeft={() => {
+					hashHistory.push("/connects/pin");
+				}}
+				delta={100}
+			>
+			<Adaptive key="qr_code">
+				<Angle
+					class="main main-code"
+					header="Scan QR code">
+					<Tappable
+						component="button"
+						classBase={this.props.activeClassName}
+						pressDelay={500}
+						className="m-angle__button btn btn-round btn-md"
+						onTap={this._getCameraAccess}
+					>
+						Start
+					</Tappable>
 
-			</Angle>
+				</Angle>
 
-			<MainConnect>
-				<h2 className="l-main__header">Where can I find this QR Code?</h2>
-				<p className="l-main__text">Use a computer to log in to your webinterface Click on your name in 
-					the top-right corner Select “Connect App” from the menu</p>
-			</MainConnect>
+				<MainConnect>
+					<h2 className="l-main__header">Where can I find this QR Code?</h2>
+					<p className="l-main__text">Use a computer to log in to your webinterface Click on your name in
+						the top-right corner Select “Connect App” from the menu</p>
+				</MainConnect>
 
-			<UnableToScanQr/>
-		</Adaptive>
+				<UnableToScanQr/>
+			</Adaptive>
+		</Swipeable>
 		);
 	}
 }

@@ -240,6 +240,7 @@ class List {
 
 	load(options) {
 		$(document).trigger('system:loading');
+		$(document).trigger('system:block');
 		options = options || {};
 
 		let
@@ -261,10 +262,12 @@ class List {
 			console.groupEnd("load " + resource);
 
 			$(document).trigger('system:loaded');
+			$(document).trigger('system:unblock');
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
 			$(document).trigger('system:loaded');
+			$(document).trigger('system:unblock');
 			return this;
 		});
 	}

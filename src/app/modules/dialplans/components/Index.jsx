@@ -17,7 +17,6 @@ export default class Index extends Component {
 	}
 
 	componentDidMount() {
-		$(document).trigger('system:loading');
 		this._init();
 	}
 
@@ -26,7 +25,10 @@ export default class Index extends Component {
 			currentIdOfDialplan = this.state.id || Dialplan.getValueByPath("_id"),
 			currentIndex = DialplanList.getIndexOfItemById(currentIdOfDialplan);
 
-		currentIndex = currentIndex !== -1 ? currentIndex : 0;
+		if (currentIndex === -1) {
+			currentIndex = 0;
+			currentIdOfDialplan = DialplanList.getValueOfDefAttrByIndex(currentIndex);
+		}
 
 		DialplanList.updateState({
 			activePage: currentIndex + 1
@@ -43,8 +45,6 @@ export default class Index extends Component {
 	}
 
 	_init() {
-		$(document).trigger('system:loading');
-
 		DialplanList
 			.load()
 			.then(this._config.bind(this))

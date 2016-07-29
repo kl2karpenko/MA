@@ -25,7 +25,8 @@ module.exports = {
 			options.multiple = true;
 	
 			$(document).trigger('system:loading');
-	
+			$(document).trigger('system:block');
+
 			navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
 				let contacts = [];
 	
@@ -38,12 +39,14 @@ module.exports = {
 				});
 	
 				$(document).trigger('system:loaded');
+				$(document).trigger('system:unblock');
 			}, () => {
 				resolve({
 					contacts: null
 				});
 	
 				$(document).trigger('system:loaded');
+				$(document).trigger('system:unblock');
 			}, options);
 		});
 	},

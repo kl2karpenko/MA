@@ -34,8 +34,6 @@ export default class Index extends Component {
 	}
 
 	_load() {
-		$(document).trigger('system:loading');
-
 		return this.state.model
 			.load()
 			.then((data) => {
@@ -46,8 +44,6 @@ export default class Index extends Component {
 					model: this.state.model,
 					list: configData
 				});
-				
-				$(document).trigger('system:loaded');
 			});
 	}
 

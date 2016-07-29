@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
+import Swipeable from "react-swipeable";
+
 import MobileContacts from "../models/MobileContacts";
 import ListComponent from "components/list/Index.jsx";
 
@@ -9,6 +11,8 @@ import Dialplan from "models/Dialplan";
 export default class Contacts extends Component {
 	constructor(props) {
 		super(props);
+
+		this.isSwiping = false;
 	}
 
 	_setActiveContact(i, contactData) {
@@ -31,14 +35,28 @@ export default class Contacts extends Component {
 
 	render() {
 		return (
-			<ListComponent
-				model={MobileContacts}
-				listClass="m-list-contacts"
-				onClick={this._setActiveContact}
-				configData={MobileContacts.configData}
-				withImg={true}
-				onError={"No permission to your contact list"}
-			/>
+			<Swipeable
+				className="swipeable"
+				onSwipingLeft={() => {
+					clearTimeout(this.isSwiping);
+
+					this.isSwiping = setTimeout(() => {
+						this.isSwiping = false;
+						hashHistory.push("contacts/extensions");
+					}, 50);
+				}}
+				flickThreshold={0.1}
+				delta={100}
+			>
+				<ListComponent
+					model={MobileContacts}
+					listClass="m-list-contacts"
+					onClick={this._setActiveContact}
+					configData={MobileContacts.configData}
+					withImg={true}
+					onError={"No permission to your contact list"}
+				/>
+			</Swipeable>
 		);
 	}
 }

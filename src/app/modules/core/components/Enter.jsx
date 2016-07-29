@@ -16,13 +16,15 @@ export default class Enter extends Component {
 		super(props);
 
 		this.state = {
-			loading: true,
+			loading: false,
 			fail: false,
 			offline: false,
 			showLoaderBlock: true
 		};
 
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
+		this._changeLoadStateToVisible = this._changeLoadStateToVisible.bind(this);
+		this._changeLoadStateToHidden = this._changeLoadStateToHidden.bind(this);
 	}
 
 	componentDidMount() {
@@ -30,8 +32,37 @@ export default class Enter extends Component {
 		this._checkIfUserIsConnected();
 	}
 
+	componentWillUnmount() {
+		$(document).off('system:loading', this._changeLoadStateToVisible);
+		$(document).off('system:loaded', this._changeLoadStateToHidden);
+
+		document.removeEventListener("offline", this._changeOfflineStateTo.bind(this, true));
+		document.removeEventListener("online", this._changeOfflineStateTo.bind(this, false));
+
+		$(document).off('system:fail', this._changeFailStateTo.bind(this, true));
+		$(document).off('system:unfail', this._changeFailStateTo.bind(this, false));
+
+		document.removeEventListener("resume", Enter._resume);
+	}
+
 	_changeLoadStateTo(data) {
 		this.setState({ loading: data.loading, showLoaderBlock: data.showLoaderBlock || false });
+	}
+
+	_changeBlockToVisible(e) {
+		$('.app-loadBlock').addClass('show');
+	}
+
+	_changeBlockToHidden(e) {
+		$('.app-loadBlock').removeClass('show');
+	}
+
+	_changeLoadStateToVisible(e) {
+		$('.app-loader').addClass('loading');
+	}
+
+	_changeLoadStateToHidden(e) {
+		$('.app-loader').removeClass('loading');
 	}
 
 	_changeOfflineStateTo(state) {
@@ -43,16 +74,11 @@ export default class Enter extends Component {
 	}
 
 	_listen() {
-		$(document).on('system:loading', (event, data) => {
-			this._changeLoadStateTo(data || {
-				loading: true, showLoaderBlock: true
-			});
-		});
-		$(document).on('system:loaded', (event, data) => {
-			this._changeLoadStateTo(data || {
-				loading: false, showLoaderBlock: false
-			});
-		});
+		$(document).on('system:loading', this._changeLoadStateToVisible);
+		$(document).on('system:loaded', this._changeLoadStateToHidden);
+
+		$(document).on('system:block', this._changeBlockToVisible);
+		$(document).on('system:unblock', this._changeBlockToHidden);
 
 		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true));
 		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false));
@@ -60,9 +86,11 @@ export default class Enter extends Component {
 		$(document).on('system:fail', this._changeFailStateTo.bind(this, true));
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
 
-		document.addEventListener("resume", function() {
-			LockCode.isExist() && hashHistory.push('/pin');
-		});
+		document.addEventListener("resume", Enter._resume);
+	}
+
+	static _resume() {
+		LockCode.isExist() && hashHistory.push('/pin');
 	}
 
 	_checkIfUserIsConnected() {
@@ -71,6 +99,7 @@ export default class Enter extends Component {
 		this
 			._checkConnection()
 			.then(() => {
+				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
 			});
 	}
@@ -91,14 +120,17 @@ export default class Enter extends Component {
 			{ this.props.children }
 
 			<Loader
+				key="loader"
 				show={this.state.showLoaderBlock}
 			/>
 
 			<LoadingBlock
+				key="loadingBlock"
 				show={this.state.loading}
 			/>
 
 			<FailBlock
+				key="failBlock"
 				onFail={this._checkIfUserIsConnected}
 				fail={this.state.fail}
 				offline={this.state.offline}

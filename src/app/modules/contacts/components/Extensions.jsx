@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
+import Swipeable from "react-swipeable";
+
 import Extensions from "../models/Extensions";
 import ListComponent from "components/list/Index.jsx";
 
@@ -31,6 +33,19 @@ export default class ExtensionsCom extends Component {
 
 	render() {
 		return (
+			<Swipeable
+				className="swipeable"
+				onSwipingRight={() => {
+					clearTimeout(this.isSwiping);
+
+					this.isSwiping = setTimeout(() => {
+						this.isSwiping = false;
+						hashHistory.push("contacts/mobile");
+					}, 50);
+				}}
+				flickThreshold={0.1}
+				delta={100}
+			>
 			<ListComponent
 				model={Extensions}
 				listClass="m-list-contacts"
@@ -39,6 +54,7 @@ export default class ExtensionsCom extends Component {
 				withImg={true}
 				onError={"Empty list"}
 			/>
+			</Swipeable>
 		);
 	}
 }
