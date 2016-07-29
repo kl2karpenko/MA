@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import Dialplan from "models/Dialplan";
-import DialplanList from "../models/DialplanList";
+import DialplanList from "models/DialplanList";
 
 export default class Index extends Component {
 	constructor(props) {
