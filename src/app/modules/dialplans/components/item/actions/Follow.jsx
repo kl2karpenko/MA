@@ -10,6 +10,7 @@ export default class Follow extends Component {
 		super(props);
 
 		this._goToList = this._goToList.bind(this);
+		this.onChange = this.onChange.bind(this);
 
 		let config = this._config(props.options);
 
@@ -19,10 +20,7 @@ export default class Follow extends Component {
 		this.state = props.options;
 	}
 
-	// TODO: THINK ABOUT DELETING THIS AND CHANGE INPUT=CHECKBOX STATE WITH ONCHANGE EVENT
 	componentWillReceiveProps(props) {
-		console.log('componentWillReceiveProps');
-
 		let config = this._config(props.options);
 
 		props.options.info = config.info;
@@ -47,13 +45,13 @@ export default class Follow extends Component {
 			case "mailbox":
 
 				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : "Tap to choose a mailbox");
-				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
+				config.checked = activeActionInDialplan === activeKey;
 				break;
 
 			case "contact":
 				let transferIsChosen = (activeActionInDialplan === activeKey &&
 				(activeTransfer && activeTransfer.number) && !ifEqualToMobileNumber.activeTransfer);
-				config.checked = transferIsChosen ? "checked" : "";
+				config.checked = transferIsChosen;
 
 				config.info =	transferIsChosen ? (activeTransfer && activeTransfer.number) :
 						(savedTransfer || "Tap to choose a contact");
@@ -66,7 +64,7 @@ export default class Follow extends Component {
 				console.log(ifEqualToMobileNumber.activeTransfer);
 
 				config.info = mobileNumber;
-				config.checked = mobileIsChosen ? "checked" : "";
+				config.checked = mobileIsChosen;
 
 				if (mobileIsChosen && ifEqualToMobileNumber.savedTransferNumber) {
 					Dialplan.updateAttributesFor("follow.contact", "");
@@ -76,7 +74,7 @@ export default class Follow extends Component {
 
 			case "origin":
 				config.info = "";
-				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
+				config.checked = activeActionInDialplan === activeKey;
 				break;
 		}
 
@@ -87,6 +85,68 @@ export default class Follow extends Component {
 		hashHistory.push(this.state.link);
 	}
 
+	onChange(e) {
+		let name = this.state.name;
+		let $el = this.refs["checkbox-" + name];
+
+		$el.checked = !$el.checked || true;
+
+		switch(name) {
+			case "contact":
+				let contactNumber = Dialplan.getValueByPath("follow.contact");
+
+				if (contactNumber) {
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: contactNumber
+						})
+						.then(this.props.onChange.bind(this, name));
+				} else {
+					hashHistory.push('/contacts');
+				}
+				break;
+
+			case "mobile":
+				PhoneNumber._getUserNumber().then((phone) => {
+					if (phone) {
+						Dialplan
+							._saveFollowToTransfer({
+								type: "contact",
+								number: phone
+							})
+							.then(this.props.onChange.bind(this, name));
+					}
+				});
+				break;
+
+			case "mailbox":
+				if (this.props.personal) {
+					let mailbox = Dialplan._getActiveMailbox();
+
+					if (mailbox && mailbox._id) {
+						Dialplan
+							._saveFollowToMailbox(mailbox)
+							.then(this.props.onChange.bind(this, name));
+					} else {
+						hashHistory.push('/mailboxes');
+					}
+				} else {
+					Dialplan
+						._saveFollowToMailbox()
+						.then(this.props.onChange.bind(this, name));
+				}
+
+				break;
+
+			default:
+				Dialplan
+					._saveFollowToOrigin()
+					.then(this.props.onChange.bind(this, name));
+				break;
+		}
+	}
+
 	render() {
 		return (
 			<li className={this.state.className}>
@@ -95,13 +155,14 @@ export default class Follow extends Component {
 					component="label"
 					className="m-label radio-block"
 					htmlFor={this.state.name}
-					onTap={this.props.onChange}>
+					onTap={this.onChange}
+					>
 					<input
+						ref={"checkbox-" + this.state.name}
 						type="radio"
 						name="follow"
-						value={this.state.name}
+						onChange={()=>{}}
 						checked={this.state.checked}
-						onChange={function() { }}
 						id={this.state.name}
 					/>
 					<div className="radio-button"></div>
