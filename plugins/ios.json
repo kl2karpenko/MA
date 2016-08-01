@@ -1,0 +1,49 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-browsersync": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "at.oneminutedistraction.phonenumber": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "Qaller"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "Qaller"
+        }
+    }
+}
