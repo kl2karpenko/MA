@@ -21,7 +21,7 @@ class Token {
 		};
 
 		let
-			requestBody = this.getBodyForRequest(options);
+			requestBody = Token.getBodyForRequest(options);
 
 		return this.getTokenRequest(requestBody).then((data) => {
 			this.tokenData = data;
@@ -34,13 +34,24 @@ class Token {
 		Storage.setValue("token", value || this.token);
 	}
 
+	_getBase64EncodeForClient() {
+		return btoa(encodeURIComponent(this.clientId + ":" + this.clientSecret).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+			return String.fromCharCode('0x' + p1);
+		}));
+	}
+
 	getTokenRequest(requestBody) {
+		console.log(this._getBase64EncodeForClient());
+
 	  return $.ajax({
 		  type: "POST",
 		  url: this.authorizationUri,
 		  data: requestBody,
 		  timeout: 10000,
 		  dataType: "json",
+		  beforeSend: (xhr) => {
+			  xhr.setRequestHeader("Authorization", "Basic " + this._getBase64EncodeForClient());
+		  },
 		  statusCode: {
 			  401: function(res) {
 				  messenger.error(
@@ -57,10 +68,8 @@ class Token {
 	  });
 	}
 
-	getBodyForRequest(options) {
+	static getBodyForRequest(options) {
 		let tokenOptions = {
-			"client_id": this.clientId,
-			"client_secret": this.clientSecret,
 			"grant_type": options.type
 		};
 
@@ -79,8 +88,6 @@ class Token {
 		}
 
 		return this.getTokenRequest({
-			"client_id": this.clientId,
-			"client_secret": this.clientSecret,
 			"grant_type": "refresh_token",
 			"refresh_token": this.tokenData.refresh_token
 		}).then((data) => {

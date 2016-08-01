@@ -61,8 +61,6 @@ export default class Follow extends Component {
 				let mobileIsChosen = ((activeActionInDialplan === activeKey) &&
 				(activeTransfer && activeTransfer.number) && ifEqualToMobileNumber.activeTransfer);
 
-				console.log(ifEqualToMobileNumber.activeTransfer);
-
 				config.info = mobileNumber;
 				config.checked = mobileIsChosen;
 
@@ -87,15 +85,14 @@ export default class Follow extends Component {
 
 	onChange(e) {
 		let name = this.state.name;
-		let $el = this.refs["checkbox-" + name];
-
-		$el.checked = !$el.checked || true;
+		let $el = this.refs["radio-" + name];
 
 		switch(name) {
 			case "contact":
 				let contactNumber = Dialplan.getValueByPath("follow.contact");
 
 				if (contactNumber) {
+					$el.checked = !$el.checked || true;
 					Dialplan
 						._saveFollowToTransfer({
 							type: "contact",
@@ -110,6 +107,8 @@ export default class Follow extends Component {
 			case "mobile":
 				PhoneNumber._getUserNumber().then((phone) => {
 					if (phone) {
+						$el.checked = !$el.checked || true;
+
 						Dialplan
 							._saveFollowToTransfer({
 								type: "contact",
@@ -121,10 +120,11 @@ export default class Follow extends Component {
 				break;
 
 			case "mailbox":
-				if (this.props.personal) {
+				if (!this.props.personal) {
 					let mailbox = Dialplan._getActiveMailbox();
 
 					if (mailbox && mailbox._id) {
+						$el.checked = !$el.checked || true;
 						Dialplan
 							._saveFollowToMailbox(mailbox)
 							.then(this.props.onChange.bind(this, name));
@@ -132,14 +132,15 @@ export default class Follow extends Component {
 						hashHistory.push('/mailboxes');
 					}
 				} else {
+					$el.checked = !$el.checked || true;
 					Dialplan
 						._saveFollowToMailbox()
 						.then(this.props.onChange.bind(this, name));
 				}
-
 				break;
 
 			default:
+				$el.checked = !$el.checked || true;
 				Dialplan
 					._saveFollowToOrigin()
 					.then(this.props.onChange.bind(this, name));
@@ -158,12 +159,12 @@ export default class Follow extends Component {
 					onTap={this.onChange}
 					>
 					<input
-						ref={"checkbox-" + this.state.name}
+						ref={"radio-" + this.state.name}
 						type="radio"
-						name="follow"
-						onChange={()=>{}}
+						name={this.state.name}
 						checked={this.state.checked}
 						id={this.state.name}
+						onChange={() => {}}
 					/>
 					<div className="radio-button"></div>
 					<div className="l-dialplan-text">
