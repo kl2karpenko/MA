@@ -1,9 +1,13 @@
-import React, {Component} from 'react';
-import Tappable from 'react-tappable';
+import React, {Component}     from 'react';
+import Tappable               from 'react-tappable';
 
-import { KeyboardComponent } from 'components/Keyboard.jsx';
-import Storage from "models/Storage";
-import LockCode from "models/LockCode";
+import { KeyboardComponent }  from 'components/Keyboard.jsx';
+import Storage                from "models/Storage";
+import LockCode               from "models/LockCode";
+
+import { $t }                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class PinForm extends Component {
 	constructor(props) {
@@ -80,7 +84,7 @@ export default class PinForm extends Component {
 			<div className="l-grey l-grey-md">
 				<label htmlFor="pin.is_on" className="checkbox-block m-label clearfix">
 					<div className="l-grey-header pull-left">
-						Password at login
+						{$t("settings.password")}
 					</div>
 					<input
 						type="checkbox"
@@ -108,7 +112,7 @@ export default class PinForm extends Component {
 							onTap={this.onTouch.bind(this, 0)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[0] ? " focus" : "") + (this.state.messages.active.show ? " error" : "")}
-							placeholder="Enter current"
+							placeholder={$t("settings.placeholders.current")}
 							name="active"
 							value={this.state.active}
 						/>
@@ -122,7 +126,7 @@ export default class PinForm extends Component {
 							onTap={this.onTouch.bind(this, 1)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[1] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
-							placeholder="Enter new pincode"
+							placeholder={$t("settings.placeholders.new")}
 							name="created"
 							value={this.state.created}
 						/>
@@ -136,7 +140,7 @@ export default class PinForm extends Component {
 							onTap={this.onTouch.bind(this, 2)}
 							onChange={this.onChange}
 							className={"input-custom" + (this.state.classFocus[2] ? " focus" : "") + (this.state.messages.created.show ? " error" : "")}
-							placeholder="Reenter new pincode"
+							placeholder={$t("settings.placeholders.reenter_new")}
 							name="created_copy"
 							value={this.state.created_copy}
 						/>

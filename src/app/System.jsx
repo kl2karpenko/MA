@@ -5,6 +5,10 @@ import {Router, hashHistory}  from 'react-router';
 
 import Main                   from "./modules/core/components/Enter.jsx";
 import config                 from 'envConfig';
+import { getCurrentLanguage } from "appConfig";
+import locale                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class System {
 	static _setStyles() {
@@ -49,8 +53,15 @@ export default class System {
 	 */
 	_initApp(redirectPage) {
 		this
-			._createRoutes(redirectPage)
-			._renderApp();
+			._defineLang()
+			.then(this._createRoutes.bind(this, redirectPage))
+			.then(this._renderApp.bind(this));
+	}
+
+	_defineLang() {
+		return getCurrentLanguage().then((lang) => {
+			locale.setLanguage(lang);
+		});
 	}
 
 	/**
@@ -72,6 +83,7 @@ export default class System {
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
-		return $.when(System._setStyles).then(require('./modules/core/config'));
+		return $.when(System._setStyles)
+			.then(require('./modules/core/config'));
 	}
 }

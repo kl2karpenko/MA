@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }   from 'react';
+import { hashHistory }        from 'react-router';
 
-import PinForm from './PinForm.jsx';
+import PinForm                from './PinForm.jsx';
 
-import LockCode from 'models/LockCode';
-import Storage from "models/Storage";
+import LockCode               from 'models/LockCode';
+import Storage                from "models/Storage";
 
-import Adaptive from 'components/layouts/adaptive/Index.jsx';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import Adaptive               from 'components/layouts/adaptive/Index.jsx';
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
+
+import { $t }                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {
@@ -45,7 +49,7 @@ export default class Index extends Component {
 				})
 		} else {
 			this._reset();
-			LockCode.messenger.error('Wrong Pin', "Error");
+			LockCode.messenger.error($t("pin.wrong_code"), $t("error"));
 		}
 	}
 
@@ -58,7 +62,7 @@ export default class Index extends Component {
 				<PinForm
 					options={{
 						form: 'pinCheck',
-						text: "Enter the code",
+						text: $t("pin.enter_code"),
 						inputType: "password",
 						onSubmit: this._save,
 						model: this.state.model

@@ -1,5 +1,9 @@
-import React from 'react';
-import LinkButton from 'components/buttons/LinkButton.jsx';
+import React          from 'react';
+import LinkButton     from 'components/buttons/LinkButton.jsx';
+
+import { $t }         from 'lib/locale';
+
+/** Import ================================================================== */
 
 class UnableToScanQr extends React.Component {
 	constructor(props) {
@@ -27,7 +31,7 @@ class UnableToScanQr extends React.Component {
 				<div className="m-connect__link">
 					<LinkButton
 						component="a"
-						text="I’m unable to scan the QR code"
+						text={$t("connects.unable_to_scan_qr")}
 						className=""
 						href="/connects/pin"
 						/>

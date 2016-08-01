@@ -1,18 +1,22 @@
-import React, {Component} from 'react';
-import { hashHistory } from 'react-router';
+import React, {Component}   from 'react';
+import { hashHistory }      from 'react-router';
 
-import Dialplan from "models/Dialplan";
+import Dialplan             from "models/Dialplan";
 
-import MailboxesList from "../models/MailboxesList";
-import ListComponent from "components/list/Index.jsx";
+import MailboxesList        from "../models/MailboxesList";
+import ListComponent        from "components/list/Index.jsx";
 
-import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import AdaptiveFixed        from 'components/layouts/adaptive/IndexFixed.jsx';
+import AdaptiveWrapper      from 'components/layouts/adaptive/Wrapper.jsx';
 
-import Angle from 'components/modules/angle/Index.jsx';
-import AngleTop from 'components/modules/angle/Top.jsx';
+import Angle                from 'components/modules/angle/Index.jsx';
+import AngleTop             from 'components/modules/angle/Top.jsx';
 
-import MainScroll from 'components/layouts/main/Scroll.jsx';
+import MainScroll           from 'components/layouts/main/Scroll.jsx';
+
+import { $t }               from 'lib/locale';
+
+/** Import ================================================================== */
 
 function _configData(data) {
 	return data.map((item) => {
@@ -58,7 +62,7 @@ export default class Index extends Component {
 			<AdaptiveWrapper class="l-adaptive-sm">
 				<Angle header={false}>
 					<div className="m-angle-content">
-						<AngleTop title="Forward to:"/>
+						<AngleTop title={$t("mailboxes.follow_to")}/>
 					</div>
 				</Angle>
 				<AdaptiveFixed class="l-mailbox">

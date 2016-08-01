@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
-import LinkButton from 'components/buttons/LinkButton.jsx';
+import React, { Component }   from 'react';
+import LinkButton             from 'components/buttons/LinkButton.jsx';
+
+import { $t }                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class LinksToContacts extends Component {
 	constructor(props) {
@@ -10,16 +14,14 @@ export default class LinksToContacts extends Component {
 		return (
 			<div className="m-angle-links">
 				<LinkButton
-					text="Mobile"
+					text={$t("contacts.links.mobile")}
 					component="a"
-					className=""
 					href="/contacts/mobile"
 				/>
 
 				<LinkButton
-					text="Extensions"
+					text={$t("contacts.links.extensions")}
 					component="a"
-					className=""
 					href="/contacts/extensions"
 				/>
 			</div>

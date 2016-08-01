@@ -1,7 +1,9 @@
-import Index from './components/Index.jsx';
-import Search from './components/Search.jsx';
-import Contacts from './components/Contacts.jsx';
+import Index      from './components/Index.jsx';
+import Search     from './components/Search.jsx';
+import Contacts   from './components/Contacts.jsx';
 import Extensions from './components/Extensions.jsx';
+
+/** Import ================================================================== */
 
 module.exports = {
 	path: '/contacts',

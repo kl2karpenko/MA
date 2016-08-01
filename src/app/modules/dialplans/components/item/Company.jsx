@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { hashHistory }      from 'react-router';
 
 import CompanyActions       from "../../models/actions/Company";
 import Dialplan             from "models/Dialplan";
-import PhoneNumber          from "models/PhoneNumber";
 
 import MainScroll           from 'components/layouts/main/Scroll.jsx';
 
 import Follow               from './actions/Follow.jsx';
 import FlowControl          from './actions/FlowControl.jsx';
+
+import { $t }               from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Company extends Component {
 	constructor(props) {
@@ -61,7 +63,7 @@ export default class Company extends Component {
 							return <div>
 								<div className="l-grey">
 									<div className="l-grey-header">
-										Flow Control
+										{$t("dialplans.flow_control")}
 									</div>
 								</div>
 								<div className="l-dialplan__list l-main-content">

@@ -1,17 +1,21 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }   from 'react';
+import { hashHistory }        from 'react-router';
 
-import ConnectCode from "models/ConnectCode";
-import Token from "models/Token";
+import ConnectCode            from "models/ConnectCode";
+import Token                  from "models/Token";
 
-import UnableToScanQr from './items/UnableToScanQr.jsx';
-import PinForm from 'components/inputs/Pin.jsx';
-import MainConnect from './items/MainConnect.jsx';
+import UnableToScanQr         from './items/UnableToScanQr.jsx';
+import PinForm                from 'components/inputs/Pin.jsx';
+import MainConnect            from './items/MainConnect.jsx';
 
-import Adaptive from 'components/layouts/adaptive/Index.jsx';
-import Angle from 'components/modules/angle/Index.jsx';
+import Adaptive               from 'components/layouts/adaptive/Index.jsx';
+import Angle                  from 'components/modules/angle/Index.jsx';
 
-import Swipeable from "react-swipeable";
+import Swipeable              from "react-swipeable";
+
+import { $t }                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Pin extends Component {
 	constructor(props) {
@@ -58,7 +62,7 @@ export default class Pin extends Component {
 						<div className="l-pin">
 							<PinForm
 								model={this.state}
-								text="Enter the code"
+								text={$t("connects.pin.enter_code")}
 								inputType="number"
 								form="connectPin"
 								onSubmit={this.connect.bind(this)}
@@ -72,14 +76,13 @@ export default class Pin extends Component {
 							data-form="connectPin"
 							disabled={!(this.state.value.length === 5)}
 							form="connectPin">
-						Log In
+						{$t("connects.pin.login")}
 					</button>
 				</Angle>
 
 				<MainConnect>
-					<h2 className="l-main__header">Where can I find this PIN Code?</h2>
-					<p className="l-main__text">Use a computer to log in to your webinterface Click on your name in
-						the top-right corner Select “Connect App” from the menu</p>
+					<h2 className="l-main__header">{$t("connects.pin.where_find_code")}</h2>
+					<p className="l-main__text">{$t("connects.find_code")}</p>
 				</MainConnect>
 
 				<UnableToScanQr/>

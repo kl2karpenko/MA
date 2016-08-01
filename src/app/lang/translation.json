@@ -22,15 +22,8 @@
     }
   },
 
-  "phone": {
-    "number_enter": "Please enter your phone number",
-    "not_valid": "Not a valid phone number"
-  },
-
   "contacts": {
     "forward": "Forward to:",
-    "allow_access_to_list": "Please check your settings to allow access to contact list",
-    "access_to_list_contact_denied": "Access to your contact list denied",
     "links": {
       "mobile": "Mobile",
       "extensions": "Extensions"

@@ -8,39 +8,42 @@
     },
     "installed_plugins": {
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.example.hello"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-browsersync": {
-            "PACKAGE_NAME": "com.example.hello"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-contacts": {
-            "PACKAGE_NAME": "com.example.hello"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-sim": {
-            "PACKAGE_NAME": "com.kwebbl.androidapp"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.kwebbl.androidapp"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.kwebbl.androidapp"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.kwebbl.androidapp"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.kwebbl.androidapp"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova.plugins.diagnostic": {
-            "PACKAGE_NAME": "Qaller"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         },
         "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "com.qaller.androidapp"
+        },
+        "cordova-plugin-globalization": {
             "PACKAGE_NAME": "com.qaller.androidapp"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.example.hello"
+            "PACKAGE_NAME": "com.qaller.androidapp"
         }
     }
 }

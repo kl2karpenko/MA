@@ -30,6 +30,13 @@
 
   &-name {
     font-size: 1.2em;
+
+    overflow: hidden;
+    position: relative;
+    max-height: 35px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 85%;
   }
 
   &-links {
@@ -141,6 +148,10 @@
     &:visited {
       color: #fff;
       text-decoration: none !important;
+    }
+
+    .l-pin-connect + & {
+      text-transform: uppercase;
     }
   }
 

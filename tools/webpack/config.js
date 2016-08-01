@@ -140,6 +140,7 @@ module.exports = {
 
             "images": 'src/img',
             "lib": 'src/app/lib',
+            "lang": 'src/app/lang',
             "modules": 'src/app/modules',
             "models": 'src/app/models',
             "core": 'src/app/modules/core',

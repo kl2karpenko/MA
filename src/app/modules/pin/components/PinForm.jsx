@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { KeyboardComponent, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import { 
+	KeyboardComponent,
+	setCurrentFocusedInputTo
+} from 'components/Keyboard.jsx';
+
+/** Import ================================================================== */
 
 import Pin from 'components/inputs/Pin.jsx';
 

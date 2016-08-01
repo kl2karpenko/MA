@@ -1,5 +1,7 @@
 import List from 'List';
 
+/** Import ================================================================== */
+
 class Extensions extends List {
 	constructor(props) {
 		super(props);
