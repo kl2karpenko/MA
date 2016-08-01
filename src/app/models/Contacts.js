@@ -1,9 +1,7 @@
 import List from 'List';
 import { hashHistory } from 'react-router';
 
-import config from 'envConfig';
-import dialogs from 'dialogs';
-import Contacts from 'lib/contacts';
+import { contacts, switchToSettings, dialogs, getMobileContacts } from "appConfig";
 
 class ContactList extends List {
 	init() {
@@ -30,26 +28,28 @@ class ContactList extends List {
 			});
 	}
 
-	load() {
-		let promise = new Promise((resolve) => {
-			Contacts.isAvailable().then((isAvailable) => {
-				if (isAvailable) {
-					if (this.cachedContacts && !this.cachedContacts.length) {
-						return config.schema
-							.mobileContacts()
-							.then((contactsList) => {
-								this.cachedContacts = contactsList.contacts;
+	_getContactsAccess() {
+		return contacts.getContactsStatus().then((isAvailable) => {
+			switch(isAvailable) {
+				// contacts is have been requested and access is granted
+				case 1:
+					return this._loadContactsOrTakeFromCache();
+					break;
+				// contacts is have been requested but access was denied
+				case 2:
+					contacts.requestForAccess().then((giveAccess) => {
+						console.log('giveAccess for contacts: ', giveAccess);
 
-								resolve(contactsList);
-							});
-					} else {
-						resolve({ "contacts": this.cachedContacts })
-					}
-				} else {
+						if (giveAccess) {
+							return this._loadContactsOrTakeFromCache();
+						}
+					});
+					break;
+				case 3:
 					dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
-								Contacts.switchToSettings();
+								contacts.switchToSettings();
 								break;
 							case 0:
 							case 2:
@@ -57,15 +57,33 @@ class ContactList extends List {
 								break;
 						}
 					}, "Access to your contact list denied", ["Go to settings", "Don't allow"]);
-
-					resolve({ "contacts": false });
-				}
-			});
+					break;
+			}
 		});
+	}
 
-		return promise
+	_loadContactsOrTakeFromCache() {
+		return new Promise((resolve) => {
+			if (this.cachedContacts && !this.cachedContacts.length) {
+				return getMobileContacts()
+					.then((contactsList) => {
+						this.cachedContacts = contactsList.contacts;
+
+						resolve(contactsList);
+					});
+			} else {
+				resolve({ "contacts": this.cachedContacts });
+			}
+		});
+	}
+
+	load() {
+		$(document).trigger('system:loading');
+
+		return this._getContactsAccess()
 			.then((data) => {
 				this.assignAttributes(data.contacts);
+				$(document).trigger('system:loaded');
 				return data;
 			});
 	}

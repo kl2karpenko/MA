@@ -6,7 +6,7 @@ module.exports = {
 	path: '/pin',
 	component: Index,
 	onEnter: (nextState, replace) => {
-		if (!Storage.existValue('pin')) {
+		if (!Storage.existValue('lockCode')) {
 			replace('/dialplans');
 		}
 	}

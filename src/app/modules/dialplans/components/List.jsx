@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link, hashHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 import imageLoader from 'imageLoader';
 
 import ListComponent from "components/list/Index.jsx";
 import LinkButton from 'components/buttons/LinkButton.jsx';
 
-import DialplanList from "../models/DialplanList";
+import DialplanList from "models/DialplanList";
 import Dialplan from "models/Dialplan";
 
 import Adaptive from 'components/layouts/adaptive/Index.jsx';
@@ -56,7 +56,6 @@ export default class List extends Component {
 			<Adaptive class="dialplans">
 				<div className="m-list m-list-dialplan m-list-withImg">
 					<ListComponent
-						system={this.props.system}
 						model={DialplanList}
 						listClass="m-list-dialplans"
 						onClick={this.renderDialplanBy}

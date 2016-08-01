@@ -97,12 +97,12 @@ class List {
 	}
 
 	getValueOfDefAttrByIndex(index) {
-		console.log(this.getModel(), index, this.defaultAttribute)
 		return this.getByIndex(index)[this.defaultAttribute];
 	}
 
 	getUrl() {
-		return '/' + this._getModelName() + '/' + this.getModel()[this.getActivePage() - 1][this.defaultAttribute];
+		let activeItem = this.getModel()[this.getActivePage() - 1];
+		return '/' + this._getModelName() + '/' + (activeItem ? activeItem[this.defaultAttribute] : "");
 	}
 
 	activatePage(page){
@@ -239,6 +239,8 @@ class List {
 	}
 
 	load(options) {
+		$(document).trigger('system:loading');
+		$(document).trigger('system:block');
 		options = options || {};
 
 		let
@@ -259,9 +261,13 @@ class List {
 			console.info("response", items[name]);
 			console.groupEnd("load " + resource);
 
+			$(document).trigger('system:loaded');
+			$(document).trigger('system:unblock');
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
 			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+			$(document).trigger('system:loaded');
+			$(document).trigger('system:unblock');
 			return this;
 		});
 	}
@@ -305,13 +311,12 @@ class State {
 	}
 }
 
-
-
 function createTextSearcher() {
 	return {
 		results: [],
 
 		match: function (term, text, item) {
+			term = term && term.toLowerCase().trim();
 			text = String(text || '').toLowerCase();
 			var position = text.indexOf(term);
 

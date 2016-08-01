@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Main extends Component {
+export default class Loader extends Component {
 	constructor(props) {
 		super(props);
 
@@ -16,6 +16,6 @@ export default class Main extends Component {
 	}
 
 	render() {
-		return <div className={"app-loadBlock" + (this.state.show ? "" : " hidden")}></div>;
+		return <div className={"app-loadBlock" + (this.state.show ? " show" : "")}></div>;
 	}
 }

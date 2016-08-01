@@ -1,6 +1,6 @@
 import List from 'List';
 
-import config from 'envConfig';
+import { getMobileSIMNumber } from "appConfig";
 
 export default class Actions extends List {
 	init(props) {
@@ -39,7 +39,7 @@ export default class Actions extends List {
 				title: "Forward to " + (this.personal ? "my" : " ") + " mailbox",
 				info: "",
 				className: (!this.personal ? "with-search" : " "),
-				search: (!this.personal ? true : false),
+				search: !this.personal,
 				name: "mailbox",
 				link: "/mailboxes",
 				active_action_key: "mailbox"
@@ -55,11 +55,8 @@ export default class Actions extends List {
 			}
 		];
 
-		return config.schema
-			.mobileSIMNumber()
+		return getMobileSIMNumber()
 			.then((number) => {
-				console.log(number);
-				
 				defaultModel[1].info = number;
 
 				return defaultModel;

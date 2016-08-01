@@ -2,8 +2,7 @@ import Model from 'Model';
 
 import Storage from 'models/Storage';
 
-import config from 'envConfig';
-import dialogs from 'dialogs';
+import { dialogs } from "appConfig";
 
 class PhoneNumber extends Model {
 	init() {

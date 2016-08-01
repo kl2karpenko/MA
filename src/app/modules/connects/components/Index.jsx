@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
 
 export default class Index extends Component {
@@ -7,15 +6,13 @@ export default class Index extends Component {
 		super(props);
 	}
 
-	render() {		
+	render() {
+		$(document).trigger('system:loaded');
+		$(document).trigger('system:unblock');
+
 		return (
 			<AdaptiveWrapper>
-				{ this.props.children && React.cloneElement(
-					this.props.children,
-					{
-						system: this.props.system
-					})
-				}
+				{ this.props.children }
 			</AdaptiveWrapper>
 		);
 	}

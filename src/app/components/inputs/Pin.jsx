@@ -50,14 +50,14 @@ export default class Pin extends Component {
 		});
 
 		if (typeof this.props.onChange === "function") {
-			typeof this.props.onChange(inputValue);
+			this.props.onChange(inputValue);
 		}
 
 		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
 			this.props.onSubmit(inputValue).then((newPinModel) => {
 				this.setState({
 					additionalClass: setCurrentFocusedInputTo(5, 0),
-					model: newPinModel.pin
+					model: newPinModel
 				});
 			});
 		}

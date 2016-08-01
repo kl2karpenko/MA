@@ -3,7 +3,7 @@ import Tappable from 'react-tappable';
 
 import { KeyboardComponent } from 'components/Keyboard.jsx';
 import Storage from "models/Storage";
-import Pin from "models/Pin";
+import LockCode from "models/LockCode";
 
 export default class PinForm extends Component {
 	constructor(props) {
@@ -60,7 +60,7 @@ export default class PinForm extends Component {
 		});
 
 		if (!isPinOn) {
-			Pin.deleteValue();
+			LockCode.deleteValue();
 
 			this.state.parent.setPin();
 
@@ -100,7 +100,7 @@ export default class PinForm extends Component {
 
 			<div className={"l-settings l-main-content" + (!this.state.is_on ? " disabled" : "")}>
 				<form action="" name="pinChange">
-					<div className={"l-settings-group" + (Storage.existValue('pin') ? "" : " hidden")}>
+					<div className={"l-settings-group" + (Storage.existValue('lockCode') ? "" : " hidden")}>
 						<Tappable
 							component="input"
 							type="number"

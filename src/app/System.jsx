@@ -1,25 +1,12 @@
 import './lib/vendor/modernizr/custom';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Router, hashHistory} from 'react-router';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import {Router, hashHistory}  from 'react-router';
 
-import Main from "./modules/core/components/Enter.jsx";
-
-import config from 'envConfig';
+import Main                   from "./modules/core/components/Enter.jsx";
+import config                 from 'envConfig';
 
 export default class System {
-	// TODO: have warning: "the request of a dependency is an expression"
-	static _loadConfiguration() {
-		let
-			configList = config.modules.map((module) => {
-				return './modules/' + module + '/config';
-			});
-
-		configList.forEach((config) => {
-			require(config);
-		});
-	}
-
 	static _setStyles() {
 		return require("../css/app.less");
 	}
@@ -85,6 +72,6 @@ export default class System {
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
-		return $.when(System._setStyles).then(System._loadConfiguration);
+		return $.when(System._setStyles).then(require('./modules/core/config'));
 	}
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 
 import Dialplan from "models/Dialplan";
-import DialplanList from "../models/DialplanList";
+import DialplanList from "models/DialplanList";
 
 export default class Index extends Component {
 	constructor(props) {
@@ -12,11 +12,12 @@ export default class Index extends Component {
 			id: props.params.id
 		};
 
-		props.system._changeLoadStateTo(true);
-		this._init();
-
 		this._config = this._config.bind(this);
 		this._goToActiveDialplan = this._goToActiveDialplan.bind(this);
+	}
+
+	componentDidMount() {
+		this._init();
 	}
 
 	_config() {
@@ -24,7 +25,10 @@ export default class Index extends Component {
 			currentIdOfDialplan = this.state.id || Dialplan.getValueByPath("_id"),
 			currentIndex = DialplanList.getIndexOfItemById(currentIdOfDialplan);
 
-		currentIndex = currentIndex !== -1 ? currentIndex : 0;
+		if (currentIndex === -1) {
+			currentIndex = 0;
+			currentIdOfDialplan = DialplanList.getValueOfDefAttrByIndex(currentIndex);
+		}
 
 		DialplanList.updateState({
 			activePage: currentIndex + 1
@@ -37,8 +41,7 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		this.props.system._changeLoadStateTo(false);
-		hashHistory.replace(DialplanList.getUrl())
+		hashHistory.replace(DialplanList.getUrl());
 	}
 
 	_init() {
@@ -55,19 +58,19 @@ export default class Index extends Component {
 				if (id === Dialplan.getValueByPath('_id')) {
 					this._goToActiveDialplan();
 				} else {
-					Dialplan
+					return Dialplan
 						.load({
 							id: id
 						})
-						.done(this._goToActiveDialplan);
+						.done(this._goToActiveDialplan)
+						.then(() => {
+							$(document).trigger('system:loaded');
+						});
 				}
-			})
+			});
 	}
 
 	render() {
-		return this.props.children && React.cloneElement(
-			this.props.children, {
-			system: this.props.system
-		});
+		return this.props.children;
 	}
 }

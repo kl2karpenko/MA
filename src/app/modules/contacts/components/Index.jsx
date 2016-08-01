@@ -73,6 +73,7 @@ export default class Index extends Component {
 			RenderOnTop = Links,
 			classes = "m-angle__button btn btn-round btn-sm btn-right",
 			imgName = "search",
+			childrenProps =this.props.children,
 			href = "/contacts/search";
 
 		if (searchPage) {
@@ -80,6 +81,8 @@ export default class Index extends Component {
 			classes = "m-angle__button btn btn-round btn-sm btn-right btn-round-grey";
 			href = '/dialplans/' + Dialplan.getValueByPath("_id");
 			imgName = "cross-white-big";
+			childrenProps = React.cloneElement( this.props.children,
+			{ parentState: this.state.searchContacts });
 		}
 
 		return (
@@ -100,13 +103,7 @@ export default class Index extends Component {
 			</Angle>
 			<AdaptiveFixed>
 				<MainScroll>
-					{ React.cloneElement(
-						this.props.children,
-						{
-							parentState: this.state.searchContacts,
-							system: this.props.system
-						})
-					}
+					{ childrenProps }
 				</MainScroll>
 			</AdaptiveFixed>
 		</AdaptiveWrapper>

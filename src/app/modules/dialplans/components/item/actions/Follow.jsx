@@ -10,6 +10,7 @@ export default class Follow extends Component {
 		super(props);
 
 		this._goToList = this._goToList.bind(this);
+		this.onChange = this.onChange.bind(this);
 
 		let config = this._config(props.options);
 
@@ -32,33 +33,46 @@ export default class Follow extends Component {
 		let
 			config = {},
 			dataName = data.name,
-			mobileNumber = PhoneNumber.getValueByPath('value');
+			activeKey = data.active_action_key,
+			activeActionInDialplan = Dialplan._getActiveActionKey(),
+			activeTransfer = Dialplan._getActiveTransfer(),
+			savedTransfer = Dialplan.getValueByPath("follow.contact"),
+			activeMailbox = Dialplan._getActiveMailbox(),
+			mobileNumber = PhoneNumber.getValueByPath('value'),
+			ifEqualToMobileNumber = Dialplan._checkIfEqualToMobileNumber();
 
 		switch(dataName) {
 			case "mailbox":
-				let activeMailbox = Dialplan._getActiveMailbox();
 
-				config.info = !this.props.personal && (activeMailbox && activeMailbox.number || "Tap to choose a mailbox");
-				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
+				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : "Tap to choose a mailbox");
+				config.checked = activeActionInDialplan === activeKey;
 				break;
 
 			case "contact":
-				config.info = Dialplan.getValueByPath("follow.contact") || "Tap to choose a contact";
-				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
-				&& Dialplan._getActiveTransfer().number !== mobileNumber) ? "checked" : "";
+				let transferIsChosen = (activeActionInDialplan === activeKey &&
+				(activeTransfer && activeTransfer.number) && !ifEqualToMobileNumber.activeTransfer);
+				config.checked = transferIsChosen;
+
+				config.info =	transferIsChosen ? (activeTransfer && activeTransfer.number) :
+						(savedTransfer || "Tap to choose a contact");
 				break;
 
 			case "mobile":
-				let activeTransfer = Dialplan._getActiveTransfer();
+				let mobileIsChosen = ((activeActionInDialplan === activeKey) &&
+				(activeTransfer && activeTransfer.number) && ifEqualToMobileNumber.activeTransfer);
 
 				config.info = mobileNumber;
-				config.checked = (Dialplan._getActiveActionKey() === data.active_action_key
-				&& (activeTransfer && activeTransfer.number === mobileNumber)) ? "checked" : "";
+				config.checked = mobileIsChosen;
+
+				if (mobileIsChosen && ifEqualToMobileNumber.savedTransferNumber) {
+					Dialplan.updateAttributesFor("follow.contact", "");
+					Dialplan.updateAttributesFor("actions.transfer.items.0.number", "");
+				}
 				break;
 
 			case "origin":
 				config.info = "";
-				config.checked = Dialplan._getActiveActionKey() === data.active_action_key ? "checked" : "";
+				config.checked = activeActionInDialplan === activeKey;
 				break;
 		}
 
@@ -69,6 +83,71 @@ export default class Follow extends Component {
 		hashHistory.push(this.state.link);
 	}
 
+	onChange(e) {
+		let name = this.state.name;
+		let $el = this.refs["radio-" + name];
+
+		switch(name) {
+			case "contact":
+				let contactNumber = Dialplan.getValueByPath("follow.contact");
+
+				if (contactNumber) {
+					$el.checked = !$el.checked || true;
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: contactNumber
+						})
+						.then(this.props.onChange.bind(this, name));
+				} else {
+					hashHistory.push('/contacts');
+				}
+				break;
+
+			case "mobile":
+				PhoneNumber._getUserNumber().then((phone) => {
+					if (phone) {
+						$el.checked = !$el.checked || true;
+
+						Dialplan
+							._saveFollowToTransfer({
+								type: "contact",
+								number: phone
+							})
+							.then(this.props.onChange.bind(this, name));
+					}
+				});
+				break;
+
+			case "mailbox":
+				if (!this.props.personal) {
+					let mailbox = Dialplan._getActiveMailbox();
+
+					if (mailbox && mailbox._id) {
+						$el.checked = !$el.checked || true;
+						Dialplan
+							._saveFollowToMailbox(mailbox)
+							.then(this.props.onChange.bind(this, name));
+					} else {
+						hashHistory.push('/mailboxes');
+					}
+				} else {
+					$el.checked = !$el.checked || true;
+					Dialplan
+						._saveFollowToMailbox()
+						.then(this.props.onChange.bind(this, name));
+				}
+				break;
+
+			default:
+				$el.checked = !$el.checked || true;
+				Dialplan
+					._saveFollowToOrigin()
+					.then(this.props.onChange.bind(this, name));
+				break;
+		}
+	}
+
 	render() {
 		return (
 			<li className={this.state.className}>
@@ -77,14 +156,15 @@ export default class Follow extends Component {
 					component="label"
 					className="m-label radio-block"
 					htmlFor={this.state.name}
-					onTap={this.props.onChange}>
+					onTap={this.onChange}
+					>
 					<input
+						ref={"radio-" + this.state.name}
 						type="radio"
-						name="follow"
-						value={this.state.name}
+						name={this.state.name}
 						checked={this.state.checked}
-						onChange={function() { }}
 						id={this.state.name}
+						onChange={() => {}}
 					/>
 					<div className="radio-button"></div>
 					<div className="l-dialplan-text">

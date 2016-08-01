@@ -93,20 +93,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"title": "Your personal",
@@ -136,20 +126,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin",
@@ -178,20 +158,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin",
@@ -224,20 +194,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -266,20 +226,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -308,20 +258,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -350,20 +290,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -392,20 +322,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -434,20 +354,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -476,20 +386,10 @@ var dialplans = [{
 			]
 		},
 		"mailbox": {
-			"items": [
-				{
-					"id": "",
-					"number": ""
-				}
-			]
+			"items": []
 		},
 		"transfer": {
-			"items": [
-				{
-					"number": "",
-					"type": ""
-				}
-			]
+			"items": []
 		}
 	},
 	"active_action_key": "origin"
@@ -746,18 +646,18 @@ var contacts = {
 	"contacts": [
 		{
 			image: true,
-			displayName: "Lily",
-			name: "Lily",
+			displayName: "Лилия Карпенко",
+			name: "Лилия",
 			phoneNumbers: [
 				{
-					normalizedNumber: "380504144151"
+					normalizedNumber: "0 (50) 414 41 51"
 				}
 			]
 		},
 		{
 			image: true,
-			displayName: "Lily",
-			name: "Lily",
+			displayName: "Лилия",
+			name: "Лилия",
 			phoneNumbers: [
 				{
 					normalizedNumber: "380934032379"

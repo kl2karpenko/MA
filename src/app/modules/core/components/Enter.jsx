@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { hashHistory } from 'react-router';
-import config from 'envConfig';
 import schema from 'schema';
+import config from 'envConfig';
 
-import Pin from "models/Pin";
+import LockCode from "models/LockCode";
 import Token from "models/Token";
 
 import FailBlock from 'components/blocks/Fail.jsx';
@@ -16,20 +16,53 @@ export default class Enter extends Component {
 		super(props);
 
 		this.state = {
-			loading: true,
+			loading: false,
 			fail: false,
 			offline: false,
-			loader: true
+			showLoaderBlock: true
 		};
 
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
+		this._changeLoadStateToVisible = this._changeLoadStateToVisible.bind(this);
+		this._changeLoadStateToHidden = this._changeLoadStateToHidden.bind(this);
+	}
 
+	componentDidMount() {
 		this._listen();
 		this._checkIfUserIsConnected();
 	}
 
-	_changeLoadStateTo(state) {
-		this.setState({ loading: state, loader: false });
+	componentWillUnmount() {
+		$(document).off('system:loading', this._changeLoadStateToVisible);
+		$(document).off('system:loaded', this._changeLoadStateToHidden);
+
+		document.removeEventListener("offline", this._changeOfflineStateTo.bind(this, true));
+		document.removeEventListener("online", this._changeOfflineStateTo.bind(this, false));
+
+		$(document).off('system:fail', this._changeFailStateTo.bind(this, true));
+		$(document).off('system:unfail', this._changeFailStateTo.bind(this, false));
+
+		document.removeEventListener("resume", Enter._resume);
+	}
+
+	_changeLoadStateTo(data) {
+		this.setState({ loading: data.loading, showLoaderBlock: data.showLoaderBlock || false });
+	}
+
+	_changeBlockToVisible(e) {
+		$('.app-loadBlock').addClass('show');
+	}
+
+	_changeBlockToHidden(e) {
+		$('.app-loadBlock').removeClass('show');
+	}
+
+	_changeLoadStateToVisible(e) {
+		$('.app-loader').addClass('loading');
+	}
+
+	_changeLoadStateToHidden(e) {
+		$('.app-loader').removeClass('loading');
 	}
 
 	_changeOfflineStateTo(state) {
@@ -41,42 +74,42 @@ export default class Enter extends Component {
 	}
 
 	_listen() {
-		$(document).ajaxStart(() => {
-			$(document).trigger('system:ajaxStart');
-		});
+		$(document).on('system:loading', this._changeLoadStateToVisible);
+		$(document).on('system:loaded', this._changeLoadStateToHidden);
 
-		$(document).ajaxComplete(() => {
-			$(document).trigger('system:ajaxComplete');
-		});
+		$(document).on('system:block', this._changeBlockToVisible);
+		$(document).on('system:unblock', this._changeBlockToHidden);
 
-		$(document).on('system:ajaxStart',this._changeLoadStateTo.bind(this, true));
-		$(document).on('system:ajaxComplete',this._changeLoadStateTo.bind(this, false));
-
-		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true), false);
-		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false), false);
+		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true));
+		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false));
 
 		$(document).on('system:fail', this._changeFailStateTo.bind(this, true));
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
 
-		document.addEventListener("resume", function() {
-			Pin.isExist() && hashHistory.push('/pin');
-		});
+		document.addEventListener("resume", Enter._resume);
+	}
+
+	static _resume() {
+		LockCode.isExist() && hashHistory.push('/pin');
 	}
 
 	_checkIfUserIsConnected() {
+		$(document).trigger('system:loading');
+
 		this
 			._checkConnection()
 			.then(() => {
+				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
-
-				setTimeout(this._changeLoadStateTo.bind(this, false), 500);
 			});
 	}
 
 	_checkConnection() {
 		return schema.ping().done(() => {
 			$(document).trigger('system:unfail');
-			Pin.isExist() && hashHistory.push('/pin');
+			LockCode.isExist() && hashHistory.push('/pin');
+		}).fail(() => {
+			$(document).trigger('system:fail');
 		});
 	}
 
@@ -84,17 +117,20 @@ export default class Enter extends Component {
 		let platformName = config.process.getActivePlatform();
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
-			{ this.props.children && React.cloneElement(this.props.children, { system: this }) }
+			{ this.props.children }
 
 			<Loader
-				show={this.state.loader}
+				key="loader"
+				show={this.state.showLoaderBlock}
 			/>
 
 			<LoadingBlock
+				key="loadingBlock"
 				show={this.state.loading}
 			/>
 
 			<FailBlock
+				key="failBlock"
 				onFail={this._checkIfUserIsConnected}
 				fail={this.state.fail}
 				offline={this.state.offline}

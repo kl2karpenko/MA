@@ -15,22 +15,22 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 		options.timeout = 10000;
 
 		options.beforeSend = function( xhr ) {
-			xhr.setRequestHeader( "Authorization", "Bearer " + Token.token );
+			xhr.setRequestHeader("Authorization", "Bearer " + Token.token);
 		};
 
 		/** add errors handling */
 		options.statusCode = {
+			400: function() {
+				console.log('400');
+				setTimeout(() => {
+					hashHistory.push('/pin');
+					console.log('200');
+				}, 200);
+			},
 			401: function() {
-				console.error("Unauthorized", "Error");
-
-				if (!Token.token) {
-					hashHistory.replace('/connects/qr');
-				} else {
-					Token.refreshToken().then(() => {
-						hashHistory.replace('/pin');
-					});
-				}
-
+				Token.refreshToken().then(() => {
+					hashHistory.replace('/pin');
+				});
 			},
 			404: function() {
 				messenger.error("Page not found", "Error");

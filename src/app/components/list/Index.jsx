@@ -12,10 +12,10 @@ export default class Index extends Component {
 			config: props.configData,
 			searchQuery: props.search || ""
 		};
+	}
 
+	componentDidMount() {
 		this._load.bind(this)();
-
-		console.log('props.searchQuery', props.searchQuery, this.state.list, props.withImg);
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -29,14 +29,8 @@ export default class Index extends Component {
 				searchQuery: searchString,
 				list: newProps.model.search(searchString, { by: ['name', 'number'] })
 			};
-		} else {
-			updateState = {
-				config: newProps.configData,
-				list: newProps.model.getModel()
-			}
+			this.setState(updateState);
 		}
-
-		this.setState(updateState);
 	}
 
 	_load() {
