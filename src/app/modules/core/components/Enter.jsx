@@ -52,14 +52,6 @@ export default class Enter extends Component {
 		this.setState({ loading: data.loading, showLoaderBlock: data.showLoaderBlock || false });
 	}
 
-	_changeBlockToVisible(e) {
-		$('.app-loadBlock').addClass('show');
-	}
-
-	_changeBlockToHidden(e) {
-		$('.app-loadBlock').removeClass('show');
-	}
-
 	_changeLoadStateToVisible(e) {
 		$('.app-loader').addClass('loading');
 	}
@@ -79,9 +71,6 @@ export default class Enter extends Component {
 	_listen() {
 		$(document).on('system:loading', this._changeLoadStateToVisible);
 		$(document).on('system:loaded', this._changeLoadStateToHidden);
-
-		$(document).on('system:block', this._changeBlockToVisible);
-		$(document).on('system:unblock', this._changeBlockToHidden);
 
 		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true));
 		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false));
@@ -104,6 +93,10 @@ export default class Enter extends Component {
 			.then(() => {
 				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
+
+				this.setState({
+					showLoaderBlock: false
+				});
 			});
 	}
 

@@ -5,16 +5,9 @@ import {Router, hashHistory}  from 'react-router';
 
 import Main                   from "./modules/core/components/Enter.jsx";
 import config                 from 'envConfig';
-import { getCurrentLanguage } from "appConfig";
 import locale                 from 'lib/locale';
 
 /** Import ================================================================== */
-
-
-import RouterContext from 'react-router/lib/RouterContext';
-
-import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
-import {renderTransitionContext, withTransition} from 'react-router-transitions';
 
 export default class System {
 	static _setStyles() {
@@ -65,9 +58,14 @@ export default class System {
 	}
 
 	_defineLang() {
-		return getCurrentLanguage().then((lang) => {
-			locale.setLanguage(lang);
-		});
+		return (new Promise((res) => {
+			res(
+				locale.setLanguage("en")
+			);
+		}));
+		// return getCurrentLanguage().then((lang) => {
+		// 	locale.setLanguage("en");
+		// });
 	}
 
 	/**

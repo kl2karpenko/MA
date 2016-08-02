@@ -22,6 +22,8 @@ import AngleArrows            from 'components/modules/angle/Arrows.jsx';
 
 import { $t }                 from 'lib/locale';
 
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
 /** Import ================================================================== */
 
 export default class Item extends Component {
@@ -32,7 +34,8 @@ export default class Item extends Component {
 			Dialplan: Dialplan.getModel(),
 			previous: DialplanList.getPreviousPage(),
 			next: DialplanList.getNextPage(),
-			loading: false
+			loading: false,
+			enterTransitionName: "visibility"
 		};
 
 		this.isSwiping = false;
@@ -90,6 +93,16 @@ export default class Item extends Component {
 
 	render() {
 		return (
+			<ReactCSSTransitionGroup
+				key={"dialplan-page-" + Dialplan.getValueByPath("_id")}
+				transitionName = {this.state.enterTransitionName}
+				transitionAppear = {true}
+				transitionAppearTimeout = {600}
+				transitionEnter = {true}
+				transitionEnterTimeout = {600}
+				transitionLeaveTimeout = {600}
+				transitionLeave = {true}
+			>
 			<Swipeable
 				className="swipeable"
 				onSwipingRight={(e, swipeX) => {
@@ -155,6 +168,7 @@ export default class Item extends Component {
 				</AdaptiveFixed>
 			</AdaptiveWrapper>
 		</Swipeable>
+		</ReactCSSTransitionGroup>
 		);
 	}
 }

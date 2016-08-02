@@ -55,7 +55,6 @@ export default class Index extends Component {
 
 	render() {
 		$(document).trigger('system:loaded');
-		$(document).trigger('system:unblock');
 
 		return (<AdaptiveWrapper>
 			<Adaptive>

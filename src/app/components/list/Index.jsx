@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component }     from 'react';
 
-import Item from "./Item.jsx";
+import Item                     from "./Item.jsx";
 
-import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
+import { $t }                   from 'lib/locale';
 
 export default class Index extends Component {
 	constructor(props) {
@@ -53,7 +55,7 @@ export default class Index extends Component {
 		let items = this.state.list && this.state.list.map((object, i) => {
 			return <ReactCSSTransitionGroup
 				key={"list-" + (object._id || i)}
-				transitionName = "example"
+				transitionName = "visibility"
 				transitionAppear = {true} transitionAppearTimeout = {500}
 				transitionEnter = {false} transitionLeave = {false}
 			><Item
@@ -71,7 +73,12 @@ export default class Index extends Component {
 					if (this.state.list && this.state.list.length) {
 							return items;
 					} else {
-						return <div className="permission-denied">No permission to your contact list</div>
+						return <ReactCSSTransitionGroup
+							key={"list-empty"}
+							transitionName = "visibility"
+							transitionAppear = {true} transitionAppearTimeout = {500}
+							transitionEnter = {false} transitionLeave = {false}
+						><div className="permission-denied">{$t("empty")}</div></ReactCSSTransitionGroup>
 					}
 				})()}
 			</div>

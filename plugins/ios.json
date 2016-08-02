@@ -7,16 +7,19 @@
         "files": {}
     },
     "installed_plugins": {
+        "at.oneminutedistraction.phonenumber": {
+            "PACKAGE_NAME": "Qaller"
+        },
         "cordova-plugin-browsersync": {
             "PACKAGE_NAME": "Qaller"
         },
         "cordova-plugin-contacts": {
             "PACKAGE_NAME": "Qaller"
         },
-        "cordova-plugin-whitelist": {
+        "cordova-plugin-keyboard": {
             "PACKAGE_NAME": "Qaller"
         },
-        "ionic-plugin-keyboard": {
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "Qaller"
         },
         "cordova-plugin-splashscreen": {
@@ -25,7 +28,7 @@
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "Qaller"
         },
-        "at.oneminutedistraction.phonenumber": {
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "Qaller"
         },
         "phonegap-plugin-barcodescanner": {
@@ -33,16 +36,10 @@
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "Qaller"
-        },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "Qaller"
-        },
-        "cordova-plugin-keyboard": {
-            "PACKAGE_NAME": "Qaller"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
+        "com.dbaq.cordova.contactsPhoneNumbers": {
             "PACKAGE_NAME": "Qaller"
         }
     }

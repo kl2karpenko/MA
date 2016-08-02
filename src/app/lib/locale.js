@@ -1,5 +1,4 @@
 import helpers                  from "lib/helpers";
-import { getCurrentLanguage }   from "appConfig";
 
 class Language {
 	constructor(lang) {

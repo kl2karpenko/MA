@@ -15,6 +15,8 @@ import Swipeable              from "react-swipeable";
 
 import { $t }                 from 'lib/locale';
 
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
 /** Import ================================================================== */
 
 export default class Pin extends Component {
@@ -50,6 +52,16 @@ export default class Pin extends Component {
 
 	render() {
 		return (
+			<ReactCSSTransitionGroup
+				key="qr-code-page"
+				transitionName = "visibility"
+				transitionAppear = {true}
+				transitionAppearTimeout = {600}
+				transitionEnter = {true}
+				transitionEnterTimeout = {600}
+				transitionLeaveTimeout = {600}
+				transitionLeave = {true}
+			>
 			<Swipeable
 				className="swipeable"
 				onSwipingRight={() => {
@@ -88,6 +100,7 @@ export default class Pin extends Component {
 				<UnableToScanQr/>
 			</Adaptive>
 		</Swipeable>
+		</ReactCSSTransitionGroup>
 		);
 	}
 }

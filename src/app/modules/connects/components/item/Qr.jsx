@@ -17,6 +17,8 @@ import messenger                              from "messenger";
 
 import { $t }                                 from 'lib/locale';
 
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
 /** Import ================================================================== */
 
 export default class Enter extends Component {
@@ -77,6 +79,16 @@ export default class Enter extends Component {
 
 	render() {
 		return (
+			<ReactCSSTransitionGroup
+				key="qr-code-page"
+				transitionName = "visibility"
+				transitionAppear = {true}
+				transitionAppearTimeout = {600}
+				transitionEnter = {true}
+				transitionEnterTimeout = {600}
+				transitionLeaveTimeout = {600}
+				transitionLeave = {true}
+			>
 			<Swipeable
 				className="swipeable"
 				onSwipingLeft={() => {
@@ -106,6 +118,7 @@ export default class Enter extends Component {
 				<UnableToScanQr/>
 			</Adaptive>
 		</Swipeable>
+		</ReactCSSTransitionGroup>
 		);
 	}
 }

@@ -22,6 +22,8 @@ import Storage                from "models/Storage";
 
 import { $t }                 from 'lib/locale';
 
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
 /** Import ================================================================== */
 
 export default class Index extends Component {
@@ -185,11 +187,20 @@ export default class Index extends Component {
 		location.reload();
 
 		$(document).trigger('system:loading');
-		$(document).trigger('system:block');
 	}
 
 	render() {
 		return (
+			<ReactCSSTransitionGroup
+				key={"settings-page"}
+				transitionName = "visibility"
+				transitionAppear = {true}
+				transitionAppearTimeout = {600}
+				transitionEnter = {true}
+				transitionEnterTimeout = {600}
+				transitionLeaveTimeout = {600}
+				transitionLeave = {true}
+			>
 			<AdaptiveWrapper class="l-adaptive-sm">
 				<Angle>
 					<div className="m-angle-content">
@@ -270,6 +281,7 @@ export default class Index extends Component {
 				/>
 			</div>
 		</AdaptiveWrapper>
+		</ReactCSSTransitionGroup>
 		);
 	}
 }
