@@ -6,6 +6,7 @@ import config               from 'envConfig';
 
 import LockCode             from "models/LockCode";
 import Token                from "models/Token";
+import Storage              from "models/Storage";
 
 import FailBlock            from 'components/blocks/Fail.jsx';
 
@@ -78,7 +79,10 @@ export default class Enter extends Component {
 	}
 
 	static _resume() {
-		LockCode.isExist() && hashHistory.push('/pin');
+		if (Storage.existValue('lockCode')) {
+			Storage.setValue("unlock", false);
+			hashHistory.push('/pin');
+		}
 	}
 
 	_checkIfUserIsConnected() {

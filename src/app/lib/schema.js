@@ -7,8 +7,6 @@ import 'rest-client';
 import Token from "models/Token";
 import xhrPool from "./abort";
 
-console.log(xhrPool);
-
 module.exports = (new $.RestClient(config.schema.hostname, {
 	stripTrailingSlash: true,
 	stringifyData: true,

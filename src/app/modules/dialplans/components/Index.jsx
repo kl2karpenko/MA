@@ -3,6 +3,7 @@ import { hashHistory }      from 'react-router';
 
 import Dialplan             from "models/Dialplan";
 import DialplanList         from "models/DialplanList";
+import Storage              from "models/Storage";
 
 /** Import ================================================================== */
 
@@ -11,8 +12,7 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
-			id: props.params.id,
-			loading: false
+			id: props.params.id
 		};
 
 		this._config = this._config.bind(this);
@@ -21,11 +21,6 @@ export default class Index extends Component {
 
 	componentDidMount() {
 		this._init();
-	}
-
-	componentWillUnmount() {
-
-		console.log(this.loadRequest);
 	}
 
 	_config() {
@@ -49,20 +44,13 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		hashHistory.push(DialplanList.getUrl());
+		if (Storage.existValue('lockCode') && Storage.getValue("unlock") === "true") {
+			hashHistory.push(DialplanList.getUrl());
+		}
 	}
 
 	_init() {
-		if (this.state.loading) {
-			return;
-		}
-		console.log('loading dialnapl');
-
-		this.setState({
-			loading: true
-		});
-
-		this.loadRequest = DialplanList
+		DialplanList
 			.load()
 			.then(this._config.bind(this))
 			.then((options) => {
@@ -91,10 +79,6 @@ export default class Index extends Component {
 	_loaded() {
 		$('.app-loadBlock').removeClass('show');
 		$(document).trigger('system:loaded');
-
-		this.setState({
-			loading: false
-		});
 	}
 
 	render() {

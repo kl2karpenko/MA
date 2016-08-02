@@ -47,9 +47,11 @@ export default class Index extends Component {
 					this._reset();
 					$('.app-loadBlock').addClass('show');
 					hashHistory.push('/dialplans');
+					Storage.setValue("unlock", true);
 				})
 		} else {
 			this._reset();
+			Storage.setValue("unlock", false);
 			LockCode.messenger.error($t("pin.wrong_code"), $t("error"));
 		}
 	}

@@ -14,7 +14,7 @@ module.exports = {
 			replace('/dialplans');
 		} else {
 			$('.app-loadBlock').removeClass('show');
-			xhrPool.requests[xhrPool.requests.length - 1].abort();
+			xhrPool.abortLast();
 		}
 	}
 };
