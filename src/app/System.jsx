@@ -32,7 +32,7 @@ export default class System {
 				}
 			]
 		};
-		
+
 		return this;
 	}
 
@@ -58,7 +58,7 @@ export default class System {
 	 * if we in dev env we will work in browser so just init the app
 	 */
 	init() {
-		if (config.process.isProd()) {
+		if (config.process.isBuildApp()) {
 			/* on device ready init app */
 			document.addEventListener("deviceready", this._initApp.bind(this), false);
 			/* on device ready init app */
