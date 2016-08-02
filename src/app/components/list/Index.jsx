@@ -14,7 +14,8 @@ export default class Index extends Component {
 			model: props.model,
 			list: props.model.getModel(),
 			config: props.configData,
-			searchQuery: props.search || ""
+			searchQuery: props.search || "",
+			loading: false
 		};
 	}
 
@@ -38,6 +39,16 @@ export default class Index extends Component {
 	}
 
 	_load() {
+		if (this.state.loading) {
+			return;
+		}
+
+		console.log(this.state.loading);
+
+		this.setState({
+			loading: true
+		});
+
 		return this.state.model
 			.load()
 			.then((data) => {
@@ -46,7 +57,8 @@ export default class Index extends Component {
 
 				this.setState({
 					model: this.state.model,
-					list: configData
+					list: configData,
+					loading: false
 				});
 			});
 	}
@@ -56,8 +68,12 @@ export default class Index extends Component {
 			return <ReactCSSTransitionGroup
 				key={"list-" + (object._id || i)}
 				transitionName = "visibility"
-				transitionAppear = {true} transitionAppearTimeout = {500}
-				transitionEnter = {false} transitionLeave = {false}
+				transitionAppear = {true}
+				transitionAppearTimeout = {300}
+				transitionEnter = {true}
+				transitionEnterTimeout = {300}
+				transitionLeaveTimeout = {300}
+				transitionLeave = {true}
 			><Item
 				data={object}
 				model={this.state.model}
@@ -78,7 +94,7 @@ export default class Index extends Component {
 							transitionName = "visibility"
 							transitionAppear = {true} transitionAppearTimeout = {500}
 							transitionEnter = {false} transitionLeave = {false}
-						><div className="permission-denied">{$t("empty")}</div></ReactCSSTransitionGroup>
+						><div className="permission-denied">{this.props.onError || $t("empty")}</div></ReactCSSTransitionGroup>
 					}
 				})()}
 			</div>

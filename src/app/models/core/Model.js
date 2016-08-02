@@ -169,7 +169,6 @@ export default class Model {
 	}
 
 	load(options) {
-		$(document).trigger('system:loading');
 		options = options || {};
 
 		let
@@ -192,13 +191,10 @@ export default class Model {
 				console.info("response", items[name]);
 				console.groupEnd("load");
 				this.assignAttributes(items[name]);
-
-				$(document).trigger('system:loaded');
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
 				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
-				$(document).trigger('system:loaded');
 				return this;
 			});
 	}

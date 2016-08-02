@@ -103,5 +103,14 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-ios-launch-screen": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kerrishotts/cordova-plugin-ios-launch-screen",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

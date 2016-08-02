@@ -76,9 +76,13 @@ app.get('/mailboxes/:mailboxId', function (req, res) {
  * List of company dialplans
  */
 app.get('/dialplans', function (req, res) {
-	res.send({
-		"dialplans": dialplansList
-	});
+
+	setTimeout(function () {
+		res.send({
+			"dialplans": dialplansList
+		});
+	}, 3000);
+
 });
 
 /**

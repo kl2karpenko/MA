@@ -54,12 +54,12 @@ export default class Pin extends Component {
 		return (
 			<ReactCSSTransitionGroup
 				key="qr-code-page"
-				transitionName = "visibility"
+				transitionName = "visibility-pages"
 				transitionAppear = {true}
-				transitionAppearTimeout = {600}
+				transitionAppearTimeout = {300}
 				transitionEnter = {true}
-				transitionEnterTimeout = {600}
-				transitionLeaveTimeout = {600}
+				transitionEnterTimeout = {300}
+				transitionLeaveTimeout = {300}
 				transitionLeave = {true}
 			>
 			<Swipeable

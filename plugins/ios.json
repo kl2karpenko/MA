@@ -36,6 +36,9 @@
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-ios-launch-screen": {
+            "PACKAGE_NAME": "Qaller"
         }
     },
     "dependent_plugins": {

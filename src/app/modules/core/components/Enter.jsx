@@ -19,7 +19,7 @@ export default class Enter extends Component {
 		super(props);
 
 		this.state = {
-			loading: false,
+			loading: true,
 			fail: false,
 			offline: false,
 			showLoaderBlock: true
@@ -46,10 +46,6 @@ export default class Enter extends Component {
 		$(document).off('system:unfail', this._changeFailStateTo.bind(this, false));
 
 		document.removeEventListener("resume", Enter._resume);
-	}
-
-	_changeLoadStateTo(data) {
-		this.setState({ loading: data.loading, showLoaderBlock: data.showLoaderBlock || false });
 	}
 
 	_changeLoadStateToVisible(e) {
@@ -93,10 +89,6 @@ export default class Enter extends Component {
 			.then(() => {
 				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
-
-				this.setState({
-					showLoaderBlock: false
-				});
 			});
 	}
 

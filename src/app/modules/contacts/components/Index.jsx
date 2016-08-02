@@ -2,6 +2,7 @@ import React, { Component }   from 'react';
 import { hashHistory }        from 'react-router';
 
 import imageLoader            from 'imageLoader';
+import Tappable               from 'react-tappable';
 
 import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
 import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
@@ -66,6 +67,10 @@ export default class Index extends Component {
 			});
 	}
 
+	static _leave() {
+		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+	}
+
 	render() {
 		let
 			pathname = this.state.loc,
@@ -95,6 +100,7 @@ export default class Index extends Component {
 				</div>
 
 				<LinkButton
+					style={{"margin-right": "67px"}}
 					text={<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>}
 					component="a"
 					className={classes}

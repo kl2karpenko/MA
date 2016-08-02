@@ -35,7 +35,7 @@ export default class Item extends Component {
 			previous: DialplanList.getPreviousPage(),
 			next: DialplanList.getNextPage(),
 			loading: false,
-			enterTransitionName: "visibility"
+			enterTransitionName: "visibility-pages"
 		};
 
 		this.isSwiping = false;
@@ -44,11 +44,12 @@ export default class Item extends Component {
 		this._renderDialplan = this._renderDialplan.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this._changeState();
 	}
 
 	_loadDialplan() {
+		// TODO: edit loading ans shit with rendering
 		return Dialplan
 			.load({
 				id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
@@ -97,10 +98,10 @@ export default class Item extends Component {
 				key={"dialplan-page-" + Dialplan.getValueByPath("_id")}
 				transitionName = {this.state.enterTransitionName}
 				transitionAppear = {true}
-				transitionAppearTimeout = {600}
+				transitionAppearTimeout = {300}
 				transitionEnter = {true}
-				transitionEnterTimeout = {600}
-				transitionLeaveTimeout = {600}
+				transitionEnterTimeout = {300}
+				transitionLeaveTimeout = {300}
 				transitionLeave = {true}
 			>
 			<Swipeable

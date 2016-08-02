@@ -193,7 +193,7 @@ export default class Index extends Component {
 		return (
 			<ReactCSSTransitionGroup
 				key={"settings-page"}
-				transitionName = "visibility"
+				transitionName = "visibility-pages"
 				transitionAppear = {true}
 				transitionAppearTimeout = {600}
 				transitionEnter = {true}

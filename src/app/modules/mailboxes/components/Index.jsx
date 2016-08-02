@@ -1,10 +1,12 @@
 import React, {Component}   from 'react';
 import { hashHistory }      from 'react-router';
+import Tappable             from 'react-tappable';
 
 import Dialplan             from "models/Dialplan";
 
 import MailboxesList        from "../models/MailboxesList";
 import ListComponent        from "components/list/Index.jsx";
+import imageLoader          from 'imageLoader';
 
 import AdaptiveFixed        from 'components/layouts/adaptive/IndexFixed.jsx';
 import AdaptiveWrapper      from 'components/layouts/adaptive/Wrapper.jsx';
@@ -57,6 +59,10 @@ export default class Index extends Component {
 			});
 	}
 
+	static _leave() {
+		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+	}
+
 	render() {
 		return (
 			<AdaptiveWrapper class="l-adaptive-sm">
@@ -64,6 +70,15 @@ export default class Index extends Component {
 					<div className="m-angle-content">
 						<AngleTop title={$t("mailboxes.follow_to")}/>
 					</div>
+
+					<Tappable
+						pressDelay={500}
+						component="button"
+						className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
+						onTap={Index._leave}
+					>
+						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Quit settings"/>
+					</Tappable>
 				</Angle>
 				<AdaptiveFixed class="l-mailbox">
 					<MainScroll>

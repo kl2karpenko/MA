@@ -11,7 +11,8 @@ export default class Index extends Component {
 		super(props);
 
 		this.state = {
-			id: props.params.id
+			id: props.params.id,
+			loading: false
 		};
 
 		this._config = this._config.bind(this);
@@ -20,6 +21,11 @@ export default class Index extends Component {
 
 	componentDidMount() {
 		this._init();
+	}
+
+	componentWillUnmount() {
+
+		console.log(this.loadRequest);
 	}
 
 	_config() {
@@ -43,11 +49,20 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		hashHistory.replace(DialplanList.getUrl());
+		hashHistory.push(DialplanList.getUrl());
 	}
 
 	_init() {
-		DialplanList
+		if (this.state.loading) {
+			return;
+		}
+		console.log('loading dialnapl');
+
+		this.setState({
+			loading: true
+		});
+
+		this.loadRequest = DialplanList
 			.load()
 			.then(this._config.bind(this))
 			.then((options) => {
@@ -59,6 +74,7 @@ export default class Index extends Component {
 
 				if (id === Dialplan.getValueByPath('_id')) {
 					this._goToActiveDialplan();
+					this._loaded();
 				} else {
 					return Dialplan
 						.load({
@@ -66,10 +82,19 @@ export default class Index extends Component {
 						})
 						.done(this._goToActiveDialplan)
 						.then(() => {
-							$(document).trigger('system:loaded');
+							this._loaded();
 						});
 				}
 			});
+	}
+
+	_loaded() {
+		$('.app-loadBlock').removeClass('show');
+		$(document).trigger('system:loaded');
+
+		this.setState({
+			loading: false
+		});
 	}
 
 	render() {

@@ -21,21 +21,23 @@
   transition: opacity 500ms ease-in;
 }
 
-.fade-enter {
-  transform: translate(100%);
-}
-.translate-enter.translate-enter-active {
-  transform: translate(0%);
-  transition: transform 300ms ease-in-out;
-}
-.translate-leave {
-  transform: translate(0%);
-}
-.translate-leave.page-transition-leave-active {
-  transform: translate(-100%);
-  transition: transform 200ms ease-in-out;
+.visibility-pages-appear {
+  opacity: 0.6;
 }
 
+.visibility-pages-appear.visibility-pages-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.visibility-pages-enter {
+  opacity: 0.6;
+}
+
+.visibility-pages-enter.visibility-pages-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
 
 .showUp-enter {
   transform: translateY(-100%);
@@ -57,14 +59,14 @@
 }
 .showFromLeft-appear.showFromLeft-appear-active {
   transform: translateX(0);
-  transition: transform 600ms ease-in-out;
+  transition: transform 300ms ease-in-out;
 }
 .showFromLeft-leave {
   transform: translateX(100%);
 }
 .showFromLeft-leave.showFromLeft-leave-active {
   transform: translateX(0);
-  transition: transform 600ms ease-in-out;
+  transition: transform 300ms ease-in-out;
 }
 
 .showFromRight-appear {
@@ -72,7 +74,7 @@
 }
 .showFromRight-appear.showFromRight-appear-active {
   transform: translateX(0);
-  transition: transform 600ms ease-in-out;
+  transition: transform 300ms ease-in-out;
 }
 
 .showFromRight-leave {
@@ -80,5 +82,5 @@
 }
 .showFromRight-leave.showFromRight-leave-active {
   transform: translateX(0);
-  transition: transform 600ms ease-in-out;
+  transition: transform 300ms ease-in-out;
 }

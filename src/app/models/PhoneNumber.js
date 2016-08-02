@@ -31,7 +31,6 @@ class PhoneNumber extends Model {
 						this.save().then(() => {
 							resolve(phoneValue);
 						});
-
 					} else if (phoneValue !== "") {
 						this.messenger.error($t("phone.not_valid"), "Warning");
 					}
