@@ -6,6 +6,12 @@ import {Router, hashHistory}  from 'react-router';
 import Main                   from "./modules/core/components/Enter.jsx";
 import config                 from 'envConfig';
 
+
+import RouterContext from 'react-router/lib/RouterContext';
+
+import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import {renderTransitionContext, withTransition} from 'react-router-transitions';
+
 export default class System {
 	static _setStyles() {
 		return require("../css/app.less");

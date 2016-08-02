@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { hashHistory }      from 'react-router';
 
 import CompanyActions       from "../../models/actions/Company";
 import Dialplan             from "models/Dialplan";
-import PhoneNumber          from "models/PhoneNumber";
 
 import MainScroll           from 'components/layouts/main/Scroll.jsx';
 

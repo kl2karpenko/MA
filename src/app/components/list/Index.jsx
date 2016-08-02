@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Item from "./Item.jsx";
 
+import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
@@ -48,19 +50,26 @@ export default class Index extends Component {
 	}
 
 	render() {
+		let items = this.state.list && this.state.list.map((object, i) => {
+			return <ReactCSSTransitionGroup
+				key={"list-" + (object._id || i)}
+				transitionName = "example"
+				transitionAppear = {true} transitionAppearTimeout = {500}
+				transitionEnter = {false} transitionLeave = {false}
+			><Item
+				data={object}
+				model={this.state.model}
+				key={"name-" + i}
+				onClick={this.props.onClick.bind(this, i, object)}
+				index={object._id || i}
+			/></ReactCSSTransitionGroup>;
+		});
+
 		return (
 			<div className={"m-list" + (this.props.listClass ? " " + this.props.listClass : "") + (this.props.withImg ? " m-list-withImg" : " m-list-withColor")}>
 				{(() => {
 					if (this.state.list && this.state.list.length) {
-							return (this.state.list.map((object, i) => {
-								return <Item
-									data={object}
-									model={this.state.model}
-									key={i}
-									onClick={this.props.onClick.bind(this, i, object)}
-									index={i}
-									/>
-							}));
+							return items;
 					} else {
 						return <div className="permission-denied">No permission to your contact list</div>
 					}
