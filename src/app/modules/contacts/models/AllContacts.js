@@ -1,7 +1,9 @@
-import List from 'List';
+import List           from 'List';
 
-import Contacts from "models/Contacts";
-import Extensions from "./Extensions";
+import Contacts       from "models/Contacts";
+import Extensions     from "./Extensions";
+
+/** Import ================================================================== */
 
 class AllContacts extends List {
 	constructor(props) {

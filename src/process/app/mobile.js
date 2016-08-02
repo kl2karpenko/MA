@@ -1,5 +1,5 @@
 import $                  from 'jquery';
-import config         from "../config";
+import config             from "../config";
 import Storage            from 'models/Storage';
 import diagnostic         from 'diagnostic';
 import dialogs            from 'dialogs';
@@ -18,7 +18,7 @@ function configContact (data) {
 }
 
 module.exports = {
-	getMobileContacts: function () {
+	getMobileContacts() {
 		return new Promise((resolve) => {
 			let options = {};
 	
@@ -51,7 +51,7 @@ module.exports = {
 		});
 	},
 
-	getMobileSIMNumber: function () {
+	getMobileSIMNumber() {
 		return new Promise((resolve, reject) => {
 			if (!config.isIOS()) {
 				window.plugins.sim.getSimInfo((result) => {
@@ -68,6 +68,20 @@ module.exports = {
 				resolve(null);
 			}
 		});
+	},
+
+	// TODO fix!
+	getCurrentLanguage() {
+		return (new Promise((res) => {
+			navigator.globalization.getPreferredLanguage((language) => {
+				res(language.value);
+
+				console.log(language.value);
+			}, () => {
+				res("en");
+				console.log("error for location language");
+			});
+		}));
 	},
 
 	dialogs: dialogs,

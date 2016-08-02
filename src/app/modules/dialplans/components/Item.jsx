@@ -1,24 +1,28 @@
-import React, { Component } from 'react';
-import { Link, hashHistory } from 'react-router';
+import React, { Component }   from 'react';
+import { Link, hashHistory }  from 'react-router';
 
-import imageLoader from 'imageLoader';
+import imageLoader            from 'imageLoader';
 
-import Tappable from 'react-tappable';
-import Swipeable from "react-swipeable";
+import Tappable               from 'react-tappable';
+import Swipeable              from "react-swipeable";
 
-import Dialplan from "models/Dialplan";
-import DialplanList from "models/DialplanList";
+import Dialplan               from "models/Dialplan";
+import DialplanList           from "models/DialplanList";
 
-import Personal from './item/Personal.jsx';
-import Company from './item/Company.jsx';
+import Personal               from './item/Personal.jsx';
+import Company                from './item/Company.jsx';
 
-import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
 
-import Angle from 'components/modules/angle/Index.jsx';
-import AngleTop from 'components/modules/angle/Top.jsx';
-import AngleInfo from 'components/modules/angle/InfoCenter.jsx';
-import AngleArrows from 'components/modules/angle/Arrows.jsx';
+import Angle                  from 'components/modules/angle/Index.jsx';
+import AngleTop               from 'components/modules/angle/Top.jsx';
+import AngleInfo              from 'components/modules/angle/InfoCenter.jsx';
+import AngleArrows            from 'components/modules/angle/Arrows.jsx';
+
+import { $t }                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Item extends Component {
 	constructor(props) {
@@ -114,7 +118,7 @@ export default class Item extends Component {
 				<Angle header={false}>
 					<div className="m-angle-content">
 
-						<AngleTop title="Call Routing">
+						<AngleTop title={$t("dialplans.call_routing")}>
 							<Tappable
 								pressDelay={500}
 								component="a"

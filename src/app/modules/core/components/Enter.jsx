@@ -1,15 +1,18 @@
-import React, {Component} from 'react';
-import { hashHistory } from 'react-router';
-import schema from 'schema';
-import config from 'envConfig';
+import React, {Component}   from 'react';
+import { hashHistory }      from 'react-router';
 
-import LockCode from "models/LockCode";
-import Token from "models/Token";
+import schema               from 'schema';
+import config               from 'envConfig';
 
-import FailBlock from 'components/blocks/Fail.jsx';
+import LockCode             from "models/LockCode";
+import Token                from "models/Token";
 
-import LoadingBlock from 'components/blocks/Loading.jsx';
-import Loader from 'components/layouts/Loader.jsx';
+import FailBlock            from 'components/blocks/Fail.jsx';
+
+import LoadingBlock         from 'components/blocks/Loading.jsx';
+import Loader               from 'components/layouts/Loader.jsx';
+
+/** Import ================================================================== */
 
 export default class Enter extends Component {
 	constructor(props) {

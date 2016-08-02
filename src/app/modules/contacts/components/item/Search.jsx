@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
-import config from 'envConfig';
+import React, { Component }     from 'react';
+import config                   from 'envConfig';
 
-import InputOnKeyDown from 'components/inputs/InputOnKeyDown.jsx';
+import InputOnKeyDown           from 'components/inputs/InputOnKeyDown.jsx';
+import { $t }                   from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class SearchTop extends Component {
 	constructor(props) {
@@ -35,20 +38,20 @@ export default class SearchTop extends Component {
 			value={this.state.value}
 			name="contacts"
 			className="input-custom input-search"
-			placeholder="Enter name or phone number"
+			placeholder={$t("contacts.search.placeholder")}
 		/>;
 
-		// if (!config.process.isIOS()) {
-		// 	InputRender = <input
-		// 		autoFocus="true"
-		// 		type="text"
-		// 		onChange={this.onChange}
-		// 		value={this.state.value}
-		// 		name="contacts"
-		// 		className="input-custom input-search"
-		// 		placeholder="Enter name or phone number"
-		// 	/>;
-		// }
+		if (!config.process.isIOS()) {
+			InputRender = <input
+				autoFocus="true"
+				type="text"
+				onChange={this.onChange}
+				value={this.state.value}
+				name="contacts"
+				className="input-custom input-search"
+				placeholder={$t("contacts.search.placeholder")}
+			/>;
+		}
 
 		return InputRender;
 	}

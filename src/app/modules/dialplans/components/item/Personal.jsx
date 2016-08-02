@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
 
-import PhoneNumber from "models/PhoneNumber";
+import PersonalActions      from "../../models/actions/Personal";
+import Follow               from './actions/Follow.jsx';
 
-import PersonalActions from "../../models/actions/Personal";
-import Follow from './actions/Follow.jsx';
+import Dialplan             from "models/Dialplan";
 
-import Dialplan from "models/Dialplan";
+/** Import ================================================================== */
 
 export default class Personal extends Component {
 	constructor(props) {

@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import React, { Component }   from 'react';
+
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {

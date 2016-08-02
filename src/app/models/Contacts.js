@@ -1,7 +1,12 @@
-import List from 'List';
-import { hashHistory } from 'react-router';
+import List                             from 'List';
+import { hashHistory }                  from 'react-router';
 
-import { contacts, switchToSettings, dialogs, getMobileContacts } from "appConfig";
+import { contacts, switchToSettings,
+	dialogs, getMobileContacts }          from "appConfig";
+
+import { $t }                           from 'lib/locale';
+
+/** Import ================================================================== */
 
 class ContactList extends List {
 	init() {
@@ -38,15 +43,13 @@ class ContactList extends List {
 				// contacts is have been requested but access was denied
 				case 2:
 					contacts.requestForAccess().then((giveAccess) => {
-						console.log('giveAccess for contacts: ', giveAccess);
-
 						if (giveAccess) {
 							return this._loadContactsOrTakeFromCache();
 						}
 					});
 					break;
 				case 3:
-					dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
+					dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
 								contacts.switchToSettings();
@@ -56,7 +59,7 @@ class ContactList extends List {
 								hashHistory.push('/contacts/extensions');
 								break;
 						}
-					}, "Access to your contact list denied", ["Go to settings", "Don't allow"]);
+					}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
 					break;
 			}
 		});

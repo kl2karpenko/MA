@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Tappable from 'react-tappable';
+import Tappable             from 'react-tappable';
 
-import Checkbox from 'components/inputs/Checkbox.jsx';
+import Checkbox             from 'components/inputs/Checkbox.jsx';
+
+/** Import ================================================================== */
 
 export default class FlowControl extends Component {
 	constructor(props) {

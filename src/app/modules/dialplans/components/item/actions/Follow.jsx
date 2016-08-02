@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
-import Tappable from 'react-tappable';
+import { hashHistory }      from 'react-router';
+import Tappable             from 'react-tappable';
 
-import Dialplan from "models/Dialplan";
-import PhoneNumber from "models/PhoneNumber";
+import Dialplan             from "models/Dialplan";
+import PhoneNumber          from "models/PhoneNumber";
+
+import { $t }               from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Follow extends Component {
 	constructor(props) {
@@ -44,7 +48,7 @@ export default class Follow extends Component {
 		switch(dataName) {
 			case "mailbox":
 
-				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : "Tap to choose a mailbox");
+				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : $t("dialplans.choose_mailbox"));
 				config.checked = activeActionInDialplan === activeKey;
 				break;
 
@@ -54,7 +58,7 @@ export default class Follow extends Component {
 				config.checked = transferIsChosen;
 
 				config.info =	transferIsChosen ? (activeTransfer && activeTransfer.number) :
-						(savedTransfer || "Tap to choose a contact");
+						(savedTransfer || $t("dialplans.choose_contact") );
 				break;
 
 			case "mobile":
@@ -154,7 +158,7 @@ export default class Follow extends Component {
 				<Tappable
 					pressDelay={500}
 					component="label"
-					className="m-label radio-block"
+					className={"m-label radio-block" + (this.state.search ? " search" : "")}
 					htmlFor={this.state.name}
 					onTap={this.onChange}
 					>

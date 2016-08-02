@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }     from 'react';
+import { hashHistory }          from 'react-router';
 
-import Swipeable from "react-swipeable";
+import Swipeable                from "react-swipeable";
 
-import Extensions from "../models/Extensions";
-import ListComponent from "components/list/Index.jsx";
+import Extensions               from "../models/Extensions";
+import ListComponent            from "components/list/Index.jsx";
 
-import Dialplan from "models/Dialplan";
+import Dialplan                 from "models/Dialplan";
+import { $t }                   from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class ExtensionsCom extends Component {
 	constructor(props) {
@@ -51,7 +54,7 @@ export default class ExtensionsCom extends Component {
 				onClick={this._setActiveContact}
 				configData={Extensions.configData}
 				withImg={true}
-				onError={"Empty list"}
+				onError={$t("contacts.errors.empty")}
 			/>
 			</Swipeable>
 		);

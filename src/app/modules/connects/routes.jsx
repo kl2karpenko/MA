@@ -1,6 +1,8 @@
 import Index from './components/Index.jsx';
-import Qr from './components/item/Qr.jsx';
-import Pin from './components/item/Pin.jsx';
+import Qr    from './components/item/Qr.jsx';
+import Pin   from './components/item/Pin.jsx';
+
+/** Import ================================================================== */
 
 module.exports = {
 	path: '/connects',
