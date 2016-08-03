@@ -22,15 +22,15 @@ class ContactList extends List {
 
 	configData(data) {
 		return data && data.map((item) => {
-				var obj = {};
+			var obj = {};
 
-				obj.number = item.number;
-				obj.image = item.image;
-				obj.name = item.name;
-				obj.type = "extension";
+			obj.number = item.number;
+			obj.image = item.image;
+			obj.name = item.name;
+			obj.type = "extension";
 
-				return obj;
-			});
+			return obj;
+		});
 	}
 
 	_getContactsAccess() {
@@ -56,7 +56,7 @@ class ContactList extends List {
 								break;
 							case 0:
 							case 2:
-								hashHistory.push('/contacts/extensions');
+								hashHistory.replace('/contacts/extensions');
 								break;
 						}
 					}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
@@ -70,6 +70,8 @@ class ContactList extends List {
 			if (this.cachedContacts && !this.cachedContacts.length) {
 				return getMobileContacts()
 					.then((contactsList) => {
+						console.log(contactsList);
+						
 						this.cachedContacts = contactsList.contacts;
 
 						resolve(contactsList);

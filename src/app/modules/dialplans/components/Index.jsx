@@ -43,7 +43,7 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		hashHistory.push(DialplanList.getUrl());
+		hashHistory.replace(DialplanList.getUrl());
 	}
 
 	_init() {

@@ -46,7 +46,7 @@ export default class Index extends Component {
 				.then(() => {
 					this._reset();
 					$('.app-loadBlock').addClass('show');
-					hashHistory.push('/dialplans');
+					hashHistory.replace('/dialplans');
 				});
 		} else {
 			this._reset();

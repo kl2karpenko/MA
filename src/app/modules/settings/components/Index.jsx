@@ -178,11 +178,11 @@ export default class Index extends Component {
 	}
 
 	static _leave() {
-		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+		hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
 
 	_disconnect() {
-		hashHistory.push('/connects/qr');
+		hashHistory.replace('/connects/qr');
 		Storage.clear();
 		location.reload();
 

@@ -226,6 +226,7 @@ export default class Model {
 	}
 
 	save(options) {
+		$(document).trigger('system:loading');
 		options = options || {};
 		let isValid = this._isValid();
 
@@ -260,10 +261,12 @@ export default class Model {
 				console.groupEnd("save " + resource);
 
 				this._setOriginalValues(this.getModel());
+				$(document).trigger('system:loaded');
 				options.message && this.messenger.success("Save " + resource);
 			})
 			.error((response) => {
 				return response;
+				$(document).trigger('system:loaded');
 			});
 	}
 

@@ -42,8 +42,6 @@ class Token {
 	}
 
 	getTokenRequest(requestBody) {
-		console.log(this._getBase64EncodeForClient());
-
 	  return $.ajax({
 		  type: "POST",
 		  url: this.authorizationUri,
@@ -55,6 +53,12 @@ class Token {
 		  },
 		  statusCode: {
 			  401: function(res) {
+				  messenger.error(
+				  	res.responseJSON && res.responseJSON.error_description,
+					  $t("error")
+				  );
+			  },
+			  403: function(res) {
 				  messenger.error(
 				  	res.responseJSON && res.responseJSON.error_description,
 					  $t("error")
@@ -82,7 +86,7 @@ class Token {
 	refreshToken() {
 		if (!this.token || !this.tokenData.refresh_token) {
 			if (!location.hash.match("connects")) {
-				hashHistory.push('/connects/qr');
+				hashHistory.replace('/connects/qr');
 			}
 
 			return (new Promise((res) => { }));

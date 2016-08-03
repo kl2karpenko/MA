@@ -28,13 +28,23 @@ export default class Index extends Component {
 			searchString = newProps.search,
 			updateState;
 
-		if (searchString) {
-			updateState = {
-				config: newProps.configData,
-				searchQuery: searchString,
-				list: newProps.model.search(searchString, { by: ['name', 'number'] })
-			};
-			this.setState(updateState);
+		if ("search" in newProps) {
+			if (searchString) {
+				updateState = {
+					config: newProps.configData,
+					searchQuery: searchString,
+					list: newProps.configData(newProps.model.search(searchString, { by: ['name', 'number'] }))
+				};
+				this.setState(updateState);
+			} else {
+				console.log(newProps);
+
+				updateState = {
+					config: newProps.configData,
+					list: newProps.configData(newProps.model.getModel())
+				};
+				this.setState(updateState);
+			}
 		}
 	}
 
@@ -61,12 +71,28 @@ export default class Index extends Component {
 			});
 	}
 
+	_getLoadingText() {
+		let
+			modelName = $t("lists." + this.state.model._getModelName()),
+			textForReturn = "";
+
+		if ($t("loading")) {
+			if (modelName) {
+				textForReturn = $t("loading").replace(/%s/g, (modelName || ""));
+			} else {
+				textForReturn = $t("loading_empty");
+			}
+		}
+
+		return textForReturn;
+	}
+
 	render() {
 		let items = this.state.list && this.state.list.map((object, i) => {
 			return <ReactCSSTransitionGroup
 				key={"list-" + (object._id || i)}
 				transitionName = "visibility"
-				transitionAppear = {true}s
+				transitionAppear = {true}
 				transitionAppearTimeout = {300}
 				transitionEnter = {true}
 				transitionEnterTimeout = {300}
@@ -84,15 +110,27 @@ export default class Index extends Component {
 		return (
 			<div className={"m-list" + (this.props.listClass ? " " + this.props.listClass : "") + (this.props.withImg ? " m-list-withImg" : " m-list-withColor")}>
 				{(() => {
-					if (this.state.list && this.state.list.length) {
+					if (!this.state.loading) {
+						if (this.state.list && this.state.list.length) {
 							return items;
+						} else {
+							return <ReactCSSTransitionGroup
+								key={"list-empty"}
+								transitionName = "visibility"
+								transitionAppear = {true} transitionAppearTimeout = {500}
+								transitionEnter = {false} transitionLeave = {false}
+							><div className="m-list-denied"><div>{this.props.onError || $t("empty")}</div></div></ReactCSSTransitionGroup>
+						}
 					} else {
+						// TODO: add good translation module
 						return <ReactCSSTransitionGroup
 							key={"list-empty"}
 							transitionName = "visibility"
 							transitionAppear = {true} transitionAppearTimeout = {500}
 							transitionEnter = {false} transitionLeave = {false}
-						><div className="permission-denied">{this.props.onError || $t("empty")}</div></ReactCSSTransitionGroup>
+						><div className="m-list-loading">
+							<div>{this._getLoadingText()}</div>
+						</div></ReactCSSTransitionGroup>
 					}
 				})()}
 			</div>

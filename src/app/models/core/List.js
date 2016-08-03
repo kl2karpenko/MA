@@ -162,12 +162,8 @@ class List {
 	search(term, options) {
 		options = options || {};
 		term = term || this.getSearchQuery();
+
 		let array = this.getModel();
-
-		if (!term) {
-			return array;
-		}
-
 		let searcher = createTextSearcher();
 
 		if (options.by && _.isObject(array[0])) {

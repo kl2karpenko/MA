@@ -71,6 +71,14 @@
         padding: 0;
       }
 
+      ul {
+        & > span:first-child {
+          li {
+            border-top: 1px solid #f2f2f2;
+          }
+        }
+      }
+
       li {
         position: relative;
 
@@ -95,10 +103,6 @@
             top: 50%;
             transform: translateY(-50%);
           }
-        }
-
-        &:first-child {
-          border-top: 1px solid #f2f2f2;
         }
 
         border-bottom: 1px solid #f2f2f2;

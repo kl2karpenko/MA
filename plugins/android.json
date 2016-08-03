@@ -39,6 +39,9 @@
         },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.digifoon.qaller"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.digifoon.qaller"
         }
     },
     "dependent_plugins": {}

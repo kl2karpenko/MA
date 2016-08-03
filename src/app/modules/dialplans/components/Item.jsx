@@ -56,7 +56,7 @@ export default class Item extends Component {
 			.then(() => {
 				this._changeState();
 
-				hashHistory.push(DialplanList.getUrl());
+				hashHistory.replace(DialplanList.getUrl());
 				this.setState({
 					loading: false
 				});
@@ -88,7 +88,7 @@ export default class Item extends Component {
 	}
 
 	static _goToSettings() {
-		hashHistory.push("/settings");
+		hashHistory.replace("/settings");
 	}
 
 	render() {
