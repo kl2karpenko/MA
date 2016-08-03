@@ -28,7 +28,7 @@ export default class Index extends Component {
 			searchString = newProps.search,
 			updateState;
 
-		if (searchString !== undefined) {
+		if ("search" in newProps) {
 			if (searchString) {
 				updateState = {
 					config: newProps.configData,
@@ -37,9 +37,10 @@ export default class Index extends Component {
 				};
 				this.setState(updateState);
 			} else {
+				console.log(newProps);
+
 				updateState = {
 					config: newProps.configData,
-					searchQuery: searchString,
 					list: newProps.configData(newProps.model.getModel())
 				};
 				this.setState(updateState);

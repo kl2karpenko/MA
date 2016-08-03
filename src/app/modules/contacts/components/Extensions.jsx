@@ -19,6 +19,7 @@ export default class ExtensionsCom extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('componentWillReceiveProps', nextProps);
 		this.setState({
 			search: nextProps.search || ""
 		});

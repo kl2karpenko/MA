@@ -31,11 +31,8 @@ export default class Index extends Component {
 	constructor(props) {
 		super(props);
 
-		let model = props.params.name === "mobile" ? Contacts : Extensions;
-		
 		this.state = {
-			model: model,
-			searchContacts: model.getStateBy('searchQuery'),
+			searchContacts: "",
 			pageType: "list",
 			pageId: props.params.name
 		};
@@ -45,17 +42,12 @@ export default class Index extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let model = nextProps.params.name === "mobile" ? Contacts : Extensions;
-
 		this.setState({
-			model: model,
 			pageId: nextProps.params.name
 		});
 	}
 
 	_changeSearchState(value) {
-		this.state.model.setStateBy('searchQuery', value);
-
 		this.setState({
 			searchContacts: value
 		});

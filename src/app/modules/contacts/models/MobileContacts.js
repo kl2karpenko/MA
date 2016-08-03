@@ -14,10 +14,14 @@ class MobileContacts extends List {
 	}
 
 	configData(data) {
+		console.log('configData contacts', data);
+
 		return Contacts.configData(data);
 	}
 
 	load() {
+		console.log('load contacts');
+
 		return Contacts.load();
 	}
 

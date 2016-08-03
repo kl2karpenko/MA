@@ -20,6 +20,7 @@ export default class Contacts extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('componentWillReceiveProps', nextProps);
 		this.setState({
 			search: nextProps.search || ""
 		});
