@@ -6,6 +6,8 @@ import {Router, hashHistory}  from 'react-router';
 import Main                   from "./modules/core/components/Enter.jsx";
 import config                 from 'envConfig';
 
+/** Import ================================================================== */
+
 export default class System {
 	static _setStyles() {
 		return require("../css/app.less");
@@ -43,13 +45,9 @@ export default class System {
 		);
 	}
 
-	/**se
-	 * create routes for app and render app in block id="app"
-	 * @param redirectPage
-	 */
-	_initApp(redirectPage) {
+	_initApp() {
 		this
-			._createRoutes(redirectPage)
+			._createRoutes()
 			._renderApp();
 	}
 
@@ -72,6 +70,7 @@ export default class System {
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
-		return $.when(System._setStyles).then(require('./modules/core/config'));
+		return $.when(System._setStyles)
+			.then(require('./modules/core/config'));
 	}
 }

@@ -1,26 +1,27 @@
-/** =============== Import resources ==================== */
+import React, { Component }   from 'react';
+import { hashHistory }        from 'react-router';
 
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import imageLoader            from 'imageLoader';
+import Tappable               from 'react-tappable';
 
-import imageLoader from 'imageLoader';
+import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
 
-import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import Angle                  from 'components/modules/angle/Index.jsx';
+import AngleTop               from 'components/modules/angle/Top.jsx';
 
-import Angle from 'components/modules/angle/Index.jsx';
-import AngleTop from 'components/modules/angle/Top.jsx';
+import MainScroll             from 'components/layouts/main/Scroll.jsx';
+import LinkButton             from 'components/buttons/LinkButton.jsx';
 
-import MainScroll from 'components/layouts/main/Scroll.jsx';
-import LinkButton from 'components/buttons/LinkButton.jsx';
+import Links                  from './item/Links.jsx';
+import Search                 from './item/Search.jsx';
 
-import Links from './item/Links.jsx';
-import Search from './item/Search.jsx';
+import AllContacts            from "../models/AllContacts";
+import Dialplan               from "models/Dialplan";
 
-import AllContacts from "../models/AllContacts";
-import Dialplan from "models/Dialplan";
+import { $t }                 from 'lib/locale';
 
-/** =============== Import resources ==================== */
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {
@@ -66,6 +67,10 @@ export default class Index extends Component {
 			});
 	}
 
+	static _leave() {
+		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+	}
+
 	render() {
 		let
 			pathname = this.state.loc,
@@ -89,12 +94,13 @@ export default class Index extends Component {
 		<AdaptiveWrapper class="l-adaptive-md">
 			<Angle header={false}>
 				<div className="m-angle-content">
-					<AngleTop title="Forward to:"/>
+					<AngleTop title={$t("contacts.forward")}/>
 					
 					<RenderOnTop onChange={this._changeSearchState} />
 				</div>
 
 				<LinkButton
+					style={{"margin-right": "67px"}}
 					text={<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>}
 					component="a"
 					className={classes}

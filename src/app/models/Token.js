@@ -2,6 +2,7 @@ import Storage from 'models/Storage';
 import config from 'envConfig';
 import messenger from 'messenger';
 import { hashHistory } from 'react-router';
+import { $t } from 'lib/locale';
 
 class Token {
 	constructor() {
@@ -56,11 +57,11 @@ class Token {
 			  401: function(res) {
 				  messenger.error(
 				  	res.responseJSON && res.responseJSON.error_description,
-					  "Error"
+					  $t("error")
 				  );
 			  },
 			  500: function() {
-				  messenger.error("Server is not available", "Error");
+				  messenger.error($t("errors.500"), $t("error"));
 
 				  $(document).trigger('system:fail');
 			  }

@@ -28,6 +28,10 @@
       color: #c2c2c2;
     }
 
+    &[placeholder] { text-overflow: ellipsis; }
+    &::-moz-placeholder { text-overflow: ellipsis; } /* firefox 19+ */
+    &:-moz-placeholder { text-overflow: ellipsis; }
+
     &.focus, &:focus {
       border-bottom-width: 3px;
       border-bottom-color: #736B72;

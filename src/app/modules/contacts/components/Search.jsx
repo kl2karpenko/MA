@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }   from 'react';
+import { hashHistory }        from 'react-router';
 
-import AllContacts from "../models/AllContacts";
-import ListComponent from "components/list/Index.jsx";
+import AllContacts            from "../models/AllContacts";
+import ListComponent          from "components/list/Index.jsx";
 
-import Dialplan from "models/Dialplan";
+import Dialplan               from "models/Dialplan";
+
+import { $t }                 from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Search extends Component {
 	constructor(props) {
@@ -22,7 +26,6 @@ export default class Search extends Component {
 	}
 
 	_setActiveContact(i, contactData) {
-		// TODO: edit search in contacts
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
@@ -48,7 +51,7 @@ export default class Search extends Component {
 				listClass="m-list-contacts"
 				onClick={this._setActiveContact}
 				withImg={true}
-				onError={"No contacts"}
+				onError={$t("contacts.errors.empty")}
 			/>
 		);
 	}

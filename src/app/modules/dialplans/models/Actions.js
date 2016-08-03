@@ -1,6 +1,8 @@
-import List from 'List';
+import List                   from 'List';
 
 import { getMobileSIMNumber } from "appConfig";
+
+/** Import ================================================================== */
 
 export default class Actions extends List {
 	init(props) {
@@ -20,7 +22,7 @@ export default class Actions extends List {
 	_getStaticModel() {
 		let defaultModel = [
 			{
-				title: "Follow original dialplan",
+				title: "dialplans.actions.follow_original",
 				info: "",
 				className: "",
 				search: false,
@@ -28,7 +30,7 @@ export default class Actions extends List {
 				active_action_key: "origin"
 			},
 			{
-				title: "Forward to my mobile",
+				title: "dialplans.actions.follow_mobile",
 				info: "",
 				className: "",
 				search: false,
@@ -36,7 +38,7 @@ export default class Actions extends List {
 				active_action_key: "transfer"
 			},
 			{
-				title: "Forward to " + (this.personal ? "my" : " ") + " mailbox",
+				title: !this.personal ? "dialplans.actions.follow_mailbox" : "dialplans.actions.follow_my_mailbox",
 				info: "",
 				className: (!this.personal ? "with-search" : " "),
 				search: !this.personal,
@@ -45,7 +47,7 @@ export default class Actions extends List {
 				active_action_key: "mailbox"
 			},
 			{
-				title: "Forward to",
+				title: "dialplans.actions.follow_to",
 				info: "",
 				className: "with-search",
 				search: true,

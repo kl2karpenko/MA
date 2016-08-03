@@ -7,6 +7,8 @@ const IPDesktop = 'http://10.10.200.28:8030/';
 function getAddressOfHost(isApp) {
 	const locHostName =  config.process.isIOS() ? IPMac : IPDesktop;
 	const hostName = isApp ? locHostName : "/";
+	console.log(hostName, locHostName, isApp);
+
 	return hostName;
 }
 
@@ -16,8 +18,6 @@ function getTokenHostName(isApp) {
 
 	return tokenHostName + tokenUrl;
 }
-
-// module.exports = config;
 
 module.exports = $.extend(true, config, {
 	schema: {

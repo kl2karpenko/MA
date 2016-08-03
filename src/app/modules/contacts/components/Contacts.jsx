@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }     from 'react';
+import { hashHistory }          from 'react-router';
 
-import Swipeable from "react-swipeable";
+import Swipeable                from "react-swipeable";
 
-import MobileContacts from "../models/MobileContacts";
-import ListComponent from "components/list/Index.jsx";
+import MobileContacts           from "../models/MobileContacts";
+import ListComponent            from "components/list/Index.jsx";
 
-import Dialplan from "models/Dialplan";
+import Dialplan                 from "models/Dialplan";
+
+import { $t }                   from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Contacts extends Component {
 	constructor(props) {
@@ -53,7 +57,7 @@ export default class Contacts extends Component {
 					onClick={this._setActiveContact}
 					configData={MobileContacts.configData}
 					withImg={true}
-					onError={"No permission to your contact list"}
+					onError={$t("contacts.errors.permission_denied")}
 				/>
 			</Swipeable>
 		);

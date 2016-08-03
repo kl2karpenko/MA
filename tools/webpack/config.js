@@ -95,7 +95,7 @@ module.exports = {
             'process.env': {
               'NODE_ENV': JSON.stringify(ACTIVE_ENVIRONMENT),
               'platformName': JSON.stringify(ProcessInfo.getActivePlatform()),
-              'BUILD_APP': JSON.stringify(ProcessInfo.isBuildApp())
+              'BUILD_APP': ProcessInfo.isBuildApp() ? "'yes'" : "'no'"
             }
         }),
 
@@ -139,10 +139,12 @@ module.exports = {
             "contacts": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/contacts.js',
             "barcodeScanner": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/barcodeScanner.js',
             "dialogs": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/dialogs.js',
+            "globalization": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/globalization.js',
             // cordova plugins for env ( web or mobile) config
 
             "images": 'src/img',
             "lib": 'src/app/lib',
+            "lang": 'src/app/lang',
             "modules": 'src/app/modules',
             "models": 'src/app/models',
             "core": 'src/app/modules/core',
@@ -213,16 +215,16 @@ module.exports = {
 };
 
 if (ProcessInfo.isBuildApp()) {
-    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-            warnings: false,
-            keep_fnames: true
-        },
-        mangle: {
-            except: ['$super', '$', 'exports', 'require']
-        }
-    }));
+    // module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    //     sourceMap: true,
+    //     compress: {
+    //         warnings: false,
+    //         keep_fnames: true
+    //     },
+    //     mangle: {
+    //         except: ['$super', '$', 'exports', 'require']
+    //     }
+    // }));
     // module.exports.plugins.push(new CompressionPlugin({
     //     asset: "[path].gz[query]",
     //     algorithm: "gzip",

@@ -8,7 +8,7 @@ function getAddressOfHost(isApp) {
 }
 
 function getTokenHostName(isApp) {
-	let tokenHostName = isApp ? "http://185.19.237.126:4445" : "http://10.60.28.150:4445";;
+	let tokenHostName = isApp ? "http://185.19.237.126:4445" : "http://10.60.28.150:4445";
 	let tokenUrl = "/token";
 
 	return tokenHostName + tokenUrl;

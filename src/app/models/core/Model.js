@@ -2,6 +2,7 @@ import schema from 'schema';
 import messenger from "messenger";
 
 import _ from "underscore";
+import helpers from "lib/helpers";
 
 export default class Model {
 	/** ========================   Initialization   ============================== */
@@ -93,42 +94,15 @@ export default class Model {
 	}
 
 	getValueByPath(path) {
-		let
-			model = this.getModel(),
-			a = path.split('.');
+		let model = this.getModel();
 
-		for (var i = 0; i < a.length - 1; i++) {
-			var n = a[i];
-			if (n in model) {
-				model = model[n];
-			} else {
-				model[n] = {};
-				model = model[n];
-			}
-		}
-
-		return model[a[a.length - 1]];
+		return helpers.getValueByPath(path, model);
 	}
 
 	setValueByPath(path, val) {
-		let
-			obj = this.getModel(),
-			fields = path.split('.'),
-			result = obj;
+		let model = this.getModel();
 
-		for (var i = 0, n = fields.length; i < n && result !== undefined; i++) {
-			var field = fields[i];
-			if (i === n - 1) {
-				result[field] = val;
-			} else {
-				if (typeof result[field] === 'undefined' || !_.isObject(result[field])) {
-					result[field] = {};
-				}
-				result = result[field];
-			}
-		}
-
-		return obj;
+		return helpers.setValueByPath(path, val, model);
 	}
 
 	_getModelName() {
@@ -195,7 +169,6 @@ export default class Model {
 	}
 
 	load(options) {
-		$(document).trigger('system:loading');
 		options = options || {};
 
 		let
@@ -218,13 +191,10 @@ export default class Model {
 				console.info("response", items[name]);
 				console.groupEnd("load");
 				this.assignAttributes(items[name]);
-
-				$(document).trigger('system:loaded');
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
 				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
-				$(document).trigger('system:loaded');
 				return this;
 			});
 	}
@@ -256,7 +226,6 @@ export default class Model {
 	}
 
 	save(options) {
-		$(document).trigger('system:loading');
 		options = options || {};
 		let isValid = this._isValid();
 
@@ -292,10 +261,8 @@ export default class Model {
 
 				this._setOriginalValues(this.getModel());
 				options.message && this.messenger.success("Save " + resource);
-				$(document).trigger('system:loaded');
 			})
 			.error((response) => {
-				$(document).trigger('system:loaded');
 				return response;
 			});
 	}

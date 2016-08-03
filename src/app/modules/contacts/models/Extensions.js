@@ -1,5 +1,7 @@
 import List from 'List';
 
+/** Import ================================================================== */
+
 class Extensions extends List {
 	constructor(props) {
 		super(props);
@@ -17,7 +19,9 @@ class Extensions extends List {
 			obj.number = item.in_number;
 			obj.image = true;
 			obj.name = item.name;
-			obj.type = "extension";
+			obj.type = item.type;
+			obj._id = item._id;
+			obj.user_id = item.user_id;
 
 			return obj;
 		});
@@ -25,7 +29,9 @@ class Extensions extends List {
 
 	_defaultExtensionsItem() {
 		return {
-
+			"name": "",
+			"number": "",
+			"type": ""
 		};
 	}
 }

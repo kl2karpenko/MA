@@ -1,25 +1,30 @@
-import React, {Component} from 'react';
-import { hashHistory } from 'react-router';
-import schema from 'schema';
-import config from 'envConfig';
+import React, {Component}   from 'react';
+import { hashHistory }      from 'react-router';
 
-import LockCode from "models/LockCode";
-import Token from "models/Token";
+import schema               from 'schema';
+import config               from 'envConfig';
+import locale               from "lib/locale";
 
-import FailBlock from 'components/blocks/Fail.jsx';
+import LockCode             from "models/LockCode";
+import Token                from "models/Token";
 
-import LoadingBlock from 'components/blocks/Loading.jsx';
-import Loader from 'components/layouts/Loader.jsx';
+import FailBlock            from 'components/blocks/Fail.jsx';
+
+import LoadingBlock         from 'components/blocks/Loading.jsx';
+import Loader               from 'components/layouts/Loader.jsx';
+
+/** Import ================================================================== */
 
 export default class Enter extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			loading: false,
+			loading: true,
 			fail: false,
 			offline: false,
-			showLoaderBlock: true
+			showLoaderBlock: true,
+			lang: "en"
 		};
 
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
@@ -30,6 +35,13 @@ export default class Enter extends Component {
 	componentDidMount() {
 		this._listen();
 		this._checkIfUserIsConnected();
+
+		this._defineLang()
+			.then((lang) => {
+				this.setState({
+					lang: lang
+				});
+			});
 	}
 
 	componentWillUnmount() {
@@ -45,23 +57,15 @@ export default class Enter extends Component {
 		document.removeEventListener("resume", Enter._resume);
 	}
 
-	_changeLoadStateTo(data) {
-		this.setState({ loading: data.loading, showLoaderBlock: data.showLoaderBlock || false });
+	_defineLang() {
+		return locale.setCurrentLanguageOfDevice("en");
 	}
 
-	_changeBlockToVisible(e) {
-		$('.app-loadBlock').addClass('show');
-	}
-
-	_changeBlockToHidden(e) {
-		$('.app-loadBlock').removeClass('show');
-	}
-
-	_changeLoadStateToVisible(e) {
+	_changeLoadStateToVisible() {
 		$('.app-loader').addClass('loading');
 	}
 
-	_changeLoadStateToHidden(e) {
+	_changeLoadStateToHidden() {
 		$('.app-loader').removeClass('loading');
 	}
 
@@ -76,9 +80,6 @@ export default class Enter extends Component {
 	_listen() {
 		$(document).on('system:loading', this._changeLoadStateToVisible);
 		$(document).on('system:loaded', this._changeLoadStateToHidden);
-
-		$(document).on('system:block', this._changeBlockToVisible);
-		$(document).on('system:unblock', this._changeBlockToHidden);
 
 		document.addEventListener("offline", this._changeOfflineStateTo.bind(this, true));
 		document.addEventListener("online", this._changeOfflineStateTo.bind(this, false));

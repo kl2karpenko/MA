@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import imageLoader from 'imageLoader';
 
+import Tappable               from 'react-tappable';
+
 export default class Angle extends Component {
 	constructor(props) {
 		super(props);
@@ -21,12 +23,27 @@ export default class Angle extends Component {
 	render() {
 		return (
 			<div className="m-angle__arrows">
-				<button className={"m-angle-arrow __left" + this.state.previous} onTouchStart={this.props.onClick}>
-					<img className="img-responsive previous" src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
-				</button>
-				<button className={"m-angle-arrow __right" + this.state.next} onTouchStart={this.props.onClick}>
-					<img className="img-responsive next" src={imageLoader(require("images/icons/arrow-right.png"))} alt="Left"/>
-				</button>
+				<Tappable
+				component="button"
+				className={"m-angle-arrow __left" + this.state.previous}
+				onTap={this.props.onClick}
+				>
+					<img className="img-responsive previous" onClick={(e) => {
+						e.stopPropagation();
+					}} src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
+				</Tappable>
+
+				<Tappable
+					component="button"
+					className={"m-angle-arrow __right" + this.state.next}
+					onTap={this.props.onClick}
+				>
+					<img className="img-responsive next" src={imageLoader(require("images/icons/arrow-right.png"))}
+					     onClick={(e) => {
+						     e.stopPropagation();
+					     }}
+					     alt="Left"/>
+				</Tappable>
 			</div>
 		);
 	}

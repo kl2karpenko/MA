@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import { hashHistory }      from 'react-router';
 
-import Dialplan from "models/Dialplan";
-import DialplanList from "models/DialplanList";
+import Dialplan             from "models/Dialplan";
+import DialplanList         from "models/DialplanList";
+
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {
@@ -41,7 +43,7 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		hashHistory.replace(DialplanList.getUrl());
+		hashHistory.push(DialplanList.getUrl());
 	}
 
 	_init() {
@@ -56,18 +58,19 @@ export default class Index extends Component {
 				let id = options.id || DialplanList.getValueOfDefAttrByIndex(options.index);
 
 				if (id === Dialplan.getValueByPath('_id')) {
-					this._goToActiveDialplan();
+					this._loaded();
 				} else {
 					return Dialplan
-						.load({
-							id: id
-						})
-						.done(this._goToActiveDialplan)
-						.then(() => {
-							$(document).trigger('system:loaded');
-						});
+						.load({ id: id })
+						.done(this._loaded.bind(this))
 				}
 			});
+	}
+
+	_loaded() {
+		this._goToActiveDialplan();
+		$('.app-loadBlock').removeClass('show');
+		$(document).trigger('system:loaded');
 	}
 
 	render() {

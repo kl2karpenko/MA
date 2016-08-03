@@ -1,0 +1,86 @@
+.swipeable {
+  position: relative;
+  height: 100%;
+}
+
+.visibility-appear {
+  opacity: 0.01;
+}
+
+.visibility-appear.visibility-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.visibility-enter {
+  opacity: 0.01;
+}
+
+.visibility-enter.visibility-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.visibility-pages-appear {
+  opacity: 0.6;
+}
+
+.visibility-pages-appear.visibility-pages-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.visibility-pages-enter {
+  opacity: 0.6;
+}
+
+.visibility-pages-enter.visibility-pages-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.showUp-enter {
+  transform: translateY(-100%);
+}
+.showUp-enter.showUp-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms ease-in-out;
+}
+.showUp-leave {
+  transform: translateY(-100%);
+}
+.showUp-leave.showUp-leave-active {
+  transform: translateY(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.showFromLeft-appear {
+  transform: translateX(-100%);
+}
+.showFromLeft-appear.showFromLeft-appear-active {
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+}
+.showFromLeft-leave {
+  transform: translateX(100%);
+}
+.showFromLeft-leave.showFromLeft-leave-active {
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.showFromRight-appear {
+  transform: translateX(100%);
+}
+.showFromRight-appear.showFromRight-appear-active {
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.showFromRight-leave {
+  transform: translateX(-100%);
+}
+.showFromRight-leave.showFromRight-leave-active {
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+}

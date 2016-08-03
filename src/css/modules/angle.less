@@ -30,6 +30,13 @@
 
   &-name {
     font-size: 1.2em;
+
+    overflow: hidden;
+    position: relative;
+    max-height: 35px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 85%;
   }
 
   &-links {
@@ -108,7 +115,7 @@
   &__header {
     font-size: 2.6923076923076925em;
     color: #fff;
-    font-weight: 100;
+    font-weight: 300;
   }
 
   &__button {
@@ -142,6 +149,10 @@
       color: #fff;
       text-decoration: none !important;
     }
+
+    .l-pin-connect + & {
+      text-transform: uppercase;
+    }
   }
 
   &-content {
@@ -161,7 +172,7 @@
 
     z-index: 1;
 
-    height: 7.5718015665796345%;
+    height: 23.571802%;
     min-height: 40px;
     transform: translate(0, -50%);
     top: 46%;
@@ -223,11 +234,16 @@
 
     height: 100%;
     width: auto;
+
+    min-width: 40px;
+    text-align: right;
+
     padding: 0;
     outline: none;
 
     &.__left {
       left: 0;
+      text-align: left !important;
     }
 
     &.__right {
@@ -241,6 +257,10 @@
     &.disabled {
       pointer-events: none;
       opacity: 0.3;
+    }
+
+    img {
+      display: inline-block;
     }
   }
 
@@ -258,12 +278,14 @@
     position: absolute;
 
     top: 0;
-    width: 7.666666666666667%;
+    width: 8.666667%;
     right: 0;
+    text-align: right;
 
     img {
       width: 100%;
-      height: 100%;
+      height: auto;
+      max-width: 28px;
     }
   }
 

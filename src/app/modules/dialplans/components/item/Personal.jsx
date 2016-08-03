@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
 
-import PhoneNumber from "models/PhoneNumber";
+import PersonalActions      from "../../models/actions/Personal";
+import Follow               from './actions/Follow.jsx';
 
-import PersonalActions from "../../models/actions/Personal";
-import Follow from './actions/Follow.jsx';
+import Dialplan             from "models/Dialplan";
 
-import Dialplan from "models/Dialplan";
+/** Import ================================================================== */
 
 export default class Personal extends Component {
 	constructor(props) {
@@ -36,12 +35,25 @@ export default class Personal extends Component {
 	}
 
 	render() {
+		let actionsList = this.state.actions;
+		if (!Dialplan.isMailBoxEnabled()) {
+			actionsList = actionsList.filter((item) => {
+				if (item.name === "mailbox") {
+					return false;
+				}
+
+				return item;
+			});
+		}
+
+		console.log(actionsList, Dialplan.isMailBoxEnabled());
+
 		return (
 			<div className="l-main">
 				<div className="l-main-scroll">
 					<div className="l-dialplan__list l-main-content">
 						<ul>
-							{this.state.actions.map((object, i) => {
+							{actionsList.map((object, i) => {
 								return <Follow
 									personal={true}
 									key={i}

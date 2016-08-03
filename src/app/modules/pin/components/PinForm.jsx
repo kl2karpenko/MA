@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { KeyboardComponent, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import { 
+	KeyboardComponent,
+	setCurrentFocusedInputTo
+} from 'components/Keyboard.jsx';
+
+/** Import ================================================================== */
 
 import Pin from 'components/inputs/Pin.jsx';
 
@@ -26,6 +31,10 @@ export default class PinForm extends Component {
 	onChange(inputValue) {
 		KeyboardComponent.keyBoardHide();
 
+		setTimeout(() => {
+			KeyboardComponent.keyBoardHide();
+		}, 25);
+
 		let pinLength = this.state.model.value.length;
 		this.state.model.value = inputValue;
 
@@ -44,8 +53,6 @@ export default class PinForm extends Component {
 	render() {
 		KeyboardComponent.keyBoardHide();
 
-		console.log("keyboard");
-		
 		return ( <div className="l-pin">
 			<Pin
 				model={this.state.model}
@@ -56,15 +63,15 @@ export default class PinForm extends Component {
 				onChange={this.onChange}
 			/>
 
-			<KeyboardComponent
-				value={this.state.model.value}
-				onSubmit={this.props.options.onSubmit}
-				onChange={this.onChange}
-				isValid={this.state.model.value.length === 5}
-				multiple={false}
-				form={this.props.options.form}
-			  element={this.state.element}
-			/>
+				<KeyboardComponent
+					value={this.state.model.value}
+					onSubmit={this.props.options.onSubmit}
+					onChange={this.onChange}
+					isValid={this.state.model.value.length === 5}
+					multiple={false}
+					form={this.props.options.form}
+				  element={this.state.element}
+				/>
 		</div>
 		);
 	}

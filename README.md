@@ -24,6 +24,8 @@ Plugin list:
 8. cordova-plugin-dialogs
 9. phonegap-plugin-barcodescanner
 9. cordova.plugins.diagnostic
+10. cordova-plugin-globalization
+11. https://github.com/kerrishotts/cordova-plugin-ios-launch-screen
 
 ## Production
 

@@ -1,6 +1,8 @@
-import List from 'List';
+import List     from 'List';
 
 import Contacts from "models/Contacts";
+
+/** Import ================================================================== */
 
 class MobileContacts extends List {
 	constructor(props) {
@@ -14,7 +16,8 @@ class MobileContacts extends List {
 	_defaultContactsItem() {
 		return {
 			"name": "",
-			"number": ""
+			"number": "",
+			"type": ""
 		};
 	}
 

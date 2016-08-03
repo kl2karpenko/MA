@@ -63,6 +63,8 @@ module.exports = {
 	},
 
 	isBuildApp: function () {
+		console.log(this.BUILD_APP, 'this.BUILD_APP', process.env.BUILD_APP, 'process.env.BUILD_APP');
+		
 		return this.BUILD_APP;
 	},
 

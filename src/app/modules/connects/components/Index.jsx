@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import React, { Component }   from 'react';
+
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
+
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {
@@ -8,12 +11,10 @@ export default class Index extends Component {
 
 	render() {
 		$(document).trigger('system:loaded');
-		$(document).trigger('system:unblock');
+		$('.app-loadBlock').removeClass('show');
 
 		return (
-			<AdaptiveWrapper>
-				{ this.props.children }
-			</AdaptiveWrapper>
+			<AdaptiveWrapper>{this.props.children}</AdaptiveWrapper>
 		);
 	}
 }

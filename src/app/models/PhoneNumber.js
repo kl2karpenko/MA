@@ -1,8 +1,10 @@
-import Model from 'Model';
+import Model        from 'Model';
+import Storage      from 'models/Storage';
 
-import Storage from 'models/Storage';
+import { dialogs }  from "appConfig";
 
-import { dialogs } from "appConfig";
+import { $t }       from 'lib/locale';
+
 
 class PhoneNumber extends Model {
 	init() {
@@ -21,7 +23,7 @@ class PhoneNumber extends Model {
 
 		return new Promise((resolve, reject) => {
 			if (!phoneValue) {
-				dialogs.prompt("Please enter your phone number", (obj) => {
+				dialogs.prompt($t("phone.number_enter"), (obj) => {
 					phoneValue = obj.input1;
 
 					if (!!(phoneValue && this._isValid(phoneValue))) {
@@ -29,9 +31,8 @@ class PhoneNumber extends Model {
 						this.save().then(() => {
 							resolve(phoneValue);
 						});
-
 					} else if (phoneValue !== "") {
-						this.messenger.error('Not a valid phone number', "Warning");
+						this.messenger.error($t("phone.not_valid"), "Warning");
 					}
 				});
 			} else {
