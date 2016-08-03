@@ -41,7 +41,7 @@
             "PACKAGE_NAME": "Qaller"
         },
         "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "com.qaller.androidapp"
+            "PACKAGE_NAME": "Qaller"
         }
     },
     "dependent_plugins": {

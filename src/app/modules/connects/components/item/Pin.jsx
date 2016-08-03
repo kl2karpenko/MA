@@ -41,7 +41,7 @@ export default class Pin extends Component {
 			this._reset();
 
 			if (Token.token) {
-				hashHistory.push('/pin');
+				hashHistory.replace('/pin');
 			}
 
 			return ConnectCode.getModel();

@@ -58,7 +58,7 @@ export default class Enter extends Component {
 						type: "qr_code",
 						value: result.text
 					}).done(() => {
-						hashHistory.push('/pin');
+						hashHistory.replace('/pin');
 					}).fail(() => {
 						messenger.error($t("token.wrong_code"), $t("error"));
 					});

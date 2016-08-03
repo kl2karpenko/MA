@@ -26,7 +26,6 @@ export default class Search extends Component {
 	}
 
 	_setActiveContact(i, contactData) {
-		// TODO: edit search in contacts
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
