@@ -11,7 +11,7 @@ export default class LinkButton extends Component {
 	}
 
 	_goto() {
-		hashHistory.push(this.props.href);
+		hashHistory.replace(this.props.href);
 
 		if (typeof this.props.onClick === "function") {
 			this.props.onClick();

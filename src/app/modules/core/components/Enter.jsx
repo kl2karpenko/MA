@@ -86,12 +86,16 @@ export default class Enter extends Component {
 
 		$(document).on('system:fail', this._changeFailStateTo.bind(this, true));
 		$(document).on('system:unfail', this._changeFailStateTo.bind(this, false));
-
+		
 		document.addEventListener("resume", Enter._resume);
 	}
 
 	static _resume() {
-		LockCode.isExist() && hashHistory.push('/pin');
+		$('.app-loadBlock').addClass('show');
+
+		if (LockCode.isExist()) {
+			hashHistory.replace('/pin');
+		}
 	}
 
 	_checkIfUserIsConnected() {
@@ -108,7 +112,7 @@ export default class Enter extends Component {
 	_checkConnection() {
 		return schema.ping().done(() => {
 			$(document).trigger('system:unfail');
-			LockCode.isExist() && hashHistory.push('/pin');
+			LockCode.isExist() && hashHistory.replace('/pin');
 		}).fail(() => {
 			$(document).trigger('system:fail');
 		});

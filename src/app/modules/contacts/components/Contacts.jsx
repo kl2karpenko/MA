@@ -23,7 +23,7 @@ export default class Contacts extends Component {
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
-			hashHistory.push('/dialplans');
+			hashHistory.replace('/dialplans');
 			return;
 		}
 		
@@ -33,7 +33,7 @@ export default class Contacts extends Component {
 				type: "contact"
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + id);
+				hashHistory.replace('/dialplans/' + id);
 			});
 	}
 
@@ -46,7 +46,7 @@ export default class Contacts extends Component {
 
 					this.isSwiping = setTimeout(() => {
 						this.isSwiping = false;
-						hashHistory.push("contacts/extensions");
+						hashHistory.replace("contacts/extensions");
 					}, 50);
 				}}
 				flickThreshold={0.1}

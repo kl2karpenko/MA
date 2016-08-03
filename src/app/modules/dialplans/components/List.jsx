@@ -40,7 +40,7 @@ export default class List extends Component {
 		Dialplan.load({
 			id: DialplanList.getValueOfDefAttrByIndex(index)
 		}).then(() => {
-			hashHistory.push(DialplanList.getUrl());
+			hashHistory.replace(DialplanList.getUrl());
 		});
 	}
 

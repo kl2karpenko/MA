@@ -32,10 +32,23 @@ export default class System {
 						require('./modules/mailboxes/routes.jsx')
 					]
 				}
-			]
+			],
+			onLeave: (nextState, replace) => {
+				let pathname = nextState.location.pathname;
+
+				if (pathname.indexOf("dialplans") !== -1) {
+					$('#app').addClass('light').removeClass('dark');
+				} else {
+					$('#app').addClass('dark').removeClass('light');
+				}
+			}
 		};
 
 		return this;
+	}
+
+	_changeBodyClass() {
+
 	}
 
 	_renderApp() {

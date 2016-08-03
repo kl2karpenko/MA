@@ -65,7 +65,7 @@ export default class Pin extends Component {
 			<Swipeable
 				className="swipeable"
 				onSwipingRight={() => {
-					hashHistory.push("/connects/qr");
+					hashHistory.replace("/connects/qr");
 				}}
 			>
 			<Adaptive key="connect_code">
@@ -81,15 +81,6 @@ export default class Pin extends Component {
 							/>
 						</div>
 					</div>
-
-					<button
-							className="m-angle__button btn btn-round btn-md"
-							onTouchStart={this.connect.bind(this)}
-							data-form="connectPin"
-							disabled={!(this.state.value.length === 5)}
-							form="connectPin">
-						{$t("connects.pin.login")}
-					</button>
 				</Angle>
 
 				<MainConnect>

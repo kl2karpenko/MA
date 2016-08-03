@@ -29,7 +29,7 @@ export default class Search extends Component {
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
-			hashHistory.push('/dialplans');
+			hashHistory.replace('/dialplans');
 			return;
 		}
 		
@@ -39,7 +39,7 @@ export default class Search extends Component {
 				type: contactData.type
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+				hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});
 	}
 

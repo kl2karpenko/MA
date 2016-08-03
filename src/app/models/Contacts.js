@@ -56,7 +56,7 @@ class ContactList extends List {
 								break;
 							case 0:
 							case 2:
-								hashHistory.push('/contacts/extensions');
+								hashHistory.replace('/contacts/extensions');
 								break;
 						}
 					}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);

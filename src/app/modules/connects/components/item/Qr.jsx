@@ -92,7 +92,7 @@ export default class Enter extends Component {
 			<Swipeable
 				className="swipeable"
 				onSwipingLeft={() => {
-					hashHistory.push("/connects/pin");
+					hashHistory.replace("/connects/pin");
 				}}
 			>
 			<Adaptive key="qr_code">

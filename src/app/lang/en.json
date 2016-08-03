@@ -2,10 +2,19 @@
   "cancel": "Cancel",
   "to_settings": "Go to settings",
   "empty": "Empty list",
+  "loading": "Loading list of %s",
+  "loading_empty": "Loading",
 
   "error": "Error",
   "errors": {
     "500": "Server is not available"
+  },
+
+  "lists": {
+    "extensions": "extensions",
+    "dialplans": "dialplans",
+    "contacts": "contacts",
+    "mailboxes": "mailboxes"
   },
 
   "connects": {

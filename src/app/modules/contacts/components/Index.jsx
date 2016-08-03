@@ -53,7 +53,7 @@ export default class Index extends Component {
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
-			hashHistory.push('/dialplans');
+			hashHistory.replace('/dialplans');
 			return;
 		}
 
@@ -63,12 +63,12 @@ export default class Index extends Component {
 				type: "contact"
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+				hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});
 	}
 
 	static _leave() {
-		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+		hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
 
 	render() {

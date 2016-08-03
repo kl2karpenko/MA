@@ -84,19 +84,17 @@ export default class Follow extends Component {
 	}
 
 	_goToList() {
-		hashHistory.push(this.state.link);
+		hashHistory.replace(this.state.link);
 	}
 
 	onChange(e) {
 		let name = this.state.name;
-		let $el = this.refs["radio-" + name];
 
 		switch(name) {
 			case "contact":
 				let contactNumber = Dialplan.getValueByPath("follow.contact");
 
 				if (contactNumber) {
-					$el.checked = !$el.checked || true;
 					Dialplan
 						._saveFollowToTransfer({
 							type: "contact",
@@ -104,15 +102,13 @@ export default class Follow extends Component {
 						})
 						.then(this.props.onChange.bind(this, name));
 				} else {
-					hashHistory.push('/contacts');
+					hashHistory.replace('/contacts');
 				}
 				break;
 
 			case "mobile":
 				PhoneNumber._getUserNumber().then((phone) => {
 					if (phone) {
-						$el.checked = !$el.checked || true;
-
 						Dialplan
 							._saveFollowToTransfer({
 								type: "contact",
@@ -128,15 +124,13 @@ export default class Follow extends Component {
 					let mailbox = Dialplan._getActiveMailbox();
 
 					if (mailbox && mailbox._id) {
-						$el.checked = !$el.checked || true;
 						Dialplan
 							._saveFollowToMailbox(mailbox)
 							.then(this.props.onChange.bind(this, name));
 					} else {
-						hashHistory.push('/mailboxes');
+						hashHistory.replace('/mailboxes');
 					}
 				} else {
-					$el.checked = !$el.checked || true;
 					Dialplan
 						._saveFollowToMailbox()
 						.then(this.props.onChange.bind(this, name));
@@ -144,7 +138,6 @@ export default class Follow extends Component {
 				break;
 
 			default:
-				$el.checked = !$el.checked || true;
 				Dialplan
 					._saveFollowToOrigin()
 					.then(this.props.onChange.bind(this, name));
