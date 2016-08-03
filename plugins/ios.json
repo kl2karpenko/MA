@@ -39,6 +39,9 @@
         },
         "cordova-plugin-ios-launch-screen": {
             "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.qaller.androidapp"
         }
     },
     "dependent_plugins": {
