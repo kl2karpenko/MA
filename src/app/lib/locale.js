@@ -18,9 +18,11 @@ class Language {
 		let globalization = require('globalization');
 
 		return globalization.getCurrentLanguage().then((lang) => {
-			console.log(lang, 'setCurrentLanguageOfDevice');
+			let langDefine = lang && lang.slice(0, 2);
 
-			this.setLanguage("ru");
+			console.log('define', langDefine);
+
+			this.setLanguage(langDefine);
 			
 			return lang;
 		});
@@ -33,7 +35,7 @@ class Language {
 
 		this.language = name;
 		this.languageFile = require("json!lang/" + name + ".json");
-		this.languageFileDefault = require("json!lang/en.json");
+		this.languageFileDefault = name !== "en" ? require("json!lang/en.json") : this.languageFile;
 	}
 
 	$t(path) {
