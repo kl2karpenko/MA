@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
-import { hashHistory }      from 'react-router';
+import React, { Component }     from 'react';
 
-import CompanyActions       from "../../models/actions/Company";
-import Dialplan             from "models/Dialplan";
-import PhoneNumber          from "models/PhoneNumber";
+import CompanyActions           from "../../models/actions/Company";
+import Dialplan                 from "models/Dialplan";
 
-import MainScroll           from 'components/layouts/main/Scroll.jsx';
+import MainScroll               from 'components/layouts/main/Scroll.jsx';
 
-import Follow               from './actions/Follow.jsx';
-import FlowControl          from './actions/FlowControl.jsx';
+import Follow                   from './actions/Follow.jsx';
+import FlowControl              from './actions/FlowControl.jsx';
+
+import { $t }                   from 'lib/locale';
+
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
+/** Import ================================================================== */
 
 export default class Company extends Component {
 	constructor(props) {
@@ -20,56 +24,8 @@ export default class Company extends Component {
 		};
 	}
 
-	onChangeDialplanForward(object) {
-		switch(object.name) {
-			case "contact":
-				let contactNumber = Dialplan.getValueByPath("follow.contact");
-
-				if (contactNumber) {
-					Dialplan
-						._saveFollowToTransfer({
-							type: "contact",
-							number: contactNumber
-						})
-						.then(this._updateDialplan.bind(this));
-				} else {
-					hashHistory.push('/contacts');
-				}
-				break;
-
-			case "mailbox":
-				let mailbox = Dialplan._getActiveMailbox();
-
-				if (mailbox._id) {
-					Dialplan
-						._saveFollowToMailbox(mailbox)
-						.then(this._updateDialplan.bind(this));
-				} else {
-					hashHistory.push('/mailboxes');
-				}
-				break;
-
-			case "mobile":
-				PhoneNumber._getUserNumber().then((phone) => {
-					console.log(phone, 'phone');
-					
-					if (phone) {
-						Dialplan
-							._saveFollowToTransfer({
-								type: "contact",
-								number: phone
-							})
-							.then(this._updateDialplan.bind(this));
-					}
-				});
-				break;
-
-			default:
-				Dialplan
-					._saveFollowToOrigin()
-					.then(this._updateDialplan.bind(this));
-				break;
-		}
+	onChangeDialplanForward() {
+		this._updateDialplan();
 	}
 
 	onChangeFlowControl(object) {
@@ -87,42 +43,63 @@ export default class Company extends Component {
 	}
 
 	render() {
+		let followItems = this.state.actions.map((object, i) => {
+				return <ReactCSSTransitionGroup
+						key={"follow-" + (object._id || i)}
+						transitionName = "visibility"
+						transitionAppear = {true}
+						transitionAppearTimeout = {600}
+						transitionEnter = {true}
+						transitionEnterTimeout = {600}
+						transitionLeaveTimeout = {20}
+						transitionLeave = {true}
+					><Follow
+					personal={false}
+					key={"follow-item-" + i + "-" + Dialplan.getValueByPath("_id")}
+					options={object}
+					onChange={this.onChangeDialplanForward.bind(this, object)}
+				/></ReactCSSTransitionGroup>;
+			});
+
+		let flowControls = this.state.Dialplan.actions.origin.items;
+		let flowControlsItems = flowControls.map((object, i) => {
+			return <ReactCSSTransitionGroup
+				key={"flow-control-" + (object._id || i) + "-" + Dialplan.getValueByPath("_id")}
+				transitionName = "visibility"
+				transitionAppear = {true}
+				transitionAppearTimeout = {600}
+				transitionEnterTimeout = {600}
+				transitionLeaveTimeout = {20}
+				transitionEnter = {true}
+				transitionLeave = {true}
+			><FlowControl
+				index={i}
+				key={"flow-control-item-" + i}
+				options={object}
+				in_number={this.state.Dialplan.in_number}
+				onChange={this.onChangeFlowControl.bind(this, object)}
+			/></ReactCSSTransitionGroup>;
+		});
+
 		return (
 			<MainScroll>
 				<form action="">
 					<div className="l-main-content l-dialplan__list">
 						<ul>
-							{this.state.actions.map((object, i) => {
-								return <Follow
-									personal={false}
-									key={i}
-									options={object}
-									onChange={this.onChangeDialplanForward.bind(this, object)}
-								/>;
-							})}
+							{followItems}
 						</ul>
 					</div>
 					{(() => {
-						let flowControls = this.state.Dialplan.actions.origin.items;
-
 						if(flowControls && flowControls.length) {
 							return <div>
 								<div className="l-grey">
 									<div className="l-grey-header">
-										Flow Control
+										{$t("dialplans.flow_control")}
 									</div>
 								</div>
 								<div className="l-dialplan__list l-main-content">
 									<ul>
-										{flowControls.map((object, i) => {
-											return <FlowControl
-												index={i}
-												key={i}
-												options={object}
-												in_number={this.state.Dialplan.in_number}
-												onChange={this.onChangeFlowControl.bind(this, object)}
-											/>;
-										})}
+										{flowControlsItems}
 									</ul>
 								</div>
 							</div>

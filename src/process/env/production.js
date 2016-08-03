@@ -1,17 +1,22 @@
 import config from "./shared";
 
-// let IPMac = 'http://192.168.2.105:8030/';
-let IPMac = 'http://10.10.201.49:8030/';
-let IPDesktop = 'http://10.10.200.28:8030/';
+function getAddressOfHost(isApp) {
+	const publicHostName = "http://185.19.237.126:7887";
+	const privetHostName = "http://10.60.28.150:7887";
+	const hostName = isApp ? publicHostName : privetHostName;
+	return hostName + "/";
+}
 
-function getAddressOfHost() {
-	let hostName =  config.process.isIOS() ? IPMac : IPDesktop;
+function getTokenHostName(isApp) {
+	let tokenHostName = isApp ? "http://185.19.237.126:4445" : "http://10.60.28.150:4445";
+	let tokenUrl = "/token";
 
-	return hostName;
+	return tokenHostName + tokenUrl;
 }
 
 module.exports = $.extend(true, config, {
 	schema: {
-		hostname: getAddressOfHost()
+		hostname: getAddressOfHost(config.process.isBuildApp()),
+		tokenHostname: getTokenHostName(config.process.isBuildApp())
 	}
 });

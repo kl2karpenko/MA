@@ -1,6 +1,6 @@
 {
-  "name": "kwebbl_mobile_app",
-  "version": "1.0.0",
+  "name": "qaller",
+  "version": "0.0.1",
   "description": "Mobile app for managing dialplans",
   "main": "app.js",
   "repository": {
@@ -8,8 +8,16 @@
     "url": "https://bitbucket.org/kl2_karpenko/mobile-app/src"
   },
   "scripts": {
-    "start": "NODE_ENV=production webpack --config tools/webpack/config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "",
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "server": "node tools/server.js",
+    "local": "BUILD_APP=no webpack --config tools/webpack/config.js",
+    "local_watch": "BUILD_APP=no webpack --watch --watch-pol --config tools/webpack/config.js",
+    "prod": "NODE_ENV=production BUILD_APP=no webpack --config tools/webpack/config.js",
+    "prod_watch": "NODE_ENV=production BUILD_APP=no webpack --watch --watch-pol --config tools/webpack/config.js",
+    "ios_app": "BUILD_APP=yes PLATFORM=ios webpack --config tools/webpack/config.js",
+    "android_app": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js"
   },
   "author": "Karpenko Lilya",
   "browser": {
@@ -51,6 +59,9 @@
     "precss": "^1.4.0",
     "react-addons": "^0.9.1-deprecated",
     "react-addons-update": "^15.1.0",
+    "react-router-transition": "0.0.5",
+    "react-router-transitions": "^2.0.0",
+    "react-swipe-views": "0.0.12",
     "react-templates": "^0.4.3",
     "react-templates-loader": "^0.4.0",
     "string-replace-webpack-plugin": "0.0.3",
@@ -60,9 +71,12 @@
   },
   "dependencies": {
     "babel-plugin-transform-runtime": "^6.7.5",
+    "json-loader": "^0.5.4",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "^2.3.0",
+    "react-router-page-transition": "^1.1.0",
+    "react-swipeable": "^3.5.1",
     "react-tappable": "^0.8.1",
     "xml-loader": "^1.1.0"
   }

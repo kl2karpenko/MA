@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
 
-import PhoneNumber from "models/PhoneNumber";
+import PersonalActions      from "../../models/actions/Personal";
+import Follow               from './actions/Follow.jsx';
 
-import PersonalActions from "../../models/actions/Personal";
-import Follow from './actions/Follow.jsx';
+import Dialplan             from "models/Dialplan";
 
-import Dialplan from "models/Dialplan";
+/** Import ================================================================== */
 
 export default class Personal extends Component {
 	constructor(props) {
@@ -25,50 +24,8 @@ export default class Personal extends Component {
 		});
 	}
 
-	onChange(object) {
-		switch(object.name) {
-			case "contact":
-				let contactNumber = Dialplan.getValueByPath("follow.contact");
-
-				if (contactNumber) {
-					Dialplan
-						._saveFollowToTransfer({
-							type: "contact",
-							number: contactNumber
-						})
-						.then(this._updateDialplan.bind(this));
-				} else {
-					hashHistory.push('/contacts');
-				}
-				break;
-
-			case "mobile":
-				PhoneNumber._getUserNumber().then((phone) => {
-					console.log(phone, 'phone');
-					
-					if (phone) {
-						Dialplan
-							._saveFollowToTransfer({
-								type: "contact",
-								number: phone
-							})
-							.then(this._updateDialplan.bind(this));
-					}
-				});
-				break;
-
-			case "mailbox":
-				Dialplan
-					._saveFollowToMailbox()
-					.then(this._updateDialplan.bind(this));
-				break;
-
-			default:
-				Dialplan
-					._saveFollowToOrigin()
-					.then(this._updateDialplan.bind(this));
-				break;
-		}
+	onChange() {
+		this._updateDialplan();
 	}
 
 	_updateDialplan() {
@@ -78,12 +35,25 @@ export default class Personal extends Component {
 	}
 
 	render() {
+		let actionsList = this.state.actions;
+		let mailboxDisabled = !Dialplan.isMailBoxEnabled();
+
+		if (mailboxDisabled) {
+			actionsList = actionsList.filter((item) => {
+				if (item.name === "mailbox") {
+					return false;
+				}
+
+				return item;
+			});
+		}
+
 		return (
 			<div className="l-main">
 				<div className="l-main-scroll">
 					<div className="l-dialplan__list l-main-content">
 						<ul>
-							{this.state.actions.map((object, i) => {
+							{actionsList.map((object, i) => {
 								return <Follow
 									personal={true}
 									key={i}

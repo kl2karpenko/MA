@@ -1,23 +1,30 @@
-import React, {Component} from 'react';
-import { hashHistory } from 'react-router';
-import Tappable from 'react-tappable';
+import React, {Component}     from 'react';
+import { hashHistory }        from 'react-router';
+import Tappable               from 'react-tappable';
 
-import imageLoader from 'imageLoader';
+import imageLoader            from 'imageLoader';
 
-import AdaptiveFixed from 'components/layouts/adaptive/IndexFixed.jsx';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
-import Angle from 'components/modules/angle/Index.jsx';
+import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
+import Angle                  from 'components/modules/angle/Index.jsx';
 
-import PinForm from './PinForm.jsx';
+import PinForm                from './PinForm.jsx';
 
-import MainScroll from 'components/layouts/main/Scroll.jsx';
+import MainScroll             from 'components/layouts/main/Scroll.jsx';
 
-import { KeyboardComponent, setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
+import { KeyboardComponent,
+	setCurrentFocusedInputTo }  from 'components/Keyboard.jsx';
 
-import LockCode from "models/LockCode";
-import PhoneNumber from "models/PhoneNumber";
-import Dialplan from "models/Dialplan";
-import Storage from "models/Storage";
+import LockCode               from "models/LockCode";
+import PhoneNumber            from "models/PhoneNumber";
+import Dialplan               from "models/Dialplan";
+import Storage                from "models/Storage";
+
+import { $t }                 from 'lib/locale';
+
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {
@@ -171,27 +178,35 @@ export default class Index extends Component {
 	}
 
 	static _leave() {
-		hashHistory.push('/dialplans/' + Dialplan.getValueByPath("_id"));
+		hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
 	}
 
 	_disconnect() {
-		hashHistory.push('/connects/qr');
+		hashHistory.replace('/connects/qr');
 		Storage.clear();
 		location.reload();
 
-		$(document).trigger('system:loading', {
-			loading: true, showLoaderBlock: true
-		});
+		$(document).trigger('system:loading');
 	}
 
 	render() {
 		return (
+			<ReactCSSTransitionGroup
+				key={"settings-page"}
+				transitionName = "visibility-pages"
+				transitionAppear = {true}
+				transitionAppearTimeout = {600}
+				transitionEnter = {true}
+				transitionEnterTimeout = {600}
+				transitionLeaveTimeout = {600}
+				transitionLeave = {true}
+			>
 			<AdaptiveWrapper class="l-adaptive-sm">
 				<Angle>
 					<div className="m-angle-content">
 						<div className="m-angle-top">
 							<div className="m-angle-name">
-								Settings
+								{$t("settings.name")}
 							</div>
 						</div>
 					</div>
@@ -216,7 +231,7 @@ export default class Index extends Component {
 					
 					<div className="l-grey">
 						<div className="l-grey-header">
-							Personal phone number
+							{$t("settings.personal_number")}
 						</div>
 					</div>
 
@@ -227,7 +242,7 @@ export default class Index extends Component {
 								component="input"
 								type="tel"
 								className={"input-custom" + (this.pin.classFocus[3] ? " focus" : "")}
-								placeholder="Please enter your telephone number"
+								placeholder={$t("settings.enter_number")}
 								onTap={this.onTouch.bind(this, 3)}
 								onChange={function() {}}
 								name="phone"
@@ -239,7 +254,7 @@ export default class Index extends Component {
 
 					<div className="l-grey">
 						<div className="l-grey-header">
-							General settings
+							{$t("settings.general")}
 						</div>
 					</div>
 
@@ -250,7 +265,7 @@ export default class Index extends Component {
 		          className="btn btn-block btn-block-lg btn-disconnect"
 		          onTap={this._disconnect}
 						>
-							Disconnect app
+							{$t("settings.disconnect")}
 						</Tappable>
 					</div>
 				</MainScroll>
@@ -266,6 +281,7 @@ export default class Index extends Component {
 				/>
 			</div>
 		</AdaptiveWrapper>
+		</ReactCSSTransitionGroup>
 		);
 	}
 }

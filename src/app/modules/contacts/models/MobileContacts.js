@@ -1,6 +1,8 @@
-import List from 'List';
+import List     from 'List';
 
 import Contacts from "models/Contacts";
+
+/** Import ================================================================== */
 
 class MobileContacts extends List {
 	constructor(props) {
@@ -11,19 +13,24 @@ class MobileContacts extends List {
 		this.managedResource = 'contacts';
 	}
 
+	configData(data) {
+		console.log('configData contacts', data);
+
+		return Contacts.configData(data);
+	}
+
+	load() {
+		console.log('load contacts');
+
+		return Contacts.load();
+	}
+
 	_defaultContactsItem() {
 		return {
 			"name": "",
-			"number": ""
+			"number": "",
+			"type": ""
 		};
-	}
-
-	configData(data) {
-		return Contacts.configData(data);
-	}
-	
-	load() {
-		return Contacts.load();
 	}
 }
 

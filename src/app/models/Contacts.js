@@ -1,7 +1,12 @@
-import List from 'List';
-import { hashHistory } from 'react-router';
+import List                             from 'List';
+import { hashHistory }                  from 'react-router';
 
-import { contacts, switchToSettings, dialogs, getMobileContacts } from "appConfig";
+import { contacts, switchToSettings,
+	dialogs, getMobileContacts }          from "appConfig";
+
+import { $t }                           from 'lib/locale';
+
+/** Import ================================================================== */
 
 class ContactList extends List {
 	init() {
@@ -17,15 +22,15 @@ class ContactList extends List {
 
 	configData(data) {
 		return data && data.map((item) => {
-				var obj = {};
+			var obj = {};
 
-				obj.number = item.number;
-				obj.image = item.image;
-				obj.name = item.name;
-				obj.type = "extension";
+			obj.number = item.number;
+			obj.image = item.image;
+			obj.name = item.name;
+			obj.type = "extension";
 
-				return obj;
-			});
+			return obj;
+		});
 	}
 
 	_getContactsAccess() {
@@ -38,25 +43,23 @@ class ContactList extends List {
 				// contacts is have been requested but access was denied
 				case 2:
 					contacts.requestForAccess().then((giveAccess) => {
-						console.log('giveAccess for contacts: ', giveAccess);
-
 						if (giveAccess) {
 							return this._loadContactsOrTakeFromCache();
 						}
 					});
 					break;
 				case 3:
-					dialogs.confirm("Please check your settings to allow access to contact list", (permissionAccess) => {
+					dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
 								contacts.switchToSettings();
 								break;
 							case 0:
 							case 2:
-								hashHistory.push('/contacts/extensions');
+								hashHistory.replace('/contacts/extensions');
 								break;
 						}
-					}, "Access to your contact list denied", ["Go to settings", "Don't allow"]);
+					}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
 					break;
 			}
 		});
@@ -67,6 +70,8 @@ class ContactList extends List {
 			if (this.cachedContacts && !this.cachedContacts.length) {
 				return getMobileContacts()
 					.then((contactsList) => {
+						console.log(contactsList);
+						
 						this.cachedContacts = contactsList.contacts;
 
 						resolve(contactsList);
@@ -78,9 +83,12 @@ class ContactList extends List {
 	}
 
 	load() {
+		$(document).trigger('system:loading');
+
 		return this._getContactsAccess()
 			.then((data) => {
 				this.assignAttributes(data.contacts);
+				$(document).trigger('system:loaded');
 				return data;
 			});
 	}

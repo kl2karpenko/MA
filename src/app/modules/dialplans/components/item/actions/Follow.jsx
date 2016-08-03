@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
-import Tappable from 'react-tappable';
+import { hashHistory }      from 'react-router';
+import Tappable             from 'react-tappable';
 
-import Dialplan from "models/Dialplan";
-import PhoneNumber from "models/PhoneNumber";
+import Dialplan             from "models/Dialplan";
+import PhoneNumber          from "models/PhoneNumber";
+
+import { $t }               from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Follow extends Component {
 	constructor(props) {
 		super(props);
 
 		this._goToList = this._goToList.bind(this);
+		this.onChange = this.onChange.bind(this);
 
 		let config = this._config(props.options);
 
@@ -28,55 +33,50 @@ export default class Follow extends Component {
 		this.setState(props.options);
 	}
 
-	_checkIfEqualNumber() {
-		let
-			mobileNumber = PhoneNumber.getValueByPath('value'),
-			transfer = Dialplan._getActiveTransfer(),
-			numberToTransfer = transfer && transfer.number;
-
-		if (numberToTransfer) {
-			numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "").replace(' ', '');
-		}
-
-		return numberToTransfer === mobileNumber;
-	}
-
 	_config(data) {
 		let
 			config = {},
 			dataName = data.name,
 			activeKey = data.active_action_key,
 			activeActionInDialplan = Dialplan._getActiveActionKey(),
-			mobileNumber = PhoneNumber.getValueByPath('value');
+			activeTransfer = Dialplan._getActiveTransfer(),
+			savedTransfer = Dialplan.getValueByPath("follow.contact"),
+			activeMailbox = Dialplan._getActiveMailbox(),
+			mobileNumber = PhoneNumber.getValueByPath('value'),
+			ifEqualToMobileNumber = Dialplan._checkIfEqualToMobileNumber();
 
 		switch(dataName) {
 			case "mailbox":
-				let activeMailbox = Dialplan._getActiveMailbox();
 
-				config.info = !this.props.personal && (activeMailbox && activeMailbox.number || "Tap to choose a mailbox");
-				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
+				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : $t("dialplans.choose_mailbox"));
+				config.checked = activeActionInDialplan === activeKey;
 				break;
 
 			case "contact":
-				config.info = Dialplan.getValueByPath("follow.contact") || "Tap to choose a contact";
-				config.checked = (activeActionInDialplan === activeKey
-				&& !this._checkIfEqualNumber()) ? "checked" : "";
+				let transferIsChosen = (activeActionInDialplan === activeKey &&
+				(activeTransfer && activeTransfer.number) && !ifEqualToMobileNumber.activeTransfer);
+				config.checked = transferIsChosen;
+
+				config.info =	transferIsChosen ? (activeTransfer && activeTransfer.number) :
+						(savedTransfer || $t("dialplans.choose_contact") );
 				break;
 
 			case "mobile":
-				config.info = mobileNumber;
-				let isActiveMobileFromTransfer = (activeActionInDialplan === activeKey
-				&& (Dialplan._getActiveTransfer() && this._checkIfEqualNumber()));
+				let mobileIsChosen = ((activeActionInDialplan === activeKey) &&
+				(activeTransfer && activeTransfer.number) && ifEqualToMobileNumber.activeTransfer);
 
-				config.checked = isActiveMobileFromTransfer ? "checked" : "";
-				if (isActiveMobileFromTransfer) {
+				config.info = mobileNumber;
+				config.checked = mobileIsChosen;
+
+				if (mobileIsChosen && ifEqualToMobileNumber.savedTransferNumber) {
 					Dialplan.updateAttributesFor("follow.contact", "");
+					Dialplan.updateAttributesFor("actions.transfer.items.0.number", "");
 				}
 				break;
 
 			case "origin":
 				config.info = "";
-				config.checked = activeActionInDialplan === activeKey ? "checked" : "";
+				config.checked = activeActionInDialplan === activeKey;
 				break;
 		}
 
@@ -84,7 +84,65 @@ export default class Follow extends Component {
 	}
 
 	_goToList() {
-		hashHistory.push(this.state.link);
+		hashHistory.replace(this.state.link);
+	}
+
+	onChange(e) {
+		let name = this.state.name;
+
+		switch(name) {
+			case "contact":
+				let contactNumber = Dialplan.getValueByPath("follow.contact");
+
+				if (contactNumber) {
+					Dialplan
+						._saveFollowToTransfer({
+							type: "contact",
+							number: contactNumber
+						})
+						.then(this.props.onChange.bind(this, name));
+				} else {
+					hashHistory.replace('/contacts/mobile');
+				}
+				break;
+
+			case "mobile":
+				PhoneNumber._getUserNumber().then((phone) => {
+					if (phone) {
+						Dialplan
+							._saveFollowToTransfer({
+								type: "contact",
+								number: phone
+							})
+							.then(this.props.onChange.bind(this, name));
+					}
+				});
+				break;
+
+			case "mailbox":
+				if (!this.props.personal) {
+					let mailbox = Dialplan._getActiveMailbox();
+
+					if (mailbox && mailbox._id) {
+						Dialplan
+							._saveFollowToMailbox(mailbox)
+							.then(this.props.onChange.bind(this, name));
+					} else {
+						hashHistory.replace('/mailboxes');
+					}
+				} else {
+					Dialplan
+						._saveFollowToMailbox()
+						.then(this.props.onChange.bind(this, name));
+				}
+				break;
+
+			default:
+				Dialplan
+					._saveFollowToOrigin()
+					.then(this.props.onChange.bind(this, name));
+				break;
+		}
 	}
 
 	render() {
@@ -93,20 +151,21 @@ export default class Follow extends Component {
 				<Tappable
 					pressDelay={500}
 					component="label"
-					className="m-label radio-block"
+					className={"m-label radio-block" + (this.state.search ? " search" : "")}
 					htmlFor={this.state.name}
-					onTap={this.props.onChange}>
+					onTap={this.onChange}
+					>
 					<input
+						ref={"radio-" + this.state.name}
 						type="radio"
-						name="follow"
-						value={this.state.name}
+						name={this.state.name}
 						checked={this.state.checked}
-						onChange={function() { }}
 						id={this.state.name}
+						onChange={() => {}}
 					/>
 					<div className="radio-button"></div>
 					<div className="l-dialplan-text">
-						<div className="l-dialplan-name">{this.state.title}</div>
+						<div className="l-dialplan-name">{$t(this.state.title)}</div>
 						<div className="l-dialplan-info">{this.state.info}</div>
 					</div>
 					{this.state.search && <Tappable

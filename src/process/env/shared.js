@@ -1,12 +1,5 @@
 import ProcessInfo from '../config';
 
-function getTokenHostName() {
-	let tokenHostName = "http://185.19.237.126:4445";
-	let tokenUrl = "/token";
-
-	return tokenHostName + tokenUrl;
-}
-
 module.exports = {
 	modules: [
 		"core",
@@ -19,7 +12,7 @@ module.exports = {
 	],
 	schema: {
 		hostname: "/",
-		tokenHostname: getTokenHostName()
+		tokenHostname: "/token"
 	},
 	process: ProcessInfo
 };

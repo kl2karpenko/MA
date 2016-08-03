@@ -1,21 +1,36 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }     from 'react';
+import { hashHistory }          from 'react-router';
 
-import MobileContacts from "../models/MobileContacts";
-import ListComponent from "components/list/Index.jsx";
+import MobileContacts           from "../models/MobileContacts";
+import ListComponent            from "components/list/Index.jsx";
 
-import Dialplan from "models/Dialplan";
+import Dialplan                 from "models/Dialplan";
+
+import { $t }                   from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class Contacts extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			search: props.search
+		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.log('componentWillReceiveProps', nextProps);
+		this.setState({
+			search: nextProps.search || ""
+		});
 	}
 
 	_setActiveContact(i, contactData) {
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
-			hashHistory.push('/dialplans');
+			hashHistory.replace('/dialplans');
 			return;
 		}
 		
@@ -25,7 +40,7 @@ export default class Contacts extends Component {
 				type: "contact"
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + id);
+				hashHistory.replace('/dialplans/' + id);
 			});
 	}
 
@@ -33,11 +48,12 @@ export default class Contacts extends Component {
 		return (
 			<ListComponent
 				model={MobileContacts}
+				search={this.state.search}
 				listClass="m-list-contacts"
 				onClick={this._setActiveContact}
 				configData={MobileContacts.configData}
 				withImg={true}
-				onError={"No permission to your contact list"}
+				onError={$t("contacts.errors.permission_denied")}
 			/>
 		);
 	}

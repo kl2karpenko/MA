@@ -20,6 +20,9 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 
 		/** add errors handling */
 		options.statusCode = {
+			400: function() {
+				messenger.error("Bad request", "Error");
+			},
 			401: function() {
 				Token.refreshToken().then(() => {
 					hashHistory.replace('/pin');

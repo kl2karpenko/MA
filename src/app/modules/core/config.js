@@ -1,5 +1,7 @@
 import schema from 'schema';
 
+/** Import ================================================================== */
+
 schema.add('extensions');
 
 schema.add('mailboxes');

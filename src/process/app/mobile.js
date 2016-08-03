@@ -1,5 +1,5 @@
 import $                  from 'jquery';
-import config         from "../config";
+import config             from "../config";
 import Storage            from 'models/Storage';
 import diagnostic         from 'diagnostic';
 import dialogs            from 'dialogs';
@@ -18,14 +18,14 @@ function configContact (data) {
 }
 
 module.exports = {
-	getMobileContacts: function () {
+	getMobileContacts() {
 		return new Promise((resolve) => {
 			let options = {};
 	
 			options.multiple = true;
 	
 			$(document).trigger('system:loading');
-	
+
 			navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
 				let contacts = [];
 	
@@ -48,7 +48,7 @@ module.exports = {
 		});
 	},
 
-	getMobileSIMNumber: function () {
+	getMobileSIMNumber() {
 		return new Promise((resolve, reject) => {
 			if (!config.isIOS()) {
 				window.plugins.sim.getSimInfo((result) => {

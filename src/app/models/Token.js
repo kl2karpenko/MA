@@ -2,6 +2,7 @@ import Storage from 'models/Storage';
 import config from 'envConfig';
 import messenger from 'messenger';
 import { hashHistory } from 'react-router';
+import { $t } from 'lib/locale';
 
 class Token {
 	constructor() {
@@ -21,7 +22,7 @@ class Token {
 		};
 
 		let
-			requestBody = this.getBodyForRequest(options);
+			requestBody = Token.getBodyForRequest(options);
 
 		return this.getTokenRequest(requestBody).then((data) => {
 			this.tokenData = data;
@@ -34,6 +35,12 @@ class Token {
 		Storage.setValue("token", value || this.token);
 	}
 
+	_getBase64EncodeForClient() {
+		return btoa(encodeURIComponent(this.clientId + ":" + this.clientSecret).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+			return String.fromCharCode('0x' + p1);
+		}));
+	}
+
 	getTokenRequest(requestBody) {
 	  return $.ajax({
 		  type: "POST",
@@ -41,15 +48,24 @@ class Token {
 		  data: requestBody,
 		  timeout: 10000,
 		  dataType: "json",
+		  beforeSend: (xhr) => {
+			  xhr.setRequestHeader("Authorization", "Basic " + this._getBase64EncodeForClient());
+		  },
 		  statusCode: {
 			  401: function(res) {
 				  messenger.error(
 				  	res.responseJSON && res.responseJSON.error_description,
-					  "Error"
+					  $t("error")
+				  );
+			  },
+			  403: function(res) {
+				  messenger.error(
+				  	res.responseJSON && res.responseJSON.error_description,
+					  $t("error")
 				  );
 			  },
 			  500: function() {
-				  messenger.error("Server is not available", "Error");
+				  messenger.error($t("errors.500"), $t("error"));
 
 				  $(document).trigger('system:fail');
 			  }
@@ -57,10 +73,8 @@ class Token {
 	  });
 	}
 
-	getBodyForRequest(options) {
+	static getBodyForRequest(options) {
 		let tokenOptions = {
-			"client_id": this.clientId,
-			"client_secret": this.clientSecret,
 			"grant_type": options.type
 		};
 
@@ -72,15 +86,13 @@ class Token {
 	refreshToken() {
 		if (!this.token || !this.tokenData.refresh_token) {
 			if (!location.hash.match("connects")) {
-				hashHistory.push('/connects/qr');
+				hashHistory.replace('/connects/qr');
 			}
 
 			return (new Promise((res) => { }));
 		}
 
 		return this.getTokenRequest({
-			"client_id": this.clientId,
-			"client_secret": this.clientSecret,
 			"grant_type": "refresh_token",
 			"refresh_token": this.tokenData.refresh_token
 		}).then((data) => {

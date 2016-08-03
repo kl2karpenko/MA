@@ -1,31 +1,47 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import React, { Component }     from 'react';
+import { hashHistory }          from 'react-router';
 
-import Extensions from "../models/Extensions";
-import ListComponent from "components/list/Index.jsx";
+import Extensions               from "../models/Extensions";
+import ListComponent            from "components/list/Index.jsx";
 
-import Dialplan from "models/Dialplan";
+import Dialplan                 from "models/Dialplan";
+import { $t }                   from 'lib/locale';
+
+/** Import ================================================================== */
 
 export default class ExtensionsCom extends Component {
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			search: props.search
+		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.log('componentWillReceiveProps', nextProps);
+		this.setState({
+			search: nextProps.search || ""
+		});
 	}
 
 	_setActiveContact(i, contactData) {
 		let id = Dialplan.getValueByPath("_id");
 
 		if (!id) {
-			hashHistory.push('/dialplans');
+			hashHistory.replace('/dialplans');
 			return;
 		}
 		
 		Dialplan
 			._saveFollowToTransfer({
 				number: contactData.number,
-				type: "extension"
+				type: "extension",
+				id: contactData._id,
+				user_id: contactData.user_id
 			})
 			.then(() => {
-				hashHistory.push('/dialplans/' + id);
+				hashHistory.replace('/dialplans/' + id);
 			});
 	}
 
@@ -33,11 +49,12 @@ export default class ExtensionsCom extends Component {
 		return (
 			<ListComponent
 				model={Extensions}
+				search={this.state.search}
 				listClass="m-list-contacts"
 				onClick={this._setActiveContact}
 				configData={Extensions.configData}
 				withImg={true}
-				onError={"Empty list"}
+				onError={$t("contacts.errors.empty")}
 			/>
 		);
 	}

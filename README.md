@@ -24,13 +24,15 @@ Plugin list:
 8. cordova-plugin-dialogs
 9. phonegap-plugin-barcodescanner
 9. cordova.plugins.diagnostic
+10. cordova-plugin-globalization
+11. https://github.com/kerrishotts/cordova-plugin-ios-launch-screen
 
 ## Production
 
 To build project files for production environment run:
 
 ```
-$ NODE_ENV='production' platformName='platform' webpack --config tools/webpack/config.js
+$ NODE_ENV='production' PLATFORM='{platform}' webpack --config tools/webpack/config.js
 ```
 
 
@@ -50,11 +52,14 @@ $ cordova run platform_name
 
 ## Development:
 
-To build project files for development environment run:
+To build project files for development environment run
 
 ```
-$ NODE_ENV='development' platformName='platform' webpack --config tools/webpack/config.js
+$ NODE_ENV='development' PLATFORM='{platform}' webpack --config tools/webpack/config.js
 ```
+Platforms:
+* ios
+* android
 
 ## Local:
 

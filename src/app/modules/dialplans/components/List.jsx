@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
-import imageLoader from 'imageLoader';
+import React, { Component }   from 'react';
+import { hashHistory }        from 'react-router';
+import imageLoader            from 'imageLoader';
 
-import ListComponent from "components/list/Index.jsx";
-import LinkButton from 'components/buttons/LinkButton.jsx';
+import ListComponent          from "components/list/Index.jsx";
+import LinkButton             from 'components/buttons/LinkButton.jsx';
 
-import DialplanList from "../models/DialplanList";
-import Dialplan from "models/Dialplan";
+import DialplanList           from "models/DialplanList";
+import Dialplan               from "models/Dialplan";
 
-import Adaptive from 'components/layouts/adaptive/Index.jsx';
-import AdaptiveWrapper from 'components/layouts/adaptive/Wrapper.jsx';
+import Adaptive               from 'components/layouts/adaptive/Index.jsx';
+import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
+
+/** Import ================================================================== */
 
 function _configData(data) {
 	return data.map((item) => {
@@ -38,7 +40,7 @@ export default class List extends Component {
 		Dialplan.load({
 			id: DialplanList.getValueOfDefAttrByIndex(index)
 		}).then(() => {
-			hashHistory.push(DialplanList.getUrl());
+			hashHistory.replace(DialplanList.getUrl());
 		});
 	}
 

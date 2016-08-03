@@ -1,6 +1,8 @@
-import React from 'react';
+import React  from 'react';
 
-import Main from 'components/layouts/main/Index.jsx';
+import Main   from 'components/layouts/main/Index.jsx';
+
+/** Import ================================================================== */
 
 export default class MainConnect extends React.Component {
 	constructor(props) {

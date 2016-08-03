@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
+import { hashHistory }      from 'react-router';
 
-import Dialplan from "models/Dialplan";
-import DialplanList from "../models/DialplanList";
+import Dialplan             from "models/Dialplan";
+import DialplanList         from "models/DialplanList";
+
+/** Import ================================================================== */
 
 export default class Index extends Component {
 	constructor(props) {
@@ -17,7 +19,6 @@ export default class Index extends Component {
 	}
 
 	componentDidMount() {
-		$(document).trigger('system:loading');
 		this._init();
 	}
 
@@ -26,7 +27,10 @@ export default class Index extends Component {
 			currentIdOfDialplan = this.state.id || Dialplan.getValueByPath("_id"),
 			currentIndex = DialplanList.getIndexOfItemById(currentIdOfDialplan);
 
-		currentIndex = currentIndex !== -1 ? currentIndex : 0;
+		if (currentIndex === -1) {
+			currentIndex = 0;
+			currentIdOfDialplan = DialplanList.getValueOfDefAttrByIndex(currentIndex);
+		}
 
 		DialplanList.updateState({
 			activePage: currentIndex + 1
@@ -43,8 +47,6 @@ export default class Index extends Component {
 	}
 
 	_init() {
-		$(document).trigger('system:loading');
-
 		DialplanList
 			.load()
 			.then(this._config.bind(this))
@@ -56,18 +58,19 @@ export default class Index extends Component {
 				let id = options.id || DialplanList.getValueOfDefAttrByIndex(options.index);
 
 				if (id === Dialplan.getValueByPath('_id')) {
-					this._goToActiveDialplan();
+					this._loaded();
 				} else {
 					return Dialplan
-						.load({
-							id: id
-						})
-						.done(this._goToActiveDialplan)
-						.then(() => {
-							$(document).trigger('system:loaded');
-						});
+						.load({ id: id })
+						.done(this._loaded.bind(this))
 				}
 			});
+	}
+
+	_loaded() {
+		this._goToActiveDialplan();
+		$('.app-loadBlock').removeClass('show');
+		$(document).trigger('system:loaded');
 	}
 
 	render() {

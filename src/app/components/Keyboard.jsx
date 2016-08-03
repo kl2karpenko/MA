@@ -57,11 +57,11 @@ export class KeyboardComponent extends Component {
 	}
 
 	static keyBoardHide() {
-		if (config.process.isProd() && Keyboard) {
+		if (config.process.isBuildApp() && Keyboard) {
 			Keyboard.hide();
 			setTimeout(() => {
 				Keyboard.hide();
-			}, 25)
+			}, 25);
 		}
 	}
 

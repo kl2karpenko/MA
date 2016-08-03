@@ -1,10 +1,12 @@
 import './lib/vendor/modernizr/custom';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Router, hashHistory} from 'react-router';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import {Router, hashHistory}  from 'react-router';
 
-import Main from "./modules/core/components/Enter.jsx";
-import config from 'envConfig';
+import Main                   from "./modules/core/components/Enter.jsx";
+import config                 from 'envConfig';
+
+/** Import ================================================================== */
 
 export default class System {
 	static _setStyles() {
@@ -30,10 +32,23 @@ export default class System {
 						require('./modules/mailboxes/routes.jsx')
 					]
 				}
-			]
+			],
+			onLeave: (nextState, replace) => {
+				let pathname = nextState.location.pathname;
+
+				if (pathname.indexOf("dialplans") !== -1) {
+					$('#app').addClass('light').removeClass('dark');
+				} else {
+					$('#app').addClass('dark').removeClass('light');
+				}
+			}
 		};
-		
+
 		return this;
+	}
+
+	_changeBodyClass() {
+
 	}
 
 	_renderApp() {
@@ -43,13 +58,9 @@ export default class System {
 		);
 	}
 
-	/**se
-	 * create routes for app and render app in block id="app"
-	 * @param redirectPage
-	 */
-	_initApp(redirectPage) {
+	_initApp() {
 		this
-			._createRoutes(redirectPage)
+			._createRoutes()
 			._renderApp();
 	}
 
@@ -58,7 +69,7 @@ export default class System {
 	 * if we in dev env we will work in browser so just init the app
 	 */
 	init() {
-		if (config.process.isProd()) {
+		if (config.process.isBuildApp()) {
 			/* on device ready init app */
 			document.addEventListener("deviceready", this._initApp.bind(this), false);
 			/* on device ready init app */
@@ -72,6 +83,7 @@ export default class System {
 	 * @returns {*|Promise.<TResult>}
 	 */
 	boot() {
-		return $.when(System._setStyles).then(require('./modules/core/config'));
+		return $.when(System._setStyles)
+			.then(require('./modules/core/config'));
 	}
 }

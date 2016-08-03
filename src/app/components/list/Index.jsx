@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component }     from 'react';
 
-import Item from "./Item.jsx";
+import Item                     from "./Item.jsx";
+
+import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+
+import { $t }                   from 'lib/locale';
 
 export default class Index extends Component {
 	constructor(props) {
@@ -10,7 +14,8 @@ export default class Index extends Component {
 			model: props.model,
 			list: props.model.getModel(),
 			config: props.configData,
-			searchQuery: props.search || ""
+			searchQuery: props.search || "",
+			loading: false
 		};
 	}
 
@@ -23,18 +28,34 @@ export default class Index extends Component {
 			searchString = newProps.search,
 			updateState;
 
-		if (searchString) {
-			updateState = {
-				config: newProps.configData,
-				searchQuery: searchString,
-				list: newProps.model.search(searchString, { by: ['name', 'number'] })
-			};
-			this.setState(updateState);
+		if ("search" in newProps) {
+			if (searchString) {
+				updateState = {
+					config: newProps.configData,
+					searchQuery: searchString,
+					list: newProps.configData(newProps.model.search(searchString, { by: ['name', 'number'] }))
+				};
+				this.setState(updateState);
+			} else {
+				console.log(newProps);
+
+				updateState = {
+					config: newProps.configData,
+					list: newProps.configData(newProps.model.getModel())
+				};
+				this.setState(updateState);
+			}
 		}
 	}
 
 	_load() {
-		$(document).trigger('system:loading');
+		if (this.state.loading) {
+			return;
+		}
+
+		this.setState({
+			loading: true
+		});
 
 		return this.state.model
 			.load()
@@ -44,29 +65,72 @@ export default class Index extends Component {
 
 				this.setState({
 					model: this.state.model,
-					list: configData
+					list: configData,
+					loading: false
 				});
-				
-				$(document).trigger('system:loaded');
 			});
 	}
 
+	_getLoadingText() {
+		let
+			modelName = $t("lists." + this.state.model._getModelName()),
+			textForReturn = "";
+
+		if ($t("loading")) {
+			if (modelName) {
+				textForReturn = $t("loading").replace(/%s/g, (modelName || ""));
+			} else {
+				textForReturn = $t("loading_empty");
+			}
+		}
+
+		return textForReturn;
+	}
+
 	render() {
+		let items = this.state.list && this.state.list.map((object, i) => {
+			return <ReactCSSTransitionGroup
+				key={"list-" + (object._id || i)}
+				transitionName = "visibility"
+				transitionAppear = {true}
+				transitionAppearTimeout = {300}
+				transitionEnter = {true}
+				transitionEnterTimeout = {300}
+				transitionLeaveTimeout = {300}
+				transitionLeave = {true}
+			><Item
+				data={object}
+				model={this.state.model}
+				key={"name-" + i}
+				onClick={this.props.onClick.bind(this, i, object)}
+				index={object._id || i}
+			/></ReactCSSTransitionGroup>;
+		});
+
 		return (
 			<div className={"m-list" + (this.props.listClass ? " " + this.props.listClass : "") + (this.props.withImg ? " m-list-withImg" : " m-list-withColor")}>
 				{(() => {
-					if (this.state.list && this.state.list.length) {
-							return (this.state.list.map((object, i) => {
-								return <Item
-									data={object}
-									model={this.state.model}
-									key={i}
-									onClick={this.props.onClick.bind(this, i, object)}
-									index={i}
-									/>
-							}));
+					if (!this.state.loading) {
+						if (this.state.list && this.state.list.length) {
+							return items;
+						} else {
+							return <ReactCSSTransitionGroup
+								key={"list-empty"}
+								transitionName = "visibility"
+								transitionAppear = {true} transitionAppearTimeout = {500}
+								transitionEnter = {false} transitionLeave = {false}
+							><div className="m-list-denied"><div>{this.props.onError || $t("empty")}</div></div></ReactCSSTransitionGroup>
+						}
 					} else {
-						return <div className="permission-denied">No permission to your contact list</div>
+						// TODO: add good translation module
+						return <ReactCSSTransitionGroup
+							key={"list-empty"}
+							transitionName = "visibility"
+							transitionAppear = {true} transitionAppearTimeout = {500}
+							transitionEnter = {false} transitionLeave = {false}
+						><div className="m-list-loading">
+							<div>{this._getLoadingText()}</div>
+						</div></ReactCSSTransitionGroup>
 					}
 				})()}
 			</div>
