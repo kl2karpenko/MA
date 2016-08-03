@@ -31,6 +31,10 @@ class Dialplan extends Model {
 		});
 	}
 
+	isMailBoxEnabled() {
+		return this.getValueByPath('mailbox_enabled');
+	}
+
 	_checkIfEqualToMobileNumber() {
 		let
 			mobileNumber = PhoneNumber.getValueByPath('value'),
@@ -63,6 +67,8 @@ class Dialplan extends Model {
 
 		let
 			changedData = {};
+		
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer.items.0', data);
 
 		this._setActiveActionKey("transfer");
 		changedData[ACTIVE_ACTION_KEY] = "transfer";
@@ -71,7 +77,6 @@ class Dialplan extends Model {
 		changedData[ACTIVE_ARRAY_KEY] = {
 			transfer: this.getValueByPath(ACTIVE_ARRAY_KEY + '.transfer')
 		};
-		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer.items.0', data);
 
 		if (!this._checkIfEqualToMobileNumber().activeTransfer) {
 			this.updateAttributesFor("follow.contact", data.number);

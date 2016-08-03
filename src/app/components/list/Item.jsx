@@ -31,7 +31,11 @@ export default class DialplanListItem extends Component {
 					onTap={this.props.onClick}>
 					{(() => {
 						if (this.state.data.image) {
-							return <Image title={this.state.data.name} src={this.state.data.image}/>;
+							return <Image
+								title={this.state.data.name}
+	              src={this.state.data.image}
+	              type={this.state.data.type}
+							/>;
 						} else {
 							return <Color color={this.state.data.color}/>;
 						}

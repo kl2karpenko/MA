@@ -27,7 +27,9 @@ export default class ExtensionsCom extends Component {
 		Dialplan
 			._saveFollowToTransfer({
 				number: contactData.number,
-				type: "extension"
+				type: "extension",
+				id: contactData._id,
+				user_id: contactData.user_id
 			})
 			.then(() => {
 				hashHistory.push('/dialplans/' + id);

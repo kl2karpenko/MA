@@ -34,6 +34,8 @@ class Language {
 		}
 
 		this.language = name;
+		console.log(name);
+		
 		this.languageFile = require("json!lang/" + name + ".json");
 		this.languageFileDefault = name !== "en" ? require("json!lang/en.json") : this.languageFile;
 	}

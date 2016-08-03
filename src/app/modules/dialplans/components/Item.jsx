@@ -92,6 +92,8 @@ export default class Item extends Component {
 	}
 
 	render() {
+		let isPersonaDialplan = this.state.Dialplan.personal;
+
 		return (
 			<ReactCSSTransitionGroup
 				key={"dialplan-page-" + Dialplan.getValueByPath("_id")}
@@ -150,7 +152,14 @@ export default class Item extends Component {
 
 						<AngleInfo>
 							<div className="m-angle-info-photo">
-								<img className="img-responsive img-circle" src={imageLoader(require("images/photo-placeholder.png"))} alt="Photo"/>
+								<img
+									className="img-responsive img-circle"
+									src={imageLoader(require(isPersonaDialplan ?
+									"images/placeholder/extension.png" :
+									"images/placeholder/dialplan.png"
+									))}
+									alt="Photo"
+								/>
 							</div>
 							<div className="m-angle-info-text">
 								<h2> {this.state.Dialplan.title} </h2>
@@ -170,7 +179,7 @@ export default class Item extends Component {
 					</Link>
 				</Angle>
 				<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
-					{this.state.Dialplan.personal ? <Personal/> : <Company/>}
+					{isPersonaDialplan ? <Personal/> : <Company/>}
 				</AdaptiveFixed>
 			</AdaptiveWrapper>
 		</Swipeable>

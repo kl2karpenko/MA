@@ -16,7 +16,8 @@ class MobileContacts extends List {
 	_defaultContactsItem() {
 		return {
 			"name": "",
-			"number": ""
+			"number": "",
+			"type": ""
 		};
 	}
 

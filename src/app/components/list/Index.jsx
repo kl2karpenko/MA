@@ -66,7 +66,7 @@ export default class Index extends Component {
 			return <ReactCSSTransitionGroup
 				key={"list-" + (object._id || i)}
 				transitionName = "visibility"
-				transitionAppear = {true}
+				transitionAppear = {true}s
 				transitionAppearTimeout = {300}
 				transitionEnter = {true}
 				transitionEnterTimeout = {300}
