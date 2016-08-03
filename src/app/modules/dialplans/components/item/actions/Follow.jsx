@@ -102,7 +102,7 @@ export default class Follow extends Component {
 						})
 						.then(this.props.onChange.bind(this, name));
 				} else {
-					hashHistory.replace('/contacts');
+					hashHistory.replace('/contacts/mobile');
 				}
 				break;
 

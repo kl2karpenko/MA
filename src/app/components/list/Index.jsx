@@ -28,13 +28,22 @@ export default class Index extends Component {
 			searchString = newProps.search,
 			updateState;
 
-		if (searchString) {
-			updateState = {
-				config: newProps.configData,
-				searchQuery: searchString,
-				list: newProps.model.search(searchString, { by: ['name', 'number'] })
-			};
-			this.setState(updateState);
+		if (searchString !== undefined) {
+			if (searchString) {
+				updateState = {
+					config: newProps.configData,
+					searchQuery: searchString,
+					list: newProps.configData(newProps.model.search(searchString, { by: ['name', 'number'] }))
+				};
+				this.setState(updateState);
+			} else {
+				updateState = {
+					config: newProps.configData,
+					searchQuery: searchString,
+					list: newProps.configData(newProps.model.getModel())
+				};
+				this.setState(updateState);
+			}
 		}
 	}
 
@@ -82,7 +91,7 @@ export default class Index extends Component {
 			return <ReactCSSTransitionGroup
 				key={"list-" + (object._id || i)}
 				transitionName = "visibility"
-				transitionAppear = {true}s
+				transitionAppear = {true}
 				transitionAppearTimeout = {300}
 				transitionEnter = {true}
 				transitionEnterTimeout = {300}

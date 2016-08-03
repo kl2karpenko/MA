@@ -58,6 +58,12 @@ class Token {
 					  $t("error")
 				  );
 			  },
+			  403: function(res) {
+				  messenger.error(
+				  	res.responseJSON && res.responseJSON.error_description,
+					  $t("error")
+				  );
+			  },
 			  500: function() {
 				  messenger.error($t("errors.500"), $t("error"));
 

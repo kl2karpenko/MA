@@ -13,20 +13,20 @@ class MobileContacts extends List {
 		this.managedResource = 'contacts';
 	}
 
+	configData(data) {
+		return Contacts.configData(data);
+	}
+
+	load() {
+		return Contacts.load();
+	}
+
 	_defaultContactsItem() {
 		return {
 			"name": "",
 			"number": "",
 			"type": ""
 		};
-	}
-
-	configData(data) {
-		return Contacts.configData(data);
-	}
-	
-	load() {
-		return Contacts.load();
 	}
 }
 

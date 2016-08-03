@@ -3,6 +3,7 @@ import { hashHistory }        from 'react-router';
 
 import imageLoader            from 'imageLoader';
 import Tappable               from 'react-tappable';
+import Swipeable              from "react-swipeable";
 
 import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
 import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
@@ -11,13 +12,16 @@ import Angle                  from 'components/modules/angle/Index.jsx';
 import AngleTop               from 'components/modules/angle/Top.jsx';
 
 import MainScroll             from 'components/layouts/main/Scroll.jsx';
-import LinkButton             from 'components/buttons/LinkButton.jsx';
 
 import Links                  from './item/Links.jsx';
 import Search                 from './item/Search.jsx';
 
-import AllContacts            from "../models/AllContacts";
+import Contacts               from "../models/MobileContacts";
+import Extensions             from "../models/Extensions";
 import Dialplan               from "models/Dialplan";
+
+import ContactsComponent      from './Contacts.jsx';
+import ExtensionsComponent    from './Extensions.jsx';
 
 import { $t }                 from 'lib/locale';
 
@@ -26,23 +30,31 @@ import { $t }                 from 'lib/locale';
 export default class Index extends Component {
 	constructor(props) {
 		super(props);
+
+		let model = props.params.name === "mobile" ? Contacts : Extensions;
 		
 		this.state = {
-			searchContacts: AllContacts.getStateBy('searchQuery'),
-			loc: props.location.pathname
+			model: model,
+			searchContacts: model.getStateBy('searchQuery'),
+			pageType: "list",
+			pageId: props.params.name
 		};
 
 		this._changeSearchState = this._changeSearchState.bind(this);
+		this._startSearch = this._startSearch.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		let model = nextProps.params.name === "mobile" ? Contacts : Extensions;
+
 		this.setState({
-			loc: nextProps.location.pathname
+			model: model,
+			pageId: nextProps.params.name
 		});
 	}
 
 	_changeSearchState(value) {
-		AllContacts.setStateBy('searchQuery', value);
+		this.state.model.setStateBy('searchQuery', value);
 
 		this.setState({
 			searchContacts: value
@@ -66,6 +78,12 @@ export default class Index extends Component {
 				hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
 			});
 	}
+	
+	_startSearch() {
+		this.setState({
+			pageType: "search"
+		});
+	}
 
 	static _leave() {
 		hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
@@ -73,25 +91,18 @@ export default class Index extends Component {
 
 	render() {
 		let
-			pathname = this.state.loc,
-			searchPage = pathname.match("search"),
-			RenderOnTop = Links,
-			classes = "m-angle__button btn btn-round btn-sm btn-right",
-			imgName = "search",
-			childrenProps =this.props.children,
-			href = "/contacts/search";
+			pageRender = this.state.pageId === "mobile" ?
+				<ContactsComponent search={this.state.searchContacts}/> :
+				<ExtensionsComponent search={this.state.searchContacts}/>,
 
-		if (searchPage) {
-			RenderOnTop = Search;
-			classes = "m-angle__button btn btn-round btn-sm btn-right btn-round-grey";
-			href = '/dialplans/' + Dialplan.getValueByPath("_id");
-			imgName = "cross-white-big";
-			childrenProps = React.cloneElement( this.props.children,
-			{ parentState: this.state.searchContacts });
-		}
+			isSearchPage = this.state.pageType !== "list",
+			RenderOnTop = !isSearchPage ? Links : Search,
+			classes = !isSearchPage ? "m-angle__button btn btn-round btn-sm btn-right"
+				: "m-angle__button btn btn-round btn-sm btn-right btn-round-grey",
 
-		return (
-		<AdaptiveWrapper class="l-adaptive-md">
+			imgName = !isSearchPage ? "search" : "cross-white-big";
+
+		return (<AdaptiveWrapper class="l-adaptive-md">
 			<Angle header={false}>
 				<div className="m-angle-content">
 					<AngleTop title={$t("contacts.forward")}/>
@@ -99,20 +110,32 @@ export default class Index extends Component {
 					<RenderOnTop onChange={this._changeSearchState} />
 				</div>
 
-				<LinkButton
-					style={{"margin-right": "67px"}}
-					text={<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>}
-					component="a"
+				<Tappable
+					component="button"
 					className={classes}
-					href={href}
-				/>
+					onTap={!isSearchPage ? this._startSearch : Index._leave}
+				>
+				<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>
+				</Tappable>
 			</Angle>
 			<AdaptiveFixed>
 				<MainScroll>
-					{ childrenProps }
+					<Swipeable
+						className="swipeable"
+						onSwipingRight={() => {
+							clearTimeout(this.isSwiping);
+
+							this.isSwiping = setTimeout(() => {
+								this.isSwiping = false;
+								hashHistory.replace("contacts/mobile");
+							}, 50);
+						}}
+						flickThreshold={0.1}
+					>
+						{pageRender}
+					</Swipeable>
 				</MainScroll>
 			</AdaptiveFixed>
-		</AdaptiveWrapper>
-		);
+		</AdaptiveWrapper>);
 	}
 }

@@ -36,7 +36,9 @@ export default class Personal extends Component {
 
 	render() {
 		let actionsList = this.state.actions;
-		if (!Dialplan.isMailBoxEnabled()) {
+		let mailboxDisabled = !Dialplan.isMailBoxEnabled();
+
+		if (mailboxDisabled) {
 			actionsList = actionsList.filter((item) => {
 				if (item.name === "mailbox") {
 					return false;
@@ -45,8 +47,6 @@ export default class Personal extends Component {
 				return item;
 			});
 		}
-
-		console.log(actionsList, Dialplan.isMailBoxEnabled());
 
 		return (
 			<div className="l-main">

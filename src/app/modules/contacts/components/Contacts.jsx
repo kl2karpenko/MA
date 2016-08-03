@@ -1,8 +1,6 @@
 import React, { Component }     from 'react';
 import { hashHistory }          from 'react-router';
 
-import Swipeable                from "react-swipeable";
-
 import MobileContacts           from "../models/MobileContacts";
 import ListComponent            from "components/list/Index.jsx";
 
@@ -16,7 +14,15 @@ export default class Contacts extends Component {
 	constructor(props) {
 		super(props);
 
-		this.isSwiping = false;
+		this.state = {
+			search: props.search
+		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			search: nextProps.search || ""
+		});
 	}
 
 	_setActiveContact(i, contactData) {
@@ -39,27 +45,15 @@ export default class Contacts extends Component {
 
 	render() {
 		return (
-			<Swipeable
-				className="swipeable"
-				onSwipingLeft={() => {
-					clearTimeout(this.isSwiping);
-
-					this.isSwiping = setTimeout(() => {
-						this.isSwiping = false;
-						hashHistory.replace("contacts/extensions");
-					}, 50);
-				}}
-				flickThreshold={0.1}
-			>
-				<ListComponent
-					model={MobileContacts}
-					listClass="m-list-contacts"
-					onClick={this._setActiveContact}
-					configData={MobileContacts.configData}
-					withImg={true}
-					onError={$t("contacts.errors.permission_denied")}
-				/>
-			</Swipeable>
+			<ListComponent
+				model={MobileContacts}
+				search={this.state.search}
+				listClass="m-list-contacts"
+				onClick={this._setActiveContact}
+				configData={MobileContacts.configData}
+				withImg={true}
+				onError={$t("contacts.errors.permission_denied")}
+			/>
 		);
 	}
 }

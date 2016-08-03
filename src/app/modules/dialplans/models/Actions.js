@@ -52,7 +52,7 @@ export default class Actions extends List {
 				className: "with-search",
 				search: true,
 				name: "contact",
-				link: "/contacts",
+				link: "/contacts/mobile",
 				active_action_key: "transfer"
 			}
 		];
