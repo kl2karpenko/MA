@@ -67,20 +67,6 @@ module.exports = {
 		});
 	},
 
-	// TODO fix!
-	getCurrentLanguage() {
-		return (new Promise((res) => {
-			navigator.globalization.getPreferredLanguage((language) => {
-				res(language.value);
-
-				console.log(language.value);
-			}, () => {
-				res("en");
-				console.log("error for location language");
-			});
-		}));
-	},
-
 	dialogs: dialogs,
 
 	diagnostic: diagnostic,

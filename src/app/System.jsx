@@ -5,7 +5,6 @@ import {Router, hashHistory}  from 'react-router';
 
 import Main                   from "./modules/core/components/Enter.jsx";
 import config                 from 'envConfig';
-import locale                 from 'lib/locale';
 
 /** Import ================================================================== */
 
@@ -46,26 +45,10 @@ export default class System {
 		);
 	}
 
-	/**se
-	 * create routes for app and render app in block id="app"
-	 * @param redirectPage
-	 */
-	_initApp(redirectPage) {
+	_initApp() {
 		this
-			._defineLang()
-			.then(this._createRoutes.bind(this, redirectPage))
-			.then(this._renderApp.bind(this));
-	}
-
-	_defineLang() {
-		return (new Promise((res) => {
-			res(
-				locale.setLanguage("en")
-			);
-		}));
-		// return getCurrentLanguage().then((lang) => {
-		// 	locale.setLanguage("en");
-		// });
+			._createRoutes()
+			._renderApp();
 	}
 
 	/**

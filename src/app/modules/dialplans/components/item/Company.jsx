@@ -79,7 +79,7 @@ export default class Company extends Component {
 				in_number={this.state.Dialplan.in_number}
 				onChange={this.onChangeFlowControl.bind(this, object)}
 			/></ReactCSSTransitionGroup>;
-		})
+		});
 
 		return (
 			<MainScroll>

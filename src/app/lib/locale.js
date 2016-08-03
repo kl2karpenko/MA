@@ -1,20 +1,29 @@
-import helpers                  from "lib/helpers";
+import helpers         from "lib/helpers";
 
 class Language {
-	constructor(lang) {
+	constructor() {
 		this.possibleLanguages = [ "en", "ru" ];
+		this.languagesFromPhone = [ "en", "ru-RU" ];
 		this.defaultLanguage = "en";
 
 		this.$t = this.$t.bind(this);
 		this.setLanguage = this.setLanguage.bind(this);
 	}
 
-	_init(langName) {
+	changeLanguage(langName) {
 		this.setLanguage(langName);
 	}
 
-	changeLanguage(langName) {
-		this.setLanguage(langName);
+	setCurrentLanguageOfDevice() {
+		let globalization = require('globalization');
+
+		return globalization.getCurrentLanguage().then((lang) => {
+			console.log(lang, 'setCurrentLanguageOfDevice');
+
+			this.setLanguage("ru");
+			
+			return lang;
+		});
 	}
 
 	setLanguage(name) {

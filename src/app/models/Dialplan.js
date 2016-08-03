@@ -66,6 +66,7 @@ class Dialplan extends Model {
 
 		this._setActiveActionKey("transfer");
 		changedData[ACTIVE_ACTION_KEY] = "transfer";
+		changedData._id = this.getValueByPath("_id");
 
 		changedData[ACTIVE_ARRAY_KEY] = {
 			transfer: this.getValueByPath(ACTIVE_ARRAY_KEY + '.transfer')

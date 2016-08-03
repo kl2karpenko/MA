@@ -49,7 +49,6 @@ export default class Item extends Component {
 	}
 
 	_loadDialplan() {
-		// TODO: edit loading ans shit with rendering
 		return Dialplan
 			.load({
 				id: DialplanList.getValueOfDefAttrByIndex(DialplanList.getActivePage() - 1)
@@ -106,7 +105,7 @@ export default class Item extends Component {
 			>
 			<Swipeable
 				className="swipeable"
-				onSwipingRight={(e, swipeX) => {
+				onSwipingRight={() => {
 					clearTimeout(this.isSwiping);
 					
 					this.isSwiping = setTimeout(() => {
@@ -116,7 +115,7 @@ export default class Item extends Component {
 						}
 					}, 50);
 				}}
-				onSwipingLeft={(e, swipeX) => {
+				onSwipingLeft={() => {
 					clearTimeout(this.isSwiping);
 
 					this.isSwiping = setTimeout(() => {

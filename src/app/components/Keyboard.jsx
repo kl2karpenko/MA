@@ -61,7 +61,7 @@ export class KeyboardComponent extends Component {
 			Keyboard.hide();
 			setTimeout(() => {
 				Keyboard.hide();
-			}, 25)
+			}, 25);
 		}
 	}
 

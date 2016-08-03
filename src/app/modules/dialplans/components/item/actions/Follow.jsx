@@ -172,7 +172,7 @@ export default class Follow extends Component {
 					/>
 					<div className="radio-button"></div>
 					<div className="l-dialplan-text">
-						<div className="l-dialplan-name">{this.state.title}</div>
+						<div className="l-dialplan-name">{$t(this.state.title)}</div>
 						<div className="l-dialplan-info">{this.state.info}</div>
 					</div>
 					{this.state.search && <Tappable

@@ -136,6 +136,7 @@ module.exports = {
             "contacts": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/contacts.js',
             "barcodeScanner": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/barcodeScanner.js',
             "dialogs": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/dialogs.js',
+            "globalization": 'src/process/app/plugins/' + BUILD_PLATFORM_FOR + '/globalization.js',
             // cordova plugins for env ( web or mobile) config
 
             "images": 'src/img',

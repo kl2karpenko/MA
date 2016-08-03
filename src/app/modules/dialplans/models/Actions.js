@@ -24,7 +24,7 @@ export default class Actions extends List {
 	_getStaticModel() {
 		let defaultModel = [
 			{
-				title: $t("dialplans.actions.follow_original"),
+				title: "dialplans.actions.follow_original",
 				info: "",
 				className: "",
 				search: false,
@@ -32,7 +32,7 @@ export default class Actions extends List {
 				active_action_key: "origin"
 			},
 			{
-				title: $t("dialplans.actions.follow_mobile"),
+				title: "dialplans.actions.follow_mobile",
 				info: "",
 				className: "",
 				search: false,
@@ -40,7 +40,7 @@ export default class Actions extends List {
 				active_action_key: "transfer"
 			},
 			{
-				title: !this.personal ? $t("dialplans.actions.follow_mailbox") : $t("dialplans.actions.follow_my_mailbox"),
+				title: !this.personal ? "dialplans.actions.follow_mailbox" : "dialplans.actions.follow_my_mailbox",
 				info: "",
 				className: (!this.personal ? "with-search" : " "),
 				search: !this.personal,
@@ -49,7 +49,7 @@ export default class Actions extends List {
 				active_action_key: "mailbox"
 			},
 			{
-				title: $t("dialplans.actions.follow_to"),
+				title: "dialplans.actions.follow_to",
 				info: "",
 				className: "with-search",
 				search: true,

@@ -43,8 +43,6 @@ export default class Index extends Component {
 			return;
 		}
 
-		console.log(this.state.loading);
-
 		this.setState({
 			loading: true
 		});

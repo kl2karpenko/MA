@@ -3,10 +3,10 @@ import { hashHistory }      from 'react-router';
 
 import schema               from 'schema';
 import config               from 'envConfig';
+import locale               from "lib/locale";
 
 import LockCode             from "models/LockCode";
 import Token                from "models/Token";
-import Storage              from "models/Storage";
 
 import FailBlock            from 'components/blocks/Fail.jsx';
 
@@ -23,7 +23,8 @@ export default class Enter extends Component {
 			loading: true,
 			fail: false,
 			offline: false,
-			showLoaderBlock: true
+			showLoaderBlock: true,
+			lang: "en"
 		};
 
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
@@ -34,6 +35,13 @@ export default class Enter extends Component {
 	componentDidMount() {
 		this._listen();
 		this._checkIfUserIsConnected();
+
+		this._defineLang()
+			.then((lang) => {
+				this.setState({
+					lang: lang
+				});
+			});
 	}
 
 	componentWillUnmount() {
@@ -49,11 +57,15 @@ export default class Enter extends Component {
 		document.removeEventListener("resume", Enter._resume);
 	}
 
-	_changeLoadStateToVisible(e) {
+	_defineLang() {
+		return locale.setCurrentLanguageOfDevice("en");
+	}
+
+	_changeLoadStateToVisible() {
 		$('.app-loader').addClass('loading');
 	}
 
-	_changeLoadStateToHidden(e) {
+	_changeLoadStateToHidden() {
 		$('.app-loader').removeClass('loading');
 	}
 
