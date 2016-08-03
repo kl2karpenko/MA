@@ -13,6 +13,8 @@ class ContactList extends List {
 		this.managedResource = 'contacts';
 		this.cachedContacts = [];
 
+		this.textError = "contacts.errors.permission_denied";
+
 		return List.prototype.init();
 	}
 
@@ -27,7 +29,7 @@ class ContactList extends List {
 			obj.number = item.number;
 			obj.image = item.image;
 			obj.name = item.name;
-			obj.type = "extension";
+			obj.type = "contact";
 
 			return obj;
 		});
@@ -38,17 +40,20 @@ class ContactList extends List {
 			switch(isAvailable) {
 				// contacts is have been requested and access is granted
 				case 1:
+					this.textError = false;
 					return this._loadContactsOrTakeFromCache();
 					break;
 				// contacts is have been requested but access was denied
 				case 2:
 					contacts.requestForAccess().then((giveAccess) => {
 						if (giveAccess) {
+							this.textError = false;
 							return this._loadContactsOrTakeFromCache();
 						}
 					});
 					break;
 				case 3:
+					this.textError = "contacts.errors.permission_denied";
 					dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
@@ -70,9 +75,9 @@ class ContactList extends List {
 			if (this.cachedContacts && !this.cachedContacts.length) {
 				return getMobileContacts()
 					.then((contactsList) => {
-						console.log(contactsList);
 						
 						this.cachedContacts = contactsList.contacts;
+						console.log(contactsList, this.cachedContacts);
 
 						resolve(contactsList);
 					});
@@ -87,6 +92,8 @@ class ContactList extends List {
 
 		return this._getContactsAccess()
 			.then((data) => {
+				console.log(data.contacts);
+
 				this.assignAttributes(data.contacts);
 				$(document).trigger('system:loaded');
 				return data;

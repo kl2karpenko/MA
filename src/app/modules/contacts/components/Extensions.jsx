@@ -19,7 +19,6 @@ export default class ExtensionsCom extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('componentWillReceiveProps', nextProps);
 		this.setState({
 			search: nextProps.search || ""
 		});
@@ -54,7 +53,6 @@ export default class ExtensionsCom extends Component {
 				onClick={this._setActiveContact}
 				configData={Extensions.configData}
 				withImg={true}
-				onError={$t("contacts.errors.empty")}
 			/>
 		);
 	}

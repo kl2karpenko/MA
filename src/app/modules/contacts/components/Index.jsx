@@ -3,7 +3,6 @@ import { hashHistory }        from 'react-router';
 
 import imageLoader            from 'imageLoader';
 import Tappable               from 'react-tappable';
-import Swipeable              from "react-swipeable";
 
 import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
 import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
@@ -16,8 +15,6 @@ import MainScroll             from 'components/layouts/main/Scroll.jsx';
 import Links                  from './item/Links.jsx';
 import Search                 from './item/Search.jsx';
 
-import Contacts               from "../models/MobileContacts";
-import Extensions             from "../models/Extensions";
 import Dialplan               from "models/Dialplan";
 
 import ContactsComponent      from './Contacts.jsx';
@@ -112,20 +109,7 @@ export default class Index extends Component {
 			</Angle>
 			<AdaptiveFixed>
 				<MainScroll>
-					<Swipeable
-						className="swipeable"
-						onSwipingRight={() => {
-							clearTimeout(this.isSwiping);
-
-							this.isSwiping = setTimeout(() => {
-								this.isSwiping = false;
-								hashHistory.replace("contacts/mobile");
-							}, 50);
-						}}
-						flickThreshold={0.1}
-					>
-						{pageRender}
-					</Swipeable>
+					{pageRender}
 				</MainScroll>
 			</AdaptiveFixed>
 		</AdaptiveWrapper>);

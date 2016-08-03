@@ -3,6 +3,7 @@
   "to_settings": "Go to settings",
   "empty": "Empty list",
   "loading": "Loading list of %s",
+  "empty_name": "No %s find",
   "loading_empty": "Loading",
 
   "error": "Error",

@@ -1,7 +1,7 @@
 import React, { Component }     from 'react';
 import { hashHistory }          from 'react-router';
 
-import MobileContacts           from "../models/MobileContacts";
+import MobileContacts           from "models/Contacts";
 import ListComponent            from "components/list/Index.jsx";
 
 import Dialplan                 from "models/Dialplan";
@@ -20,7 +20,6 @@ export default class Contacts extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('componentWillReceiveProps', nextProps);
 		this.setState({
 			search: nextProps.search || ""
 		});
@@ -53,7 +52,7 @@ export default class Contacts extends Component {
 				onClick={this._setActiveContact}
 				configData={MobileContacts.configData}
 				withImg={true}
-				onError={$t("contacts.errors.permission_denied")}
+				onError={MobileContacts.textError}
 			/>
 		);
 	}
