@@ -1,8 +1,8 @@
 module.exports = {
-	BUILD_APP: process.env.BUILD_APP || false,
+	BUILD_APP: (process.env.BUILD_APP && (process.env.BUILD_APP === "yes" || process.env.BUILD_APP === "true")) ? true : false,
 
 	platforms: {
-		active: process.env.platformName,
+		active: process.env.PLATFORM,
 		ios: "ios",
 		android: "android",
 		"default": "android"
@@ -53,7 +53,7 @@ module.exports = {
 	},
 
 	getDestinationDir: function () {
-		return this.isProd() ? 'www' : 'build';
+		return this.isBuildApp() ? 'www' : 'build';
 	},
 
 	getActivePlatform: function () {
@@ -62,12 +62,12 @@ module.exports = {
 		return platforms[platforms.active] || platforms.default;
 	},
 
-	getIfBuildApp: function () {
+	isBuildApp: function () {
 		return this.BUILD_APP;
 	},
 
-	getAppConfig: function () {
-		return this.BUILD_APP ? this.build.mobile :this.build.web;
+	getAppMode: function () {
+		return this.isBuildApp() ? this.build.mobile :this.build.web;
 	},
 
 	isIOS: function () {

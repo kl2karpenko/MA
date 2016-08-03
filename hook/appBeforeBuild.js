@@ -5,8 +5,8 @@ module.exports = function(context) {
 	if (!process.env.NODE_ENV) {
 		process.env.NODE_ENV = 'production';
 	}
-	if (!process.env.platformName) {
-		process.env.platformName = androidIs ? 'android' : 'ios';
+	if (!process.env.PLATFORM) {
+		process.env.PLATFORM = androidIs ? 'android' : 'ios';
 	}
 	// >>>>>>>>>>>>>>>>>>>>>> set env variable <<<<<<<<<<<<<<<<<<<<<<
 

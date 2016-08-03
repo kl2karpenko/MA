@@ -43,7 +43,7 @@ postcss()
 
 const ProcessInfo = require('../../src/process/config');
 const ACTIVE_ENVIRONMENT = ProcessInfo.getActiveEnv();
-const BUILD_PLATFORM_FOR = ProcessInfo.getAppConfig();
+const BUILD_PLATFORM_FOR = ProcessInfo.getAppMode();
 
 /**
  * ==========================================================
@@ -55,13 +55,16 @@ console.log(" ================ are on >> "
   + ACTIVE_ENVIRONMENT.toUpperCase() +
   " << environment =====================");
 
-if (ProcessInfo.getIfBuildApp()) {
+if (ProcessInfo.isBuildApp()) {
     console.log(" ================ build for mobile, platform >> "
       + ProcessInfo.getActivePlatform().toUpperCase() +
       " << =====================");
 } else {
     console.log(" ================ build for web =====================");
 }
+
+console.log(`>>> env: NODE_ENV=${process.env.NODE_ENV}, BUILD_APP=${process.env.BUILD_APP}, PLATFORM=${process.env.PLATFORM}`)
+console.log(`>>> mode: env=${ProcessInfo.getActiveEnv()}, isApp=${ProcessInfo.isBuildApp()}, mode=${ProcessInfo.getAppMode()}`)
 
 /**
  * Set begin path for run
@@ -92,7 +95,7 @@ module.exports = {
             'process.env': {
               'NODE_ENV': JSON.stringify(ACTIVE_ENVIRONMENT),
               'platformName': JSON.stringify(ProcessInfo.getActivePlatform()),
-              'BUILD_APP': JSON.stringify(ProcessInfo.getIfBuildApp())
+              'BUILD_APP': JSON.stringify(ProcessInfo.isBuildApp())
             }
         }),
 
@@ -211,7 +214,7 @@ module.exports = {
     }
 };
 
-if (ProcessInfo.isProd()) {
+if (ProcessInfo.isBuildApp()) {
     module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         compress: {
@@ -222,6 +225,13 @@ if (ProcessInfo.isProd()) {
             except: ['$super', '$', 'exports', 'require']
         }
     }));
+    // module.exports.plugins.push(new CompressionPlugin({
+    //     asset: "[path].gz[query]",
+    //     algorithm: "gzip",
+    //     test: /\.js$|\.html$/,
+    //     threshold: 10240,
+    //     minRatio: 0.8
+    // }));
 } else {
     module.exports.devtool = 'inline-source-map';
 }
