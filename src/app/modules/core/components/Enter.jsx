@@ -79,10 +79,7 @@ export default class Enter extends Component {
 	}
 
 	static _resume() {
-		if (Storage.existValue('lockCode')) {
-			Storage.setValue("unlock", false);
-			hashHistory.push('/pin');
-		}
+		LockCode.isExist() && hashHistory.push('/pin');
 	}
 
 	_checkIfUserIsConnected() {

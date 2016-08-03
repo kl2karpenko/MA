@@ -11,6 +11,7 @@ export default class Index extends Component {
 
 	render() {
 		$(document).trigger('system:loaded');
+		$('.app-loadBlock').removeClass('show');
 
 		return (
 			<AdaptiveWrapper>{this.props.children}</AdaptiveWrapper>

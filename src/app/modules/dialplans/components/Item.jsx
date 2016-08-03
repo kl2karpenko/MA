@@ -139,7 +139,13 @@ export default class Item extends Component {
 								className="m-angle-settings"
 								onTap={Item._goToSettings}
 								>
-								<img src={imageLoader(require("images/icons/nav-list.png"))} alt="Qr background"/>
+								<img
+									src={imageLoader(require("images/icons/nav-list.png"))}
+									onClick={(e) => {
+										e.stopPropagation();
+									}}
+									alt="Qr background"
+								/>
 							</Tappable>
 						</AngleTop>
 

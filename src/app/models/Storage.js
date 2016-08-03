@@ -23,7 +23,6 @@ export default class Storage {
 		this.deleteValue("lockCode");
 		this.deleteValue("phone");
 		this.deleteValue("token");
-		this.deleteValue("unlock");
 	}
 }
 

@@ -5,7 +5,6 @@ import { hashHistory } from 'react-router';
 
 import 'rest-client';
 import Token from "models/Token";
-import xhrPool from "./abort";
 
 module.exports = (new $.RestClient(config.schema.hostname, {
 	stripTrailingSlash: true,
@@ -17,16 +16,6 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 
 		options.beforeSend = function( xhr ) {
 			xhr.setRequestHeader("Authorization", "Bearer " + Token.token);
-
-			xhrPool.requests.push(xhr);
-		};
-
-		options.complete = function( xhr ) {
-			var index = xhrPool.requests.indexOf(xhr);
-
-			if (index > -1) {
-				xhrPool.requests.splice(index, 1);
-			}
 		};
 
 		/** add errors handling */

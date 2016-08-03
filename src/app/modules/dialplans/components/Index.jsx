@@ -44,9 +44,7 @@ export default class Index extends Component {
 	}
 
 	_goToActiveDialplan() {
-		if (Storage.existValue('lockCode') && Storage.getValue("unlock") === "true") {
-			hashHistory.push(DialplanList.getUrl());
-		}
+		hashHistory.push(DialplanList.getUrl());
 	}
 
 	_init() {
@@ -62,23 +60,18 @@ export default class Index extends Component {
 
 				if (id === Dialplan.getValueByPath('_id')) {
 					this._goToActiveDialplan();
-					this._loaded();
+					$('.app-loadBlock').removeClass('show');
+					$(document).trigger('system:loaded');
 				} else {
 					return Dialplan
-						.load({
-							id: id
-						})
+						.load({ id: id })
 						.done(this._goToActiveDialplan)
 						.then(() => {
-							this._loaded();
+							$('.app-loadBlock').removeClass('show');
+							$(document).trigger('system:loaded');
 						});
 				}
 			});
-	}
-
-	_loaded() {
-		$('.app-loadBlock').removeClass('show');
-		$(document).trigger('system:loaded');
 	}
 
 	render() {
