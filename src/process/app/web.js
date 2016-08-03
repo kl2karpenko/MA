@@ -3,7 +3,6 @@ import diagnostic         from 'diagnostic';
 import dialogs            from 'dialogs';
 import camera             from 'camera';
 import contacts           from 'contacts';
-import globalization      from 'globalization';
 import barcodeScanner     from 'barcodeScanner';
 
 module.exports = {
@@ -35,12 +34,6 @@ module.exports = {
 		return new Promise((resolve) => {
 			resolve("0504144151");
 		});
-	},
-
-	getCurrentLanguage() {
-		return (new Promise((res) => {
-			res("ru");
-		}));
 	},
 
 	dialogs: dialogs,

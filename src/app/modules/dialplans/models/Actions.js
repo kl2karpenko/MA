@@ -2,8 +2,6 @@ import List                   from 'List';
 
 import { getMobileSIMNumber } from "appConfig";
 
-import { $t }                 from 'lib/locale';
-
 /** Import ================================================================== */
 
 export default class Actions extends List {

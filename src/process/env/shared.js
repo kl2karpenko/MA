@@ -1,6 +1,5 @@
 import ProcessInfo from '../config';
 
-
 module.exports = {
 	modules: [
 		"core",

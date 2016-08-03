@@ -1,9 +1,8 @@
-import helpers         from "lib/helpers";
+import helpers from "lib/helpers";
 
 class Language {
 	constructor() {
 		this.possibleLanguages = [ "en", "ru" ];
-		this.languagesFromPhone = [ "en", "ru-RU" ];
 		this.defaultLanguage = "en";
 
 		this.$t = this.$t.bind(this);
@@ -34,8 +33,6 @@ class Language {
 		}
 
 		this.language = name;
-		console.log(name);
-		
 		this.languageFile = require("json!lang/" + name + ".json");
 		this.languageFileDefault = name !== "en" ? require("json!lang/en.json") : this.languageFile;
 	}

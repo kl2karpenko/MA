@@ -95,7 +95,7 @@ module.exports = {
             'process.env': {
               'NODE_ENV': JSON.stringify(ACTIVE_ENVIRONMENT),
               'platformName': JSON.stringify(ProcessInfo.getActivePlatform()),
-              'BUILD_APP': JSON.stringify(ProcessInfo.isBuildApp())
+              'BUILD_APP': ProcessInfo.isBuildApp() ? "'yes'" : "'no'"
             }
         }),
 
@@ -215,16 +215,16 @@ module.exports = {
 };
 
 if (ProcessInfo.isBuildApp()) {
-    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-            warnings: false,
-            keep_fnames: true
-        },
-        mangle: {
-            except: ['$super', '$', 'exports', 'require']
-        }
-    }));
+    // module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    //     sourceMap: true,
+    //     compress: {
+    //         warnings: false,
+    //         keep_fnames: true
+    //     },
+    //     mangle: {
+    //         except: ['$super', '$', 'exports', 'require']
+    //     }
+    // }));
     // module.exports.plugins.push(new CompressionPlugin({
     //     asset: "[path].gz[query]",
     //     algorithm: "gzip",
