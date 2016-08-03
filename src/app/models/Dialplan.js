@@ -21,6 +21,7 @@ class Dialplan extends Model {
 		let
 			changedData = {};
 
+		changedData._id = this.getValueByPath("_id");
 		changedData[ACTIVE_ACTION_KEY] = "origin";
 		this._setActiveActionKey("origin");
 
@@ -102,6 +103,7 @@ class Dialplan extends Model {
 
 		// update model
 		this._setActiveActionKey("mailbox");
+		changedData._id = this.getValueByPath("_id");
 		changedData[ACTIVE_ACTION_KEY] = "mailbox";
 
 		if (data) {

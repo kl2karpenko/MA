@@ -34,7 +34,7 @@ class PhoneNumber extends Model {
 					} else if (phoneValue !== "") {
 						this.messenger.error($t("phone.not_valid"), "Warning");
 					}
-				});
+				}, $t("phone.title"));
 			} else {
 				resolve(phoneValue);
 			}

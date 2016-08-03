@@ -25,6 +25,7 @@
 
   "phone": {
     "number_enter": "Please enter your phone number",
+    "title": "Phone number",
     "not_valid": "Not a valid phone number"
   },
 
