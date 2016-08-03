@@ -67,7 +67,8 @@ class Dialplan extends Model {
 
 		let
 			changedData = {};
-		
+
+		data.number = data.number.replace(/[\s)(\+]+/gi, "");
 		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer.items.0', data);
 
 		this._setActiveActionKey("transfer");

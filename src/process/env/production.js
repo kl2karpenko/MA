@@ -4,7 +4,7 @@ function getAddressOfHost(isApp) {
 	const publicHostName = "http://185.19.237.126:7887";
 	const privetHostName = "http://10.60.28.150:7887";
 	const hostName = isApp ? publicHostName : privetHostName;
-	return hostName;
+	return hostName + "/";
 }
 
 function getTokenHostName(isApp) {
