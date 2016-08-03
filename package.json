@@ -13,6 +13,7 @@
 
     "server": "node tools/server.js",
     "local": "BUILD_APP=no webpack --config tools/webpack/config.js",
+    "local_watch": "BUILD_APP=no webpack --watch --watch-pol --config tools/webpack/config.js",
     "prod": "NODE_ENV=production BUILD_APP=no webpack --config tools/webpack/config.js",
     "ios_app": "BUILD_APP=yes PLATFORM=ios webpack --config tools/webpack/config.js",
     "android_app": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js"
