@@ -112,5 +112,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-sim": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-sim@~1.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
