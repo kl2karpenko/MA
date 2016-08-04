@@ -1,6 +1,10 @@
 .idea/
 node_modules/
 platforms/
-plugins/
+plugins/*
 build/*
 www/*
+qaller_ios
+qaller_android
+qaller_android.zip
+qaller_ios.zip
