@@ -114,7 +114,9 @@ export default class Follow extends Component {
 						._saveFollowToMailbox(mailbox)
 						.then(this.props.onChange.bind(this, name));
 				} else {
-					hashHistory.replace('/mailboxes');
+					if (!this.props.personal) {
+						hashHistory.replace('/mailboxes');
+					}
 				}
 				break;
 
