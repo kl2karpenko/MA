@@ -87,7 +87,9 @@ export default class Follow extends Component {
 				if (cachedExternalData.number) {
 					Dialplan
 						._saveFollowToTransfer(cachedExternalData)
-						.then(this.props.onChange.bind(this, name));
+						.then(this.props.onChange.bind(this, name)).fail((fl) => {
+						console.log('cant save follow to transfer, error: ', fl);
+					});
 				} else {
 					hashHistory.replace('/contacts/mobile');
 				}
@@ -101,8 +103,12 @@ export default class Follow extends Component {
 								type: "contact",
 								number: phone
 							})
-							.then(this.props.onChange.bind(this, name));
+							.then(this.props.onChange.bind(this, name)).fail((fl) => {
+							console.log('cant save follow to transfer in dialplan, error: ', fl);
+						});
 					}
+				}).catch((fl) => {
+					console.log('cant get user number, error: ', fl);
 				});
 				break;
 
@@ -114,7 +120,9 @@ export default class Follow extends Component {
 				if (mailbox && mailbox.number) {
 					Dialplan
 						._saveFollowToMailbox(mailbox)
-						.then(this.props.onChange.bind(this, name));
+						.then(this.props.onChange.bind(this, name)).fail((fl) => {
+						console.log('cant save follow to mailbox diaplan, error: ', fl);
+					});
 				} else {
 					if (!this.props.personal) {
 						hashHistory.replace('/mailboxes');
@@ -125,7 +133,10 @@ export default class Follow extends Component {
 			default:
 				Dialplan
 					._saveFollowToOrigin()
-					.then(this.props.onChange.bind(this, name));
+					.then(this.props.onChange.bind(this, name))
+					.fail((fl) => {
+						console.log('cant load dialplans, error: ', fl);
+					});
 				break;
 		}
 	}

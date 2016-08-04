@@ -28,11 +28,13 @@ export default class Enter extends Component {
 
 	_getCameraAccess() {
 		camera.getCameraStatus().then((isAvailable) => {
+			if (isAvailable === 1) {
+				Enter._scanQRCode();
+			}
+		}).catch((isAvailable) => {
+			console.log('fail to get camera access', isAvailable);
+
 			switch(isAvailable) {
-				// camera is have been requested and access is granted
-				case 1:
-					Enter._scanQRCode();
-					break;
 				// camera is have been requested but access was denied
 				case 2:
 					camera.requestForAccess().then((giveAccess) => {

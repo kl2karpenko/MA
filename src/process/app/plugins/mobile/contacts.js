@@ -1,9 +1,9 @@
 import { diagnostic } from './diagnostic';
 import config from "../../../config";
 
-function requestPermissionsForContacts (callback) {
+function requestPermissionsForContacts (callback, error) {
 	if (config.isIOS()) {
-		return diagnostic.getContactsAuthorizationStatus(callback);
+		return diagnostic.getContactsAuthorizationStatus(callback, error);
 	} else {
 		return diagnostic.requestRuntimePermission(callback, function(error){
 			console.error("The following error occurred: " + error);
@@ -13,7 +13,7 @@ function requestPermissionsForContacts (callback) {
 
 module.exports = {
 	getContactsStatus() {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			requestPermissionsForContacts((status) => {
 				console.log('requestPermissionsForContacts: ', status);
 
@@ -24,17 +24,19 @@ module.exports = {
 						break;
 					case this.STATUSES.NOT_REQUESTED:
 						console.log("Permission to use the contact list has not been requested yet");
-						resolve(2);
+						reject(2);
 						break;
 					case this.STATUSES.DENIED:
 						console.log("Permission denied to use the contact list - ask again?");
-						resolve(3);
+						reject(3);
 						break;
 					case this.STATUSES.DENIED_ALWAYS:
 						console.log("Permission permanently denied to use the contact list - guess we won't be using it then!");
-						resolve(3);
+						reject(3);
 						break;
 				}
+			}, () => {
+				console.log('permission to contacts denied');
 			});
 		});
 	},
@@ -42,9 +44,12 @@ module.exports = {
 	STATUSES: diagnostic.permissionStatus,
 
 	requestForAccess() {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			diagnostic.requestContactsAuthorization((status) => {
+				console.log(status);
 				resolve(this.STATUSES.GRANTED === status);
+			}, (err) => {
+				reject(err);
 			});
 		});
 	},

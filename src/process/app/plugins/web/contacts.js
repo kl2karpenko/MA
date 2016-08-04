@@ -2,8 +2,8 @@ import { diagnostic } from './diagnostic';
 
 module.exports = {
 	getContactsStatus() {
-		return new Promise((resolve) => {
-			resolve(1);
+		return new Promise((resolve, reject) => {
+			reject(3);
 		});
 	},
 

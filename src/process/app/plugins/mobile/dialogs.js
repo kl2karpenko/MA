@@ -1,5 +1,5 @@
 if (!navigator.notification) {
-	throw new Error("you don't have installed >> notification << cordova plugin");
+	throw new Error("you don't have installed >> dialogs << cordova plugin");
 }
 
 module.exports = {

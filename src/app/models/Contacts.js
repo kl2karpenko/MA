@@ -37,23 +37,20 @@ class ContactList extends List {
 
 	_getContactsAccess() {
 		return contacts.getContactsStatus().then((isAvailable) => {
+			if(isAvailable === 1) {
+				this.textError = false;
+				return this._loadContactsOrTakeFromCache();
+			}
+		}).catch((isAvailable) => {
+			console.log('fail load contacts', isAvailable);
+
 			switch(isAvailable) {
-				// contacts is have been requested and access is granted
-				case 1:
-					this.textError = false;
-					return this._loadContactsOrTakeFromCache();
-					break;
 				// contacts is have been requested but access was denied
 				case 2:
-					contacts.requestForAccess().then((giveAccess) => {
-						if (giveAccess) {
-							this.textError = false;
-							return this._loadContactsOrTakeFromCache();
-						}
-					});
+					return this._getContactsRequestIfNotDetermined();
 					break;
 				case 3:
-					this.textError = "contacts.errors.permission_denied";
+					this.textError = $t("contacts.errors.permission_denied");
 					dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
@@ -70,6 +67,17 @@ class ContactList extends List {
 		});
 	}
 
+	_getContactsRequestIfNotDetermined() {
+		return contacts.requestForAccess().then((giveAccess) => {
+			if (giveAccess) {
+				this.textError = false;
+				return this._loadContactsOrTakeFromCache();
+			}
+		}).catch((fl) => {
+			console.log('fail', fl);
+		});
+	}
+
 	_loadContactsOrTakeFromCache() {
 		return new Promise((resolve) => {
 			if (this.cachedContacts && !this.cachedContacts.length) {
@@ -80,6 +88,8 @@ class ContactList extends List {
 						console.log(contactsList, this.cachedContacts);
 
 						resolve(contactsList);
+					}).catch((fl) => {
+						console.log('cant load contacts, error: ', fl);
 					});
 			} else {
 				resolve({ "contacts": this.cachedContacts });
@@ -92,11 +102,13 @@ class ContactList extends List {
 
 		return this._getContactsAccess()
 			.then((data) => {
-				console.log(data.contacts);
-
 				this.assignAttributes(data.contacts);
 				$(document).trigger('system:loaded');
+
 				return data;
+			}).catch((fl) => {
+				console.log('fail load contacts', fl);
+				$(document).trigger('system:loaded');
 			});
 	}
 

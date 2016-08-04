@@ -42,6 +42,8 @@ export default class List extends Component {
 			id: DialplanList.getValueOfDefAttrByIndex(index)
 		}).then(() => {
 			hashHistory.replace(DialplanList.getUrl());
+		}).fail((fl) => {
+			console.log('cant load dialplan, error: ', fl);
 		});
 	}
 

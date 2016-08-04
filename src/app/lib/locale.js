@@ -22,6 +22,9 @@ class Language {
 			this.setLanguage(langDefine);
 
 			return lang;
+		}).catch((fl) => {
+			console.log('cant load lang of device, error: ', fl);
+			this.setLanguage(this.defaultLanguage);
 		});
 	}
 

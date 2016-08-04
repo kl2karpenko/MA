@@ -30,6 +30,8 @@ class Dialplan extends Model {
 			}
 		}).then(() => {
 			this.assignAttributes(this.getModel());
+		}).fail((fl) => {
+			console.log('cannot save dialplan, error: ', fl);
 		});
 	}
 
@@ -60,6 +62,8 @@ class Dialplan extends Model {
 			}
 		}).then(() => {
 			this.assignAttributes(this.getModel());
+		}).fail((fl) => {
+			console.log('cant save forward dialplan to transfer, error: ', fl);
 		});
 	}
 
