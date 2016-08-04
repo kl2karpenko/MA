@@ -17,6 +17,7 @@
     },
     "connects": {
         "unable_to_scan_qr": "Ik kan de QR code niet scannen",
+        "want_to_scan_qr": "Ik wil proberen de QR code te scannen",
         "find_code": "Gebruik een computer om in te loggen in uw webinterface\nKlik op uw naam in de rechterbovenhoek\nSelecteer \"Koppel App\" in het menu.",
         "qr": {
             "scan_qr_code": "Scan QR code",
