@@ -16,7 +16,7 @@ class Extensions extends List {
 			var obj = {};
 
 			obj._id = item._id;
-			obj.number = item.in_number;
+			obj.number = item.ex_number || item.in_number;
 			obj.image = true;
 			obj.name = item.name;
 			obj.type = item.type;
