@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-browsersync": {
             "PACKAGE_NAME": "com.digifoon.qaller"
+        },
+        "cordova-plugin-ios-launch-screen": {
+            "PACKAGE_NAME": "com.digifoon.qaller"
         }
     },
     "dependent_plugins": {}
