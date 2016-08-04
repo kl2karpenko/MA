@@ -65,7 +65,9 @@ if (ProcessInfo.isBuildApp()) {
 }
 
 console.log(`>>> env: NODE_ENV=${process.env.NODE_ENV}, BUILD_APP=${process.env.BUILD_APP}, PLATFORM=${process.env.PLATFORM}`)
-console.log(`>>> mode: env=${ProcessInfo.getActiveEnv()}, isApp=${ProcessInfo.isBuildApp()}, mode=${ProcessInfo.getAppMode()}`)
+console.log(`>>> mode: env=${ProcessInfo.getActiveEnv()},`
+  + ` isApp=${ProcessInfo.isBuildApp()}, mode=${ProcessInfo.getAppMode()},`
+  + ` platform=${ProcessInfo.getActivePlatform()}`)
 
 /**
  * Set begin path for run
@@ -216,23 +218,16 @@ module.exports = {
 };
 
 if (ProcessInfo.isBuildApp()) {
-    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-            warnings: false,
-            keep_fnames: true
-        },
-        mangle: {
-            except: ['$super', '$', 'exports', 'require']
-        }
-    }));
-    module.exports.plugins.push(new CompressionPlugin({
-        asset: "[path].gz[query]",
-        algorithm: "gzip",
-        test: /\.js$|\.html$/,
-        threshold: 10240,
-        minRatio: 0.8
-    }));
+    // module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    //     sourceMap: true,
+    //     compress: {
+    //         warnings: false,
+    //         keep_fnames: true
+    //     },
+    //     mangle: {
+    //         except: ['$super', '$', 'exports', 'require']
+    //     }
+    // }));
 } else {
     module.exports.devtool = 'inline-source-map';
 }

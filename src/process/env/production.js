@@ -1,14 +1,12 @@
 import config from "./shared";
 
 function getAddressOfHost(isApp) {
-	const publicHostName = "http://185.19.237.126:7887";
-	const privetHostName = "http://10.60.28.150:7887";
-	const hostName = isApp ? publicHostName : privetHostName;
+	let hostName = `https://${config.isIOS() ? "ios" : "android"}.app.qaller.net`;
 	return hostName + "/";
 }
 
 function getTokenHostName(isApp) {
-	let tokenHostName = isApp ? "http://185.19.237.126:4445" : "http://10.60.28.150:4445";
+	let tokenHostName = `https://${config.isIOS() ? "ios" : "android"}.app.qaller.net`;
 	let tokenUrl = "/token";
 
 	return tokenHostName + tokenUrl;
