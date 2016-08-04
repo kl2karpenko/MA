@@ -91,7 +91,7 @@ export class KeyboardComponent extends Component {
 							className="m-keyboard__key buttons"
 							onTap={this._deleteValue.bind(this)}
 						>
-							<img className="img-responsive" src={imageLoader(require("images/icons/delete.jpg"))} alt="Delete"/>
+							<img className="img-responsive" src={imageLoader(require("images/icons/delete.svg"))} alt="Delete"/>
 						</Tappable>
 					</div>
 					<div className="col-xs-5 m-keyboard-digit">

@@ -18,7 +18,7 @@ export default class Image extends Component {
 	render() {
 		return (
 			<img className="img-circle pull-left" src={(typeof this.props.src === "string" && this.props.src)
-			|| imageLoader(require("images/placeholder/" + this._getImageName() + ".png"))} alt={this.props.title}/>
+			|| imageLoader(require("images/placeholder/" + this._getImageName() + ".svg"))} alt={this.props.title}/>
 		);
 	}
 }

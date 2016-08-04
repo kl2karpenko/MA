@@ -30,7 +30,7 @@ export default class Angle extends Component {
 				>
 					<img className="img-responsive previous" onClick={(e) => {
 						e.stopPropagation();
-					}} src={imageLoader(require("images/icons/arrow-left.png"))} alt="Left"/>
+					}} src={imageLoader(require("images/icons/arrow-left.svg"))} alt="Left"/>
 				</Tappable>
 
 				<Tappable
@@ -38,7 +38,7 @@ export default class Angle extends Component {
 					className={"m-angle-arrow __right" + this.state.next}
 					onTap={this.props.onClick}
 				>
-					<img className="img-responsive next" src={imageLoader(require("images/icons/arrow-right.png"))}
+					<img className="img-responsive next" src={imageLoader(require("images/icons/arrow-right.svg"))}
 					     onClick={(e) => {
 						     e.stopPropagation();
 					     }}

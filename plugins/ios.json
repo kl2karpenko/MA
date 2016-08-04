@@ -42,6 +42,9 @@
         },
         "cordova-plugin-globalization": {
             "PACKAGE_NAME": "Qaller"
+        },
+        "cordova-plugin-sim": {
+            "PACKAGE_NAME": "Qaller"
         }
     },
     "dependent_plugins": {

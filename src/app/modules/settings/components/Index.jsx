@@ -217,7 +217,7 @@ export default class Index extends Component {
 						className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
 						onTap={Index._leave}
 						>
-						<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Quit settings"/>
+						<img src={imageLoader(require("images/icons/cross-white-big.svg"))} alt="Quit settings"/>
 					</Tappable>
 				</Angle>
 			<AdaptiveFixed>

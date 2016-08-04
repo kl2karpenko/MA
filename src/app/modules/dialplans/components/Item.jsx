@@ -141,7 +141,7 @@ export default class Item extends Component {
 								onTap={Item._goToSettings}
 								>
 								<img
-									src={imageLoader(require("images/icons/nav-list.png"))}
+									src={imageLoader(require("images/icons/nav-list.svg"))}
 									onClick={(e) => {
 										e.stopPropagation();
 									}}
@@ -155,8 +155,8 @@ export default class Item extends Component {
 								<img
 									className="img-responsive img-circle"
 									src={imageLoader(require(isPersonaDialplan ?
-									"images/placeholder/extension.png" :
-									"images/placeholder/dialplan.png"
+									"images/placeholder/extension.svg" :
+									"images/placeholder/dialplan.svg"
 									))}
 									alt="Photo"
 								/>
@@ -175,7 +175,7 @@ export default class Item extends Component {
 					</div>
 
 					<Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
-						<img src={imageLoader(require("images/icons/list.png"))} alt="List of dialplans"/>
+						<img src={imageLoader(require("images/icons/list.svg"))} alt="List of dialplans"/>
 					</Link>
 				</Angle>
 				<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
