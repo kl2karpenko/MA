@@ -32,6 +32,7 @@ export default class Item extends Component {
 
 		this.state = {
 			Dialplan: Dialplan.getModel(),
+			accessOnlyPersonal: DialplanList.getModel().length === 1,
 			previous: DialplanList.getPreviousPage(),
 			next: DialplanList.getNextPage(),
 			loading: false,
@@ -67,7 +68,8 @@ export default class Item extends Component {
 		this.setState({
 			previous: DialplanList.getPreviousPage(),
 			next: DialplanList.getNextPage(),
-			Dialplan: Dialplan.getModel()
+			Dialplan: Dialplan.getModel(),
+			accessOnlyPersonal: DialplanList.getModel().length === 1
 		});
 	}
 
@@ -167,16 +169,24 @@ export default class Item extends Component {
 							</div>
 						</AngleInfo>
 
-						<AngleArrows
-							previous={this.state.previous}
-							next={this.state.next}
-							onClick={this._renderDialplan}
-						/>
+						{(() => {
+							if (!this.state.accessOnlyPersonal) {
+								return <AngleArrows
+									previous={this.state.previous}
+									next={this.state.next}
+									onClick={this._renderDialplan}
+								/>;
+							}
+						})()}
 					</div>
 
-					<Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
-						<img src={imageLoader(require("images/icons/list.svg"))} alt="List of dialplans"/>
-					</Link>
+					{(() => {
+						if (!this.state.accessOnlyPersonal) {
+							return <Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
+								<img src={imageLoader(require("images/icons/list.svg"))} alt="List of dialplans"/>
+							</Link>;
+						}
+					})()}
 				</Angle>
 				<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
 					{isPersonaDialplan ? <Personal/> : <Company/>}

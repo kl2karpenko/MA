@@ -19,10 +19,8 @@ class Language {
 		return globalization.getCurrentLanguage().then((lang) => {
 			let langDefine = lang && lang.slice(0, 2);
 
-			console.log('define', langDefine);
-
 			this.setLanguage(langDefine);
-			
+
 			return lang;
 		});
 	}

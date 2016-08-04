@@ -32,7 +32,7 @@ export default class Index extends Component {
 			if (searchString) {
 				updateState = {
 					searchQuery: searchString,
-					list: newProps.configData(newProps.model.search(searchString, {by: ['name', 'number']}))
+					list: newProps.configData(newProps.model.search(searchString, {by: ['name', 'number', 'in_number', 'ex_number']}))
 				};
 				this.setState(updateState);
 			} else {
