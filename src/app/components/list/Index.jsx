@@ -74,19 +74,7 @@ export default class Index extends Component {
 	}
 
 	_getLoadingText() {
-		let
-			modelName = $t("lists." + this.state.model._getModelName()),
-			textForReturn = "";
-
-		if ($t("loading")) {
-			if (modelName) {
-				textForReturn = $t("loading").replace(/%s/g, (modelName || ""));
-			} else {
-				textForReturn = $t("loading_empty");
-			}
-		}
-
-		return textForReturn;
+		return $t("loading");
 	}
 
 	render() {
