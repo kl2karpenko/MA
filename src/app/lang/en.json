@@ -1,9 +1,9 @@
 {
   "cancel": "Cancel",
   "to_settings": "Go to settings",
-  "empty": "Empty list",
+  "empty": "No results found",
   "loading": "Loading list of %s",
-  "empty_name": "No %s find",
+  "empty_name": "No %s found",
   "loading_empty": "Loading",
 
   "error": "Error",
@@ -63,10 +63,10 @@
     "call_routing": "Call Routing",
     "actions": {
       "follow_original": "Follow original dialplan",
-      "follow_mobile": "Follow to my mobile",
-      "follow_mailbox": "Follow original mailbox",
-      "follow_my_mailbox": "Follow original my mailbox",
-      "follow_to": "Forward to"
+      "follow_mobile": "Forward to my mobile",
+      "follow_to_mailbox": "Forward to mailbox:",
+      "follow_to_my_mailbox": "Forward to my mailbox",
+      "follow_to": "Forward to:"
     }
   },
 
@@ -81,7 +81,7 @@
 
   "settings": {
     "name": "Settings",
-    "personal_number": "Personal phone number",
+    "personal_number": "Mobile phone number",
     "enter_number": "Please enter your telephone number",
     "password": "Password at login",
     "general": "General settings",

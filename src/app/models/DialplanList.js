@@ -14,7 +14,8 @@ class Dialplans extends List {
 			"_id": "",
 			"_rev": "",
 			"in_number": "",
-			"ex_number": ""
+			"ex_number": "",
+			"type": ""
 		};
 	}
 }

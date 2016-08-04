@@ -2,7 +2,7 @@ import helpers from "lib/helpers";
 
 class Language {
 	constructor() {
-		this.possibleLanguages = [ "en", "ru" ];
+		this.possibleLanguages = [ "en", "ru" , "nl" ];
 		this.defaultLanguage = "en";
 
 		this.$t = this.$t.bind(this);

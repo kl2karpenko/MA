@@ -38,7 +38,7 @@ export default class Actions extends List {
 				active_action_key: "transfer"
 			},
 			{
-				title: !this.personal ? "dialplans.actions.follow_mailbox" : "dialplans.actions.follow_my_mailbox",
+				title: !this.personal ? "dialplans.actions.follow_to_mailbox" : "dialplans.actions.follow_to_my_mailbox",
 				info: "",
 				className: (!this.personal ? "with-search" : " "),
 				search: !this.personal,

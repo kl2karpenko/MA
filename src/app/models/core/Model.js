@@ -265,8 +265,8 @@ export default class Model {
 				options.message && this.messenger.success("Save " + resource);
 			})
 			.error((response) => {
-				return response;
 				$(document).trigger('system:loaded');
+				return response;
 			});
 	}
 

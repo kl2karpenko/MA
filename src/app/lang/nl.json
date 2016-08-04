@@ -1,0 +1,97 @@
+{
+    "cancel": "Annuleren",
+    "to_settings": "Ga naar instellingen",
+    "empty": "Lege lijst",
+    "loading": "Bezig met laden van %s",
+    "empty_name": "No %s find",
+    "loading_empty": "Loading",
+    "error": "Fout",
+    "errors": {
+        "500": "Server is niet bereikbaar"
+    },
+    "lists": {
+        "extensions": "extensies",
+        "dialplans": "belplannen",
+        "contacts": "contacten",
+        "mailboxes": "mailboxen"
+    },
+    "connects": {
+        "unable_to_scan_qr": "Ik kan de QR code niet scannen",
+        "find_code": "Gebruik een computer om in te loggen in uw webinterface. Klik op uw naam in de rechterbovenhoek en selecteer \"Connect App\" in het menu.",
+        "qr": {
+            "scan_qr_code": "Scan QR code",
+            "where_find_code": "Waar kan ik de QR code vinden?",
+            "start": "Start"
+        },
+        "pin": {
+            "enter_code": "Voer de code in",
+            "where_find_code": "Waar kan ik deze PIN code vinden?",
+            "login": "Inloggen"
+        }
+    },
+    "phone": {
+        "number_enter": "Vul uw telefoonnummer in",
+        "title": "Telefoonnummer",
+        "not_valid": "Ongeldig telefoonnummer"
+    },
+    "contacts": {
+        "forward": "Doorschakelen naar:",
+        "allow_access_to_list": "Controleer uw instellingen om toegang tot uw contactpersonen toe te staan",
+        "access_to_list_contact_denied": "Toegang tot uw contactpersonen is geweigerd",
+        "links": {
+            "mobile": "Mobiel",
+            "extensions": "Extensies"
+        },
+        "search": {
+            "placeholder": "Naam of telefoonnummer invoeren"
+        },
+        "errors": {
+            "permission_denied": "Geen toegang tot uw contactpersonen",
+            "empty": "Lege lijst"
+        }
+    },
+    "dialplans": {
+        "flow_control": "Omleiding",
+        "choose_contact": "Klik om een contact te selecteren",
+        "choose_mailbox": "Klik om een mailbox te selecteren",
+        "call_routing": "Gespreksroutering",
+        "actions": {
+            "follow_original": "Volg originele",
+            "follow_mobile": "Doorschakelen naar mijn mobiel",
+            "follow_to_mailbox": "Forward to mailbox:",
+            "follow_to_my_mailbox": "Forward to my mailbox",
+            "follow_mailbox": "Follow original mailbox",
+            "follow_my_mailbox": "Follow my mailbox",
+            "follow_to": "Doorschakelen naar"
+        }
+    },
+    "mailboxes": {
+        "follow_to": "Doorschakelen naar"
+    },
+    "pin": {
+        "enter_code": "Voer code in",
+        "wrong_code": "Verkeerde pin"
+    },
+    "settings": {
+        "name": "Instellingen",
+        "personal_number": "Personal phone number",
+        "enter_number": "Vul uw telefoonnummer in",
+        "password": "Wachtwoord voor login",
+        "general": "Algemene instellingen",
+        "disconnect": "Ontkoppel app",
+        "placeholders": {
+            "current": "Huidige pincode",
+            "new": "Nieuwe pincode",
+            "reenter_new": "Herhaal nieuwe pincode"
+        }
+    },
+    "camera": {
+        "check_settings": "Controleer uw instellingen om toegang tot de camera toe te staan",
+        "access_denied": "Toegang tot camera is afgewezen"
+    },
+    "token": {
+        "wrong_code": "Verkeerde code",
+        "scan_failed": "Scannen is mislukt:",
+        "barcode": "Plaats de QR code in het aangegeven gebied"
+    }
+}

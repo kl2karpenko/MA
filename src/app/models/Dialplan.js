@@ -126,6 +126,7 @@ class Dialplan extends Model {
 		return this.save({
 			data: {
 				"dialplan": {
+					"_id": this.getValueByPath("_id"),
 					"actions": {
 						"origin": {
 							"items": [changedFlowControl]

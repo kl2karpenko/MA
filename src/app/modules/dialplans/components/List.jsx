@@ -20,6 +20,7 @@ function _configData(data) {
 		obj.number = item.ex_number || item.in_number;
 		obj.image = true;
 		obj.name = item.title;
+		obj.type = item.type;
 
 		return obj;
 	});
