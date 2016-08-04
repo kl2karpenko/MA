@@ -178,9 +178,11 @@ class Dialplan extends Model {
 	_setDataForTransfer(data) {
 		let object = {};
 
-		if (data.number) object.number = Dialplan._formatExternalNumber(data.number);
-		if (data.id) object.id = data.id;
-		if (data.user_id) object.user_id = data.user_id;
+		if (data) {
+			if (data.number) object.number = Dialplan._formatExternalNumber(data.number);
+			if (data.id) object.id = data.id;
+			if (data.user_id) object.user_id = data.user_id;
+		}
 
 		object.type = data.type || "contact";
 
@@ -190,9 +192,11 @@ class Dialplan extends Model {
 	_setDataForMailbox(data) {
 		let object = {};
 
-		if (data.number) object.number = data.number;
-		if (data.id) object.id = data.id;
-		if (data.user_id) object.user_id = data.user_id;
+		if (data) {
+			if (data.number) object.number = data.number;
+			if (data.id) object.id = data.id;
+			if (data.user_id) object.user_id = data.user_id;
+		}
 
 		return object;
 	}
