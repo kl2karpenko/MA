@@ -166,7 +166,8 @@ class Dialplan extends Model {
 
 		if (this.isTransferedToExternalNumber()) {
 			this.updateAttributesFor('follow.contact', this.getTransferedToExternalNumberData());
-		} else if(this.isTransferedToMailbox()) {
+		}
+		if(this.isTransferedToMailbox()) {
 			this.updateAttributesFor('follow.mailbox', this.getTransferedToMailboxData());
 		}
 
@@ -182,9 +183,9 @@ class Dialplan extends Model {
 			if (data.number) object.number = Dialplan._formatExternalNumber(data.number);
 			if (data.id) object.id = data.id;
 			if (data.user_id) object.user_id = data.user_id;
+			object.type = data.type || "contact";
 		}
 
-		object.type = data.type || "contact";
 
 		return object;
 	}
