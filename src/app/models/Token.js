@@ -27,7 +27,7 @@ class Token {
 		return this.getTokenRequest(requestBody).then((data) => {
 			this.tokenData = data;
 			this.saveToken(data.access_token);
-		}).catch((fl) => {
+		}).fail((fl) => {
 			console.log('cant load token, error: ', fl);
 		});
 	}
@@ -100,7 +100,7 @@ class Token {
 		}).then((data) => {
 			this.tokenData = data;
 			this.saveToken(data.access_token);
-		}).catch((fl) => {
+		}).fail((fl) => {
 			console.log('cant refresh token, error: ', fl);
 		});
 	}
