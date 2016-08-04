@@ -70,19 +70,7 @@ export default class Index extends Component {
 	}
 
 	_getEmptyText() {
-		let
-			modelName = $t("lists." + this.state.model._getModelName()),
-			textForReturn = "";
-
-		if ($t("empty_name")) {
-			if (modelName) {
-				textForReturn = $t("empty_name").replace(/%s/g, (modelName || ""));
-			} else {
-				textForReturn = $t("empty");
-			}
-		}
-
-		return textForReturn;
+		return $t("empty");
 	}
 
 	_getLoadingText() {

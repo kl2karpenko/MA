@@ -20,7 +20,6 @@ class Extensions extends List {
 			obj.image = true;
 			obj.name = item.name;
 			obj.type = item.type;
-			obj._id = item._id;
 			obj.user_id = item.user_id;
 
 			return obj;

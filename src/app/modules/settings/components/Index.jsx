@@ -70,6 +70,7 @@ export default class Index extends Component {
 	_save() {
 		if (this.state.type === "pin") {
 			LockCode.updateAttributesFor('value', this.pin.created);
+
 			this.setPin();
 
 			return LockCode
