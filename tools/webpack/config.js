@@ -96,7 +96,7 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
               'NODE_ENV': JSON.stringify(ACTIVE_ENVIRONMENT),
-              'platformName': JSON.stringify(ProcessInfo.getActivePlatform()),
+              'PLATFORM': JSON.stringify(ProcessInfo.getActivePlatform()),
               'BUILD_APP': ProcessInfo.isBuildApp() ? "'yes'" : "'no'"
             }
         }),
