@@ -74,8 +74,6 @@
     </feature>
     <preference name="orientation" value="portrait" />
 
-
-
     <plugin name="cordova-plugin-sim" spec="~1.2.1" />
     <plugin name="cordova-plugin-keyboard" spec="~1.1.4" />
     <plugin name="cordova-plugin-compat" spec="~1.0.0" />
@@ -88,5 +86,4 @@
     <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
     <plugin name="cordova-plugin-ios-launch-screen" spec="https://github.com/kerrishotts/cordova-plugin-ios-launch-screen" />
     <plugin name="cordova-plugin-contacts" spec="https://github.com/apache/cordova-plugin-contacts" />
-
 </widget>
