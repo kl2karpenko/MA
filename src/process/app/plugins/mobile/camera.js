@@ -45,6 +45,8 @@ module.exports = {
 		return new Promise((resolve) => {
 			diagnostic.requestCameraAuthorization((status) => {
 				resolve(this.STATUSES.GRANTED === status);
+			}, (err) => {
+				reject(err);
 			});
 		});
 	},
