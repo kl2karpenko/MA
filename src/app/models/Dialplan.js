@@ -14,21 +14,22 @@ class Dialplan extends Model {
 	}
 
 	_saveFollowToOrigin() {
-		if (this._getActiveActionKey() === "origin") {
-			return new Promise((resolve, reject) => {});
-		}
+		let dataForSave = {};
 
-		let
-			changedData = {};
+		dataForSave._id = this.getValueByPath("_id");
+		dataForSave[ACTIVE_ACTION_KEY] = "origin";
+		this._setActiveActionKeyValue("origin");
 
-		changedData._id = this.getValueByPath("_id");
-		changedData[ACTIVE_ACTION_KEY] = "origin";
-		this._setActiveActionKey("origin");
+		// "actions"
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.mailbox', { "items": [ ] });
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer', { "items": [ ] });
 
 		return this.save({
 			data: {
-				"dialplan": changedData
+				"dialplan": dataForSave
 			}
+		}).then(() => {
+			this.assignAttributes(this.getModel());
 		});
 	}
 
@@ -36,91 +37,57 @@ class Dialplan extends Model {
 		return this.getValueByPath('mailbox_enabled');
 	}
 
-	_checkIfEqualToMobileNumber() {
-		let
-			mobileNumber = PhoneNumber.getValueByPath('value'),
-			transfer = this._getActiveTransfer(),
-			numberToTransfer = transfer && transfer.number,
-			savedTransferNumber = this.getValueByPath("follow.contact.number");
-
-		if (numberToTransfer) {
-			numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "");
-		}
-
-		if (savedTransferNumber) {
-			savedTransferNumber = savedTransferNumber.replace(/[\s)(\+]+/gi, "");
-		}
-
-		return {
-			activeTransfer: numberToTransfer === mobileNumber,
-			savedTransferNumber: savedTransferNumber === mobileNumber
-		};
-	}
-
 	_saveFollowToTransfer(data) {
-		let activeTransfer = this._getActiveTransfer();
+		let dataForSave = {};
 
-		if (this._getActiveActionKey() === "transfer" && (activeTransfer && activeTransfer.number === data.number)) {
-			return new Promise((resolve) => {
-				resolve();
-			});
-		}
+		// set active action key
+		this._setActiveActionKeyValue("transfer");
 
-		let
-			changedData = {};
+		// actions.transfer.items
+		dataForSave[ACTIVE_ARRAY_KEY] = { "transfer": { "items": [this._setDataForTransfer(data)] } };
+		// "active_action_key"
+		dataForSave[ACTIVE_ACTION_KEY] = "transfer";
+		// dialplan _id
+		dataForSave._id = this.getValueByPath("_id");
 
-		data.number = String(data.number).replace(/[\s)(\+]+/gi, "");
-		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer.items.0', data);
-
-		this._setActiveActionKey("transfer");
-		changedData[ACTIVE_ACTION_KEY] = "transfer";
-		changedData._id = this.getValueByPath("_id");
-
-		changedData[ACTIVE_ARRAY_KEY] = {
-			transfer: this.getValueByPath(ACTIVE_ARRAY_KEY + '.transfer')
-		};
-
-		if (!this._checkIfEqualToMobileNumber().activeTransfer) {
-			this.updateAttributesFor("follow.contact.number", data.number);
-			data.id && this.updateAttributesFor("follow.contact.id", data.id);
-			data.user_id && this.updateAttributesFor("follow.contact.user_id", data.user_id);
-		}
+		// "actions"
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.mailbox', { "items": [ ] });
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer', dataForSave[ACTIVE_ARRAY_KEY].transfer);
 
 		return this.save({
 			data: {
-				"dialplan": changedData
+				"dialplan": dataForSave
 			}
+		}).then(() => {
+			this.assignAttributes(this.getModel());
 		});
 	}
 
 	_saveFollowToMailbox(data) {
-		let activeMailbox = this._getActiveMailbox();
+		let dataForSave = {};
 
-		if (this._getActiveActionKey() === "mailbox" && activeMailbox && activeMailbox._id === data._id) {
-			return new Promise((resolve, reject) => {});
-		}
+		// set active action key
+		this._setActiveActionKeyValue("mailbox");
 
-		let
-			changedData = {};
+		// actions.transfer.items
+		dataForSave[ACTIVE_ARRAY_KEY] = { "mailbox": { "items": [this._setDataForMailbox(data)] } };
+		// "active_action_key"
+		dataForSave[ACTIVE_ACTION_KEY] = "mailbox";
+		// dialplan _id
+		dataForSave._id = this.getValueByPath("_id");
 
-		// update model
-		this._setActiveActionKey("mailbox");
-		changedData._id = this.getValueByPath("_id");
-		changedData[ACTIVE_ACTION_KEY] = "mailbox";
+		console.log(dataForSave);
 
-		if (data) {
-			this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.mailbox.items.0', data);
-			this.updateAttributesFor("follow.mailbox", data.number);
-
-			changedData[ACTIVE_ARRAY_KEY] = {
-				mailbox: this.getValueByPath(ACTIVE_ARRAY_KEY + '.mailbox')
-			};
-		}
+		// "actions"
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer', { "items": [ ] });
+		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.mailbox', dataForSave[ACTIVE_ARRAY_KEY].mailbox);
 
 		return this.save({
 			data: {
-				"dialplan": changedData
+				"dialplan": dataForSave
 			}
+		}).then(() => {
+			this.assignAttributes(this.getModel());
 		});
 	}
 	
@@ -139,41 +106,97 @@ class Dialplan extends Model {
 		});
 	}
 
-	_getActiveTransfer() {
+	static _formatExternalNumber(number) {
+		return String(number).replace(/[\s)(\+]+/gi, "");
+	}
+
+	isTransferedToExternalNumber() {
+		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".transfer.items.0.number") &&
+			!this.isTransferedToPersonalMobileNumber();
+	}
+
+	getTransferedToExternalNumberData() {
 		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".transfer.items.0");
 	}
 
-	_getActiveMailbox() {
-		let mailbox = this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0");
-
-		return mailbox && mailbox.length || mailbox;
+	getCachedToExternalNumberData() {
+		return this.getValueByPath("follow.contact");
 	}
 
-	_getActiveActionKey() {
+	getCachedToMailboxData() {
+		return this.getValueByPath("follow.mailbox");
+	}
+
+	isTransferedToPersonalMobileNumber() {
+		let
+			mobileNumber = PhoneNumber.getValueByPath('value'),
+			numberToTransfer = this.getValueByPath(ACTIVE_ARRAY_KEY + ".transfer.items.0.number");
+
+		if (numberToTransfer) {
+			numberToTransfer = Dialplan._formatExternalNumber(numberToTransfer);
+		}
+
+		if (mobileNumber) {
+			mobileNumber = Dialplan._formatExternalNumber(mobileNumber);
+		}
+
+		return numberToTransfer === mobileNumber;
+	}
+
+	isTransferedToMailbox() {
+		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0.number");
+	}
+
+	getTransferedToMailboxData() {
+		return this.getValueByPath(ACTIVE_ARRAY_KEY + ".mailbox.items.0");
+	}
+
+	isTransferedToOriginal() {
+		return this._getActiveActionKeyValue() === "origin";
+	}
+
+	_getActiveActionKeyValue() {
 		return this.getValueByPath(ACTIVE_ACTION_KEY);
 	}
 
-	_setActiveActionKey(activeKey) {
+	_setActiveActionKeyValue(activeKey) {
 		return this.updateAttributesFor(ACTIVE_ACTION_KEY, activeKey);
 	}
 
 	assignAttributes(props) {
 		super.assignAttributes.call(this, props);
 
-		if (this._getActiveTransfer()) {
-
-			let
-				defaultModel = this.getModel(),
-				transferNumber = this._getActiveTransfer().number;
-
-			if (transferNumber && transferNumber !== PhoneNumber.getValueByPath('value')) {
-				defaultModel.follow.contact = transferNumber;
-			}
+		if (this.isTransferedToExternalNumber()) {
+			this.updateAttributesFor('follow.contact', this.getTransferedToExternalNumberData());
+		} else if(this.isTransferedToMailbox()) {
+			this.updateAttributesFor('follow.mailbox', this.getTransferedToMailboxData());
 		}
 
 		this.isLoaded();
 
 		return this;
+	}
+
+	_setDataForTransfer(data) {
+		let object = {};
+
+		if (data.number) object.number = Dialplan._formatExternalNumber(data.number);
+		if (data.id) object.id = data.id;
+		if (data.user_id) object.user_id = data.user_id;
+
+		object.type = data.type || "contact";
+
+		return object;
+	}
+
+	_setDataForMailbox(data) {
+		let object = {};
+
+		if (data.number) object.number = data.number;
+		if (data.id) object._id = data.id;
+		if (data.user_id) object.user_id = data.user_id;
+
+		return object;
 	}
 
 	_defaultDialplan() {
@@ -183,32 +206,41 @@ class Dialplan extends Model {
 			"in_number": "",
 			"ex_number": "",
 			"title": "",
-			"actions": {
-				"origin": {
-					"items": [ ]
-				},
-				"mailbox": {
-					"items": [ ]
-				},
-				"transfer": {
-					"items": [ ]
-				}
-			},
+			"actions": this._getDefaultActions(),
 			"follow": {
-				"origin": "",
-				"mailbox": "",
-				"contact": this._getDefaultExtension,
-				"mobile": ""
+				"mailbox": this._getDefaultMailbox(),
+				"contact": this._getDefaultContact()
 			},
 			"active_action_key": "origin"
 		};
 	}
 
-	_getDefaultExtension() {
+	_getDefaultActions() {
+		return {
+			"origin": {
+				"items": [ ]
+			},
+			"mailbox": {
+				"items": [ ]
+			},
+			"transfer": {
+				"items": [ ]
+			}
+		};
+	}
+
+	_getDefaultContact() {
 		return {
 			"number": "",
-				"id": "",
-				"user_id": ""
+			"id": "",
+			"user_id": ""
+		};
+	}
+
+	_getDefaultMailbox() {
+		return {
+			"number": "",
+			"id": ""
 		};
 	}
 }
