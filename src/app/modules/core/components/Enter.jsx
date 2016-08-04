@@ -93,9 +93,10 @@ export default class Enter extends Component {
 	static _resume() {
 		if (LockCode.isExist()) {
 			$('.app-loadBlock').addClass('show');
-			
+
 			hashHistory.replace('/pin');
 		}
+		$('.app-loadBlock').removeClass('show');
 	}
 
 	_checkIfUserIsConnected() {
