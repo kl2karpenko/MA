@@ -15,10 +15,14 @@ export default class Image extends Component {
 		return images.indexOf(imageToSet) === -1 ? "extension" : imageToSet;
 	}
 
+	_getSource() {
+		return (typeof this.props.src === "string" && this.props.src)
+		|| imageLoader(require("images/placeholder/" + this._getImageName() + ".svg"));
+	}
+
 	render() {
 		return (
-			<img className="img-circle pull-left" src={(typeof this.props.src === "string" && this.props.src)
-			|| imageLoader(require("images/placeholder/" + this._getImageName() + ".svg"))} alt={this.props.title}/>
+			<img className="img-circle pull-left" src={this._getSource()} alt={this.props.title}/>
 		);
 	}
 }
