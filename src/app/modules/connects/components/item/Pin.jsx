@@ -4,7 +4,7 @@ import { hashHistory }        from 'react-router';
 import ConnectCode            from "models/ConnectCode";
 import Token                  from "models/Token";
 
-import UnableToScanQr         from './items/UnableToScanQr.jsx';
+import WantToScanQr         from './items/WantToScanQr.jsx';
 import PinForm                from 'components/inputs/Pin.jsx';
 import MainConnect            from './items/MainConnect.jsx';
 
@@ -88,7 +88,7 @@ export default class Pin extends Component {
 					<p className="l-main__text">{$t("connects.find_code")}</p>
 				</MainConnect>
 
-				<UnableToScanQr/>
+				<WantToScanQr/>
 			</Adaptive>
 		</Swipeable>
 		</ReactCSSTransitionGroup>

@@ -15,12 +15,11 @@ class Extensions extends List {
 		return data && data.map((item) => {
 			var obj = {};
 
-			obj._id = item._id;
-			obj.number = item.in_number;
+			obj.id = item.id;
+			obj.number = item.ex_number || item.in_number;
 			obj.image = true;
 			obj.name = item.name;
 			obj.type = item.type;
-			obj._id = item._id;
 			obj.user_id = item.user_id;
 
 			return obj;

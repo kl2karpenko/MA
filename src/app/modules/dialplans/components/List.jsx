@@ -20,6 +20,7 @@ function _configData(data) {
 		obj.number = item.ex_number || item.in_number;
 		obj.image = true;
 		obj.name = item.title;
+		obj.type = item.type;
 
 		return obj;
 	});
@@ -49,7 +50,7 @@ export default class List extends Component {
 		<AdaptiveWrapper>
 			<div className="dialplan-button">
 				<LinkButton
-					text={<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>}
+					text={<img src={imageLoader(require("images/icons/cross-white-big.svg"))} alt="Right"/>}
 					component="a"
 					className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
 					href={DialplanList.getUrl()}

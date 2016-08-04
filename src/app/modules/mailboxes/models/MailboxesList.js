@@ -11,7 +11,7 @@ class MailboxesList extends List {
 
 	_defaultMailboxesListItem() {
 		return {
-			"_id": "",
+			"id": "",
 			"name": "",
 			"in_number": "",
 			"color": "",

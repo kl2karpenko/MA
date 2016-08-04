@@ -227,13 +227,6 @@ if (ProcessInfo.isBuildApp()) {
     //         except: ['$super', '$', 'exports', 'require']
     //     }
     // }));
-    // module.exports.module.loaders.push(new CompressionPlugin({
-    //     asset: "[path].gz[query]",
-    //     algorithm: "gzip",
-    //     test: /\.js$|\.html$/,
-    //     threshold: 10240,
-    //     minRatio: 0.8
-    // }));
 } else {
     module.exports.devtool = 'inline-source-map';
 }

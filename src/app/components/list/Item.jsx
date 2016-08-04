@@ -32,6 +32,7 @@ export default class DialplanListItem extends Component {
 					{(() => {
 						if (this.state.data.image) {
 							return <Image
+								light={this.props.light || false}
 								title={this.state.data.name}
 	              src={this.state.data.image}
 	              type={this.state.data.type}

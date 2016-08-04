@@ -12,13 +12,18 @@ export default class Image extends Component {
 			images = ["dialplan", "extension"],
 			imageToSet = this.props.type || "extension";
 
-		return images.indexOf(imageToSet) === -1 ? "extension" : imageToSet;
+		return images.indexOf(imageToSet) === -1 ? "extension.png" :
+			((this.props.light ? imageToSet + '-white' : imageToSet) + ".svg");
+	}
+
+	_getSource() {
+		return (typeof this.props.src === "string" && this.props.src)
+		|| imageLoader(require("images/placeholder/" + this._getImageName()));
 	}
 
 	render() {
 		return (
-			<img className="img-circle pull-left" src={(typeof this.props.src === "string" && this.props.src)
-			|| imageLoader(require("images/placeholder/" + this._getImageName() + ".png"))} alt={this.props.title}/>
+			<img className="img-circle pull-left" src={this._getSource()} alt={this.props.title}/>
 		);
 	}
 }

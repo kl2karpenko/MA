@@ -138,6 +138,10 @@
       margin-bottom: -30px;
     }
 
+    &.second {
+      margin-right: 67px;
+    }
+
     &.btn-right {
       left: auto;
       right: @paddingContent;
@@ -192,7 +196,11 @@
     &-photo {
       width: 20%;
       margin: 0 @paddingContent;
-      float: left;
+
+      left: 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
 
       img {
         width: 100%;

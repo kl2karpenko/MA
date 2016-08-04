@@ -56,14 +56,11 @@ export default class Index extends Component {
 				});
 
 				let id = options.id || DialplanList.getValueOfDefAttrByIndex(options.index);
-
-				if (id === Dialplan.getValueByPath('_id')) {
-					this._loaded();
-				} else {
-					return Dialplan
-						.load({ id: id })
-						.done(this._loaded.bind(this))
-				}
+				console.log('load Dialplans');
+				
+				return Dialplan
+					.load({ id: id })
+					.done(this._loaded.bind(this))
 			});
 	}
 

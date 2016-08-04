@@ -1,105 +1,98 @@
 {
-  "cancel": "Cancel",
-  "to_settings": "Go to settings",
-  "empty": "Empty list",
-  "loading": "Loading list of %s",
-  "loading_empty": "Loading",
-
-  "error": "Error",
-  "errors": {
-    "500": "Server is not available"
-  },
-
-  "lists": {
-    "extensions": "extensions",
-    "dialplans": "dialplans",
-    "contacts": "contacts",
-    "mailboxes": "mailboxes"
-  },
-
-  "connects": {
-    "unable_to_scan_qr": "I’m unable to scan the QR code",
-    "find_code": "Use a computer to log in to your webinterface Click on your name in the top-right corner Select “Connect App” from the menu",
-    "qr": {
-      "scan_qr_code": "Scan QR code",
-      "where_find_code": "Where can I find this QR Code?",
-      "start": "Start"
+    "cancel": "Cancel",
+    "to_settings": "Go to settings",
+    "empty": "No results found",
+    "loading": "Loading list of %s",
+    "empty_name": "No %s found",
+    "loading_empty": "Loading",
+    "error": "Error",
+    "errors": {
+        "500": "Server is not available"
+    },
+    "lists": {
+        "extensions": "extensions",
+        "dialplans": "dialplans",
+        "contacts": "contacts",
+        "mailboxes": "mailboxes"
+    },
+    "connects": {
+        "unable_to_scan_qr": "I'm unable to scan the QR code",
+        "want_to_scan_qr": "I want to try to scan the QR code",
+        "find_code": "Use a computer to log in to your webinterface\nClick on your name in the top-right corner\nSelect \"Connect App\" from the menu",
+        "qr": {
+            "scan_qr_code": "Scan QR code",
+            "where_find_code": "Where can I find the QR Code?",
+            "start": "Start"
+        },
+        "pin": {
+            "enter_code": "Enter the pair code",
+            "where_find_code": "Where can I find the pair code?",
+            "login": "Login"
+        }
+    },
+    "phone": {
+        "number_enter": "Please enter your phone number",
+        "title": "Phone number",
+        "not_valid": "Not a valid phone number"
+    },
+    "contacts": {
+        "forward": "Forward to:",
+        "allow_access_to_list": "Please check your settings to allow access to contact list",
+        "access_to_list_contact_denied": "Access to your contact list denied",
+        "links": {
+            "mobile": "Mobile",
+            "extensions": "Extensions"
+        },
+        "search": {
+            "placeholder": "Enter name or phone number"
+        },
+        "errors": {
+            "permission_denied": "No permission to access your contact list",
+            "empty": "Empty list"
+        }
+    },
+    "dialplans": {
+        "flow_control": "Flow Control",
+        "choose_contact": "Tap to choose a contact",
+        "choose_mailbox": "Tap to choose a mailbox",
+        "call_routing": "Call Routing",
+        "actions": {
+            "follow_original": "Follow original dialplan",
+            "follow_mobile": "Forward to my mobile",
+            "follow_to_mailbox": "Forward to mailbox:",
+            "follow_to_my_mailbox": "Forward to my mailbox",
+            "follow_mailbox": "Follow original mailbox",
+            "follow_my_mailbox": "Follow my mailbox",
+            "follow_to": "Forward to:"
+        }
+    },
+    "mailboxes": {
+        "follow_to": "Forward to"
     },
     "pin": {
-      "enter_code": "Enter the code",
-      "where_find_code": "Where can I find this PIN Code?",
-      "login": "Login"
-    }
-  },
-
-  "phone": {
-    "number_enter": "Please enter your phone number",
-    "title": "Phone number",
-    "not_valid": "Not a valid phone number"
-  },
-
-  "contacts": {
-    "forward": "Forward to:",
-    "allow_access_to_list": "Please check your settings to allow access to contact list",
-    "access_to_list_contact_denied": "Access to your contact list denied",
-    "links": {
-      "mobile": "Mobile",
-      "extensions": "Extensions"
+        "enter_code": "Enter your lock code",
+        "wrong_code": "Wrong lock code"
     },
-    "search": {
-      "placeholder": "Enter name or phone number"
+    "settings": {
+        "name": "Settings",
+        "personal_number": "Mobile phone number",
+        "enter_number": "Please enter your telephone number",
+        "password": "Lock code on start",
+        "general": "General settings",
+        "disconnect": "Unpair app from account",
+        "placeholders": {
+            "current": "Enter current code",
+            "new": "Enter new code",
+            "reenter_new": "Reenter new code"
+        }
     },
-    "errors": {
-      "permission_denied": "No permission to your contact list",
-      "empty": "Empty list"
+    "camera": {
+        "check_settings": "Please check your settings to allow access to your camera",
+        "access_denied": "Access to your camera denied"
+    },
+    "token": {
+        "wrong_code": "Incorrect pair code",
+        "scan_failed": "Scanning failed:",
+        "barcode": "Place the QR code inside the scaning area"
     }
-  },
-
-  "dialplans": {
-    "flow_control": "Flow Control",
-    "choose_contact": "Tap to choose a contact",
-    "choose_mailbox": "Tap to choose a mailbox",
-    "call_routing": "Call Routing",
-    "actions": {
-      "follow_original": "Follow original dialplan",
-      "follow_mobile": "Follow to my mobile",
-      "follow_mailbox": "Follow original mailbox",
-      "follow_my_mailbox": "Follow original my mailbox",
-      "follow_to": "Forward to"
-    }
-  },
-
-  "mailboxes": {
-    "follow_to": "Forward to"
-  },
-
-  "pin": {
-    "enter_code": "Enter the code",
-    "wrong_code": "Wrong Pin"
-  },
-
-  "settings": {
-    "name": "Settings",
-    "personal_number": "Personal phone number",
-    "enter_number": "Please enter your telephone number",
-    "password": "Password at login",
-    "general": "General settings",
-    "disconnect": "Disconnect app",
-    "placeholders": {
-      "current": "Enter current",
-      "new": "Enter new pincode",
-      "reenter_new": "Reenter new pincode"
-    }
-  },
-
-  "camera": {
-    "check_settings": "Please check your settings to allow access to camera",
-    "access_denied": "Access to camera denied"
-  },
-
-  "token": {
-    "wrong_code": "Wrong connect code",
-    "scan_failed": "Scanning failed:",
-    "barcode": "Place a barcode inside the scan area"
-  }
 }

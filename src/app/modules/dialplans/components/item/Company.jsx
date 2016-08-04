@@ -45,7 +45,7 @@ export default class Company extends Component {
 	render() {
 		let followItems = this.state.actions.map((object, i) => {
 				return <ReactCSSTransitionGroup
-						key={"follow-" + (object._id || i)}
+						key={"follow-" + (object.id || i)}
 						transitionName = "visibility"
 						transitionAppear = {true}
 						transitionAppearTimeout = {600}
@@ -64,7 +64,7 @@ export default class Company extends Component {
 		let flowControls = this.state.Dialplan.actions.origin.items;
 		let flowControlsItems = flowControls.map((object, i) => {
 			return <ReactCSSTransitionGroup
-				key={"flow-control-" + (object._id || i) + "-" + Dialplan.getValueByPath("_id")}
+				key={"flow-control-" + (object._id || object.id || i) + "-" + Dialplan.getValueByPath("_id")}
 				transitionName = "visibility"
 				transitionAppear = {true}
 				transitionAppearTimeout = {600}

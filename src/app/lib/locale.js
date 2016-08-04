@@ -2,7 +2,7 @@ import helpers from "lib/helpers";
 
 class Language {
 	constructor() {
-		this.possibleLanguages = [ "en", "ru" ];
+		this.possibleLanguages = [ "en", "ru" , "nl" ];
 		this.defaultLanguage = "en";
 
 		this.$t = this.$t.bind(this);
@@ -19,10 +19,8 @@ class Language {
 		return globalization.getCurrentLanguage().then((lang) => {
 			let langDefine = lang && lang.slice(0, 2);
 
-			console.log('define', langDefine);
-
 			this.setLanguage(langDefine);
-			
+
 			return lang;
 		});
 	}
@@ -34,14 +32,10 @@ class Language {
 
 		this.language = name;
 		this.languageFile = require("json!lang/" + name + ".json");
-		this.languageFileDefault = name !== "en" ? require("json!lang/en.json") : this.languageFile;
 	}
 
 	$t(path) {
-		let translation = this.languageFile && (helpers.getValueByPath(path, this.languageFile) ||
-			helpers.getValueByPath(path, this.languageFileDefault));
-
-		return translation;
+		return this.languageFile && (helpers.getValueByPath(path, this.languageFile));
 	}
 }
 

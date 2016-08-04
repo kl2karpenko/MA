@@ -87,5 +87,6 @@
     <plugin name="cordova.plugins.diagnostic" spec="~3.1.1" />
     <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
     <plugin name="cordova-plugin-ios-launch-screen" spec="https://github.com/kerrishotts/cordova-plugin-ios-launch-screen" />
+    <plugin name="cordova-plugin-contacts" spec="https://github.com/apache/cordova-plugin-contacts" />
 
 </widget>

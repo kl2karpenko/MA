@@ -19,7 +19,6 @@ export default class ExtensionsCom extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('componentWillReceiveProps', nextProps);
 		this.setState({
 			search: nextProps.search || ""
 		});
@@ -36,8 +35,8 @@ export default class ExtensionsCom extends Component {
 		Dialplan
 			._saveFollowToTransfer({
 				number: contactData.number,
-				type: "extension",
-				id: contactData._id,
+				type: contactData.type || "extension",
+				id: contactData.id,
 				user_id: contactData.user_id
 			})
 			.then(() => {
@@ -54,7 +53,6 @@ export default class ExtensionsCom extends Component {
 				onClick={this._setActiveContact}
 				configData={Extensions.configData}
 				withImg={true}
-				onError={$t("contacts.errors.empty")}
 			/>
 		);
 	}

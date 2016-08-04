@@ -12,11 +12,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node tools/server.js",
     "local": "BUILD_APP=no webpack --config tools/webpack/config.js",
-    "local_watch": "BUILD_APP=no webpack --watch --watch-pol --config tools/webpack/config.js",
+    "local_w": "BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
+
+    "dev_w": "NODE_ENV=development BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
+
     "prod": "NODE_ENV=production BUILD_APP=no webpack --config tools/webpack/config.js",
-    "prod_watch": "NODE_ENV=production BUILD_APP=no webpack --watch --watch-pol --config tools/webpack/config.js",
+
+    "prod_w": "NODE_ENV=production BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
+
+    "android_prod_w": "NODE_ENV=production BUILD_APP=yes PLATFORM=android webpack --watch --watch-poll --config tools/webpack/config.js",
+    "ios_and_prod_w": "NODE_ENV=production BUILD_APP=yes PLATFORM=ios webpack --watch --watch-poll --config tools/webpack/config.js",
+
     "ios_app": "BUILD_APP=yes PLATFORM=ios webpack --config tools/webpack/config.js && zip -r qaller_ios.zip www res config.xml",
-    "android_app": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js && zip -r qaller_android.zip www res config.xml"
+    "android_app": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js && zip -r qaller_android.zip www res config.xml",
+
+    "android_cordova_run": "cordova run android"
   },
   "author": "Karpenko Lilya",
   "browser": {

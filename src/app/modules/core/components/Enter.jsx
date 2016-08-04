@@ -39,7 +39,7 @@ export default class Enter extends Component {
 		this._defineLang()
 			.then((lang) => {
 				this.setState({
-					lang: lang
+					lang: "ru"
 				});
 			});
 	}
@@ -58,7 +58,7 @@ export default class Enter extends Component {
 	}
 
 	_defineLang() {
-		return locale.setCurrentLanguageOfDevice("en");
+		return locale.setCurrentLanguageOfDevice();
 	}
 
 	_changeLoadStateToVisible() {
@@ -91,11 +91,12 @@ export default class Enter extends Component {
 	}
 
 	static _resume() {
-		$('.app-loadBlock').addClass('show');
-
 		if (LockCode.isExist()) {
+			$('.app-loadBlock').addClass('show');
+
 			hashHistory.replace('/pin');
 		}
+		$('.app-loadBlock').removeClass('show');
 	}
 
 	_checkIfUserIsConnected() {

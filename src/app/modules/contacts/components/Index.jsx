@@ -3,7 +3,6 @@ import { hashHistory }        from 'react-router';
 
 import imageLoader            from 'imageLoader';
 import Tappable               from 'react-tappable';
-import Swipeable              from "react-swipeable";
 
 import AdaptiveFixed          from 'components/layouts/adaptive/IndexFixed.jsx';
 import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
@@ -16,8 +15,6 @@ import MainScroll             from 'components/layouts/main/Scroll.jsx';
 import Links                  from './item/Links.jsx';
 import Search                 from './item/Search.jsx';
 
-import Contacts               from "../models/MobileContacts";
-import Extensions             from "../models/Extensions";
 import Dialplan               from "models/Dialplan";
 
 import ContactsComponent      from './Contacts.jsx';
@@ -55,7 +52,6 @@ export default class Index extends Component {
 
 	_setActiveContact(i, contactData) {
 		let id = Dialplan.getValueByPath("_id");
-
 		if (!id) {
 			hashHistory.replace('/dialplans');
 			return;
@@ -104,28 +100,23 @@ export default class Index extends Component {
 
 				<Tappable
 					component="button"
-					className={classes}
+					className={!isSearchPage ? (classes + " second") : classes}
 					onTap={!isSearchPage ? this._startSearch : Index._leave}
 				>
-				<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>
+				<img src={imageLoader(require("images/icons/" + imgName + ".svg"))} alt="Right"/>
+				</Tappable>
+
+				<Tappable
+					component="button"
+					className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
+					onTap={Index._leave}
+				>
+				<img src={imageLoader(require("images/icons/cross-white-big.svg"))} alt="Right"/>
 				</Tappable>
 			</Angle>
 			<AdaptiveFixed>
 				<MainScroll>
-					<Swipeable
-						className="swipeable"
-						onSwipingRight={() => {
-							clearTimeout(this.isSwiping);
-
-							this.isSwiping = setTimeout(() => {
-								this.isSwiping = false;
-								hashHistory.replace("contacts/mobile");
-							}, 50);
-						}}
-						flickThreshold={0.1}
-					>
-						{pageRender}
-					</Swipeable>
+					{pageRender}
 				</MainScroll>
 			</AdaptiveFixed>
 		</AdaptiveWrapper>);

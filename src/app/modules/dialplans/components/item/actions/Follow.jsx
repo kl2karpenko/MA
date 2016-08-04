@@ -38,45 +38,31 @@ export default class Follow extends Component {
 			config = {},
 			dataName = data.name,
 			activeKey = data.active_action_key,
-			activeActionInDialplan = Dialplan._getActiveActionKey(),
-			activeTransfer = Dialplan._getActiveTransfer(),
-			savedTransfer = Dialplan.getValueByPath("follow.contact"),
-			activeMailbox = Dialplan._getActiveMailbox(),
-			mobileNumber = PhoneNumber.getValueByPath('value'),
-			ifEqualToMobileNumber = Dialplan._checkIfEqualToMobileNumber();
+			activeActionInDialplan = Dialplan._getActiveActionKeyValue(),
+			transferedToMobileNumber = Dialplan.isTransferedToPersonalMobileNumber(),
+			transferedToExternalNumber = Dialplan.isTransferedToExternalNumber();
 
 		switch(dataName) {
 			case "mailbox":
-
-				config.info = !this.props.personal && (activeMailbox ? activeMailbox.number : $t("dialplans.choose_mailbox"));
+				config.info = !this.props.personal ? (Dialplan.getCachedToMailboxData()
+				&& Dialplan.getCachedToMailboxData().number || $t("dialplans.choose_mailbox")) : "";
 				config.checked = activeActionInDialplan === activeKey;
 				break;
 
 			case "contact":
-				let transferIsChosen = (activeActionInDialplan === activeKey &&
-				(activeTransfer && activeTransfer.number) && !ifEqualToMobileNumber.activeTransfer);
-				config.checked = transferIsChosen;
-
-				config.info =	transferIsChosen ? (activeTransfer && activeTransfer.number) :
-						(savedTransfer || $t("dialplans.choose_contact") );
+				config.checked = transferedToExternalNumber;
+				config.info = Dialplan.getCachedToExternalNumberData() &&
+				Dialplan.getCachedToExternalNumberData().number || $t("dialplans.choose_contact");
 				break;
 
 			case "mobile":
-				let mobileIsChosen = ((activeActionInDialplan === activeKey) &&
-				(activeTransfer && activeTransfer.number) && ifEqualToMobileNumber.activeTransfer);
-
-				config.info = mobileNumber;
-				config.checked = mobileIsChosen;
-
-				if (mobileIsChosen && ifEqualToMobileNumber.savedTransferNumber) {
-					Dialplan.updateAttributesFor("follow.contact", "");
-					Dialplan.updateAttributesFor("actions.transfer.items.0.number", "");
-				}
+				config.checked = transferedToMobileNumber;
+				config.info =	PhoneNumber.getValueByPath('value') || "";
 				break;
 
 			case "origin":
-				config.info = "";
 				config.checked = activeActionInDialplan === activeKey;
+				config.info = "";
 				break;
 		}
 
@@ -89,17 +75,18 @@ export default class Follow extends Component {
 
 	onChange(e) {
 		let name = this.state.name;
-
+		
+		if (this.refs["radio-" + name].checked) {
+			return;
+		}
+		
 		switch(name) {
 			case "contact":
-				let contactNumber = Dialplan.getValueByPath("follow.contact");
+				let cachedExternalData = Dialplan.getCachedToExternalNumberData();
 
-				if (contactNumber) {
+				if (cachedExternalData.number) {
 					Dialplan
-						._saveFollowToTransfer({
-							type: "contact",
-							number: contactNumber
-						})
+						._saveFollowToTransfer(cachedExternalData)
 						.then(this.props.onChange.bind(this, name));
 				} else {
 					hashHistory.replace('/contacts/mobile');
@@ -120,20 +107,14 @@ export default class Follow extends Component {
 				break;
 
 			case "mailbox":
-				if (!this.props.personal) {
-					let mailbox = Dialplan._getActiveMailbox();
+				let mailbox = Dialplan.getCachedToMailboxData();
 
-					if (mailbox && mailbox._id) {
-						Dialplan
-							._saveFollowToMailbox(mailbox)
-							.then(this.props.onChange.bind(this, name));
-					} else {
-						hashHistory.replace('/mailboxes');
-					}
-				} else {
+				if (mailbox && mailbox.number) {
 					Dialplan
-						._saveFollowToMailbox()
+						._saveFollowToMailbox(mailbox)
 						.then(this.props.onChange.bind(this, name));
+				} else {
+					hashHistory.replace('/mailboxes');
 				}
 				break;
 
