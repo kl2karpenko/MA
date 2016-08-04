@@ -2,8 +2,10 @@ import { switchToSettings, diagnostic } from './diagnostic';
 import config from "../../../config";
 
 function requestPermissionsForContacts (callback) {
+	console.log(config.isIOS(), 'config.isIOS()');
+
 	if (config.isIOS()) {
-		return cordova.plugins.diagnostic.getContactsAuthorizationStatus(callback);
+		return diagnostic.getContactsAuthorizationStatus(callback);
 	} else {
 		return diagnostic.requestRuntimePermission(callback, function(error){
 			console.error("The following error occurred: " + error);

@@ -104,7 +104,7 @@ export default class Index extends Component {
 					className={classes}
 					onTap={!isSearchPage ? this._startSearch : Index._leave}
 				>
-				<img src={imageLoader(require("images/icons/" + imgName + ".png"))} alt="Right"/>
+				<img src={imageLoader(require("images/icons/" + imgName + ".svg"))} alt="Right"/>
 				</Tappable>
 
 				<Tappable
@@ -112,7 +112,7 @@ export default class Index extends Component {
 					className="m-angle__button btn btn-round btn-sm btn-right btn-round-grey"
 					onTap={Index._leave}
 				>
-				<img src={imageLoader(require("images/icons/cross-white-big.png"))} alt="Right"/>
+				<img src={imageLoader(require("images/icons/cross-white-big.svg"))} alt="Right"/>
 				</Tappable>
 			</Angle>
 			<AdaptiveFixed>

@@ -59,6 +59,8 @@ module.exports = {
 	getActivePlatform: function () {
 		var platforms = this.platforms;
 
+		console.log(platforms, platforms[platforms.active], process.env, platforms.default);
+
 		return platforms[platforms.active] || platforms.default;
 	},
 
