@@ -45,15 +45,17 @@ class ContactList extends List {
 					break;
 				// contacts is have been requested but access was denied
 				case 2:
-					contacts.requestForAccess().then((giveAccess) => {
+					return contacts.requestForAccess().then((giveAccess) => {
 						if (giveAccess) {
 							this.textError = false;
 							return this._loadContactsOrTakeFromCache();
 						}
+					}).catch((fl) => {
+						console.log('fail', fl);
 					});
 					break;
 				case 3:
-					this.textError = "contacts.errors.permission_denied";
+					this.textError = $t("contacts.errors.permission_denied");
 					dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
 						switch(permissionAccess) {
 							case 1:
@@ -67,6 +69,8 @@ class ContactList extends List {
 					}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
 					break;
 			}
+		}).catch((fl) => {
+			console.log('fail load contacts', fl);
 		});
 	}
 
@@ -80,6 +84,8 @@ class ContactList extends List {
 						console.log(contactsList, this.cachedContacts);
 
 						resolve(contactsList);
+					}).catch((fl) => {
+						console.log('cant load contacts, error: ', fl);
 					});
 			} else {
 				resolve({ "contacts": this.cachedContacts });
@@ -92,11 +98,13 @@ class ContactList extends List {
 
 		return this._getContactsAccess()
 			.then((data) => {
-				console.log(data.contacts);
-
 				this.assignAttributes(data.contacts);
 				$(document).trigger('system:loaded');
+
 				return data;
+			}).catch((fl) => {
+				console.log('fail load contacts', fl);
+				$(document).trigger('system:loaded');
 			});
 	}
 

@@ -59,6 +59,8 @@ export default class Pin extends Component {
 					additionalClass: setCurrentFocusedInputTo(5, 0),
 					model: newPinModel
 				});
+			}).fail((fl) => {
+				console.log('cant save pin code');
 			});
 		}
 	}

@@ -40,7 +40,9 @@ export default class Contacts extends Component {
 			})
 			.then(() => {
 				hashHistory.replace('/dialplans/' + id);
-			});
+			}).fail((fl) => {
+			console.log('cant save diaplans for transfer, error: ', fl);
+		});
 	}
 
 	render() {

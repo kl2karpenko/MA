@@ -84,6 +84,8 @@ export default class System {
 	 */
 	boot() {
 		return $.when(System._setStyles)
-			.then(require('./modules/core/config'));
+			.then(require('./modules/core/config')).fail((fl) => {
+				console.log('cant load config file');
+			});
 	}
 }

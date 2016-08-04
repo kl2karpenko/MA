@@ -85,7 +85,8 @@ export default class Index extends Component {
 				._saveFollowToTransfer({
 					type: "contact",
 					number: this.state.phoneNumber
-				}).then(() => {
+				})
+				.then(() => {
 					PhoneNumber
 						.save()
 						.then(() => {

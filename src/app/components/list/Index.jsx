@@ -58,8 +58,8 @@ export default class Index extends Component {
 		return this.state.model
 			.load()
 			.then((data) => {
-				let configData = this.state.config ?
-					this.state.config(data[this.state.model._getModelName()]) : data[this.state.model._getModelName()];
+				let configData = data ? ( this.state.config ?
+					this.state.config(data[this.state.model._getModelName()]) : data[this.state.model._getModelName()]) : [];
 
 				this.setState({
 					model: this.state.model,
@@ -106,6 +106,7 @@ export default class Index extends Component {
 						if (this.state.list && this.state.list.length) {
 							return items;
 						} else {
+							console.log(this._getEmptyText());
 							return <ReactCSSTransitionGroup
 								key={"list-empty"}
 								transitionName="visibility"
@@ -113,7 +114,7 @@ export default class Index extends Component {
 								transitionEnter={false} transitionLeave={false}
 							>
 								<div className="m-list-denied">
-									<div>{this.props.onError || this._getEmptyText()}
+									<div>{(this.props.onError && $t(this.props.onError)) || this._getEmptyText()}
 									</div>
 								</div>
 							</ReactCSSTransitionGroup>
@@ -127,7 +128,13 @@ export default class Index extends Component {
 							transitionEnter={false} transitionLeave={false}
 						>
 							<div className="m-list-loading">
-								<div>{this._getLoadingText()}</div>
+								<div>{(() => {
+									if (!this.state.list.length){
+										return this._getEmptyText()
+									} else {
+										return this._getLoadingText()
+									}
+								})()}</div>
 							</div>
 						</ReactCSSTransitionGroup>
 					}

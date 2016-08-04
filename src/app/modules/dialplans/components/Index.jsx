@@ -61,6 +61,9 @@ export default class Index extends Component {
 				return Dialplan
 					.load({ id: id })
 					.done(this._loaded.bind(this))
+			})
+			.fail((fl) => {
+				console.log('cant load dialplans, error: ', fl);
 			});
 	}
 

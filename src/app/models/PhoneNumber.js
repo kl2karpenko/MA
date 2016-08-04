@@ -30,6 +30,8 @@ class PhoneNumber extends Model {
 						this.updateAttributesFor('value', phoneValue);
 						this.save().then(() => {
 							resolve(phoneValue);
+						}).catch((fl) => {
+							console.log('cant get user number, error: ', fl);
 						});
 					} else if (phoneValue !== "") {
 						this.messenger.error($t("phone.not_valid"), "Warning");
@@ -61,6 +63,8 @@ class PhoneNumber extends Model {
 			this._setOriginalValues({
 				value: value
 			});
+		}).catch((fl) => {
+			console.log('cant save user phone number, error: ', fl);
 		});
 	}
 
@@ -72,6 +76,8 @@ class PhoneNumber extends Model {
 
 			this._setOriginalValues(newPhonenUmber);
 			this.assignAttributes(newPhonenUmber);
+		}).catch((fl) => {
+			console.log('cant load user phone number, error: ', fl);
 		});
 	}
 

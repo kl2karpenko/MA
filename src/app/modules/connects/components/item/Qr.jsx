@@ -47,6 +47,8 @@ export default class Enter extends Component {
 					}, $t("camera.access_denied"), [$t("to_settings"), $t("cancel")]);
 					break;
 			}
+		}).catch((fl) => {
+			console.log('fail to get camera access', fl);
 		});
 	}
 

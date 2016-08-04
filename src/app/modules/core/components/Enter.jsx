@@ -41,7 +41,9 @@ export default class Enter extends Component {
 				this.setState({
 					lang: "ru"
 				});
-			});
+			}).catch((fl) => {
+			console.log('cant load lang, error: ', fl);
+		});
 	}
 
 	componentWillUnmount() {
@@ -107,7 +109,9 @@ export default class Enter extends Component {
 			.then(() => {
 				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
-			});
+			}).fail((fl) => {
+			console.log('cant check connection to server, error: ', fl);
+		});
 	}
 
 	_checkConnection() {
