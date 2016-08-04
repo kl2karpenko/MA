@@ -101,6 +101,7 @@ export default class Index extends Component {
 					transitionLeaveTimeout={300}
 					transitionLeave={true}
 				><Item
+					light={this.state.model._getModelName() == "dialplans"}
 					data={object}
 					model={this.state.model}
 					key={"name-" + i}
