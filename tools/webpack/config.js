@@ -7,6 +7,7 @@ const precss            = require('precss');
 const autoprefixer      = require('autoprefixer');
 const postcss           = require("postcss");
 const atImport          = require("postcss-import");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 /**
  * ==========================================================
