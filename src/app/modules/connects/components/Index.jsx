@@ -1,4 +1,5 @@
 import React, { Component }   from 'react';
+import Storage                from "models/Storage";
 
 import AdaptiveWrapper        from 'components/layouts/adaptive/Wrapper.jsx';
 
@@ -12,6 +13,11 @@ export default class Index extends Component {
 	render() {
 		$(document).trigger('system:loaded');
 		$('.app-loadBlock').removeClass('show');
+
+		if (Storage.getValue("disconnect")) {
+			$('.app-loadBlock').addClass('show');
+			Storage.deleteValue("disconnect");
+		}
 
 		return (
 			<AdaptiveWrapper>{this.props.children}</AdaptiveWrapper>

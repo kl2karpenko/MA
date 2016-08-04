@@ -1,9 +1,29 @@
 @media screen and (max-width: @screenSm) {
+
+  body {
+    font-size: 13px;
+  }
+
   /* MODULES */
   .m {
     &-angle {
       &-rotated {
         height: 80px;
+      }
+    }
+
+    &-list {
+      &-item {
+        img {
+          height: 50px;
+          width: 50px;
+        }
+        &-wrap {
+          padding: 4.2488755622188905% 0 !important;
+        }
+      }
+      &-info {
+        left: 65px;
       }
     }
   }
@@ -30,7 +50,14 @@
     }
   }
 
-  .btn-round.btn-sm:not(.btn-right) {
+  .btn-round.btn-sm {
+    &.btn-right {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      margin-bottom: 0 !important;
+    }
+
     width: 45px;
     height: 45px;
     line-height: 45px;
