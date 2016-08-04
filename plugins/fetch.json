@@ -2,7 +2,7 @@
     "cordova-plugin-browsersync": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-browsersync"
+            "id": "cordova-plugin-browsersync@~0.1.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -91,6 +91,15 @@
         "source": {
             "type": "git",
             "url": "https://github.com/kerrishotts/cordova-plugin-ios-launch-screen",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-contacts": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-contacts",
             "subdir": "."
         },
         "is_top_level": true,
