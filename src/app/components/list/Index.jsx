@@ -74,7 +74,7 @@ export default class Index extends Component {
 	}
 
 	_getLoadingText() {
-		return $t("loading");
+		return $t("loading_empty");
 	}
 
 	render() {
