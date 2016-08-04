@@ -155,8 +155,8 @@ export default class Item extends Component {
 								<img
 									className="img-responsive img-circle"
 									src={imageLoader(require(isPersonaDialplan ?
-									"images/placeholder/extension.svg" :
-									"images/placeholder/dialplan.svg"
+									"images/placeholder/extension-white.svg" :
+									"images/placeholder/dialplan-white.svg"
 									))}
 									alt="Photo"
 								/>
