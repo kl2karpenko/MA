@@ -77,3 +77,8 @@ node tools/server.js
 ```
 
 This will start localhost on 8030 port.
+
+## Notes
+```
+sudo npm -g install ios-deploy --unsafe-perm=true
+```

@@ -1,14 +1,21 @@
 import config from "./shared";
 
 function getAddressOfHost(isApp) {
-	let devServerHostName = isApp ? "http://185.19.237.126:7887" : "http://10.60.28.150:7887";
+	let devServerHostName = "http://10.60.28.150:7887"
+	if (isApp) {
+		devServerHostName = `https://${config.isIOS() ? "idev" : "adev"}.app.qaller.net`;
+	}
+
 	let devServerUrl =  "/";
 
 	return devServerHostName + devServerUrl;
 }
 
 function getTokenHostName(isApp) {
-	let tokenHostName = isApp ? "http://185.19.237.126:4445" : "http://10.60.28.150:4445";
+	let tokenHostName = "http://10.60.28.150:4445";
+	if (isApp) {
+		tokenHostName = `https://${config.isIOS() ? "idev" : "adev"}.app.qaller.net`;
+	}
 	let tokenUrl = "/token";
 
 	return tokenHostName + tokenUrl;

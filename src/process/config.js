@@ -71,10 +71,10 @@ module.exports = {
 	},
 
 	isIOS: function () {
-		return this.getActivePlatform() === "ios";
+		return this.getActivePlatform() === this.platforms.ios;
 	},
 
 	isAndroid: function () {
-		return this.getActivePlatform() === "android";
+		return this.getActivePlatform() === this.platforms.android;
 	}
 };
