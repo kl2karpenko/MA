@@ -191,7 +191,7 @@ class Dialplan extends Model {
 		let object = {};
 
 		if (data.number) object.number = data.number;
-		if (data.id) object._id = data.id;
+		if (data.id) object.id = data.id;
 		if (data.user_id) object.user_id = data.user_id;
 
 		return object;

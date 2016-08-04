@@ -24,7 +24,7 @@ function _configData(data) {
 	return data.map((item) => {
 		var obj = {};
 
-		obj._id = item._id;
+		obj.id = item.id;
 		obj.number = item.number;
 		obj.image = false;
 		obj.color = item.color;
@@ -51,7 +51,7 @@ export default class Index extends Component {
 
 		Dialplan
 			._saveFollowToMailbox({
-				_id: mailboxData._id,
+				id: mailboxData.id,
 				number: mailboxData.number
 			})
 			.then(() => {

@@ -35,8 +35,8 @@ export default class ExtensionsCom extends Component {
 		Dialplan
 			._saveFollowToTransfer({
 				number: contactData.number,
-				type: "extension",
-				id: contactData._id,
+				type: contactData.type || "extension",
+				id: contactData.id,
 				user_id: contactData.user_id
 			})
 			.then(() => {

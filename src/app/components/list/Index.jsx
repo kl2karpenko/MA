@@ -80,7 +80,7 @@ export default class Index extends Component {
 	render() {
 		let items = this.state.list && this.state.list.map((object, i) => {
 				return <ReactCSSTransitionGroup
-					key={"list-" + (object._id || i)}
+					key={"list-" + (object._id || object.id || i)}
 					transitionName="visibility"
 					transitionAppear={true}
 					transitionAppearTimeout={300}
@@ -94,7 +94,7 @@ export default class Index extends Component {
 					model={this.state.model}
 					key={"name-" + i}
 					onClick={this.props.onClick.bind(this, i, object)}
-					index={object._id || i}
+					index={object._id || object.id || i}
 				/></ReactCSSTransitionGroup>;
 			});
 
