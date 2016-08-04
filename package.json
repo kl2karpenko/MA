@@ -10,22 +10,16 @@
   "scripts": {
     "start": "",
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "server": "node tools/server.js",
     "local": "BUILD_APP=no webpack --config tools/webpack/config.js",
     "local_w": "BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
-
     "dev_w": "NODE_ENV=development BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
-
     "prod": "NODE_ENV=production BUILD_APP=no webpack --config tools/webpack/config.js",
     "prod_w": "NODE_ENV=production BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
-
     "android_prod_w": "NODE_ENV=production BUILD_APP=yes PLATFORM=android webpack --watch --watch-poll --config tools/webpack/config.js",
     "ios_and_prod_w": "NODE_ENV=production BUILD_APP=yes PLATFORM=ios webpack --watch --watch-poll --config tools/webpack/config.js",
-
     "ios_app": "BUILD_APP=yes PLATFORM=ios webpack --config tools/webpack/config.js",
     "android_app": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js",
-
     "android_cordova_run": "cordova run android"
   },
   "author": "Karpenko Lilya",
@@ -45,6 +39,7 @@
     "browser-sync": "^2.12.7",
     "clean-webpack-plugin": "^0.1.8",
     "client-oauth2": "^2.2.0",
+    "compression-webpack-plugin": "^0.3.1",
     "copy-webpack-plugin": "^2.1.3",
     "csp-parse": "^0.0.2",
     "css-loader": "^0.23.1",
