@@ -55,7 +55,7 @@
       width: 50px;
       height: 50px;
       line-height: 50px;
-      margin-bottom: 0 !important;
+      margin-bottom: 0px !important;
 
       &.second {
         margin-right: 55px;
@@ -72,7 +72,16 @@
   .btn-round.btn-sm {
     margin-bottom: -10px !important;
   }
-  .l-adaptive-wrapper .m-angle {
-    height: 52.481259%;
+  .l-adaptive-wrapper {
+    .m-angle {
+      height: 52.481259%;
+    }
+    &.l-adaptive-md .m-angle {
+      height: 43.481259%;
+
+      .btn-round.btn-sm.btn-right {
+        margin-bottom: -10px !important;
+      }
+    }
   }
 }
