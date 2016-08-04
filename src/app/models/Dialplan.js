@@ -76,8 +76,6 @@ class Dialplan extends Model {
 		// dialplan _id
 		dataForSave._id = this.getValueByPath("_id");
 
-		console.log(dataForSave);
-
 		// "actions"
 		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer', { "items": [ ] });
 		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.mailbox', dataForSave[ACTIVE_ARRAY_KEY].mailbox);

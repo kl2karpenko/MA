@@ -100,7 +100,7 @@ export default class Index extends Component {
 
 				<Tappable
 					component="button"
-					style={!isSearchPage ? {"margin-right": "67px"} : {}}
+					style={!isSearchPage ? {"marginRight": "67px"} : {}}
 					className={classes}
 					onTap={!isSearchPage ? this._startSearch : Index._leave}
 				>

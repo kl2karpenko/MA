@@ -161,7 +161,7 @@ export default class Item extends Component {
 									alt="Photo"
 								/>
 							</div>
-							<div className="m-angle-info-text">
+							<div className="m-angle-inmarginfo-text">
 								<h2> {this.state.Dialplan.title} </h2>
 								<p> {this.state.Dialplan.ex_number || this.state.Dialplan.in_number} </p>
 							</div>
