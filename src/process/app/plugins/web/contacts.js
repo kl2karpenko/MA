@@ -3,7 +3,7 @@ import { diagnostic } from './diagnostic';
 module.exports = {
 	getContactsStatus() {
 		return new Promise((resolve, reject) => {
-			reject(2);
+			reject(3);
 		});
 	},
 
