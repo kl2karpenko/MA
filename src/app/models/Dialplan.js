@@ -41,7 +41,7 @@ class Dialplan extends Model {
 			mobileNumber = PhoneNumber.getValueByPath('value'),
 			transfer = this._getActiveTransfer(),
 			numberToTransfer = transfer && transfer.number,
-			savedTransferNumber = this.getValueByPath("follow.contact");
+			savedTransferNumber = this.getValueByPath("follow.contact.number");
 
 		if (numberToTransfer) {
 			numberToTransfer = numberToTransfer.replace(/[\s)(\+]+/gi, "");
@@ -69,7 +69,7 @@ class Dialplan extends Model {
 		let
 			changedData = {};
 
-		data.number = data.number.replace(/[\s)(\+]+/gi, "");
+		data.number = String(data.number).replace(/[\s)(\+]+/gi, "");
 		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer.items.0', data);
 
 		this._setActiveActionKey("transfer");
@@ -81,7 +81,9 @@ class Dialplan extends Model {
 		};
 
 		if (!this._checkIfEqualToMobileNumber().activeTransfer) {
-			this.updateAttributesFor("follow.contact", data.number);
+			this.updateAttributesFor("follow.contact.number", data.number);
+			data.id && this.updateAttributesFor("follow.contact.id", data.id);
+			data.user_id && this.updateAttributesFor("follow.contact.user_id", data.user_id);
 		}
 
 		return this.save({
@@ -195,10 +197,18 @@ class Dialplan extends Model {
 			"follow": {
 				"origin": "",
 				"mailbox": "",
-				"contact": ""	,
+				"contact": this._getDefaultExtension,
 				"mobile": ""
 			},
 			"active_action_key": "origin"
+		};
+	}
+
+	_getDefaultExtension() {
+		return {
+			"number": "",
+				"id": "",
+				"user_id": ""
 		};
 	}
 }

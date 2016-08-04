@@ -40,7 +40,7 @@ export default class Follow extends Component {
 			activeKey = data.active_action_key,
 			activeActionInDialplan = Dialplan._getActiveActionKey(),
 			activeTransfer = Dialplan._getActiveTransfer(),
-			savedTransfer = Dialplan.getValueByPath("follow.contact"),
+			savedTransfer = Dialplan.getValueByPath("follow.contact.number"),
 			activeMailbox = Dialplan._getActiveMailbox(),
 			mobileNumber = PhoneNumber.getValueByPath('value'),
 			ifEqualToMobileNumber = Dialplan._checkIfEqualToMobileNumber();
@@ -69,7 +69,7 @@ export default class Follow extends Component {
 				config.checked = mobileIsChosen;
 
 				if (mobileIsChosen && ifEqualToMobileNumber.savedTransferNumber) {
-					Dialplan.updateAttributesFor("follow.contact", "");
+					Dialplan.updateAttributesFor("follow.contact", Dialplan._getDefaultExtension());
 					Dialplan.updateAttributesFor("actions.transfer.items.0.number", "");
 				}
 				break;
@@ -92,14 +92,26 @@ export default class Follow extends Component {
 
 		switch(name) {
 			case "contact":
-				let contactNumber = Dialplan.getValueByPath("follow.contact");
+				let contactNumber = Dialplan.getValueByPath("follow.contact.number");
+				let contactId = Dialplan.getValueByPath("follow.contact.id");
+				let contactUserId = Dialplan.getValueByPath("follow.contact.user_id");
 
 				if (contactNumber) {
+					let dataToSave = {};
+
+					dataToSave.number = contactNumber;
+					if (contactId) dataToSave.id = contactId;
+					if (contactUserId) dataToSave.user_id = contactId;
+					if (contactUserId) {
+						dataToSave.type = "extension";
+					} else if (!contactUserId && contactId) {
+						dataToSave.type = "dialplan";
+					} else {
+						dataToSave.type = "contact";
+					}
+
 					Dialplan
-						._saveFollowToTransfer({
-							type: "contact",
-							number: contactNumber
-						})
+						._saveFollowToTransfer(dataToSave)
 						.then(this.props.onChange.bind(this, name));
 				} else {
 					hashHistory.replace('/contacts/mobile');

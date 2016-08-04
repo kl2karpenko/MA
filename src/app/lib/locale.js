@@ -34,14 +34,10 @@ class Language {
 
 		this.language = name;
 		this.languageFile = require("json!lang/" + name + ".json");
-		this.languageFileDefault = name !== "en" ? require("json!lang/en.json") : this.languageFile;
 	}
 
 	$t(path) {
-		let translation = this.languageFile && (helpers.getValueByPath(path, this.languageFile) ||
-			helpers.getValueByPath(path, this.languageFileDefault));
-
-		return translation;
+		return this.languageFile && (helpers.getValueByPath(path, this.languageFile));
 	}
 }
 
