@@ -107,20 +107,14 @@ export default class Follow extends Component {
 				break;
 
 			case "mailbox":
-				if (!this.props.personal) {
-					let mailbox = Dialplan.getCachedToMailboxData();
+				let mailbox = Dialplan.getCachedToMailboxData();
 
-					if (mailbox && mailbox.number) {
-						Dialplan
-							._saveFollowToMailbox(mailbox)
-							.then(this.props.onChange.bind(this, name));
-					} else {
-						hashHistory.replace('/mailboxes');
-					}
-				} else {
+				if (mailbox && mailbox.number) {
 					Dialplan
-						._saveFollowToMailbox()
+						._saveFollowToMailbox(mailbox)
 						.then(this.props.onChange.bind(this, name));
+				} else {
+					hashHistory.replace('/mailboxes');
 				}
 				break;
 

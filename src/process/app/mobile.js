@@ -23,7 +23,8 @@ module.exports = {
 			let options = {};
 	
 			options.multiple = true;
-	
+			options.hasPhoneNumber = true;
+
 			$(document).trigger('system:loading');
 
 			navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {

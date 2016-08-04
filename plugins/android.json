@@ -13,9 +13,6 @@
         "cordova-plugin-browsersync": {
             "PACKAGE_NAME": "com.digifoon.qaller"
         },
-        "cordova-plugin-contacts": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
         "cordova-plugin-sim": {
             "PACKAGE_NAME": "com.digifoon.qaller"
         },
@@ -41,6 +38,9 @@
             "PACKAGE_NAME": "com.digifoon.qaller"
         },
         "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.digifoon.qaller"
+        },
+        "cordova-plugin-contacts": {
             "PACKAGE_NAME": "com.digifoon.qaller"
         }
     },
