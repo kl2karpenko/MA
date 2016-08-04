@@ -185,6 +185,8 @@ export default class Index extends Component {
 	_disconnect() {
 		hashHistory.replace('/connects/qr');
 		Storage.clear();
+		Storage.setValue("disconnect", "true");
+		
 		location.reload();
 
 		$(document).trigger('system:loading');

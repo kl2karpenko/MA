@@ -1,9 +1,7 @@
-import { switchToSettings, diagnostic } from './diagnostic';
+import { diagnostic } from './diagnostic';
 import config from "../../../config";
 
 function requestPermissionsForContacts (callback) {
-	console.log(config.isIOS(), 'config.isIOS()');
-
 	if (config.isIOS()) {
 		return diagnostic.getContactsAuthorizationStatus(callback);
 	} else {
@@ -52,6 +50,6 @@ module.exports = {
 	},
 
 	switchToSettings() {
-		return switchToSettings();
+		return diagnostic.switchToSettings();
 	}
 };
