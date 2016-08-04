@@ -100,8 +100,7 @@ export default class Index extends Component {
 
 				<Tappable
 					component="button"
-					style={!isSearchPage ? {"marginRight": "67px"} : {}}
-					className={classes}
+					className={!isSearchPage ? (classes + " second") : classes}
 					onTap={!isSearchPage ? this._startSearch : Index._leave}
 				>
 				<img src={imageLoader(require("images/icons/" + imgName + ".svg"))} alt="Right"/>

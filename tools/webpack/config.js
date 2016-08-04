@@ -215,23 +215,23 @@ module.exports = {
 };
 
 if (ProcessInfo.isBuildApp()) {
-    // module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    //     sourceMap: true,
-    //     compress: {
-    //         warnings: false,
-    //         keep_fnames: true
-    //     },
-    //     mangle: {
-    //         except: ['$super', '$', 'exports', 'require']
-    //     }
-    // }));
-    // module.exports.plugins.push(new CompressionPlugin({
-    //     asset: "[path].gz[query]",
-    //     algorithm: "gzip",
-    //     test: /\.js$|\.html$/,
-    //     threshold: 10240,
-    //     minRatio: 0.8
-    // }));
+    module.exports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        compress: {
+            warnings: false,
+            keep_fnames: true
+        },
+        mangle: {
+            except: ['$super', '$', 'exports', 'require']
+        }
+    }));
+    module.exports.plugins.push(new CompressionPlugin({
+        asset: "[path].gz[query]",
+        algorithm: "gzip",
+        test: /\.js$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
+    }));
 } else {
     module.exports.devtool = 'inline-source-map';
 }
