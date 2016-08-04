@@ -52,7 +52,6 @@ export default class Index extends Component {
 
 	_setActiveContact(i, contactData) {
 		let id = Dialplan.getValueByPath("_id");
-
 		if (!id) {
 			hashHistory.replace('/dialplans');
 			return;
