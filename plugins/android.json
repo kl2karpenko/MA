@@ -7,40 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
         "cordova-plugin-browsersync": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-contacts": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-sim": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova.plugins.diagnostic": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-keyboard": {
-            "PACKAGE_NAME": "com.qaller.androidapp"
-        },
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.digifoon.qaller"
-        },
-        "cordova-plugin-globalization": {
             "PACKAGE_NAME": "com.digifoon.qaller"
         }
     },

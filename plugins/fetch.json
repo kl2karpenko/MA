@@ -1,12 +1,4 @@
 {
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-browsersync": {
         "source": {
             "type": "registry",
@@ -15,84 +7,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-contacts": {
-        "source": {
-            "type": "git",
-            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-contacts.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-compat": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-splashscreen": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-splashscreen"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-network-information": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-network-information"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "at.oneminutedistraction.phonenumber": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/oneminutedistraction/phonenumber.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-dialogs": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-dialogs"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "phonegap-plugin-barcodescanner": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-barcodescanner"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-cszbar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-cszbar"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova.plugins.diagnostic": {
-        "source": {
-            "type": "registry",
-            "id": "cordova.plugins.diagnostic"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-keyboard": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-keyboard"
+            "id": "cordova-plugin-whitelist@1"
         },
         "is_top_level": true,
         "variables": {}
@@ -100,7 +18,63 @@
     "cordova-plugin-sim": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-sim"
+            "id": "cordova-plugin-sim@~1.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-keyboard@~1.1.4"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat@~1.0.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen@~3.2.2"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-network-information": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-network-information@~1.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs@~1.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-barcodescanner": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-barcodescanner@~6.0.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic@~3.1.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -108,7 +82,16 @@
     "cordova-plugin-globalization": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-globalization"
+            "id": "cordova-plugin-globalization@~1.0.3"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-ios-launch-screen": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kerrishotts/cordova-plugin-ios-launch-screen",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
