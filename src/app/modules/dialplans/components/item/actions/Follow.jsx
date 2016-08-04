@@ -109,12 +109,16 @@ export default class Follow extends Component {
 			case "mailbox":
 				let mailbox = Dialplan.getCachedToMailboxData();
 
+				console.log(mailbox);
+
 				if (mailbox && mailbox.number) {
 					Dialplan
 						._saveFollowToMailbox(mailbox)
 						.then(this.props.onChange.bind(this, name));
 				} else {
-					hashHistory.replace('/mailboxes');
+					if (!this.props.personal) {
+						hashHistory.replace('/mailboxes');
+					}
 				}
 				break;
 
