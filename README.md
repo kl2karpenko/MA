@@ -28,7 +28,7 @@ Plugin list:
 11. https://github.com/kerrishotts/cordova-plugin-ios-launch-screen
 
 ```
-cordova plugins add \
+cordova plugin add \
 cordova-plugin-contacts \
 cordova-plugin-sim \
 cordova-plugin-keyboard \

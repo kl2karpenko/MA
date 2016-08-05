@@ -19,6 +19,7 @@ import Angle                  from 'components/modules/angle/Index.jsx';
 import AngleTop               from 'components/modules/angle/Top.jsx';
 import AngleInfo              from 'components/modules/angle/InfoCenter.jsx';
 import AngleArrows            from 'components/modules/angle/Arrows.jsx';
+import LinkButton             from 'components/buttons/LinkButton.jsx';
 
 import { $t }                 from 'lib/locale';
 
@@ -96,8 +97,6 @@ export default class Item extends Component {
 	}
 
 	render() {
-		let isPersonaDialplan = this.state.Dialplan.personal;
-
 		return (
 			<ReactCSSTransitionGroup
 				key={"dialplan-page-" + Dialplan.getValueByPath("_id")}
@@ -139,7 +138,6 @@ export default class Item extends Component {
 
 						<AngleTop title={$t("dialplans.call_routing")}>
 							<Tappable
-								pressDelay={500}
 								component="a"
 								className="m-angle-settings"
 								onTap={Item._goToSettings}
@@ -184,9 +182,11 @@ export default class Item extends Component {
 
 					{(() => {
 						if (!this.state.accessOnlyPersonal) {
-							return <Link className="m-angle__button btn btn-round btn-sm btn-right" to="/dialplans/list">
-								<img src={imageLoader(require("images/icons/list.svg"))} alt="List of dialplans"/>
-							</Link>;
+							return <LinkButton
+								component="a"
+								className="m-angle__button btn btn-round btn-sm btn-right"
+								text={<img src={imageLoader(require("images/icons/list.svg"))} alt="List of dialplans"/>}
+								href="/dialplans/list"/>;
 						}
 					})()}
 				</Angle>

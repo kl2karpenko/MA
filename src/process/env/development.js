@@ -1,7 +1,7 @@
 import config from "./shared";
 
 function getAddressOfHost(isApp) {
-	let devServerHostName = "http://10.60.28.150:7887"
+	let devServerHostName = "http://10.60.28.150:7887";
 	if (isApp) {
 		devServerHostName = `https://${config.process.isIOS() ? "idev" : "adev"}.app.qaller.net`;
 	}
