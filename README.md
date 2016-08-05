@@ -27,6 +27,23 @@ Plugin list:
 10. cordova-plugin-globalization
 11. https://github.com/kerrishotts/cordova-plugin-ios-launch-screen
 
+```
+cordova plugins add \
+cordova-plugin-contacts \
+cordova-plugin-sim \
+cordova-plugin-keyboard \
+cordova-plugin-compat \
+cordova-plugin-browsersync \
+cordova-plugin-splashscreen \
+cordova-plugin-network-information \
+cordova-plugin-dialogs \
+phonegap-plugin-barcodescanner \
+cordova.plugins.diagnostic \
+cordova-plugin-globalization \
+https://github.com/kerrishotts/cordova-plugin-ios-launch-screen \
+--save
+```
+
 ## Production
 
 To build project files for production environment run:
