@@ -97,6 +97,7 @@ export default class Enter extends Component {
 
 			hashHistory.replace('/pin');
 		}
+
 		$('.app-loadBlock').removeClass('show');
 	}
 
