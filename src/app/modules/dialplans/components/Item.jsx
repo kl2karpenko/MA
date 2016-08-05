@@ -36,7 +36,8 @@ export default class Item extends Component {
 			previous: DialplanList.getPreviousPage(),
 			next: DialplanList.getNextPage(),
 			loading: false,
-			enterTransitionName: "visibility-pages"
+			enterTransitionName: "visibility-pages",
+			isPersonal: Dialplan.getValueByPath("personal")
 		};
 
 		this.isSwiping = false;
@@ -69,7 +70,8 @@ export default class Item extends Component {
 			previous: DialplanList.getPreviousPage(),
 			next: DialplanList.getNextPage(),
 			Dialplan: Dialplan.getModel(),
-			accessOnlyPersonal: DialplanList.getModel().length === 1
+			accessOnlyPersonal: DialplanList.getModel().length === 1,
+			isPersonal: Dialplan.getValueByPath("personal")
 		});
 	}
 
@@ -156,7 +158,7 @@ export default class Item extends Component {
 							<div className="m-angle-info-photo">
 								<img
 									className="img-responsive img-circle"
-									src={imageLoader(require(isPersonaDialplan ?
+									src={imageLoader(require(this.state.isPersonal ?
 									"images/placeholder/extension.png" :
 									"images/placeholder/dialplan-white.svg"
 									))}
@@ -189,7 +191,7 @@ export default class Item extends Component {
 					})()}
 				</Angle>
 				<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
-					{isPersonaDialplan ? <Personal/> : <Company/>}
+					{this.state.isPersonal ? <Personal/> : <Company/>}
 				</AdaptiveFixed>
 			</AdaptiveWrapper>
 		</Swipeable>

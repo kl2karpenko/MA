@@ -34,7 +34,7 @@ class Dialplan extends Model {
 	}
 
 	isMailBoxEnabled() {
-		return this.getValueByPath('mailbox_enabled');
+		return this.getValueByPath('mailbox_enabled') || false;
 	}
 
 	_saveFollowToTransfer(data) {
@@ -205,6 +205,7 @@ class Dialplan extends Model {
 		return {
 			"_id": "",
 			"personal": false,
+			"mailbox_enabled": false,
 			"in_number": "",
 			"ex_number": "",
 			"title": "",
