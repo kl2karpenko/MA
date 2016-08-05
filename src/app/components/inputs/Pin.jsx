@@ -68,7 +68,6 @@ export default class Pin extends Component {
 					this._setModelAndInputValue(newPinModel);
 				})
 				.fail((error) => {
-					console.log('cant save pin code, error: ', error);
 					this._setModelAndInputValue("");
 				});
 

@@ -1,5 +1,9 @@
-import helpers from "lib/helpers";
-import { logError, logInfo } from "lib/logger";
+/** Define Language class for set, get language of app */
+
+import helpers                from "lib/helpers";
+import { logError, logInfo }  from "lib/logger";
+
+/** Import ================================================================== */
 
 class Language {
 	constructor() {
@@ -20,20 +24,22 @@ class Language {
 		return globalization
 			.getCurrentLanguage()
 			.then((lang) => {
-			let langDefine = lang && lang.slice(0, 2);
+				let langDefine = lang && lang.slice(0, 2);
 
-			this.setLanguage(langDefine);
+				this.setLanguage(langDefine);
 
-			return lang;
-		}).catch((fl) => {
-			logInfo("device", fl);
+				return lang;
+			})
+			.catch((fl) => {
+				logInfo("device", fl);
 
-			this.setLanguage(this.defaultLanguage);
-		});
+				this.setLanguage();
+			});
 	}
 
 	setLanguage(name) {
 		if (!name || this.possibleLanguages.indexOf(name) === -1) {
+			logError("locale", "no language found, set default >>> en <<<");
 			name = this.defaultLanguage;
 		}
 
@@ -42,6 +48,10 @@ class Language {
 	}
 
 	$t(path) {
+		if (!path) {
+			logError("locale", "no path  to phrase: ");
+		}
+
 		return this.languageFile && (helpers.getValueByPath(path, this.languageFile));
 	}
 }

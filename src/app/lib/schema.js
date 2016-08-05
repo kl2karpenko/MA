@@ -26,8 +26,6 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 			401: function() {
 				Token.refreshToken().then(() => {
 					hashHistory.replace('/pin');
-				}).fail((fl) => {
-					console.log('cannot refresh token for user, error: ', fl);
 				});
 			},
 			404: function() {

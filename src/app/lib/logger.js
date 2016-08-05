@@ -1,6 +1,6 @@
 module.exports = {
 	logInfo(text, response) {
-		console.log(text, " response: ", response);
+		console.log(text, " response: ", response || "");
 	},
 
 	logInfoGroup(text, response) {
@@ -8,12 +8,12 @@ module.exports = {
 	},
 
 	logError(entity, error) {
-		let jsonResponse = error.responseText;
+		let errorText = error.responseText || error;
 
-		if (jsonResponse) {
-			jsonResponse = jsonResponse.error_description || jsonResponse;
+		if (errorText) {
+			errorText = errorText.error_description || errorText;
 		}
 
-		throw new Error(`Error for ${entity}: response: ${jsonResponse}`);
+		throw new Error(`Error for ${entity}: response: ${errorText}`);
 	}
 };

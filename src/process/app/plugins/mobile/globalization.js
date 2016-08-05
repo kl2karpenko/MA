@@ -1,3 +1,8 @@
+/**
+ * define language for app
+ * @type {{getCurrentLanguage: (function())}}
+ */
+
 if (!navigator.globalization) {
 	throw new Error("you don't have installed >> globalization << cordova plugin");
 }
