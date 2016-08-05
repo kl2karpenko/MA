@@ -80,7 +80,7 @@ app.get('/dialplans', function (req, res) {
 		res.send({
 			"dialplans": dialplansList
 		});
-	}, 4000);
+	}, 0);
 });
 
 /**

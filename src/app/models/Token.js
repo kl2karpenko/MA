@@ -95,14 +95,16 @@ class Token {
 		}
 
 		return this.getTokenRequest({
-			"grant_type": "refresh_token",
-			"refresh_token": this.tokenData.refresh_token
-		}).then((data) => {
-			this.tokenData = data;
-			this.saveToken(data.access_token);
-		}).fail((fl) => {
-			console.log('cant refresh token, error: ', fl);
-		});
+									"grant_type": "refresh_token",
+									"refresh_token": this.tokenData.refresh_token
+								})
+								.then((data) => {
+									this.tokenData = data;
+									this.saveToken(data.access_token);
+								})
+								.fail((fl) => {
+									console.log('cant refresh token, error: ', fl);
+								});
 	}
 }
 

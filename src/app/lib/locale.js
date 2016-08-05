@@ -1,4 +1,5 @@
 import helpers from "lib/helpers";
+import { logError, logInfo } from "lib/logger";
 
 class Language {
 	constructor() {
@@ -16,14 +17,17 @@ class Language {
 	setCurrentLanguageOfDevice() {
 		let globalization = require('globalization');
 
-		return globalization.getCurrentLanguage().then((lang) => {
+		return globalization
+			.getCurrentLanguage()
+			.then((lang) => {
 			let langDefine = lang && lang.slice(0, 2);
 
 			this.setLanguage(langDefine);
 
 			return lang;
 		}).catch((fl) => {
-			console.log('cant load lang of device, error: ', fl);
+			logInfo("device", fl);
+
 			this.setLanguage(this.defaultLanguage);
 		});
 	}

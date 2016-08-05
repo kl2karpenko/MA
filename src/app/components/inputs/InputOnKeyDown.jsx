@@ -5,43 +5,22 @@ export default class InputOnKeyDown extends Component {
 		super(props);
 
 		this.state = {
-			value: ""
+			value: this.props.value
 		};
 
 		this.onChange = this.onChange.bind(this);
 	}
 
-	static onNumbersAllow(val) {
-		let event = val;
-
-		if (val.target) {
-			val = val.target.value;
-		}
-
-		let
-			isNumber = !isNaN(Number(val));
-
-		if (isNumber) {
-			event.preventDefault();
-		}
-
-		return isNumber;
-	}
-
-	triggerParentChange(value) {
-		if (typeof this.props.onChange === "function") {
-			this.props.onChange(value);
-		}
+	componentWillReceiveProps(t) {
+		this.setState({
+			value: t.value
+		});
 	}
 
 	onChange(value) {
-		value = value.target ? value.target.value : value;
-
-		this.setState({
-			value: value
-		});
-
-		this.triggerParentChange(value);
+		if (typeof this.props.onChange === "function") {
+			this.props.onChange(value.target ? value.target.value : value);
+		}
 	}
 
 	componentDidMount(){
@@ -61,7 +40,7 @@ export default class InputOnKeyDown extends Component {
 			<input
 				key="input1"
 				ref="nameInput"
-				autoFocus="true"
+				autoFocus={true}
 				autoComplete="off"
 				pattern={this.getInputPattern()}
 				type={this.props.type}
