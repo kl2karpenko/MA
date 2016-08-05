@@ -1,8 +1,10 @@
-import schema from 'schema';
-import messenger from "messenger";
+import schema                 from 'schema';
+import messenger              from "messenger";
+import { logError, logInfo,
+	logInfoGroup }              from "lib/logger";
 
-import _ from "underscore";
-import helpers from "lib/helpers";
+import _                      from "underscore";
+import helpers                from "lib/helpers";
 
 export default class Model {
 	/** ========================   Initialization   ============================== */
@@ -187,14 +189,12 @@ export default class Model {
 
 		return resource[readMethod].apply(resource, params)
 			.done((items) => {
-				console.groupCollapsed("load " + resource);
-				console.info("response", items[name]);
-				console.groupEnd("load");
+				logInfoGroup("load", resource, items[name]);
 				this.assignAttributes(items[name]);
 				return this._setOriginalValues(items[name]);
 			})
 			.error((response) => {
-				console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+				logError(resource, response);
 				return this;
 			});
 	}
@@ -214,25 +214,25 @@ export default class Model {
 		}
 
 		return resource[readMethod].apply(resource, params).done((items) => {
-			console.groupCollapsed("loadCollection " + resource);
-			console.info("response ", items[this.managedResource][path]);
-			console.groupEnd("loadCollection " + resource);
+			logInfoGroup("loadCollection", resource, items[name]);
 
 			return this.assignAttributesTo(path, items[this.managedResource][path]);
 		}).error((response) => {
-			console.log('Error for ' + resource + ' status of response: ' + (response && response.status));
+			logError(resource, response);
 			return this;
 		});
 	}
 
 	save(options) {
-		$(document).trigger('system:loading');
-		options = options || {};
 		let isValid = this._isValid();
+		$(document).trigger('system:loading');
+
+		options = options || {};
 
 		if (!isValid) {
 			return (new Promise((res, rej) => {
 				rej(false);
+				$(document).trigger('system:loaded');
 			}));
 		}
 
@@ -256,9 +256,7 @@ export default class Model {
 
 		return resource[saveMethod].apply(resource, params)
 			.done((items) => {
-				console.groupCollapsed("save " + resource);
-				console.info("response", items[name]);
-				console.groupEnd("save " + resource);
+				logInfoGroup("Save", resource, items[name]);
 
 				this._setOriginalValues(this.getModel());
 				$(document).trigger('system:loaded');
@@ -266,6 +264,7 @@ export default class Model {
 			})
 			.error((response) => {
 				$(document).trigger('system:loaded');
+				logError(resource, response);
 				return response;
 			});
 	}

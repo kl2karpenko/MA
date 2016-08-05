@@ -1,12 +1,13 @@
-import { diagnostic } from './diagnostic';
-import config from "../../../config";
+import { switchToSettings, diagnostic }         from './diagnostic';
+import config                 from "../../../config";
+import { logError, logInfo }  from "lib/logger";
 
 function requestPermissionsForContacts (callback, error) {
 	if (config.isIOS()) {
 		return diagnostic.getContactsAuthorizationStatus(callback, error);
 	} else {
-		return diagnostic.requestRuntimePermission(callback, function(error){
-			console.error("The following error occurred: " + error);
+		return diagnostic.requestRuntimePermission(callback, (errorTextForRuntimePermissions) => {
+			logError("requestRuntimePermission android", errorTextForRuntimePermissions);
 		}, diagnostic.runtimePermission.READ_CONTACTS);
 	}
 }
@@ -15,28 +16,29 @@ module.exports = {
 	getContactsStatus() {
 		return new Promise((resolve, reject) => {
 			requestPermissionsForContacts((status) => {
-				console.log('requestPermissionsForContacts: ', status);
-
 				switch(status){
 					case this.STATUSES.GRANTED:
-						console.log("Permission granted to use the contact list");
+						logInfo("Permission granted to use the contact list");
 						resolve(1);
 						break;
 					case this.STATUSES.NOT_REQUESTED:
-						console.log("Permission to use the contact list has not been requested yet");
+						logInfo("Permission to use the contact list has not been requested yet");
 						reject(2);
 						break;
 					case this.STATUSES.DENIED:
-						console.log("Permission denied to use the contact list - ask again?");
+						logInfo("Permission denied to use the contact list - ask again?");
 						reject(3);
 						break;
 					case this.STATUSES.DENIED_ALWAYS:
-						console.log("Permission permanently denied to use the contact list - guess we won't be using it then!");
+						logInfo("Permission permanently denied to use the contact list - guess we won't be using it then!");
 						reject(3);
 						break;
 				}
-			}, () => {
-				console.log('permission to contacts denied');
+			}, (errorForPermission) => {
+				logError('Contacts', errorForPermission);
+
+				$(document).trigger('system:loaded');
+				reject(errorForPermission);
 			});
 		});
 	},
@@ -45,16 +47,20 @@ module.exports = {
 
 	requestForAccess() {
 		return new Promise((resolve, reject) => {
-			diagnostic.requestContactsAuthorization((status) => {
-				console.log(status);
-				resolve(this.STATUSES.GRANTED === status);
-			}, (err) => {
-				reject(err);
-			});
+			diagnostic.requestContactsAuthorization(
+				// success
+				(status) => {
+					resolve(this.STATUSES.GRANTED === status);
+				},
+				// error
+				(err) => {
+					reject(err);
+				}
+			);
 		});
 	},
 
 	switchToSettings() {
-		return diagnostic.switchToSettings();
+		return switchToSettings();
 	}
 };

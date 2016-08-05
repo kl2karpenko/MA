@@ -29,11 +29,6 @@ class Language {
 				this.setLanguage(langDefine);
 
 				return lang;
-			})
-			.catch((fl) => {
-				logInfo("device", fl);
-
-				this.setLanguage();
 			});
 	}
 

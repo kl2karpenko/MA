@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import config from 'envConfig';
+import React, { Component }   from 'react';
+import config                 from 'envConfig';
+import { logError, logInfo }  from "lib/logger";
 
 import { setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 import InputOnKeyDown from './InputOnKeyDown.jsx';
@@ -62,15 +63,10 @@ export default class Pin extends Component {
 			onSubmit = this.props.onSubmit;
 
 		if (isPinValueValid && typeof onSubmit === "function") {
-
 			onSubmit(inputValue)
 				.then((newPinModel) => {
 					this._setModelAndInputValue(newPinModel);
-				})
-				.fail((error) => {
-					this._setModelAndInputValue("");
 				});
-
 		}
 	}
 

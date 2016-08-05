@@ -55,15 +55,12 @@ export default class Index extends Component {
 					activePage: options.index + 1
 				});
 
-				let id = options.id || DialplanList.getValueOfDefAttrByIndex(options.index);
-				console.log('load Dialplans');
+				let id = options.id || 
+					DialplanList.getValueOfDefAttrByIndex(options.index);
 				
 				return Dialplan
-					.load({ id: id })
-					.done(this._loaded.bind(this))
-			})
-			.fail((fl) => {
-				console.log('cant load dialplans, error: ', fl);
+							.load({ id: id })
+							.done(this._loaded.bind(this))
 			});
 	}
 

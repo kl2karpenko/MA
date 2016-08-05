@@ -46,31 +46,35 @@ class ContactList extends List {
 				} else {
 					logError("contacts permission, undefined status for permission", isAvailable);
 				}
-			})
-			.catch((isAvailable) => {
-					logInfo('contacts', isAvailable);
 
-					switch(isAvailable) {
-						// contacts is have been requested but access was denied
-						case 2:
-							return this._getContactsRequestIfNotDetermined();
-							break;
-						case 3:
-							this.textError = $t("contacts.errors.permission_denied");
-							dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
-								switch(permissionAccess) {
-									case 1:
-										contacts.switchToSettings();
-										break;
-									case 0:
-									case 2:
-										hashHistory.replace('/contacts/extensions');
-										break;
-								}
-							}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
-							break;
-					}
-				});
+				$(document).trigger('system:loaded');
+			})
+			.catch((statusPermission) => {
+				logInfo('Contacts', `get status: ${statusPermission}`);
+
+				switch(statusPermission) {
+					// contacts is have been requested but access was denied
+					case 2:
+						return this._getContactsRequestIfNotDetermined();
+						break;
+					case 3:
+						this.textError = $t("contacts.errors.permission_denied");
+						dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
+							switch(permissionAccess) {
+								case 1:
+									contacts.switchToSettings();
+									break;
+								case 0:
+								case 2:
+									hashHistory.replace('/contacts/extensions');
+									break;
+							}
+						}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
+						break;
+				}
+
+				$(document).trigger('system:loaded');
+			});
 	}
 
 	_getContactsRequestIfNotDetermined() {
@@ -96,7 +100,10 @@ class ContactList extends List {
 						resolve(contactsList);
 					})
 					.catch((errorForLoadContacts) => {
-						logError("device", errorForLoadContacts);
+						this.cachedContacts = [];
+						resolve({ "contacts": this.cachedContacts });
+
+						logError("Contacts", errorForLoadContacts);
 					});
 			} else {
 				resolve({ "contacts": this.cachedContacts });
@@ -110,13 +117,7 @@ class ContactList extends List {
 		return this._getContactsAccess()
 			.then((data) => {
 				this.assignAttributes(data.contacts);
-				$(document).trigger('system:loaded');
-
 				return data;
-			})
-			.catch((errorForAccessToContactsList) => {
-				logError("contacts", errorForAccessToContactsList);
-				$(document).trigger('system:loaded');
 			});
 	}
 

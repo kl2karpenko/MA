@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { hashHistory }      from 'react-router';
-import Tappable             from 'react-tappable';
+import React, { Component }   from 'react';
+import { hashHistory }        from 'react-router';
+import Tappable               from 'react-tappable';
 
-import Dialplan             from "models/Dialplan";
-import PhoneNumber          from "models/PhoneNumber";
+import Dialplan               from "models/Dialplan";
+import PhoneNumber            from "models/PhoneNumber";
 
-import { $t }               from 'lib/locale';
+import { $t }                 from 'lib/locale';
+import { logError, logInfo }  from "lib/logger";
 
 /** Import ================================================================== */
 
@@ -87,42 +88,39 @@ export default class Follow extends Component {
 				if (cachedExternalData.number) {
 					Dialplan
 						._saveFollowToTransfer(cachedExternalData)
-						.then(this.props.onChange.bind(this, name)).fail((fl) => {
-						console.log('cant save follow to transfer, error: ', fl);
-					});
+						.then(this.props.onChange.bind(this, name));
 				} else {
 					hashHistory.replace('/contacts/mobile');
 				}
 				break;
 
 			case "mobile":
-				PhoneNumber._getUserNumber().then((phone) => {
-					if (phone) {
-						Dialplan
-							._saveFollowToTransfer({
-								type: "contact",
-								number: phone
-							})
-							.then(this.props.onChange.bind(this, name)).fail((fl) => {
-							console.log('cant save follow to transfer in dialplan, error: ', fl);
-						});
-					}
-				}).catch((fl) => {
-					console.log('cant get user number, error: ', fl);
-				});
+				PhoneNumber
+					._getUserNumber()
+					.then((phone) => {
+						if (phone) {
+							Dialplan
+								._saveFollowToTransfer({
+									type: "contact",
+									number: phone
+								})
+								.then(this.props.onChange.bind(this, name));
+						} else {
+							logError('Forward to transfer', "cant sve, pone is not defined");
+						}
+					})
+					.catch((mobileNumberError) => {
+						logError('Mobile number', mobileNumberError);
+					});
 				break;
 
 			case "mailbox":
 				let mailbox = Dialplan.getCachedToMailboxData();
 
-				console.log(mailbox);
-
 				if (mailbox && mailbox.number) {
 					Dialplan
 						._saveFollowToMailbox(mailbox)
-						.then(this.props.onChange.bind(this, name)).fail((fl) => {
-						console.log('cant save follow to mailbox diaplan, error: ', fl);
-					});
+						.then(this.props.onChange.bind(this, name));
 				} else {
 					if (!this.props.personal) {
 						hashHistory.replace('/mailboxes');
@@ -133,10 +131,7 @@ export default class Follow extends Component {
 			default:
 				Dialplan
 					._saveFollowToOrigin()
-					.then(this.props.onChange.bind(this, name))
-					.fail((fl) => {
-						console.log('cant load dialplans, error: ', fl);
-					});
+					.then(this.props.onChange.bind(this, name));
 				break;
 		}
 	}

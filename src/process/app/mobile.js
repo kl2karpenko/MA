@@ -1,11 +1,12 @@
-import $                  from 'jquery';
-import config             from "../config";
-import Storage            from 'models/Storage';
-import diagnostic         from 'diagnostic';
-import dialogs            from 'dialogs';
-import camera             from 'camera';
-import contacts           from 'contacts';
-import barcodeScanner     from 'barcodeScanner';
+import $                      from 'jquery';
+import config                 from "../config";
+import Storage                from 'models/Storage';
+import diagnostic             from 'diagnostic';
+import dialogs                from 'dialogs';
+import camera                 from 'camera';
+import contacts               from 'contacts';
+import barcodeScanner         from 'barcodeScanner';
+import { logError, logInfo }  from "lib/logger";
 
 function configContact (data) {
 	let object = {};
@@ -19,34 +20,36 @@ function configContact (data) {
 
 module.exports = {
 	getMobileContacts() {
-		return new Promise((resolve) => {
-			let options = {};
-	
-			options.multiple = true;
-			options.hasPhoneNumber = true;
+		return new Promise(
+			(resolve, reject) => {
+				$(document).trigger('system:loading');
 
-			$(document).trigger('system:loading');
+				navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
+					let contacts = [];
 
-			navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
-				let contacts = [];
-	
-				contactsList.forEach((contactItem) => {
-					contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
-				});
-	
-				resolve({
-					contacts: contacts
-				});
-	
-				$(document).trigger('system:loaded');
-			}, () => {
-				resolve({
-					contacts: null
-				});
-	
-				$(document).trigger('system:loaded');
-			}, options);
-		});
+					contactsList.forEach((contactItem) => {
+						contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
+					});
+
+					resolve({
+						contacts: contacts
+					});
+
+					$(document).trigger('system:loaded');
+				},
+				(errorForContacts) => {
+					reject(null);
+
+					logError("Contacts", errorForContacts);
+
+					$(document).trigger('system:loaded');
+					},
+					{
+						multiple: true,
+						hasPhoneNumber: true
+					});
+				}
+		);
 	},
 
 	getMobileSIMNumber() {

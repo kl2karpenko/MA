@@ -27,13 +27,14 @@ class PhoneNumber extends Model {
 				dialogs.prompt($t("phone.number_enter"), (obj) => {
 					phoneValue = obj.input1;
 
+					console.log(phoneValue, 'phoneValue');
+
 					if (!!(phoneValue && this._isValid(phoneValue))) {
 						this.updateAttributesFor('value', phoneValue);
 						this.save().then(() => {
 							resolve(phoneValue);
 						})
-					}
-					else if (phoneValue !== "") {
+					} else if (phoneValue !== "") {
 						this.messenger.error($t("phone.not_valid"), "Warning");
 					}
 				}, $t("phone.title"));

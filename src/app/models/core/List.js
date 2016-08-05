@@ -1,6 +1,8 @@
-import schema from 'schema';
-import messenger from "messenger";
-import _ from "underscore";
+import schema                 from 'schema';
+import messenger              from "messenger";
+import _                      from "underscore";
+import { logError, logInfo,
+	logInfoGroup }              from "lib/logger";
 
 let
 	defaultAttribute = '_id';
@@ -252,14 +254,12 @@ class List {
 				activePage: 1
 			});
 
-			console.groupCollapsed("load " + resource);
-			console.info("response", items[name]);
-			console.groupEnd("load " + resource);
+			logInfoGroup("load", resource, items[name]);
 
 			$(document).trigger('system:loaded');
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
-			console.error('Error for ' + resource + ' status of response: ' + (response && response.status));
+			logError(response, response);
 			$(document).trigger('system:loaded');
 			return this;
 		});

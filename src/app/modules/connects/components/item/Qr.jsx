@@ -38,26 +38,31 @@ export default class Enter extends Component {
 				}
 			})
 			.catch((isAvailable) => {
-			logInfo('Camera', isAvailable);
+				logInfo('Camera', isAvailable);
 
-			switch(isAvailable) {
-				// camera is have been requested but access was denied
-				case 2:
-					camera
-						.requestForAccess()
-						.then((giveAccess) => {
-						if (giveAccess) {
-							Enter._scanQRCode();
-						}
-					});
-					break;
-				case 3:
-					dialogs.confirm($t("camera.check_settings"), (permissionAccess) => {
-						(permissionAccess === 1) && camera.switchToSettings();
-					}, $t("camera.access_denied"), [$t("to_settings"), $t("cancel")]);
-					break;
-			}
-		});
+				switch(isAvailable) {
+					// camera is have been requested but access was denied
+					case 2:
+						camera
+							.requestForAccess()
+							.then((giveAccess) => {
+								if (giveAccess) {
+									Enter._scanQRCode();
+								} else {
+									logInfo("Camera", "Access denied");
+								}
+							})
+							.catch((isAvailable) => {
+								logError("Camera", isAvailable);
+							});
+						break;
+					case 3:
+						dialogs.confirm($t("camera.check_settings"), (permissionAccess) => {
+							(permissionAccess === 1) && camera.switchToSettings();
+						}, $t("camera.access_denied"), [$t("to_settings"), $t("cancel")]);
+						break;
+				}
+			});
 	}
 
 	static _scanQRCode() {
@@ -72,11 +77,6 @@ export default class Enter extends Component {
 							})
 							.done(() => {
 								hashHistory.replace('/pin');
-							})
-							.fail((errorForToken) => {
-								logInfo(errorForToken);
-
-								messenger.error($t("token.wrong_code"), $t("error"));
 							});
 					}
 				},

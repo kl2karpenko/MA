@@ -1,17 +1,18 @@
-import React, {Component}   from 'react';
-import { hashHistory }      from 'react-router';
+import React, {Component}       from 'react';
+import { hashHistory }          from 'react-router';
 
-import schema               from 'schema';
-import config               from 'envConfig';
-import locale               from "lib/locale";
+import schema                   from 'schema';
+import config                   from 'envConfig';
+import locale                   from "lib/locale";
 
-import LockCode             from "models/LockCode";
-import Token                from "models/Token";
+import LockCode                 from "models/LockCode";
+import Token                    from "models/Token";
 
-import FailBlock            from 'components/blocks/Fail.jsx';
+import FailBlock                from 'components/blocks/Fail.jsx';
 
-import LoadingBlock         from 'components/blocks/Loading.jsx';
-import Loader               from 'components/layouts/Loader.jsx';
+import LoadingBlock             from 'components/blocks/Loading.jsx';
+import Loader                   from 'components/layouts/Loader.jsx';
+import { logError, logInfo }    from "lib/logger";
 
 /** Import ================================================================== */
 
@@ -41,9 +42,7 @@ export default class Enter extends Component {
 				this.setState({
 					lang: "ru"
 				});
-			}).catch((fl) => {
-			console.log('cant load lang, error: ', fl);
-		});
+			});
 	}
 
 	componentWillUnmount() {
@@ -109,18 +108,18 @@ export default class Enter extends Component {
 			.then(() => {
 				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
-			}).fail((fl) => {
-			console.log('cant check connection to server, error: ', fl);
-		});
+			});
 	}
 
 	_checkConnection() {
-		return schema.ping().done(() => {
-			$(document).trigger('system:unfail');
-			LockCode.isExist() && hashHistory.replace('/pin');
-		}).fail(() => {
-			$(document).trigger('system:fail');
-		});
+		return schema.ping()
+			.done(() => {
+				$(document).trigger('system:unfail');
+				LockCode.isExist() && hashHistory.replace('/pin');
+			})
+			.fail(() => {
+				$(document).trigger('system:fail');
+			});
 	}
 
 	render() {

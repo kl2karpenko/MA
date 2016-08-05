@@ -61,8 +61,6 @@ export default class Item extends Component {
 				this.setState({
 					loading: false
 				});
-			}).fail((fl) => {
-				console.log('cant load diaplan, error: ', fl);
 			});
 	}
 

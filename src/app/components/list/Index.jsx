@@ -38,8 +38,6 @@ export default class Index extends Component {
 				};
 				this.setState(updateState);
 			} else {
-				console.log(newProps);
-
 				updateState = {
 					list: newProps.configData(newProps.model.getModel())
 				};

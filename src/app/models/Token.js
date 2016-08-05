@@ -1,8 +1,9 @@
-import Storage from 'models/Storage';
-import config from 'envConfig';
-import messenger from 'messenger';
-import { hashHistory } from 'react-router';
-import { $t } from 'lib/locale';
+import Storage                from 'models/Storage';
+import config                 from 'envConfig';
+import messenger              from 'messenger';
+import { hashHistory }        from 'react-router';
+import { $t }                 from 'lib/locale';
+import { logError, logInfo }  from "lib/logger";
 
 class Token {
 	constructor() {
@@ -24,12 +25,14 @@ class Token {
 		let
 			requestBody = Token.getBodyForRequest(options);
 
-		return this.getTokenRequest(requestBody).then((data) => {
-			this.tokenData = data;
-			this.saveToken(data.access_token);
-		}).fail((fl) => {
-			console.log('cant load token, error: ', fl);
-		});
+		return this.getTokenRequest(requestBody)
+			.then((data) => {
+				this.tokenData = data;
+				this.saveToken(data.access_token);
+			})
+			.fail((tokenError) => {
+				logError('Token', tokenError);
+			});
 	}
 
 	saveToken(value) {
@@ -102,8 +105,8 @@ class Token {
 			this.tokenData = data;
 			this.saveToken(data.access_token);
 		})
-		.fail((fl) => {
-			console.log('cant refresh token, error: ', fl);
+		.fail((tokenError) => {
+			logError('Token', tokenError);
 		});
 	}
 }
