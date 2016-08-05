@@ -38,12 +38,14 @@ export default class Enter extends Component {
 				}
 			})
 			.catch((isAvailable) => {
-			logError('Camera', isAvailable);
+			logInfo('Camera', isAvailable);
 
 			switch(isAvailable) {
 				// camera is have been requested but access was denied
 				case 2:
-					camera.requestForAccess().then((giveAccess) => {
+					camera
+						.requestForAccess()
+						.then((giveAccess) => {
 						if (giveAccess) {
 							Enter._scanQRCode();
 						}

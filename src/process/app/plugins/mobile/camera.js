@@ -16,7 +16,7 @@ module.exports = {
 
 	getCameraStatus() {
 		return new Promise((resolve, reject) => {
-			requestPermissionsForCamera((status) => {
+			return requestPermissionsForCamera((status) => {
 				switch(status){
 					case this.STATUSES.GRANTED:
 						console.log("Permission granted to use the camera");
