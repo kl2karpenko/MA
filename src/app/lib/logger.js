@@ -14,6 +14,6 @@ module.exports = {
 			errorText = errorText.error_description || errorText;
 		}
 
-		throw new Error(`Error for ${entity}: response: ${errorText}`);
+		console.error(`Error for ${entity}: response: ${errorText}`);
 	}
 };
