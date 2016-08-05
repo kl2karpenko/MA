@@ -25,9 +25,10 @@ export default class DialplanListItem extends Component {
 		return (
 			<div className="m-list-item clearfix">
 				<Tappable
-					pressDelay={500}Pin
-					component="div" 
-					className="m-list-item-wrap clearfix" 
+					pressDelay={500}
+					component="div"
+					className="m-list-item-wrap clearfix"
+					moveThreshold={30}
 					onTap={this.props.onClick}>
 					{(() => {
 						if (this.state.data.image) {
