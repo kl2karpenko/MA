@@ -184,8 +184,8 @@ export default class Index extends Component {
 
 	static _disconnect() {
 		Storage.deleteValue("token");
-		location.reload();
 		Storage.setValue("disconnect", "true");
+		location.reload();
 	}
 
 	render() {
