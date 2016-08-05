@@ -93,12 +93,12 @@ export default class Enter extends Component {
 
 	static _resume() {
 		if (LockCode.isExist()) {
-			$('.app-loadBlock').addClass('show');
+			// $('.app-loadBlock').addClass('show');
 
 			hashHistory.replace('/pin');
 		}
 
-		$('.app-loadBlock').removeClass('show');
+		// $('.app-loadBlock').removeClass('show');
 	}
 
 	_checkIfUserIsConnected() {
@@ -128,12 +128,7 @@ export default class Enter extends Component {
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
 			{ this.props.children }
-
-			<Loader
-				key="loader"
-				show={this.state.showLoaderBlock}
-			/>
-
+			
 			<LoadingBlock
 				key="loadingBlock"
 				show={this.state.loading}

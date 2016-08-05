@@ -8,7 +8,7 @@ module.exports = {
 	component: Index,
 	onEnter: (nextState, replace) => {
 		if (!Storage.existValue('lockCode')) {
-			$('.app-loadBlock').addClass('show');
+			// $('.app-loadBlock').addClass('show');
 			replace('/dialplans');
 		}
 	}

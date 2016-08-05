@@ -45,7 +45,7 @@ export default class Index extends Component {
 				.save()
 				.then(() => {
 					this._reset();
-					$('.app-loadBlock').addClass('show');
+					// $('.app-loadBlock').addClass('show');
 					hashHistory.replace('/dialplans');
 				});
 		} else {
@@ -56,7 +56,7 @@ export default class Index extends Component {
 
 	render() {
 		$(document).trigger('system:loaded');
-		$('.app-loadBlock').removeClass('show');
+		// $('.app-loadBlock').removeClass('show');
 
 		return (<AdaptiveWrapper>
 			<Adaptive>

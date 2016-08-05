@@ -1,7 +1,7 @@
 @media screen and (max-width: @screenSm) {
 
   body {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   /* MODULES */
@@ -66,6 +66,16 @@
     height: 45px;
     line-height: 45px;
   }
+
+  .m-angle__button.btn-md {
+    margin-bottom: -32px;
+  }
+
+  .btn-round.btn-md {
+    width: 65px;
+    height: 65px;
+    line-height: 55px;
+  }
 }
 
 @media screen and (max-height: 650px) {
@@ -82,6 +92,35 @@
       .btn-round.btn-sm.btn-right {
         margin-bottom: -10px !important;
       }
+    }
+  }
+}
+
+@media screen and (max-height: 490px) {
+  .btn-round.btn-sm {
+    margin-bottom: -10px !important;
+  }
+  .l-adaptive-wrapper {
+    .m-angle.main {
+      min-height: 238px;
+      height: 43.481259%;
+
+    }
+
+    .l-main {
+      top: 36.481259%;
+    }
+
+    .m-connect {
+      bottom: 6%;
+    }
+
+    .m-angle {
+      height: 53.481259%;
+    }
+    .l-dialplan__list li {
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
   }
 }

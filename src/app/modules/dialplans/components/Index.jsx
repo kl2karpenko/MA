@@ -66,7 +66,7 @@ export default class Index extends Component {
 
 	_loaded() {
 		this._goToActiveDialplan();
-		$('.app-loadBlock').removeClass('show');
+		// $('.app-loadBlock').removeClass('show');
 		$(document).trigger('system:loaded');
 	}
 
