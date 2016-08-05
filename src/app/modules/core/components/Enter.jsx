@@ -1,17 +1,18 @@
-import React, {Component}   from 'react';
-import { hashHistory }      from 'react-router';
+import React, {Component}       from 'react';
+import { hashHistory }          from 'react-router';
 
-import schema               from 'schema';
-import config               from 'envConfig';
-import locale               from "lib/locale";
+import schema                   from 'schema';
+import config                   from 'envConfig';
+import locale                   from "lib/locale";
 
-import LockCode             from "models/LockCode";
-import Token                from "models/Token";
+import LockCode                 from "models/LockCode";
+import Token                    from "models/Token";
 
-import FailBlock            from 'components/blocks/Fail.jsx';
+import FailBlock                from 'components/blocks/Fail.jsx';
 
-import LoadingBlock         from 'components/blocks/Loading.jsx';
-import Loader               from 'components/layouts/Loader.jsx';
+import LoadingBlock             from 'components/blocks/Loading.jsx';
+import Storage                  from "models/Storage";
+import { logError, logInfo }    from "lib/logger";
 
 /** Import ================================================================== */
 
@@ -30,6 +31,9 @@ export default class Enter extends Component {
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
 		this._changeLoadStateToVisible = this._changeLoadStateToVisible.bind(this);
 		this._changeLoadStateToHidden = this._changeLoadStateToHidden.bind(this);
+		this._disconnect = this._disconnect.bind(this);
+
+		this._disconnect();
 	}
 
 	componentDidMount() {
@@ -39,11 +43,9 @@ export default class Enter extends Component {
 		this._defineLang()
 			.then((lang) => {
 				this.setState({
-					lang: "ru"
+					lang: lang
 				});
-			}).catch((fl) => {
-			console.log('cant load lang, error: ', fl);
-		});
+			});
 	}
 
 	componentWillUnmount() {
@@ -94,11 +96,20 @@ export default class Enter extends Component {
 
 	static _resume() {
 		if (LockCode.isExist()) {
-			$('.app-loadBlock').addClass('show');
-
 			hashHistory.replace('/pin');
 		}
-		$('.app-loadBlock').removeClass('show');
+	}
+
+	_disconnect() {
+		if (Storage.existValue("disconnect") &&
+			Storage.getValue("disconnect") === "true") {
+
+			Storage.deleteValue("disconnect");
+			hashHistory.replace('/connects/qr');
+			$(document).trigger('system:loading');
+			return this;
+		}
+		return this;
 	}
 
 	_checkIfUserIsConnected() {
@@ -109,18 +120,18 @@ export default class Enter extends Component {
 			.then(() => {
 				$(document).trigger('system:loaded');
 				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
-			}).fail((fl) => {
-			console.log('cant check connection to server, error: ', fl);
-		});
+			});
 	}
 
 	_checkConnection() {
-		return schema.ping().done(() => {
-			$(document).trigger('system:unfail');
-			LockCode.isExist() && hashHistory.replace('/pin');
-		}).fail(() => {
-			$(document).trigger('system:fail');
-		});
+		return schema.ping()
+			.done(() => {
+				$(document).trigger('system:unfail');
+				LockCode.isExist() && hashHistory.replace('/pin');
+			})
+			.fail(() => {
+				$(document).trigger('system:fail');
+			});
 	}
 
 	render() {
@@ -128,11 +139,6 @@ export default class Enter extends Component {
 
 		return (<div className={"l-adaptive-top" + (platformName ? (" " + platformName) : "")}>
 			{ this.props.children }
-
-			<Loader
-				key="loader"
-				show={this.state.showLoaderBlock}
-			/>
 
 			<LoadingBlock
 				key="loadingBlock"

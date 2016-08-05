@@ -41,9 +41,7 @@ export default class ExtensionsCom extends Component {
 			})
 			.then(() => {
 				hashHistory.replace('/dialplans/' + id);
-			}).fail((fl) => {
-			console.log('cant save dialplan transfer to ex number, error: ', fl);
-		});
+			});
 	}
 
 	render() {

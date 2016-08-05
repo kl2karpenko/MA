@@ -13,14 +13,18 @@ export default class Personal extends Component {
 
 		this.state = {
 			Dialplan: Dialplan.getModel(),
-			actions: PersonalActions.getModel()
+			actions: PersonalActions.getModel(),
+			enableMailbox: Dialplan.getValueByPath("mailbox_enabled")
 		};
+
+		console.log(this.state.enableMailbox, Dialplan.getModel(), 'this.state.enableMailbox');
 	}
 
 	/* call on change props in parent scope */
 	componentWillReceiveProps() {
 		this.setState({
-			Dialplan: Dialplan.getModel()
+			Dialplan: Dialplan.getModel(),
+			enableMailbox: Dialplan.getValueByPath("mailbox_enabled")
 		});
 	}
 
@@ -30,22 +34,27 @@ export default class Personal extends Component {
 
 	_updateDialplan() {
 		this.setState({
-			Dialplan: Dialplan.getModel()
+			Dialplan: Dialplan.getModel(),
+			enableMailbox: Dialplan.getValueByPath("mailbox_enabled")
 		});
 	}
 
 	render() {
-		let actionsList = this.state.actions;
-		let mailboxDisabled = !Dialplan.isMailBoxEnabled();
+		let actionsList = [];
+		let mailboxDisabled = !this.state.enableMailbox;
 
 		if (mailboxDisabled) {
-			actionsList = actionsList.filter((item) => {
-				if (item.name === "mailbox") {
-					return false;
-				}
+			actionsList = this.state.actions.map((item) => {
+				if (item.name === "mailbox") { return false; }
 
 				return item;
 			});
+
+			actionsList = actionsList.filter((item) => {
+				return item || false;
+			});
+		} else {
+			actionsList = this.state.actions;
 		}
 
 		return (

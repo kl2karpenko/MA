@@ -1,9 +1,10 @@
-import Model        from 'Model';
-import Storage      from 'models/Storage';
+import Model                    from 'Model';
+import Storage                  from 'models/Storage';
 
-import { dialogs }  from "appConfig";
+import { dialogs }              from "appConfig";
 
-import { $t }       from 'lib/locale';
+import { $t }                   from 'lib/locale';
+import { logError, logInfo }    from "lib/logger";
 
 
 class PhoneNumber extends Model {
@@ -21,18 +22,18 @@ class PhoneNumber extends Model {
 	_getUserNumber() {
 		let phoneValue = this.getValueByPath('value');
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			if (!phoneValue) {
 				dialogs.prompt($t("phone.number_enter"), (obj) => {
 					phoneValue = obj.input1;
+
+					console.log(phoneValue, 'phoneValue');
 
 					if (!!(phoneValue && this._isValid(phoneValue))) {
 						this.updateAttributesFor('value', phoneValue);
 						this.save().then(() => {
 							resolve(phoneValue);
-						}).catch((fl) => {
-							console.log('cant get user number, error: ', fl);
-						});
+						})
 					} else if (phoneValue !== "") {
 						this.messenger.error($t("phone.not_valid"), "Warning");
 					}
@@ -47,37 +48,30 @@ class PhoneNumber extends Model {
 		let
 			value = this.getValueByPath('value');
 
-		let promise = new Promise((resolve, reject) => {
-			resolve({
-				phoneNumber: value
-			});
-		});
+		return (new Promise((resolve) => {
+					resolve({
+						phoneNumber: value
+					});
+				}))
+				.then(() => {
+					if (value) {
+						Storage.setValue('phone', value);
+					} else {
+						Storage.deleteValue('phone');
+					}
 
-		return promise.then(() => {
-			if (value) {
-				Storage.setValue('phone', value);
-			} else {
-				Storage.deleteValue('phone');
-			}
-
-			this._setOriginalValues({
-				value: value
-			});
-		}).catch((fl) => {
-			console.log('cant save user phone number, error: ', fl);
-		});
+					this._setOriginalValues({ value: value });
+				});
 	}
 
 	load() {
 		return (new Promise()).then(() => {
-			let newPhonenUmber = {
+			let newPhoneNumber = {
 				value: Storage.getValue('phone')
 			};
 
-			this._setOriginalValues(newPhonenUmber);
-			this.assignAttributes(newPhonenUmber);
-		}).catch((fl) => {
-			console.log('cant load user phone number, error: ', fl);
+			this._setOriginalValues(newPhoneNumber);
+			this.assignAttributes(newPhoneNumber);
 		});
 	}
 

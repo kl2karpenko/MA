@@ -5,6 +5,7 @@ import { contacts, switchToSettings,
 	dialogs, getMobileContacts }          from "appConfig";
 
 import { $t }                           from 'lib/locale';
+import { logError, logInfo }            from "lib/logger";
 
 /** Import ================================================================== */
 
@@ -36,46 +37,57 @@ class ContactList extends List {
 	}
 
 	_getContactsAccess() {
-		return contacts.getContactsStatus().then((isAvailable) => {
-			if(isAvailable === 1) {
-				this.textError = false;
-				return this._loadContactsOrTakeFromCache();
-			}
-		}).catch((isAvailable) => {
-			console.log('fail load contacts', isAvailable);
+		return contacts
+			.getContactsStatus()
+			.then((isAvailable) => {
+				if(isAvailable === 1) {
+					this.textError = false;
+					return this._loadContactsOrTakeFromCache();
+				} else {
+					logError("contacts permission, undefined status for permission", isAvailable);
+				}
 
-			switch(isAvailable) {
-				// contacts is have been requested but access was denied
-				case 2:
-					return this._getContactsRequestIfNotDetermined();
-					break;
-				case 3:
-					this.textError = $t("contacts.errors.permission_denied");
-					dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
-						switch(permissionAccess) {
-							case 1:
-								contacts.switchToSettings();
-								break;
-							case 0:
-							case 2:
-								hashHistory.replace('/contacts/extensions');
-								break;
-						}
-					}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
-					break;
-			}
-		});
+				$(document).trigger('system:loaded');
+			})
+			.catch((statusPermission) => {
+				logInfo('Contacts', `get status: ${statusPermission}`);
+
+				switch(statusPermission) {
+					// contacts is have been requested but access was denied
+					case 2:
+						return this._getContactsRequestIfNotDetermined();
+						break;
+					case 3:
+						this.textError = $t("contacts.errors.permission_denied");
+						dialogs.confirm($t("contacts.allow_access_to_list"), (permissionAccess) => {
+							switch(permissionAccess) {
+								case 1:
+									contacts.switchToSettings();
+									break;
+								case 0:
+								case 2:
+									hashHistory.replace('/contacts/extensions');
+									break;
+							}
+						}, $t("contacts.access_to_list_contact_denied"), [$t("to_settings"), $t("cancel")]);
+						break;
+				}
+
+				$(document).trigger('system:loaded');
+			});
 	}
 
 	_getContactsRequestIfNotDetermined() {
-		return contacts.requestForAccess().then((giveAccess) => {
-			if (giveAccess) {
-				this.textError = false;
-				return this._loadContactsOrTakeFromCache();
-			}
-		}).catch((fl) => {
-			console.log('fail', fl);
-		});
+		return contacts
+			.requestForAccess()
+			.then((giveAccess) => {
+				if (giveAccess) {
+					this.textError = false;
+					return this._loadContactsOrTakeFromCache();
+				} else {
+					logInfo("contacts permission", "permission denied");
+				}
+			});
 	}
 
 	_loadContactsOrTakeFromCache() {
@@ -83,17 +95,21 @@ class ContactList extends List {
 			if (this.cachedContacts && !this.cachedContacts.length) {
 				return getMobileContacts()
 					.then((contactsList) => {
-						
 						this.cachedContacts = contactsList.contacts;
-						console.log(contactsList, this.cachedContacts);
 
 						resolve(contactsList);
-					}).catch((fl) => {
-						console.log('cant load contacts, error: ', fl);
+					})
+					.catch((errorForLoadContacts) => {
+						this.cachedContacts = [];
+						resolve({ "contacts": this.cachedContacts });
+
+						logError("Contacts", errorForLoadContacts);
 					});
 			} else {
 				resolve({ "contacts": this.cachedContacts });
 			}
+			
+			$(document).trigger('system:loaded');
 		});
 	}
 
@@ -103,12 +119,7 @@ class ContactList extends List {
 		return this._getContactsAccess()
 			.then((data) => {
 				this.assignAttributes(data.contacts);
-				$(document).trigger('system:loaded');
-
 				return data;
-			}).catch((fl) => {
-				console.log('fail load contacts', fl);
-				$(document).trigger('system:loaded');
 			});
 	}
 

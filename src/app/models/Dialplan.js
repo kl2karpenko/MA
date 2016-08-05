@@ -1,5 +1,5 @@
-import Model from 'Model';
-import PhoneNumber from "models/PhoneNumber";
+import Model                  from 'Model';
+import PhoneNumber            from "models/PhoneNumber";
 
 const ACTIVE_ACTION_KEY = 'active_action_key';
 const ACTIVE_ARRAY_KEY = 'actions';
@@ -30,13 +30,11 @@ class Dialplan extends Model {
 			}
 		}).then(() => {
 			this.assignAttributes(this.getModel());
-		}).fail((fl) => {
-			console.log('cannot save dialplan, error: ', fl);
 		});
 	}
 
 	isMailBoxEnabled() {
-		return this.getValueByPath('mailbox_enabled');
+		return this.getValueByPath('mailbox_enabled') || false;
 	}
 
 	_saveFollowToTransfer(data) {
@@ -57,14 +55,11 @@ class Dialplan extends Model {
 		this.updateAttributesFor(ACTIVE_ARRAY_KEY + '.transfer', dataForSave[ACTIVE_ARRAY_KEY].transfer);
 
 		return this.save({
-			data: {
-				"dialplan": dataForSave
-			}
-		}).then(() => {
-			this.assignAttributes(this.getModel());
-		}).fail((fl) => {
-			console.log('cant save forward dialplan to transfer, error: ', fl);
-		});
+				data: { "dialplan": dataForSave }
+			})
+			.then(() => {
+				this.assignAttributes(this.getModel());
+			})
 	}
 
 	_saveFollowToMailbox(data) {
@@ -109,7 +104,7 @@ class Dialplan extends Model {
 	}
 
 	static _formatExternalNumber(number) {
-		return String(number).replace(/[\s)(\+]+/gi, "");
+		return String(number).replace(/[\s\*#)(\+]+/gi, "");
 	}
 
 	isTransferedToExternalNumber() {
@@ -210,6 +205,7 @@ class Dialplan extends Model {
 		return {
 			"_id": "",
 			"personal": false,
+			"mailbox_enabled": false,
 			"in_number": "",
 			"ex_number": "",
 			"title": "",

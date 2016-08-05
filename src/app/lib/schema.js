@@ -24,11 +24,11 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 				messenger.error("Bad request", "Error");
 			},
 			401: function() {
-				Token.refreshToken().then(() => {
-					hashHistory.replace('/pin');
-				}).fail((fl) => {
-					console.log('cannot refresh token for user, error: ', fl);
-				});
+				Token
+					.refreshToken()
+					.then(() => {
+						hashHistory.replace('/pin');
+					});
 			},
 			404: function() {
 				messenger.error("Page not found", "Error");

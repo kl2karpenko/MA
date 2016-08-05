@@ -1,5 +1,6 @@
 import { switchToSettings, diagnostic } from './diagnostic';
-import config from "../../../config";
+import config                           from "../../../config";
+import { logError, logInfo }            from "lib/logger";
 
 function requestPermissionsForCamera (callback, error) {
 	if (config.isIOS()) {
@@ -16,36 +17,42 @@ module.exports = {
 
 	getCameraStatus() {
 		return new Promise((resolve, reject) => {
-			requestPermissionsForCamera((status) => {
+			return requestPermissionsForCamera((status) => {
 				switch(status){
 					case this.STATUSES.GRANTED:
-						console.log("Permission granted to use the camera");
+						logInfo("Permission granted to use the camera");
 						resolve(1);
 						break;
 					case this.STATUSES.NOT_REQUESTED:
-						console.log("Permission to use the camera has not been requested yet");
+						logInfo("Permission to use the camera has not been requested yet");
 						reject(2);
 						break;
 					case this.STATUSES.DENIED:
-						console.log("Permission denied to use the camera - ask again?");
+						logInfo("Permission denied to use the camera - ask again?");
 						reject(3);
 						break;
 					case this.STATUSES.DENIED_ALWAYS:
-						console.log("Permission permanently denied to use the camera - guess we won't be using it then!");
+						logInfo("Permission permanently denied to use the camera - guess we won't be using it then!");
 						reject(3);
 						break;
 				}
-			}, () => {
-				console.log('permission to camera denied');
+			}, (errorForPermission) => {
+				logError('Camera', errorForPermission);
+				reject(errorForPermission);
 			});
 		});
 	},
 
 	requestForAccess() {
-		return new Promise((resolve) => {
-			diagnostic.requestCameraAuthorization((status) => {
-				resolve(this.STATUSES.GRANTED === status);
-			});
+		return new Promise((resolve, reject) => {
+			diagnostic.requestCameraAuthorization(
+				(status) => {
+					resolve(this.STATUSES.GRANTED === status);
+				},
+				(err) => {
+					reject(err);
+				}
+			);
 		});
 	},
 

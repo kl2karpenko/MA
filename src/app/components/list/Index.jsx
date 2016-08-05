@@ -17,6 +17,8 @@ export default class Index extends Component {
 			searchQuery: props.search || "",
 			loading: false
 		};
+
+		this._getErrorText = this._getErrorText.bind(this);
 	}
 
 	componentDidMount() {
@@ -36,8 +38,6 @@ export default class Index extends Component {
 				};
 				this.setState(updateState);
 			} else {
-				console.log(newProps);
-
 				updateState = {
 					list: newProps.configData(newProps.model.getModel())
 				};
@@ -66,7 +66,15 @@ export default class Index extends Component {
 					list: configData,
 					loading: false
 				});
+
+				console.log('loaded list')
 			});
+	}
+
+	_getErrorText() {
+		console.log(this.props.onError && $t(this.props.onError));
+
+		return this.props.onError && $t(this.props.onError);
 	}
 
 	_getEmptyText() {
@@ -106,7 +114,7 @@ export default class Index extends Component {
 						if (this.state.list && this.state.list.length) {
 							return items;
 						} else {
-							console.log(this._getEmptyText());
+							// TODO: not right text
 							return <ReactCSSTransitionGroup
 								key={"list-empty"}
 								transitionName="visibility"
@@ -114,13 +122,12 @@ export default class Index extends Component {
 								transitionEnter={false} transitionLeave={false}
 							>
 								<div className="m-list-denied">
-									<div>{(this.props.onError && $t(this.props.onError)) || this._getEmptyText()}
+									<div>{this._getErrorText() || this._getEmptyText()}
 									</div>
 								</div>
 							</ReactCSSTransitionGroup>
 						}
 					} else {
-						// TODO: add good translation module
 						return <ReactCSSTransitionGroup
 							key={"list-empty"}
 							transitionName="visibility"
@@ -128,13 +135,7 @@ export default class Index extends Component {
 							transitionEnter={false} transitionLeave={false}
 						>
 							<div className="m-list-loading">
-								<div>{(() => {
-									if (!this.state.list.length){
-										return this._getEmptyText()
-									} else {
-										return this._getLoadingText()
-									}
-								})()}</div>
+								<div>{this._getLoadingText()}</div>
 							</div>
 						</ReactCSSTransitionGroup>
 					}

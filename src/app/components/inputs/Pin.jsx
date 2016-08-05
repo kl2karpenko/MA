@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import config from 'envConfig';
+import React, { Component }   from 'react';
+import config                 from 'envConfig';
+import { logError, logInfo }  from "lib/logger";
 
 import { setCurrentFocusedInputTo } from 'components/Keyboard.jsx';
 import InputOnKeyDown from './InputOnKeyDown.jsx';
@@ -19,6 +20,15 @@ export default class Pin extends Component {
 
 	componentWillReceiveProps(s) {
 		this.onFocus(s.model.value);
+	}
+
+	_setModelAndInputValue(inputValue) {
+		this.state.model.value = inputValue;
+
+		this.setState({
+			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1),
+			model: this.state.model
+		});
 	}
 
 	onFocus(e) {
@@ -42,31 +52,27 @@ export default class Pin extends Component {
 			inputValue = inputValue.target.value;
 		}
 
-		this.state.model.value = inputValue;
-
-		this.setState({
-			additionalClass: setCurrentFocusedInputTo(5, inputValue.length - 1),
-			model: this.state.model
-		});
+		this._setModelAndInputValue(inputValue);
 
 		if (typeof this.props.onChange === "function") {
 			this.props.onChange(inputValue);
 		}
 
-		if (inputValue.length === validPinLength && typeof this.props.onSubmit === "function") {
-			this.props.onSubmit(inputValue).then((newPinModel) => {
-				this.setState({
-					additionalClass: setCurrentFocusedInputTo(5, 0),
-					model: newPinModel
+		let
+			isPinValueValid = inputValue.length === validPinLength,
+			onSubmit = this.props.onSubmit;
+
+		if (isPinValueValid && typeof onSubmit === "function") {
+			onSubmit(inputValue)
+				.then((newPinModel) => {
+					this._setModelAndInputValue(newPinModel);
 				});
-			}).fail((fl) => {
-				console.log('cant save pin code');
-			});
 		}
 	}
 
 	render() {
 		let InputRender = <InputOnKeyDown
+			ref="input-for-pincode"
 			type={this.props.inputType}
 			name="pin"
 			value={this.state && this.state.model.value}
@@ -77,7 +83,8 @@ export default class Pin extends Component {
 
 		if (!config.process.isIOS()) {
 			InputRender = <input
-				autoFocus="true"
+				ref="input-for-pincode"
+				autoFocus={true}
 				type={this.props.inputType}
 				name="pin"
 				value={this.state && this.state.model.value}

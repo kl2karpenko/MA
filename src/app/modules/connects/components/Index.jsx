@@ -12,12 +12,6 @@ export default class Index extends Component {
 
 	render() {
 		$(document).trigger('system:loaded');
-		$('.app-loadBlock').removeClass('show');
-
-		if (Storage.getValue("disconnect")) {
-			$('.app-loadBlock').addClass('show');
-			Storage.deleteValue("disconnect");
-		}
 
 		return (
 			<AdaptiveWrapper>{this.props.children}</AdaptiveWrapper>

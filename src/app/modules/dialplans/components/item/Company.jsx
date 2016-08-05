@@ -33,10 +33,7 @@ export default class Company extends Component {
 
 		Dialplan
 			.saveForFlowControl(object)
-			.then(this._updateDialplan.bind(this))
-			.fail((fl) => {
-				console.log('cant load dialplan, error: ', fl);
-			});
+			.then(this._updateDialplan.bind(this));
 	}
 
 	_updateDialplan() {

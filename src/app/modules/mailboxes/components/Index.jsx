@@ -56,9 +56,6 @@ export default class Index extends Component {
 			})
 			.then(() => {
 				hashHistory.replace('/dialplans/' + Dialplan.getValueByPath("_id"));
-			})
-			.fail((fl) => {
-				console.log('cant save follow dialplan to mailbox, error: ', fl);
 			});
 	}
 

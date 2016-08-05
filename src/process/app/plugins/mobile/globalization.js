@@ -1,3 +1,10 @@
+/**
+ * define language for app
+ * @type {{getCurrentLanguage: (function())}}
+ */
+
+import { logError, logInfo }    from "lib/logger";
+
 if (!navigator.globalization) {
 	throw new Error("you don't have installed >> globalization << cordova plugin");
 }
@@ -9,10 +16,10 @@ module.exports = {
 			navigator.globalization.getPreferredLanguage((language) => {
 				res(language.value);
 
-				console.log(language.value);
-			}, () => {
+				logInfo("Language", language.value);
+			}, (error) => {
 				res("en");
-				console.log("error for location language");
+				logError("Language", error);
 			});
 		}));
 	}

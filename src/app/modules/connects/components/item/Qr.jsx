@@ -17,7 +17,8 @@ import messenger                              from "messenger";
 
 import { $t }                                 from 'lib/locale';
 
-import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
+import ReactCSSTransitionGroup                from 'react/lib/ReactCSSTransitionGroup';
+import { logError, logInfo }                  from "lib/logger";
 
 /** Import ================================================================== */
 
@@ -27,56 +28,69 @@ export default class Enter extends Component {
 	}
 
 	_getCameraAccess() {
-		camera.getCameraStatus().then((isAvailable) => {
-			if (isAvailable === 1) {
-				Enter._scanQRCode();
-			}
-		}).catch((isAvailable) => {
-			console.log('fail to get camera access', isAvailable);
+		camera
+			.getCameraStatus()
+			.then((isAvailable) => {
+				if (isAvailable === 1) {
+					Enter._scanQRCode();
+				} else {
+					logInfo("Camera", "Access denied");
+				}
+			})
+			.catch((isAvailable) => {
+				logInfo('Camera', isAvailable);
 
-			switch(isAvailable) {
-				// camera is have been requested but access was denied
-				case 2:
-					camera.requestForAccess().then((giveAccess) => {
-						if (giveAccess) {
-							Enter._scanQRCode();
-						}
-					});
-					break;
-				case 3:
-					dialogs.confirm($t("camera.check_settings"), (permissionAccess) => {
-						(permissionAccess === 1) && camera.switchToSettings();
-					}, $t("camera.access_denied"), [$t("to_settings"), $t("cancel")]);
-					break;
-			}
-		});
+				switch(isAvailable) {
+					// camera is have been requested but access was denied
+					case 2:
+						camera
+							.requestForAccess()
+							.then((giveAccess) => {
+								if (giveAccess) {
+									Enter._scanQRCode();
+								} else {
+									logInfo("Camera", "Access denied");
+								}
+							})
+							.catch((isAvailable) => {
+								logError("Camera", isAvailable);
+							});
+						break;
+					case 3:
+						dialogs.confirm($t("camera.check_settings"), (permissionAccess) => {
+							(permissionAccess === 1) && camera.switchToSettings();
+						}, $t("camera.access_denied"), [$t("to_settings"), $t("cancel")]);
+						break;
+				}
+			});
 	}
 
 	static _scanQRCode() {
-		barcodeScanner.scan(
-			function (result) {
-				if (!result.cancelled && result.text) {
-					Token.load({
-						type: "qr_code",
-						value: result.text
-					}).done(() => {
-						hashHistory.replace('/pin');
-					}).fail(() => {
-						messenger.error($t("token.wrong_code"), $t("error"));
-					});
+		barcodeScanner
+			.scan(
+				(result) => {
+					if (!result.cancelled && result.text) {
+						Token
+							.load({
+								type: "qr_code",
+								value: result.text
+							})
+							.done(() => {
+								hashHistory.replace('/pin');
+							});
+					}
+				},
+				(error) => {
+					dialogs.alert($t("token.scan_failed") + " " + error);
+				},
+				{
+					"preferFrontCamera" : false, // iOS and Android
+					"showFlipCameraButton" : false, // iOS and Android
+					"prompt" : $t("token.barcode"), // supported on Android only
+					"formats" : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+					"orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
 				}
-			},
-			function (error) {
-				dialogs.alert($t("token.scan_failed") + " " + error);
-			},
-			{
-				"preferFrontCamera" : false, // iOS and Android
-				"showFlipCameraButton" : false, // iOS and Android
-				"prompt" : $t("token.barcode"), // supported on Android only
-				"formats" : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
-				"orientation" : "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
-			}
-		);
+			);
 	}
 
 	render() {
