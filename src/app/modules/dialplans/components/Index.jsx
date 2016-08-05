@@ -59,8 +59,8 @@ export default class Index extends Component {
 					DialplanList.getValueOfDefAttrByIndex(options.index);
 				
 				return Dialplan
-							.load({ id: id })
-							.done(this._loaded.bind(this))
+					.load({ id: id })
+					.done(this._loaded.bind(this))
 			});
 	}
 

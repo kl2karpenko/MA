@@ -108,6 +108,8 @@ class ContactList extends List {
 			} else {
 				resolve({ "contacts": this.cachedContacts });
 			}
+			
+			$(document).trigger('system:loaded');
 		});
 	}
 

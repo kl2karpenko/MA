@@ -104,7 +104,7 @@ class Dialplan extends Model {
 	}
 
 	static _formatExternalNumber(number) {
-		return String(number).replace(/[\s)(\+]+/gi, "");
+		return String(number).replace(/[\s\*#)(\+]+/gi, "");
 	}
 
 	isTransferedToExternalNumber() {
