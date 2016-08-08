@@ -1,5 +1,5 @@
 import React, { Component }   from 'react';
-import { Link, hashHistory }  from 'react-router';
+import { hashHistory }        from 'react-router';
 
 import imageLoader            from 'imageLoader';
 
@@ -8,6 +8,9 @@ import Swipeable              from "react-swipeable";
 
 import Dialplan               from "models/Dialplan";
 import DialplanList           from "models/DialplanList";
+import PhoneNumber            from "models/PhoneNumber";
+
+import InputOnKeyDown         from 'components/inputs/InputOnKeyDown.jsx';
 
 import Personal               from './item/Personal.jsx';
 import Company                from './item/Company.jsx';
@@ -22,6 +25,7 @@ import AngleArrows            from 'components/modules/angle/Arrows.jsx';
 import LinkButton             from 'components/buttons/LinkButton.jsx';
 
 import { $t }                 from 'lib/locale';
+import config                 from 'envConfig';
 
 import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
 
@@ -38,17 +42,52 @@ export default class Item extends Component {
 			next: DialplanList.getNextPage(),
 			loading: false,
 			enterTransitionName: "visibility-pages",
-			isPersonal: Dialplan.getValueByPath("personal")
+			isPersonal: Dialplan.getValueByPath("personal"),
+			isVisiblePhoneModal: false,
+			phoneValue: PhoneNumber.getModel().value,
+			phoneValueIsValid: true
 		};
 
 		this.isSwiping = false;
 
 		this._loadDialplan = this._loadDialplan.bind(this);
 		this._renderDialplan = this._renderDialplan.bind(this);
+
+		this.closeModalForPhoneNumber = this.closeModalForPhoneNumber.bind(this);
+		this.openModalForPhoneNumber = this.openModalForPhoneNumber.bind(this);
+		this.savePhoneNumber = this.savePhoneNumber.bind(this);
 	}
 
 	componentDidMount() {
 		this._changeState();
+	}
+
+	closeModalForPhoneNumber() {
+		this.setState({
+			isVisiblePhoneModal: false,
+			phoneValue: "",
+			phoneValueIsValid: true
+		});
+	}
+
+	openModalForPhoneNumber() {
+		this.setState({
+			isVisiblePhoneModal: true,
+			phoneValueIsValid: true
+		});
+
+		this.refs["inputPhone"].focus();
+	}
+
+	savePhoneNumber(inputValue) {
+		if (inputValue.target) {
+			inputValue = inputValue.target.value;
+		}
+
+		this.setState({
+			phoneValue: inputValue,
+			phoneValueIsValid: !!inputValue
+		});
 	}
 
 	_loadDialplan() {
@@ -91,12 +130,76 @@ export default class Item extends Component {
 		DialplanList[activatePage]();
 		this._loadDialplan();
 	}
-
+	
 	static _goToSettings() {
 		hashHistory.replace("/settings");
 	}
 
 	render() {
+		let modalForPhone = "";
+
+		let InputRender = <InputOnKeyDown
+			ref="inputPhone"
+			type="number"
+			onChange={this.savePhoneNumber}
+			value={this.state.phoneValue}
+			name="phoneNumber"
+			className="form-control"
+			style={!this.state.phoneValueIsValid ? {"border": "red"} : {}}
+		/>;
+
+		if (!config.process.isIOS()) {
+			InputRender = <input
+				autoFocus="true"
+				ref="inputPhone"
+				type="number"
+				onChange={this.savePhoneNumber}
+				value={this.state.phoneValue}
+				name="phoneNumber"
+				className="form-control"
+				style={!this.state.phoneValueIsValid ? {"border": "red"} : {}}
+			/>;
+		}
+
+		modalForPhone = <div id="myModal" className={"modal fade" + (this.state.isVisiblePhoneModal ? " in" : "")} role="dialog">
+			<div className="modal-dialog">
+				<div className="modal-content">
+					<div className="modal-header">
+						<h4 className="modal-title">{$t("phone.title")}</h4>
+					</div>
+					<div className="modal-body">
+						<div className="form-group">
+							{InputRender}
+						</div>
+					</div>
+					<div className="modal-footer">
+						<Tappable
+							component="button"
+							type="button"
+							className="btn btn-default"
+							onTap={() => {
+							  if (this.state.phoneValueIsValid) {
+									PhoneNumber.updateAttributesFor("value", this.state.phoneValue);
+
+									PhoneNumber.save()
+										.then(() => {
+											this.closeModalForPhoneNumber();
+											$(document).trigger('forward:phone');
+										});
+							  }
+						  }}
+						>{$t("ok")}</Tappable>
+						<Tappable
+							component="button"
+							type="button"
+							className="btn btn-default"
+							onTap={this.closeModalForPhoneNumber}
+						>{$t("cancel")}</Tappable>
+					</div>
+				</div>
+			</div>
+		</div>;
+
 		return (
 			<ReactCSSTransitionGroup
 				key={"dialplan-page-" + Dialplan.getValueByPath("_id")}
@@ -191,8 +294,13 @@ export default class Item extends Component {
 					})()}
 				</Angle>
 				<AdaptiveFixed class={DialplanList.getState().pagesCount <= 1 ? "dialplans-only" : ""}>
-					{this.state.isPersonal ? <Personal/> : <Company/>}
+					{this.state.isPersonal ? <Personal
+						parentScope={this}
+					/> : <Company
+						parentScope={this}
+					/>}
 				</AdaptiveFixed>
+				{modalForPhone}
 			</AdaptiveWrapper>
 		</Swipeable>
 		</ReactCSSTransitionGroup>

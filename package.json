@@ -15,16 +15,14 @@
     "local_w": "BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
     "dev_w": "NODE_ENV=development BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
     "prod": "NODE_ENV=production BUILD_APP=no webpack --config tools/webpack/config.js",
-
     "prod_w": "NODE_ENV=production BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
+    "android_dev_w": "NODE_ENV=development BUILD_APP=yes PLATFORM=android webpack --watch --watch-poll --config tools/webpack/config.js",
     "android_prod_w": "NODE_ENV=production BUILD_APP=yes PLATFORM=android webpack --watch --watch-poll --config tools/webpack/config.js",
     "ios_and_prod_w": "NODE_ENV=production BUILD_APP=yes PLATFORM=ios webpack --watch --watch-poll --config tools/webpack/config.js",
-
     "ios_app": "BUILD_APP=yes PLATFORM=ios webpack --config tools/webpack/config.js",
     "android_app": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js",
     "ios_zip": "BUILD_APP=yes PLATFORM=ios webpack --config tools/webpack/config.js && zip -r qaller_ios.zip www res config.xml",
     "android_zip": "BUILD_APP=yes PLATFORM=android webpack --config tools/webpack/config.js && zip -r qaller_android.zip www res config.xml",
-
     "android_cordova_run": "cordova run android"
   },
   "author": "Karpenko Lilya",
@@ -41,7 +39,7 @@
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.1.2",
     "babel-runtime": "^6.0.0",
-    "browser-sync": "^2.12.7",
+    "browser-sync": "^2.14.0",
     "clean-webpack-plugin": "^0.1.8",
     "client-oauth2": "^2.2.0",
     "copy-webpack-plugin": "^2.1.3",
@@ -82,6 +80,7 @@
     "json-loader": "^0.5.4",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
+    "react-modal": "^1.4.0",
     "react-router": "^2.3.0",
     "react-router-page-transition": "^1.1.0",
     "react-swipeable": "^3.5.1",

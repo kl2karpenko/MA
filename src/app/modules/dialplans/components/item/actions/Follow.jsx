@@ -14,15 +14,30 @@ export default class Follow extends Component {
 	constructor(props) {
 		super(props);
 
-		this._goToList = this._goToList.bind(this);
-		this.onChange = this.onChange.bind(this);
-
 		let config = this._config(props.options);
+
+		this.dialplanScope = props.parentScope;
 
 		props.options.info = config.info;
 		props.options.checked = config.checked;
 
 		this.state = props.options;
+
+		this._goToList = this._goToList.bind(this);
+		this.onChange = this.onChange.bind(this);
+
+		this._listen();
+	}
+
+	_listen() {
+		$(document).on('forward:phone', () => {
+			Dialplan
+				._saveFollowToTransfer({
+					type: "contact",
+					number: PhoneNumber.getValueByPath("value")
+				})
+				.then(this.props.onChange.bind(this, "mobile"));
+		});
 	}
 
 	componentWillReceiveProps(props) {
@@ -74,8 +89,8 @@ export default class Follow extends Component {
 		hashHistory.replace(this.state.link);
 	}
 
-	onChange(e) {
-		let name = this.state.name;
+	onChange(e, name) {
+		name = name || this.state.name;
 		
 		if (this.refs["radio-" + name].checked) {
 			return;
@@ -106,11 +121,9 @@ export default class Follow extends Component {
 								})
 								.then(this.props.onChange.bind(this, name));
 						} else {
-							logError('Forward to transfer', "cant sve, pone is not defined");
+							this.dialplanScope.openModalForPhoneNumber();
+							logError('Forward to transfer', "cant save, phone number is not defined");
 						}
-					})
-					.catch((mobileNumberError) => {
-						logError('Mobile number', mobileNumberError);
 					});
 				break;
 

@@ -18,9 +18,12 @@ export default class Company extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log(props);
+
 		this.state = {
 			Dialplan: Dialplan.getModel(),
-			actions: CompanyActions.getModel()
+			actions: CompanyActions.getModel(),
+			parentScope: props.parentScope
 		};
 	}
 
@@ -54,6 +57,7 @@ export default class Company extends Component {
 						transitionLeaveTimeout = {20}
 						transitionLeave = {true}
 					><Follow
+					parentScope={this.state.parentScope}
 					personal={false}
 					key={"follow-item-" + i + "-" + Dialplan.getValueByPath("_id")}
 					options={object}

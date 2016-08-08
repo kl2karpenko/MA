@@ -77,14 +77,13 @@
         <param name="onload" value="true" />
     </feature>
     <preference name="SplashScreenDelay" value="1000" />
+    <preference name="loadUrlTimeoutValue" value="700000" />
     <feature name="Contacts">
         <param name="ios-package" value="CDVContacts" />
     </feature>
-    <plugin name="cordova-plugin-contacts" spec="~2.1.1-dev" />
     <plugin name="cordova-plugin-sim" spec="~1.2.1" />
     <plugin name="cordova-plugin-keyboard" spec="~1.1.4" />
     <plugin name="cordova-plugin-compat" spec="~1.0.0" />
-    <plugin name="cordova-plugin-browsersync" spec="~0.1.1" />
     <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
     <plugin name="cordova-plugin-network-information" spec="~1.2.1" />
     <plugin name="cordova-plugin-dialogs" spec="~1.2.1" />
@@ -92,4 +91,6 @@
     <plugin name="cordova.plugins.diagnostic" spec="~3.1.1" />
     <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
     <plugin name="cordova-plugin-ios-launch-screen" spec="https://github.com/kerrishotts/cordova-plugin-ios-launch-screen" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
+    <plugin name="com.dbaq.cordova.contactsPhoneNumbers" spec="~0.0.8" />
 </widget>

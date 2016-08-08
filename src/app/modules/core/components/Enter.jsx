@@ -106,6 +106,7 @@ export default class Enter extends Component {
 
 			Storage.deleteValue("disconnect");
 			Storage.clear();
+			
 			hashHistory.replace('/connects/qr');
 			$(document).trigger('system:loading');
 			return this;

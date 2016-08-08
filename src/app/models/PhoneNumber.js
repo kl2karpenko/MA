@@ -23,30 +23,16 @@ class PhoneNumber extends Model {
 		let phoneValue = this.getValueByPath('value');
 
 		return new Promise((resolve) => {
-			if (!phoneValue) {
-				dialogs.prompt($t("phone.number_enter"), (obj) => {
-					phoneValue = obj.input1;
-
-					console.log(phoneValue, 'phoneValue');
-
-					if (!!(phoneValue && this._isValid(phoneValue))) {
-						this.updateAttributesFor('value', phoneValue);
-						this.save().then(() => {
-							resolve(phoneValue);
-						})
-					} else if (phoneValue !== "") {
-						this.messenger.error($t("phone.not_valid"), "Warning");
-					}
-				}, $t("phone.title"));
-			} else {
+			if (phoneValue) {
 				resolve(phoneValue);
+			} else {
+				resolve(null);
 			}
 		});
 	}
 
 	save() {
-		let
-			value = this.getValueByPath('value');
+		let value = this.getValueByPath('value');
 
 		return (new Promise((resolve) => {
 					resolve({

@@ -11,9 +11,9 @@ import { logError, logInfo }  from "lib/logger";
 function configContact (data) {
 	let object = {};
 
-	object.name = data.name && data.name.formatted;
-	object.number = data.phoneNumbers[0].value;
-	object.image = data.photos && data.photos[0] && data.photos[0].value || true;
+	object.name = data.displayName;
+	object.number = data.phoneNumbers[0].normalizedNumber;
+	object.image = true;
 
 	return object;
 }
@@ -24,30 +24,60 @@ module.exports = {
 			(resolve, reject) => {
 				$(document).trigger('system:loading');
 
-				navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
-					let contacts = [];
+				navigator.contactsPhoneNumbers.list(function(contacts) {
+					let contactsList = [];
 
-					contactsList.forEach((contactItem) => {
-						contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
-					});
+					for(var i = 0; i < contacts.length; i++) {
+						console.log(contacts[i].id + " - " + contacts[i].displayName);
+
+						contactsList.push(configContact(contacts[i]));
+
+						for(var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+							var phone = contacts[i].phoneNumbers[j];
+
+							console.log("===> " + phone.type + "  " + phone.number + " (" + phone.normalizedNumber+ ")");
+						}
+					}
 
 					resolve({
-						contacts: contacts
+						contacts: contactsList
 					});
 
 					$(document).trigger('system:loaded');
-				},
-				(errorForContacts) => {
+				}, function(error) {
 					reject(null);
 
-					logError("Contacts", errorForContacts);
+					logError("Contacts", error);
 
 					$(document).trigger('system:loaded');
-					},
-					{
-						multiple: true,
-						hasPhoneNumber: true
-					});
+				});
+
+				// navigator.contacts.find([navigator.contacts.fieldType.displayName,
+				// 		navigator.contacts.fieldType.name,
+				// 		navigator.contacts.fieldType.phoneNumbers], (contactsList) => {
+				// 	let contacts = [];
+				//
+				// 	contactsList.forEach((contactItem) => {
+				// 		contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
+				// 	});
+				//
+				// 	resolve({
+				// 		contacts: contacts
+				// 	});
+				//
+				// 	$(document).trigger('system:loaded');
+				// },
+				// (errorForContacts) => {
+				// 	reject(null);
+				//
+				// 	logError("Contacts", errorForContacts);
+				//
+				// 	$(document).trigger('system:loaded');
+				// 	},
+				// 	{
+				// 		multiple: true,
+				// 		hasPhoneNumber: true
+				// 	});
 				}
 		);
 	},

@@ -8,7 +8,7 @@ module.exports = {
 	logInfoGroup(groupTitle, resource, responseData) {
 		console.groupCollapsed(`${groupTitle} ${resource}`);
 		console.info("response", responseData);
-		console.groupCollapsed(`${groupTitle} ${resource}`);
+		console.groupEnd(`${groupTitle} ${resource}`);
 	},
 
 	logError(entity, error) {

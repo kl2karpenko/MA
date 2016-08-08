@@ -14,11 +14,11 @@ $ npm i
 ## Adding cordova plugins:
 
 Plugin list:
-1. cordova-plugin-contacts
-2. cordova-plugin-sim only for Android
+1. cordova-plugin-contacts => https://github.com/kl2karpenko/cordova-plugin-contacts.git
+2. cordova-plugin-sim // only for Android
 3. cordova-plugin-keyboard
 4. cordova-plugin-compat
-5. cordova-plugin-browsersync
+5. cordova-plugin-whitelist
 6. cordova-plugin-splashscreen
 7. cordova-plugin-network-information
 8. cordova-plugin-dialogs
@@ -26,14 +26,17 @@ Plugin list:
 9. cordova.plugins.diagnostic
 10. cordova-plugin-globalization
 11. https://github.com/kerrishotts/cordova-plugin-ios-launch-screen
+12. cordova-plugin-cache
+13. cordova-plugin-contacts-phonenumbers
 
 ```
 cordova plugin add \
-cordova-plugin-contacts \
+cordova-plugin-whitelist \
+cordova-plugin-cache \
+https://github.com/kl2karpenko/cordova-plugin-contacts.git \
 cordova-plugin-sim \
 cordova-plugin-keyboard \
 cordova-plugin-compat \
-cordova-plugin-browsersync \
 cordova-plugin-splashscreen \
 cordova-plugin-network-information \
 cordova-plugin-dialogs \

@@ -14,10 +14,9 @@ export default class Personal extends Component {
 		this.state = {
 			Dialplan: Dialplan.getModel(),
 			actions: PersonalActions.getModel(),
-			enableMailbox: Dialplan.getValueByPath("mailbox_enabled")
+			enableMailbox: Dialplan.getValueByPath("mailbox_enabled"),
+			parentScope: props.parentScope
 		};
-
-		console.log(this.state.enableMailbox, Dialplan.getModel(), 'this.state.enableMailbox');
 	}
 
 	/* call on change props in parent scope */
@@ -64,6 +63,7 @@ export default class Personal extends Component {
 						<ul>
 							{actionsList.map((object, i) => {
 								return <Follow
+									parentScope={this.state.parentScope}
 									personal={true}
 									key={i}
 									options={object}
