@@ -18,8 +18,6 @@ export default class Company extends Component {
 	constructor(props) {
 		super(props);
 
-		console.log(props);
-
 		this.state = {
 			Dialplan: Dialplan.getModel(),
 			actions: CompanyActions.getModel(),
