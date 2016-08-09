@@ -1,6 +1,6 @@
 {
   "name": "qaller",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Mobile app for managing dialplans",
   "main": "app.js",
   "repository": {
