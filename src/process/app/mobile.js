@@ -8,11 +8,11 @@ import contacts               from 'contacts';
 import barcodeScanner         from 'barcodeScanner';
 import { logError, logInfo }  from "lib/logger";
 
-function configContact (data) {
+function configContact (data, index) {
 	let object = {};
 
 	object.name = data.displayName;
-	object.number = data.phoneNumbers[0].normalizedNumber;
+	object.number = data.phoneNumbers[index || 0].normalizedNumber;
 	object.image = true;
 
 	return object;
@@ -28,14 +28,14 @@ module.exports = {
 					let contactsList = [];
 
 					for(var i = 0; i < contacts.length; i++) {
-						console.log(contacts[i].id + " - " + contacts[i].displayName);
+						let contactItemPhones = contacts[i].phoneNumbers;
 
-						contactsList.push(configContact(contacts[i]));
-
-						for(var j = 0; j < contacts[i].phoneNumbers.length; j++) {
-							var phone = contacts[i].phoneNumbers[j];
-
-							console.log("===> " + phone.type + "  " + phone.number + " (" + phone.normalizedNumber+ ")");
+						if (contactItemPhones.length === 1) {
+							contactsList.push(configContact(contacts[i]));
+						} else {
+							for(var j = 0; j < contactItemPhones.length; j++) {
+								contactsList.push(configContact(contacts[i], j));
+							}
 						}
 					}
 
@@ -52,32 +52,30 @@ module.exports = {
 					$(document).trigger('system:loaded');
 				});
 
-				// navigator.contacts.find([navigator.contacts.fieldType.displayName,
-				// 		navigator.contacts.fieldType.name,
-				// 		navigator.contacts.fieldType.phoneNumbers], (contactsList) => {
-				// 	let contacts = [];
-				//
-				// 	contactsList.forEach((contactItem) => {
-				// 		contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
-				// 	});
-				//
-				// 	resolve({
-				// 		contacts: contacts
-				// 	});
-				//
-				// 	$(document).trigger('system:loaded');
-				// },
-				// (errorForContacts) => {
-				// 	reject(null);
-				//
-				// 	logError("Contacts", errorForContacts);
-				//
-				// 	$(document).trigger('system:loaded');
-				// 	},
-				// 	{
-				// 		multiple: true,
-				// 		hasPhoneNumber: true
-				// 	});
+				navigator.contacts.find([navigator.contacts.fieldType.displayName,
+						navigator.contacts.fieldType.name,
+						navigator.contacts.fieldType.phoneNumbers], (contactsList) => {
+					let contacts = [];
+
+					contactsList.forEach((contactItem) => {
+						contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
+					});
+
+					resolve({
+						contacts: contacts
+					});
+				},
+				(errorForContacts) => {
+					reject(null);
+
+					logError("Contacts", errorForContacts);
+
+					$(document).trigger('system:loaded');
+					},
+					{
+						multiple: true,
+						hasPhoneNumber: true
+					});
 				}
 		);
 	},

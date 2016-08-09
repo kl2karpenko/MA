@@ -102,3 +102,15 @@ This will start localhost on 8030 port.
 ```
 sudo npm -g install ios-deploy --unsafe-perm=true
 ```
+
+### Sign app:
+
+```
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /home/lkarpenko/projects/TripFinder/img/qaller.keystore /home/lkarpenko/projects/mobileApp/platforms/android/build/outputs/apk/android-release-unsigned.apk qaller
+```
+
+### Zipalign project
+
+```
+./zipalign -f -v 4 /home/lkarpenko/projects/mobileApp/platforms/android/build/outputs/apk/android-release-unsigned.apk /home/lkarpenko/projects/mobileApp/platforms/android/build/outputs/apk/android-release.apk
+```
