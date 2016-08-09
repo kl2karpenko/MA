@@ -183,7 +183,14 @@ export default class Item extends Component {
 									PhoneNumber.save()
 										.then(() => {
 											this.closeModalForPhoneNumber();
-											$(document).trigger('forward:phone');
+
+											Dialplan
+												._saveFollowToTransfer({
+													type: "contact",
+													number: PhoneNumber.getValueByPath('value')
+												}).then(() => {
+													$(document).trigger('forward:phone');
+												});
 										});
 							  }
 						  }}

@@ -25,18 +25,14 @@ export default class Follow extends Component {
 
 		this._goToList = this._goToList.bind(this);
 		this.onChange = this.onChange.bind(this);
+		this._listen = this._listen.bind(this);
 
 		this._listen();
 	}
 
 	_listen() {
 		$(document).on('forward:phone', () => {
-			Dialplan
-				._saveFollowToTransfer({
-					type: "contact",
-					number: PhoneNumber.getValueByPath("value")
-				})
-				.then(this.props.onChange.bind(this, "mobile"));
+			this.props.onChange("mobile");
 		});
 	}
 
@@ -91,6 +87,8 @@ export default class Follow extends Component {
 
 	onChange(e, name) {
 		name = name || this.state.name;
+
+		console.log(name, this);
 		
 		if (this.refs["radio-" + name].checked) {
 			return;
