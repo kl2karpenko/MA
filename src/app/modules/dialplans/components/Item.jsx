@@ -164,10 +164,9 @@ export default class Item extends Component {
 		modalForPhone = <div id="myModal" className={"modal fade" + (this.state.isVisiblePhoneModal ? " in" : "")} role="dialog">
 			<div className="modal-dialog">
 				<div className="modal-content">
-					<div className="modal-header">
-						<h4 className="modal-title">{$t("phone.title")}</h4>
-					</div>
 					<div className="modal-body">
+						<h4 className="modal-title">{$t("phone.title")}</h4>
+
 						<div className="form-group">
 							{InputRender}
 						</div>
@@ -176,7 +175,7 @@ export default class Item extends Component {
 						<Tappable
 							component="button"
 							type="button"
-							className="btn btn-default"
+							className="btn btn-success"
 							onTap={() => {
 							  if (this.state.phoneValueIsValid) {
 									PhoneNumber.updateAttributesFor("value", this.state.phoneValue);
