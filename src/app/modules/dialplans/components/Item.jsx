@@ -26,6 +26,7 @@ import LinkButton             from 'components/buttons/LinkButton.jsx';
 
 import { $t }                 from 'lib/locale';
 import config                 from 'envConfig';
+import helpers                from "lib/helpers";
 
 import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
 
@@ -45,17 +46,25 @@ export default class Item extends Component {
 			isPersonal: Dialplan.getValueByPath("personal"),
 			isVisiblePhoneModal: false,
 			phoneValue: PhoneNumber.getModel().value,
-			phoneValueIsValid: true
+			phoneValueIsValid: true,
+			activeId: Dialplan.getValueByPath("_id")
 		};
 
 		this.isSwiping = false;
 
 		this._loadDialplan = this._loadDialplan.bind(this);
 		this._renderDialplan = this._renderDialplan.bind(this);
+		this._changeState = this._changeState.bind(this);
 
 		this.closeModalForPhoneNumber = this.closeModalForPhoneNumber.bind(this);
 		this.openModalForPhoneNumber = this.openModalForPhoneNumber.bind(this);
 		this.savePhoneNumber = this.savePhoneNumber.bind(this);
+
+		this._listen.call(this);
+	}
+
+	_listen() {
+		$(document).on('dialplans:updateState', this._changeState);
 	}
 
 	componentDidMount() {
@@ -111,7 +120,8 @@ export default class Item extends Component {
 			next: DialplanList.getNextPage(),
 			Dialplan: Dialplan.getModel(),
 			accessOnlyPersonal: DialplanList.getModel().length === 1,
-			isPersonal: Dialplan.getValueByPath("personal")
+			isPersonal: Dialplan.getValueByPath("personal"),
+			activeId: Dialplan.getValueByPath("_id")
 		});
 	}
 
@@ -208,14 +218,14 @@ export default class Item extends Component {
 
 		return (
 			<ReactCSSTransitionGroup
-				key={"dialplan-page-" + Dialplan.getValueByPath("_id")}
+				key={"dialplan-page-" + this.state.activeId + "-" + helpers.getRandomHash()}
 				transitionName = {this.state.enterTransitionName}
 				transitionAppear = {true}
 				transitionAppearTimeout = {300}
 				transitionEnter = {true}
 				transitionEnterTimeout = {300}
-				transitionLeaveTimeout = {300}
 				transitionLeave = {true}
+				transitionLeaveTimeout = {300}
 			>
 			<Swipeable
 				className="swipeable"
@@ -244,7 +254,6 @@ export default class Item extends Component {
 			<AdaptiveWrapper>
 				<Angle header={false}>
 					<div className="m-angle-content">
-
 						<AngleTop title={$t("dialplans.call_routing")}>
 							<Tappable
 								component="a"

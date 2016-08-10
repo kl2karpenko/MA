@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component }     from 'react';
 
-import PersonalActions      from "../../models/actions/Personal";
-import Follow               from './actions/Follow.jsx';
+import PersonalActions          from "../../models/actions/Personal";
+import Follow                   from './actions/Follow.jsx';
 
-import Dialplan             from "models/Dialplan";
+import Dialplan                 from "models/Dialplan";
 
 /** Import ================================================================== */
 
@@ -56,20 +56,22 @@ export default class Personal extends Component {
 			actionsList = this.state.actions;
 		}
 
+		let followItems = actionsList.map((object, i) => {
+			return <Follow
+				parentScope={this.state.parentScope}
+				personal={true}
+				key={i}
+				options={object}
+				onChange={this.onChange.bind(this, object)}
+			/>;
+		});
+
 		return (
 			<div className="l-main">
 				<div className="l-main-scroll">
 					<div className="l-dialplan__list l-main-content">
 						<ul>
-							{actionsList.map((object, i) => {
-								return <Follow
-									parentScope={this.state.parentScope}
-									personal={true}
-									key={i}
-									options={object}
-									onChange={this.onChange.bind(this, object)}
-								/>;
-							})}
+							{followItems}
 						</ul>
 					</div>
 				</div>

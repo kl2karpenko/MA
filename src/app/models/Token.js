@@ -10,8 +10,6 @@ class Token {
 		this.authorizationUri = config.schema.tokenHostname;
 		this.clientId = "2909abc18ab27bea41f531705d0dcf55";
 		this.clientSecret = "b63mso0el64xpa7";
-
-		console.log(this._getActiveValue(), this._getActiveTokenData() && this._getActiveTokenData().refresh_token);
 	}
 
 	load(options) {

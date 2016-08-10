@@ -1,5 +1,6 @@
 import Model                  from 'Model';
 import PhoneNumber            from "models/PhoneNumber";
+import DialplanList           from "models/DialplanList";
 
 const ACTIVE_ACTION_KEY = 'active_action_key';
 const ACTIVE_ARRAY_KEY = 'actions';
@@ -7,6 +8,8 @@ const ACTIVE_ARRAY_KEY = 'actions';
 class Dialplan extends Model {
 	init() {
 		this.managedResource = 'dialplan';
+		this.listResource = 'dialplans';
+		this.listModel = DialplanList;
 	}
 
 	_getRecourseName() {

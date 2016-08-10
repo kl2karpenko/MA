@@ -61,6 +61,8 @@ export default class Model {
 		this.schema = schema;
 		this.messenger = messenger;
 		this.managedResource = this.managedResource || this.constructor.name.toLowerCase();
+		this.listResource = this.listResource || null;
+		this.listModel = this.listModel || null;
 
 		return this;
 	}
@@ -93,6 +95,10 @@ export default class Model {
 		let resourceName = this._getRecourseName() || this._getModelName();
 
 		return this.schema[resourceName];
+	}
+
+	getListRecourse() {
+		return this.listResource ? this.schema[this.listResource] : null;
 	}
 
 	getValueByPath(path) {
@@ -166,6 +172,27 @@ export default class Model {
 		return this.isLoaded();
 	}
 
+	updateCollectionAndEntity() {
+		let listResource = this.getListRecourse();
+
+		// if item didn't found load all list model again
+		if (listResource) {
+			let currentIndexOfActiveDialplan = this.listModel.getIndexOfItemById( this.getValueByPath("_id") );
+
+			if (this.listModel) {
+				this.listModel.update({
+					// set active page that was active
+					activePage: currentIndexOfActiveDialplan
+				}).then(() => {
+					// trigger change in UI view after load new list and entity
+					$(document).trigger(this.listResource + ':updateState');
+				});
+			} else {
+				logError("Please specify model for list update for: " + this._getModelName());
+			}
+		}
+	}
+
 	update(options) {
 		return this.load(options);
 	}
@@ -195,6 +222,11 @@ export default class Model {
 			})
 			.error((response) => {
 				logError(resource, response);
+				
+				if (response.status === 404) {
+					this.updateCollectionAndEntity();
+				}
+				
 				return this;
 			});
 	}

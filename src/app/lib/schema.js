@@ -32,7 +32,7 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 					});
 			},
 			404: function() {
-				messenger.error("Page not found", "Error");
+				// messenger.error("Page not found", "Error");
 			},
 			500: function() {
 				messenger.error("Server is not available", "Error");

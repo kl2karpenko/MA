@@ -18,16 +18,16 @@ module.exports = {
 			errorText = JSON.parse(errorText);
 
 			if (errorText && _.isObject(errorText)) {
-				if (errorText.error_description) {
-					errorText = errorText.error_description;
-				}
-
-				if (errorText.status) {
-					errorText = errorText.status;
+				if (errorText.error_description || errorText.message) {
+					errorText = errorText.error_description || errorText.message;
+				} else if (errorText.status || errorText.statusCode) {
+					errorText = errorText.status || errorText.statusCode;
 				}
 			}
-		} catch(error) { }
+		} catch(error) {
+			console.log('fail parse response, invalid json');
+		}
 
-		console.error(`Error for ${entity}: response: `, errorText);
+		console.error(`Error for ${entity}, response: `, errorText);
 	}
 };

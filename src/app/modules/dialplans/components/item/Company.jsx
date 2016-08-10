@@ -10,8 +10,6 @@ import FlowControl              from './actions/FlowControl.jsx';
 
 import { $t }                   from 'lib/locale';
 
-import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
-
 /** Import ================================================================== */
 
 export default class Company extends Component {
@@ -45,42 +43,24 @@ export default class Company extends Component {
 
 	render() {
 		let followItems = this.state.actions.map((object, i) => {
-				return <ReactCSSTransitionGroup
-						key={"follow-" + (object.id || i)}
-						transitionName = "visibility"
-						transitionAppear = {true}
-						transitionAppearTimeout = {600}
-						transitionEnter = {true}
-						transitionEnterTimeout = {600}
-						transitionLeaveTimeout = {20}
-						transitionLeave = {true}
-					><Follow
+				return <Follow
 					parentScope={this.state.parentScope}
 					personal={false}
 					key={"follow-item-" + i + "-" + Dialplan.getValueByPath("_id")}
 					options={object}
 					onChange={this.onChangeDialplanForward.bind(this, object)}
-				/></ReactCSSTransitionGroup>;
+				/>;
 			});
 
 		let flowControls = this.state.Dialplan.actions.origin.items;
 		let flowControlsItems = flowControls.map((object, i) => {
-			return <ReactCSSTransitionGroup
-				key={"flow-control-" + (object._id || object.id || i) + "-" + Dialplan.getValueByPath("_id")}
-				transitionName = "visibility"
-				transitionAppear = {true}
-				transitionAppearTimeout = {600}
-				transitionEnterTimeout = {600}
-				transitionLeaveTimeout = {20}
-				transitionEnter = {true}
-				transitionLeave = {true}
-			><FlowControl
+			return <FlowControl
 				index={i}
 				key={"flow-control-item-" + i}
 				options={object}
 				in_number={this.state.Dialplan.in_number}
 				onChange={this.onChangeFlowControl.bind(this, object)}
-			/></ReactCSSTransitionGroup>;
+			/>;
 		});
 
 		return (

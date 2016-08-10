@@ -42,6 +42,16 @@ module.exports = {
 
 	getIndexOfItemByAttr(attr, array, value) {
 		return _.indexOf(_.pluck(array, attr), value);
+	},
+	
+	getRandomHash() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for( var i=0; i < 5; i++ )
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+		return text;
 	}
 
 };

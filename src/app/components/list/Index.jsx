@@ -1,10 +1,11 @@
-import React, {Component}     from 'react';
+import React, {Component}       from 'react';
 
 import Item                     from "./Item.jsx";
 
 import ReactCSSTransitionGroup  from 'react/lib/ReactCSSTransitionGroup';
 
-import {$t}                   from 'lib/locale';
+import {$t}                     from 'lib/locale';
+import helpers                  from "lib/helpers";
 
 export default class Index extends Component {
 	constructor(props) {
@@ -85,7 +86,7 @@ export default class Index extends Component {
 	render() {
 		let items = this.state.list && this.state.list.map((object, i) => {
 				return <ReactCSSTransitionGroup
-					key={"list-" + (object._id || object.id || i)}
+					key={"list-" + (object._id || object.id || i) + helpers.getRandomHash()}
 					transitionName="visibility"
 					transitionAppear={true}
 					transitionAppearTimeout={300}
@@ -113,7 +114,7 @@ export default class Index extends Component {
 						} else {
 							// TODO: not right text
 							return <ReactCSSTransitionGroup
-								key={"list-empty"}
+								key={"list-empty" + helpers.getRandomHash()}
 								transitionName="visibility"
 								transitionAppear={true} transitionAppearTimeout={500}
 								transitionEnter={false} transitionLeave={false}
@@ -126,7 +127,7 @@ export default class Index extends Component {
 						}
 					} else {
 						return <ReactCSSTransitionGroup
-							key={"list-empty"}
+							key={"list-loading" + helpers.getRandomHash()}
 							transitionName="visibility"
 							transitionAppear={true} transitionAppearTimeout={500}
 							transitionEnter={false} transitionLeave={false}

@@ -47,6 +47,8 @@ export default class Index extends Component {
 	}
 
 	_init() {
+		console.log('load dialplan list');
+
 		DialplanList
 			.load()
 			.then(this._config.bind(this))

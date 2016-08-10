@@ -23,9 +23,10 @@ class List {
 		this
 			.notLoaded()
 			._defineModel()
-			._setMainResources();
+			._setMainResources()
+			._listen();
 
-		this.defaultAttribute = defaultAttribute;
+		this.defaultAttribute = defaultAttribute;		
 		this.state = new State(props.state);
 
 		if (typeof this.afterInit === "function") {
@@ -35,6 +36,10 @@ class List {
 
 	init() {
 		return this;
+	}
+
+	_listen() {
+		$(document).on(this._getModelName() + ':update', this.update);
 	}
 	
 	static _getRandomHash() {
@@ -252,7 +257,7 @@ class List {
 		return resource[readMethod].apply(resource, params).done((items) => {
 			this.updateState({
 				pagesCount: items[name].length,
-				activePage: 1
+				activePage: options.activePage || 1
 			});
 
 			logInfoGroup("load", this._getModelName(), items[name]);
