@@ -18,6 +18,7 @@ export default class FailBlock extends Component {
 	}
 	
 	_getText() {
+		// TODO: add translation
 		return this.state.isOffline ? "You have gone offline, please check your internet connection" :
 			"Server is unavailable!"
 	}

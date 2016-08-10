@@ -6,11 +6,14 @@ import dialogs                from 'dialogs';
 import camera                 from 'camera';
 import contacts               from 'contacts';
 import barcodeScanner         from 'barcodeScanner';
+
+import helpers                from "lib/helpers";
 import { logError, logInfo }  from "lib/logger";
 
 function configContact (data, index) {
 	let object = {};
 
+	object.id = data.id;
 	object.name = data.displayName;
 	object.number = data.phoneNumbers[index || 0].normalizedNumber;
 	object.image = true;
@@ -20,8 +23,7 @@ function configContact (data, index) {
 
 module.exports = {
 	getMobileContacts() {
-		return new Promise(
-			(resolve, reject) => {
+		return new Promise((resolve, reject) => {
 				$(document).trigger('system:loading');
 
 				navigator.contactsPhoneNumbers.list(function(contacts) {
@@ -29,7 +31,6 @@ module.exports = {
 
 					for(var i = 0; i < contacts.length; i++) {
 						let contactItemPhones = contacts[i].phoneNumbers;
-
 						if (contactItemPhones.length === 1) {
 							contactsList.push(configContact(contacts[i]));
 						} else {
@@ -51,33 +52,36 @@ module.exports = {
 
 					$(document).trigger('system:loaded');
 				});
+			}
+		);
+	},
 
-				navigator.contacts.find([navigator.contacts.fieldType.displayName,
-						navigator.contacts.fieldType.name,
-						navigator.contacts.fieldType.phoneNumbers], (contactsList) => {
-					let contacts = [];
+	getMobileImages(arrayToAdd) {
+		return new Promise((resolve) => {
+			navigator.contacts.find([navigator.contacts.fieldType.photoes, navigator.contacts.fieldType.id], (contactsList) => {
 
 					contactsList.forEach((contactItem) => {
-						contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
+						let contactId             = contactItem.id;
+						let contactFromCacheIndex = helpers.getIndexOfItemByAttr("id", arrayToAdd, contactId);
+
+						// set image for contact item in main list
+						arrayToAdd[contactFromCacheIndex].image = contactItem.photos && contactItem.photos[0] &&
+							contactItem.photos[0].value;
 					});
 
-					resolve({
-						contacts: contacts
-					});
+					console.log(arrayToAdd);
+
+					resolve(arrayToAdd);
 				},
 				(errorForContacts) => {
-					reject(null);
-
+					resolve(arrayToAdd);
 					logError("Contacts", errorForContacts);
-
-					$(document).trigger('system:loaded');
-					},
-					{
-						multiple: true,
-						hasPhoneNumber: true
-					});
-				}
-		);
+				},
+				{
+					multiple: true,
+					hasPhoneNumber: true
+				});
+		});
 	},
 
 	getMobileSIMNumber() {

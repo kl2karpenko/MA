@@ -1,6 +1,7 @@
 import schema                 from 'schema';
 import messenger              from "messenger";
 import _                      from "underscore";
+import helpers                from "lib/helpers";
 import { logError, logInfo,
 	logInfoGroup }              from "lib/logger";
 
@@ -198,7 +199,7 @@ class List {
 	}
 
 	getIndexOfItemById(valueOfAttr) {
-		return _.indexOf(_.pluck(this.getModel(), this.defaultAttribute), valueOfAttr);
+		return helpers.getIndexOfItemByAttr(this.defaultAttribute, this.getModel(), valueOfAttr);
 	}
 	
 	assignAttributes(props) {

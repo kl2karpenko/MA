@@ -38,6 +38,10 @@ module.exports = {
 		}
 
 		return model;
+	},
+
+	getIndexOfItemByAttr(attr, array, value) {
+		return _.indexOf(_.pluck(array, attr), value);
 	}
 
 };

@@ -29,6 +29,12 @@ module.exports = {
 			});
 		});
 	},
+
+	getMobileImages(arrayToAdd) {
+		return new Promise((resolve) => {
+			resolve(arrayToAdd);
+		});
+	},
 	
 	getMobileSIMNumber: function () {
 		return new Promise((resolve) => {
