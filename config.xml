@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.digifoon.qaller.dev" version="0.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Qaller dev</name>
+<widget id="com.digifoon.qaller" version="0.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Qaller</name>
     <description>
         Kwebbl mobile app for company/users changing dialplans state
     </description>
@@ -88,10 +88,10 @@
     <plugin name="cordova-plugin-network-information" spec="~1.2.1" />
     <plugin name="cordova-plugin-dialogs" spec="~1.2.1" />
     <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.1" />
-    <plugin name="cordova.plugins.diagnostic" spec="3.1.1" />
+    <plugin name="cordova.plugins.diagnostic" spec="Ё3.1.1" />
     <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
     <plugin name="cordova-plugin-ios-launch-screen" spec="https://github.com/kerrishotts/cordova-plugin-ios-launch-screen" />
-    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
     <plugin name="com.dbaq.cordova.contactsPhoneNumbers" spec="~0.0.8" />
     <plugin name="cordova-plugin-contacts" spec="https://github.com/kl2karpenko/cordova-plugin-contacts.git" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
 </widget>

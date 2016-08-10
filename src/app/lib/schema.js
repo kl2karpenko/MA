@@ -29,17 +29,14 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 				Token
 					.refreshToken()
 					.then(() => {
-						// TODO: refactor logic of going to pin page
 						pagesOfProjects.forEach((item) => {
 							let page = location.hash.match(/\w+\/(\w+)?/g);
 							if (page && page[0]) {
 								if (page[0].indexOf(item) !== -1) {
 									$(document).trigger('system:reload:' + item);
-									console.log(item, 'item')
 								}
 							}
 						});
-
 					});
 			},
 			404: function() {
