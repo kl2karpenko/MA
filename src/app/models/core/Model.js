@@ -173,6 +173,7 @@ export default class Model {
 	}
 
 	updateCollectionAndEntity() {
+		// TODO: define where to go
 		let listResource = this.getListRecourse();
 
 		// if item didn't found load all list model again
