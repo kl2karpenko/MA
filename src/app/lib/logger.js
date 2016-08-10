@@ -28,6 +28,6 @@ module.exports = {
 			}
 		} catch(error) { }
 
-		console.error(`Error for ${entity}: response: ${errorText}`);
+		console.error(`Error for ${entity}: response: `, errorText);
 	}
 };

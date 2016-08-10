@@ -18,6 +18,7 @@ import { KeyboardComponent,
 import LockCode               from "models/LockCode";
 import PhoneNumber            from "models/PhoneNumber";
 import Dialplan               from "models/Dialplan";
+import Storage                from "models/Storage";
 
 import { $t }                 from 'lib/locale';
 

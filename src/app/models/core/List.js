@@ -254,12 +254,12 @@ class List {
 				activePage: 1
 			});
 
-			logInfoGroup("load", resource, items[name]);
+			logInfoGroup("load", this._getModelName(), items[name]);
 
 			$(document).trigger('system:loaded');
 			return this.assignAttributes(items[name]);
 		}).error((response) => {
-			logError(response, response);
+			logError(this._getModelName(), response);
 			$(document).trigger('system:loaded');
 			return this;
 		});

@@ -11,6 +11,7 @@
     "start": "",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node tools/server.js",
+    "tokenServer": "node tools/token-server.js",
     "local": "BUILD_APP=no webpack --config tools/webpack/config.js",
     "local_w": "BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
     "dev_w": "NODE_ENV=development BUILD_APP=no webpack --watch --watch-poll --config tools/webpack/config.js",
