@@ -156,7 +156,13 @@ export default class Follow extends Component {
 					component="label"
 					className={"m-label radio-block" + (this.state.search ? " search" : "")}
 					htmlFor={this.state.name}
-					onTap={this.onChange}
+					onTap={(e,d,i) => {
+						this.onChange(e,d,i);
+						return true;
+					}}
+					onTouchEnd={() => {
+						return true;
+					}}
 					>
 					<input
 						ref={"radio-" + this.state.name}

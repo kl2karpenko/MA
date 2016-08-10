@@ -96,4 +96,5 @@
     <plugin name="cordova-plugin-ios-launch-screen" spec="https://github.com/kerrishotts/cordova-plugin-ios-launch-screen" />
     <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
     <plugin name="com.dbaq.cordova.contactsPhoneNumbers" spec="~0.0.8" />
+    <plugin name="cordova-plugin-contacts" spec="https://github.com/kl2karpenko/cordova-plugin-contacts.git" />
 </widget>

@@ -2,7 +2,8 @@ import List                             from 'List';
 import { hashHistory }                  from 'react-router';
 
 import { contacts, switchToSettings,
-	dialogs, getMobileContacts }          from "appConfig";
+	dialogs, getMobileContacts,
+	getMobileImages }          from "appConfig";
 
 import { $t }                           from 'lib/locale';
 import { logError, logInfo }            from "lib/logger";
@@ -96,6 +97,12 @@ class ContactList extends List {
 				return getMobileContacts()
 					.then((contactsList) => {
 						this.cachedContacts = contactsList.contacts;
+
+						getMobileImages(this.cachedContacts).then(() => {
+							logInfo("Contacts", "load images for contacts");
+
+							console.log(this.cachedContacts, 'this.cachedContacts');
+						});
 
 						resolve(contactsList);
 					})

@@ -66,14 +66,11 @@ export default class Index extends Component {
 					list: configData,
 					loading: false
 				});
-
-				console.log('loaded list')
 			});
 	}
 
 	_getErrorText() {
-		console.log(this.props.onError && $t(this.props.onError));
-
+		// TODO: fix error or empty message
 		return this.props.onError && $t(this.props.onError);
 	}
 

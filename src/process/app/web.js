@@ -25,8 +25,15 @@ module.exports = {
 					});
 				}
 
+				$(document).trigger('system:loaded');
 				resolve(contactsData);
 			});
+		});
+	},
+
+	getMobileImages(arrayToAdd) {
+		return new Promise((resolve) => {
+			resolve(arrayToAdd);
 		});
 	},
 	
