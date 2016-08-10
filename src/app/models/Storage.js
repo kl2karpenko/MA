@@ -21,6 +21,13 @@ export default class Storage {
 		this.storage.removeItem(name);
 	}
 
+	disconnect() {
+		this.deleteValue("token");
+		this.deleteValue("tokenData");
+		this.setValue("disconnect", true);
+		location.reload();
+	}
+
 	clear() {
 		this.storageValue.forEach((itemName) => {
 			this.deleteValue(itemName);

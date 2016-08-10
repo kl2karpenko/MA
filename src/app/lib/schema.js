@@ -27,6 +27,7 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 				Token
 					.refreshToken()
 					.then(() => {
+						// TODO: refactor logic of going to pin page
 						hashHistory.replace('/pin');
 					});
 			},
