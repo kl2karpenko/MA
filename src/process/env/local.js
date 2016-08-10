@@ -14,9 +14,9 @@ function getAddressOfHost(isApp) {
 function getTokenHostName(isApp) {
 	const locHostName =  config.process.isIOS() ? IPMac : IPDesktop;
 	const tokenHostName = "http://185.19.237.126:4445";
-	const tokenUrl = "token";
+	const tokenUrl = "/token";
 
-	return locHostName + tokenUrl;
+	return tokenHostName + tokenUrl;
 }
 
 module.exports = $.extend(true, config, {

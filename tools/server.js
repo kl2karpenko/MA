@@ -41,6 +41,14 @@ app.configure(() => {
 });
 
 app.all('*', function (req, res, next) {
+	console.log(req.headers.authorization, req.url, 'all **************');
+
+	if (req.url !== '/favicon.ico') {
+		if (req.headers.authorization === "Bearer JoDRfQbP4XWpIxiE93IOYmdPhAjnJMYg") {
+
+		}
+	}
+
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 	res.header('Access-Control-Allow-Headers', 'Content-Type');

@@ -16,6 +16,10 @@ export default class Index extends Component {
 
 		this._config = this._config.bind(this);
 		this._goToActiveDialplan = this._goToActiveDialplan.bind(this);
+
+		$(document).on('system:reload:dialplans', () => {
+			this._init();
+		});
 	}
 
 	componentDidMount() {
@@ -47,8 +51,6 @@ export default class Index extends Component {
 	}
 
 	_init() {
-		console.log('load dialplan list');
-
 		DialplanList
 			.load()
 			.then(this._config.bind(this))

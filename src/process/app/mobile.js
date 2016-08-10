@@ -7,7 +7,6 @@ import camera                 from 'camera';
 import contacts               from 'contacts';
 import barcodeScanner         from 'barcodeScanner';
 
-import helpers                from "lib/helpers";
 import { logError, logInfo }  from "lib/logger";
 
 function configContact (data, index) {
@@ -24,8 +23,9 @@ function configContact (data, index) {
 module.exports = {
 	getMobileContacts() {
 		return new Promise((resolve, reject) => {
-				$(document).trigger('system:loading');
+			$(document).trigger('system:loading');
 
+			if (!config.isIOS()) {
 				navigator.contactsPhoneNumbers.list(function(contacts) {
 					let contactsList = [];
 
@@ -52,37 +52,40 @@ module.exports = {
 
 					$(document).trigger('system:loaded');
 				});
+			} else {
+				navigator.contacts.find(["displayName", "phoneNumbers", "photos"], (contactsList) => {
+						let contacts = [];
+
+						contactsList.forEach((contactItem) => {
+							contactItem.phoneNumbers && contactItem.phoneNumbers[0] ? contacts.push(configContact(contactItem)) : false;
+						});
+
+						resolve({
+							contacts: contacts
+						});
+
+						$(document).trigger('system:loaded');
+					},
+					(errorForContacts) => {
+						reject(null);
+
+						logError("Contacts", errorForContacts);
+
+						$(document).trigger('system:loaded');
+					},
+					{
+						multiple: true,
+						hasPhoneNumber: true
+					});
+			}
+
 			}
 		);
 	},
 
 	getMobileImages(arrayToAdd) {
 		return new Promise((resolve) => {
-			navigator.contacts.find([navigator.contacts.fieldType.photoes, navigator.contacts.fieldType.id], (contactsList) => {
-
-				logInfo("Start load contacts with images");
-					contactsList.forEach((contactItem) => {
-						let contactId             = contactItem.id;
-						let contactFromCacheIndex = helpers.getIndexOfItemByAttr("id", arrayToAdd, contactId);
-
-						// set image for contact item in main list
-						arrayToAdd[contactFromCacheIndex].image = contactItem.photos && contactItem.photos[0] &&
-							contactItem.photos[0].value || true;
-					});
-
-					console.log(arrayToAdd);
-
-					logInfo("End load contacts with images");
-					resolve(arrayToAdd);
-				},
-				(errorForContacts) => {
-					resolve(arrayToAdd);
-					logError("Contacts", errorForContacts);
-				},
-				{
-					multiple: true,
-					hasPhoneNumber: true
-				});
+			resolve(arrayToAdd);
 		});
 	},
 

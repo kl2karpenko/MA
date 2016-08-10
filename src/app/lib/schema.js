@@ -6,6 +6,8 @@ import { hashHistory } from 'react-router';
 import 'rest-client';
 import Token from "models/Token";
 
+let pagesOfProjects = [ "connects", "pin" , "dialplans", "settings", "contacts", "mailboxes" ];
+
 module.exports = (new $.RestClient(config.schema.hostname, {
 	stripTrailingSlash: true,
 	stringifyData: true,
@@ -28,7 +30,16 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 					.refreshToken()
 					.then(() => {
 						// TODO: refactor logic of going to pin page
-						hashHistory.replace('/pin');
+						pagesOfProjects.forEach((item) => {
+							let page = location.hash.match(/\w+\/(\w+)?/g);
+							if (page && page[0]) {
+								if (page[0].indexOf(item) !== -1) {
+									$(document).trigger('system:reload:' + item);
+									console.log(item, 'item')
+								}
+							}
+						});
+
 					});
 			},
 			404: function() {
