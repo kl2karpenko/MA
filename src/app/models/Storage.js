@@ -1,6 +1,8 @@
 export default class Storage {
 	constructor() {
 		this.storage = localStorage;
+
+		this.storageValue = ["lockCode", "phone", "token", "tokenData", "disconnect"];
 	}
 
 	setValue(name, value) {
@@ -20,10 +22,9 @@ export default class Storage {
 	}
 
 	clear() {
-		this.deleteValue("lockCode");
-		this.deleteValue("phone");
-		this.deleteValue("token");
-		this.deleteValue("tokenData");
+		this.storageValue.forEach((itemName) => {
+			this.deleteValue(itemName);
+		});
 	}
 }
 

@@ -15,7 +15,7 @@ module.exports = (new $.RestClient(config.schema.hostname, {
 		options.timeout = 10000;
 
 		options.beforeSend = function( xhr ) {
-			xhr.setRequestHeader("Authorization", "Bearer " + Token.token);
+			xhr.setRequestHeader("Authorization", "Bearer " + Token._getActiveValue());
 		};
 
 		/** add errors handling */

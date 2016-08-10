@@ -31,9 +31,9 @@ export default class Enter extends Component {
 		this._checkIfUserIsConnected = this._checkIfUserIsConnected.bind(this);
 		this._changeLoadStateToVisible = this._changeLoadStateToVisible.bind(this);
 		this._changeLoadStateToHidden = this._changeLoadStateToHidden.bind(this);
-		this._disconnect = this._disconnect.bind(this);
+		this.checkIfDisconnect = this.checkIfDisconnect.bind(this);
 
-		this._disconnect();
+		this.checkIfDisconnect();
 	}
 
 	componentDidMount() {
@@ -100,11 +100,8 @@ export default class Enter extends Component {
 		}
 	}
 
-	_disconnect() {
-		if (Storage.existValue("disconnect") &&
-			Storage.getValue("disconnect") === "true") {
-
-			Storage.deleteValue("disconnect");
+	checkIfDisconnect() {
+		if (Storage.existValue("disconnect")) {
 			Storage.clear();
 			
 			hashHistory.replace('/connects/qr');
