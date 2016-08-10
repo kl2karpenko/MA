@@ -1,6 +1,6 @@
 export default class Storage {
 	constructor() {
-		this.storage = localStorage;
+		this.storage = window.localStorage;
 
 		this.storageValue = ["lockCode", "phone", "token", "tokenData", "disconnect"];
 	}

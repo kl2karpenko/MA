@@ -18,7 +18,6 @@ import { KeyboardComponent,
 import LockCode               from "models/LockCode";
 import PhoneNumber            from "models/PhoneNumber";
 import Dialplan               from "models/Dialplan";
-import Storage                from "models/Storage";
 
 import { $t }                 from 'lib/locale';
 
@@ -121,10 +120,10 @@ export default class Index extends Component {
 
 	_addValidation() {
 		let model = this.pin;
-		let hadPrevValue = Storage.existValue('lockCode');
+		let hadPrevValue = LockCode.isExist();
 
 		if (hadPrevValue && model.active.length === 5) {
-			this.pin.messages.active = Storage.getValue('lockCode') !== model.active;
+			this.pin.messages.active = LockCode.getValueByPath('value') !== model.active;
 		}
 
 		if (model.created.length === 5 && model.created_copy.length === 5) {
@@ -143,11 +142,11 @@ export default class Index extends Component {
 		let
 			model = this.pin,
 			modelCopy = [],
-			hadPrevValue = Storage.existValue('lockCode');
+			hadPrevValue = LockCode.isExist();
 
 		if (model.created === model.created_copy) {
 			if (hadPrevValue) {
-				if (Storage.getValue('lockCode') === model.active) {
+				if (LockCode.getValueByPath('value') === model.active) {
 					modelCopy.push(model.active);
 				} else {
 					return false;
