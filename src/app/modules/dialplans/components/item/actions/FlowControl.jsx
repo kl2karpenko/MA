@@ -22,21 +22,27 @@ export default class FlowControl extends Component {
 				pressDelay={500}
 				component="li"
 				className={this.state.className}
-				onTap={this.props.onChange}
+				onTap={(e,d,i) => {
+					this.props.onChange(e,d,i);
+					return true;
+				}}
+				onTouchEnd={() => {
+					return true;
+				}}
 			>
-					<Checkbox
-						id={"action_" + this.props.index}
-						name="flow_control"
-						checked={this.state.is_on}
-						onChange={function() { }}
-						text={(() => {
-						return (
-							<div className="l-dialplan-text">
-								<div className="l-dialplan-name">{this.state.label || (this.props.in_number + "*" + this.state.short_code)}</div>
-							</div>
-						);
-					})}
-					/>
+				<Checkbox
+					id={"action_" + this.props.index}
+					name="flow_control"
+					checked={this.state.is_on}
+					onChange={function() { }}
+					text={(() => {
+					return (
+						<div className="l-dialplan-text">
+							<div className="l-dialplan-name">{this.state.label || (this.props.in_number + "*" + this.state.short_code)}</div>
+						</div>
+					);
+				})}
+				/>
 			</Tappable>
 		);
 	}

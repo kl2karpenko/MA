@@ -60,17 +60,19 @@ module.exports = {
 		return new Promise((resolve) => {
 			navigator.contacts.find([navigator.contacts.fieldType.photoes, navigator.contacts.fieldType.id], (contactsList) => {
 
+				logInfo("Start load contacts with images");
 					contactsList.forEach((contactItem) => {
 						let contactId             = contactItem.id;
 						let contactFromCacheIndex = helpers.getIndexOfItemByAttr("id", arrayToAdd, contactId);
 
 						// set image for contact item in main list
 						arrayToAdd[contactFromCacheIndex].image = contactItem.photos && contactItem.photos[0] &&
-							contactItem.photos[0].value;
+							contactItem.photos[0].value || true;
 					});
 
 					console.log(arrayToAdd);
 
+					logInfo("End load contacts with images");
 					resolve(arrayToAdd);
 				},
 				(errorForContacts) => {

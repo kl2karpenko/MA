@@ -98,15 +98,17 @@ class ContactList extends List {
 					.then((contactsList) => {
 						this.cachedContacts = contactsList.contacts;
 
+						getMobileImages(this.cachedContacts).then(() => {
+							logInfo("Contacts", "load images for contacts");
+
+							console.log(this.cachedContacts, 'this.cachedContacts');
+						});
+
 						resolve(contactsList);
 					})
 					.catch((errorForLoadContacts) => {
 						this.cachedContacts = [];
 						resolve({ "contacts": this.cachedContacts });
-
-						getMobileImages(this.cachedContacts).then(() => {
-							logInfo("Contacts", "load images for contacts");
-						});
 
 						logError("Contacts", errorForLoadContacts);
 					});

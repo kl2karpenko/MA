@@ -29,7 +29,13 @@ export default class DialplanListItem extends Component {
 					component="div"
 					className="m-list-item-wrap clearfix"
 					moveThreshold={30}
-					onTap={this.props.onClick}>
+					onTap={(e, data, i) => {
+						this.props.onClick(e, data, i);
+						return true;
+					}}
+					onTouchEnd={() => {
+						return true;
+					}}>
 					{(() => {
 						if (this.state.data.image) {
 							return <Image
