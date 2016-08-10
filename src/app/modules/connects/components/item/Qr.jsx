@@ -76,7 +76,9 @@ export default class Enter extends Component {
 								value: result.text
 							})
 							.done(() => {
-								hashHistory.replace('/pin');
+								if (Token._getActiveValue()) {
+									hashHistory.replace('/pin');
+								}
 							});
 					}
 				},

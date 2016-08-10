@@ -121,7 +121,7 @@ export default class Enter extends Component {
 			._checkConnection()
 			.then(() => {
 				$(document).trigger('system:loaded');
-				hashHistory.replace(Token.token ? '/pin' : '/connects/qr');
+				hashHistory.replace(Token._getActiveValue() ? '/pin' : '/connects/qr');
 			});
 	}
 

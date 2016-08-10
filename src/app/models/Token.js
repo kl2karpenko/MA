@@ -10,10 +10,6 @@ class Token {
 		this.authorizationUri = config.schema.tokenHostname;
 		this.clientId = "2909abc18ab27bea41f531705d0dcf55";
 		this.clientSecret = "b63mso0el64xpa7";
-
-		this.token = Storage.getValue('token');
-		this.tokenData = {};
-		this.client = false;
 	}
 
 	load(options) {
@@ -27,21 +23,46 @@ class Token {
 
 		return this.getTokenRequest(requestBody)
 			.then((data) => {
-				this.tokenData = data;
-				this.saveToken(data.access_token);
+				Token.saveTokenData(data);
+				Token.saveToken(data.access_token);
 			})
 			.fail((tokenError) => {
 				logError('Token', tokenError);
 			});
 	}
+	
+	static saveTokenData(objValue) {
+		Storage.setValue("tokenData", JSON.stringify(objValue));
+	}
 
-	saveToken(value) {
-		this.token = value;
-		Storage.setValue("token", value || this.token);
+	static saveToken(value) {
+		Storage.setValue("token", value);
+	}
+	
+	_getActiveValue() {
+		return Storage.getValue("token");
+	}
+
+	_getActiveTokenData() {
+		let tokenData = Storage.getValue("tokenData");
+
+		if (tokenData) {
+			try {
+				tokenData = JSON.parse(tokenData);
+			} catch (e) {
+				console.log(e);
+				Storage.deleteValue("tokenData");
+			}
+
+			return tokenData;
+		}
+
+		return null;
 	}
 
 	_getBase64EncodeForClient() {
-		return btoa(encodeURIComponent(this.clientId + ":" + this.clientSecret).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+		return btoa(encodeURIComponent(this.clientId + ":" + this.clientSecret)
+			.replace(/%([0-9A-F]{2})/g, function(match, p1) {
 			return String.fromCharCode('0x' + p1);
 		}));
 	}
@@ -89,7 +110,9 @@ class Token {
 	}
 
 	refreshToken() {
-		if (!this.token || !this.tokenData.refresh_token) {
+		let tokenData = this._getActiveTokenData();
+
+		if (!tokenData || !tokenData.refresh_token) {
 			if (!location.hash.match("connects")) {
 				hashHistory.replace('/connects/qr');
 			}
@@ -99,11 +122,11 @@ class Token {
 
 		return this.getTokenRequest({
 			"grant_type": "refresh_token",
-			"refresh_token": this.tokenData.refresh_token
+			"refresh_token": tokenData.refresh_token
 		})
 		.then((data) => {
-			this.tokenData = data;
-			this.saveToken(data.access_token);
+			Token.saveTokenData(data);
+			Token.saveToken(data.access_token);
 		})
 		.fail((tokenError) => {
 			logError('Token', tokenError);

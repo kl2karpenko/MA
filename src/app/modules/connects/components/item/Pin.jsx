@@ -40,7 +40,7 @@ export default class Pin extends Component {
 		}).then(() => {
 			this._reset();
 
-			if (Token.token) {
+			if (Token._getActiveValue()) {
 				hashHistory.replace('/pin');
 			}
 
